@@ -37,7 +37,7 @@ public class userDBAccess
 			{
 				Connection con=getConnection();
 				Statement sql=con.createStatement();
-				sql.execute("insert into userInfo values(" + id +","+password+","+emailinformation+")");
+				sql.execute("insert into userInfo values(\"" + id +"\",\""+password+"\",\""+emailinformation+"\")");
 			}
 			catch (java.lang.ClassNotFoundException e){
 				System.err.println("ClassNotFoundException:"+e.getMessage());
