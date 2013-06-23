@@ -1,0 +1,28 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\begin{document}
+\section{Match Score Calculation}
+\subsection{Input Arguments}
+\begin{itemize}
+\item \textit{commute} - boolean indicating whether trip is one-time or commute.
+\item \textit{roundtrip} - boolean indicating whether trip is one-way or roundtrip.
+\item \textit{day\_of\_week} - e.g. MonTueWedThuFri, indicating which days of week the trip happens, null if commute=false. (what's the best representation)
+\item \textit{date} - trip date, null if commute=true.
+\item \textit{origin\_add} - address of the origin.(break into multiple fields?)
+\item \textit{destination\_add} - address of the destination.(break into multiple fields?)
+\item \textit{forward\_time} - start time of the trip going from origin to destination.
+\item \textit{forward\_flexibility} - flexibility of \textit{forward\_time}.  e.g. if \textit{forward\_time} is 9:00am and \textit{forward\_flexibility} is 30 minutes, then any start time between 8:30am-9:30am is acceptable.
+\item \textit{back\_time} - start time of trip going from destination to origin.  null if roundtrip=false.
+\item \textit{back\_flexibility} - similar to \textit{forward\_flexibility}.
+\end{itemize}
+
+\subsection{Type Match Score}
+\subsection{Destination Match Score}
+\subsection{Time Match Score}
+\subsection{Match Score}
+\begin{equation*}
+\mbox{Match Score} = \mbox{Type Match Score} \times \mbox{Destination Match Score} \times \mbox{Time Match Score}
+\end{equation*}
+\section{Pricing Scheme}
+\subsection{Observation}
+\end{document}
