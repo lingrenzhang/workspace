@@ -1,9 +1,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<script>
+
+function clickaway(str){
+	if (str=="username")
+	{
+		document.getElementById("name").value="";
+	}
+	if (str=="password")
+	{
+		document.getElementById("pwd").value="";
+	}
+}
+
+</script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Welcome!</title>
 </head>
+
+
 <body>
 <form action="/TicketSchedule/servlet/Welcome" method="get">
 	<p>
@@ -12,5 +29,17 @@
 	</p>
 </form>
 
+
+<form action="/TicketSchedule/servlet/Welcome" method="post">
+	<div class="box">
+		<div class="text_input">
+		<input id="name" class="input_text_clickaway" type="text" value="username"  name="name" style="color: rgb(153, 153, 153)" onclick="clickaway(this.value)">
+		</div>
+		<div class="text_input">
+		<input id="pwd" class="input_text_clickaway" type="text" value="password" name="pwd" style="color: rgb(153, 153, 153)" onclick="clickaway(this.value)">
+		</div>
+		<button class="clickaway_confirm" type="submit">InsertName</button>
+	</div>
+</form>
 </body>
 </html>

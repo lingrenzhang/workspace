@@ -19,4 +19,14 @@
     <servlet-name>Welcome</servlet-name>
     <url-pattern>/servlet/Welcome</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ShowUser</display-name>
+    <servlet-name>ShowUser</servlet-name>
+    <servlet-class>com.shs.liangdiaosi.ShowUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowUser</servlet-name>
+    <url-pattern>/servlet/ShowUser</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -1,7 +1,7 @@
 package com.shs.liangdiaosi;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.ResultSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,15 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import com.shs.liangdiaosi.Access.userDBAccess;
 
 /**
- * Servlet implementation class Welcome
+ * Servlet implementation class ShowUser
  */
-public class Welcome extends HttpServlet {
+public class ShowUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Welcome() {
+    public ShowUser() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,16 +28,7 @@ public class Welcome extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter returnHTML;
-		response.setContentType("text/html;charset=utf-8");
-		returnHTML = response.getWriter();
-		returnHTML.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">");
-		returnHTML.println("<html><head><title>");
-		returnHTML.println("A simple GET servlet");
-		returnHTML.println("</title></head><body>");
-		returnHTML.println("<h2>Welcome! Greetings, this it the servlet answering</h2>");
-		returnHTML.println("</body></html>");
-		returnHTML.close();
+		// TODO Auto-generated method stub
 	}
 
 	/**
@@ -46,8 +37,8 @@ public class Welcome extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=utf-8");
 		userDBAccess userDB=new userDBAccess();
-		userDB.insertValue(request.getParameter("id"), request.getParameter("pwd"), "");
-		response.sendRedirect("../ShowUser.jsp");
+		ResultSet rs=userDB.selectByName(request.getParameter("name"));
+		
 	}
 
 }
