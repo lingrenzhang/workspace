@@ -48,6 +48,7 @@ public class Welcome extends HttpServlet {
 		userDBAccess userDB=new userDBAccess();
 		userDB.insertValue(request.getParameter("name"), request.getParameter("pwd"), "");
 		response.sendRedirect("../ShowUser.jsp");
+
 	}
 
 }

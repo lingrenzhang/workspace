@@ -76,7 +76,7 @@ public class userDBAccess
         	{
 	        	Connection con= getConnection();
 				Statement sql = con.createStatement();
-				String query = "select * from userInfo where id="+name;
+				String query = "select * from userInfo where id=\""+name+"\"";
 				result = sql.executeQuery(query);
 
         	}
