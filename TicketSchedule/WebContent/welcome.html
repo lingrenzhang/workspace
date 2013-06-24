@@ -6,11 +6,15 @@
 function clickaway(str){
 	if (str=="username")
 	{
-		document.getElementById("name").value="";
+		var obj=document.getElementById("name");
+		obj.value="";
+		obj.style.color="#000000";
 	}
 	if (str=="password")
 	{
-		document.getElementById("pwd").value="";
+		var obj=document.getElementById("pwd");
+		obj.value="";
+		obj.style.color="#000000";
 	}
 }
 
