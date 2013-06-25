@@ -1,6 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
+<link rel="stylesheet" type="text/css" href="./CSS/c1.css" />
+
 <script>
 
 function clickaway(str){
@@ -24,8 +27,24 @@ function clickaway(str){
 <title>Welcome!</title>
 </head>
 
-
 <body>
+<div id="header_wrap">
+	<div id="header">
+		<a id="logo" href="http://www.zimride.com/">Zimride</a>
+	<ul id="top_nav">
+		<li>
+		<a id="sign_up" class="signup_link" href="https://www.zimride.com/auth/register?">Sign up</a>
+		</li>
+		<li>
+		<a id="log_in" class="login_link" href="https://www.zimride.com/auth/signin?">Log in</a>
+		</li>
+		<li>
+		<a id="post_ride" class="button post" href="http://www.zimride.com/ride/add">Post a ride</a>
+		</li>
+	</ul>
+	</div>
+</div>
+
 <form action="/TicketSchedule/servlet/Welcome" method="get">
 	<p>
 		Press the button to execute the servlet

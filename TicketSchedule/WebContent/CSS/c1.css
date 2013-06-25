@@ -1,0 +1,110 @@
+/* ----------------------------------- header ------------------------------------*/
+#header{
+	height:65px;margin:5px auto 0 auto;position:relative;width:940px
+	}
+	
+#header #logo{
+	background:url(/TicketSchedule/Picture/logo.png);
+	bottom:10px;
+	display:block;
+	font-size:0;height:0;
+	left:0;line-height:0;
+	overflow:hidden;
+	padding-top:44px;
+	position:absolute;
+	width:147px
+	}
+
+
+/* ----------------------------------- top_nav -----------------------------------*/
+ul#top_nav{
+	float:right;
+	padding:35px 0 5px 0;
+	font-size:12px
+	}
+
+ul#top_nav a{
+	color:#333
+	}
+	
+ul#top_nav a:hover{
+	color:#00569f
+}
+
+ul#top_nav a.post{
+	font-size:13px
+	}
+	
+ul#top_nav a.post:hover{
+	color:#333
+}
+
+ul#top_nav a#private_networks{
+	padding-right:13px;background:url(../2/images/up_down_pointers.png) no-repeat right 1px
+}
+
+ul#top_nav a#private_networks:hover{
+	background-position:right -11px
+}
+
+ul#top_nav a#private_networks.opened,ul#top_nav a#private_networks.opened:hover{
+	background-position:right -23px
+}
+ul#top_nav li{
+	float:left;margin-left:25px
+	}
+
+ul#top_nav .button{
+	margin:-7px 1px 1px 1px
+}
+
+ul#top_nav .dropmenu li{
+	margin-left:0;width:148px
+}
+
+ul#top_nav .dropmenu li a span{
+	display:block;
+	padding-left:28px;
+	background-repeat:no-repeat;
+	background-image:url(../2/images/account_dropmenu_icons.png)
+}
+
+ul#top_nav .dropmenu li a.profile span{
+	background-position:6px 2px
+}
+
+ul#top_nav .dropmenu li a.profile:hover span{
+	background-position:6px -21px
+	}
+	
+ul#top_nav .dropmenu li a.account span{
+	background-position:6px -44px
+	}
+
+ul#top_nav .dropmenu li a.account:hover span{
+	background-position:6px -69px
+	}
+	
+ul#top_nav .dropmenu li a.calendar span{
+	background-position:6px -93px
+	}
+	
+ul#top_nav .dropmenu li a.calendar:hover span{
+	background-position:6px -117px
+	}
+	
+ul#top_nav .dropmenu li a.admin span{
+	background-position:6px -140px
+	}
+	
+ul#top_nav .dropmenu li a.admin:hover span{
+	background-position:6px -163px
+	}
+	
+ul#top_nav .dropmenu li a.logout span{
+	background-position:6px -187px
+	}
+	
+ul#top_nav .dropmenu li a.logout:hover span{
+	background-position:6px -212px
+	}

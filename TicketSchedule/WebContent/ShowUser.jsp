@@ -56,6 +56,5 @@ function clickaway(str){
 </table>
 <%} %>
 
-
 </body>
 </html>
