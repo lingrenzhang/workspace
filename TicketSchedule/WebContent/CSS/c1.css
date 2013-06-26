@@ -39,17 +39,6 @@ ul#top_nav a.post:hover{
 	color:#333
 }
 
-ul#top_nav a#private_networks{
-	padding-right:13px;background:url(../2/images/up_down_pointers.png) no-repeat right 1px
-}
-
-ul#top_nav a#private_networks:hover{
-	background-position:right -11px
-}
-
-ul#top_nav a#private_networks.opened,ul#top_nav a#private_networks.opened:hover{
-	background-position:right -23px
-}
 ul#top_nav li{
 	float:left;margin-left:25px
 	}
