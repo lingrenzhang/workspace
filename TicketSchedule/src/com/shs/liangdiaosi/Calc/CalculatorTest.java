@@ -1,51 +1,12 @@
 package com.shs.liangdiaosi.Calc;
 
 import java.sql.*;
-
-import com.shs.liangdiaosi.Access.userDBAccess;
+import com.shs.liangdiaosi.Access.*;
 
 public class CalculatorTest {
 
 	private static userDBAccess userDBObj;
-	private static final String[] columns={
-		// login info
-		"userName",
-		"password",
-		"emailAddress",
-		// trip info
-		"recordId",
-		"commute", 
-		"roundtrip", 
-		"userType", 
-		"dayOfWeek", 
-		"tripDate",
-		"origin",
-		"destination",
-		"detourFactor",
-		"forwardTime",
-		"forwardFlexibility",
-		"backTime",
-		"backFlexibility",
-	};
-	private static final String[] columnTypes = {
-		"VARCHAR(30)",
-		"VARCHAR(30)",
-		"VARCHAR(30)",
-		// trip info
-		"INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE",
-		"BOOL",
-		"BOOL",
-		"VARCHAR(8)",
-		"VARCHAR(8)",
-		"DATE",
-		"VARCHAR(50)",
-		"VARCHAR(50)",
-		"DECIMAL(3,2)",
-		"TIME",
-		"TIME",
-		"TIME",
-		"TIME",
-	};
+	
 	private static void createTestTable(){
 		try
     	{
@@ -55,19 +16,17 @@ public class CalculatorTest {
         	ResultSet tables = dbm.getTables(null, null, "userInfo", null);
         	if(tables.next()){
         		Statement sql=con.createStatement();
-        		String query = "delete from userInfo";
+        		String query = "drop table userInfo";
         		sql.executeUpdate(query);
         	}
-        	else{
-	        	Statement sql = con.createStatement();
-				String query = "CREATE TABLE userInfo (";
-				for(int i=0; i<columns.length; i++){
-					if(i>0) query += ", ";
-					query += columns[i] + " " + columnTypes[i];
-				}
-				query += ")";
-				sql.executeUpdate(query);
-        	};
+        	Statement sql = con.createStatement();
+			String query = "CREATE TABLE userInfo (";
+			for(int i=0; i<userDBFormat.columns.length; i++){
+				if(i>0) query += ", ";
+				query += userDBFormat.columns[i] + " " + userDBFormat.columnTypes[i];
+			}
+			query += ")";
+			sql.executeUpdate(query);
     	}
 		catch (java.lang.ClassNotFoundException e){
 			System.err.println("ClassNotFoundException:"+e.getMessage());
@@ -81,9 +40,9 @@ public class CalculatorTest {
 		try {
 			Connection con = userDBObj.getConnection(true);
 			Statement sql = con.createStatement();
-			String query = "INSERT INTO userInfo (commute, roundtrip, userType, dayOfWeek, tripDate, origin, destination, detourFactor, forwardTime, forwardFlexibility, backTime, backFlexibility) VALUES ";
-			query += "(false, false, 'driver', NULL, '2013-08-01', '44 Olmsted Rd.,Apt 133, Stanford, CA', '405 Hilgard Ave, Los Angeles, CA', 0.1, '09:00:00', '00:30:00', NULL, NULL), ";
-			query += "(false, false, 'rider', NULL, '2013-08-01', '10983 N Wolfe Rd  Cupertino, CA', '405 Hilgard Ave, Los Angeles, CA', 0.1, '09:45:00', '00:30:00', NULL, NULL)";
+			String query = "INSERT INTO userInfo (commute, roundtrip, userType, dayOfWeek, tripDate, origState, origCity, origNbhd, origAddr, destState, destCity, destNbhd, destAddr, detourFactor, forwardTime, forwardFlexibility, backTime, backFlexibility) VALUES ";
+			query += "(false, false, 'driver', NULL, '2013-08-01', 'CA', 'Stanford', NULL, '44 Olmsted Rd.', 'CA', 'Los Angeles', NULL, '405 Hilgard Ave', 0.1, '09:00:00', '00:30:00', NULL, NULL), ";
+			query += "(false, false, 'rider', NULL, '2013-08-01', 'CA', 'Cupertino', NULL, '10983 N Wolfe Rd.', 'CA', 'Los Angeles', NULL, '405 Hilgard Ave', null, '09:45:00', '00:30:00', NULL, NULL)";
 			sql.executeUpdate(query);
 		} catch (ClassNotFoundException e) {
 			System.err.println("ClassNotFoundException:"+e.getMessage());
@@ -98,6 +57,6 @@ public class CalculatorTest {
 		userDBObj.setTest(true);
 		createTestTable();
 		insertTestEntries();
-		//create a few test cases
+		//Todo: create a few test cases
 	}
 }
