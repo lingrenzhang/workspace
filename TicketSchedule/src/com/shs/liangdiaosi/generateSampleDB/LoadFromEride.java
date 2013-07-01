@@ -1,10 +1,20 @@
 package com.shs.liangdiaosi.generateSampleDB;
 import com.shs.liangdiaosi.Access.userDBAccess;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.sql.*;
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
+import org.htmlparser.filters.NodeClassFilter;
 import org.htmlparser.filters.TagNameFilter;
+import org.htmlparser.tags.LinkTag;
+import org.htmlparser.tags.TableColumn;
+import org.htmlparser.tags.TableRow;
 import org.htmlparser.tags.TableTag;
 import org.htmlparser.util.NodeList;
 
@@ -32,27 +42,28 @@ public class LoadFromEride {
 	            System.out.println(sTotalString);
 
 	            System.out.println("====================");
-	            String testText = extractText(sTotalString);
-	            System.out.println(testText);
+	            
+	            Parser parser = Parser.createParser(new String(sTotalString.getBytes(),
+                "8859_1"), "8859-1");
+	            NodeClassFilter filter = new NodeClassFilter(TableTag.class);
+                NodeList nodeList = parser.parse(filter);
+                int i=4;
+                while (i<=nodeList.size())
+                {
+	                TableTag tableTag = (TableTag) nodeList.elementAt(i);
+	                TableRow[] rows = tableTag.getRows();
+	                for (int j = 0; j < rows.length; j++) {
+		                  TableRow tr = (TableRow) rows[j];
+		                  TableColumn[] td = tr.getColumns();
+		                  
+		                  /*for (int k = 0; k < td.length; k++) {		                   		                   */
+		                     //Parsing operation, DB operation
+		                  
+	                }
+	                i++;
+	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
 	}
-	
-    public static String extractText(String inputHtml) throws Exception {
-        StringBuffer text = new StringBuffer();
-
-        Parser parser = Parser.createParser(new String(inputHtml.getBytes(),
-                "8859_1"), "8859-1");
-
-        NodeList nodes = parser.extractAllNodesThatMatch(new NodeFilter() {
-            public boolean accept(Node node) {
-                return true;
-            }
-        });
-        
-        Node node = nodes.elementAt(0);
-        text.append(new String(node.toPlainTextString().getBytes("8859_1")));
-        return text.toString();
-    }
 }
