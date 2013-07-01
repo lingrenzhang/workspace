@@ -37,8 +37,6 @@ public class LoadFromEride {
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
-	        
-	        
 	}
 	
     public static String extractText(String inputHtml) throws Exception {
@@ -46,12 +44,13 @@ public class LoadFromEride {
 
         Parser parser = Parser.createParser(new String(inputHtml.getBytes(),
                 "8859_1"), "8859-1");
-        // 遍历所有的节点
+
         NodeList nodes = parser.extractAllNodesThatMatch(new NodeFilter() {
             public boolean accept(Node node) {
                 return true;
             }
         });
+        
         Node node = nodes.elementAt(0);
         text.append(new String(node.toPlainTextString().getBytes("8859_1")));
         return text.toString();

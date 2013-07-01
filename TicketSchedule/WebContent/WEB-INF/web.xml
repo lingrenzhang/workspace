@@ -29,4 +29,14 @@
     <servlet-name>ShowUser</servlet-name>
     <url-pattern>/servlet/ShowUser</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>googleMapSupporting</display-name>
+    <servlet-name>googleMapSupporting</servlet-name>
+    <servlet-class>com.shs.liangdiaosi.googleMapSupporting</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>googleMapSupporting</servlet-name>
+    <url-pattern>/servlet/googleMapSupporting</url-pattern>
+  </servlet-mapping>
 </web-app>
