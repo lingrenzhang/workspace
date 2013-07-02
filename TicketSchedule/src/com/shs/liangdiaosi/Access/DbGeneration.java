@@ -36,6 +36,11 @@ public class DbGeneration {
 		"forwardFlexibility",
 		"backTime",
 		"backFlexibility",
+		"origLat",
+		"origLon",
+		"destLat",
+		"destLon",
+		"tripTime"
 	};
 	public static final String[] CarpoolTbcolumnTypes = {
 		"VARCHAR(30)", //"userName"
@@ -57,7 +62,12 @@ public class DbGeneration {
 		"TIME",//"forwardTime"
 		"TIME",//"forwardFlexibility"
 		"TIME",//"backTime"
-		"TIME" //"backFlexibility"
+		"TIME", //"backFlexibility"
+		"DECIMAL(8,6)",//"origLat"
+		"DECIMAL(9,6)",//"origLon",
+		"DECIMAL(8,6)",//"destLat",
+		"DECIMAL(9,6)",//"destLon"
+		"TIME"//"tripTime"
 	};
 
 	
@@ -81,6 +91,7 @@ public class DbGeneration {
 		"forwardFlexibility",
 		"backTime",
 		"backFlexibility",
+		
 	};
 	public static final String[] TravelTbcolumnTypes = {
 		// trip info

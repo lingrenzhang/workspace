@@ -1,9 +1,18 @@
 package com.shs.liangdiaosi.Access;
 
+
+
+
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import com.mysql.jdbc.ResultSet;
+
+
 
 public class CarpoolTbAccess {
 
@@ -14,7 +23,7 @@ public class CarpoolTbAccess {
 		Class.forName("com.mysql.jdbc.Driver");
 		String userName="admin";
 		String password="admin";
-		Connection con = DriverManager.getConnection(url,userName,password);
+		Connection con = (Connection) DriverManager.getConnection(url,userName,password);
 		return con;
 	}
 	
@@ -75,7 +84,7 @@ public class CarpoolTbAccess {
 		
 		try
 		{
-			Statement sql=con.createStatement();
+			Statement sql=(Statement) con.createStatement();
 			sql.execute("insert into CarpoolTb(userName,roundtrip,userType,dayOfweek,origState,origCity,origNbhd," +
 					"origAddr,destState,destCity,destNbhd,destAddr,detourFactor,forwardTime,forwardFlexibility,backTime," +
 					"backFlexibility) values(\"" + 
@@ -89,6 +98,15 @@ public class CarpoolTbAccess {
 		{
 			System.err.println("SQLException:"+e.getMessage());
 		}
+	}
+	
+	public static ResultSet listAllLocation() throws ClassNotFoundException, SQLException
+	{
+		ResultSet rs;
+		Connection con =CarpoolTbAccess.getConnection();
+		Statement sql=(Statement) con.createStatement();
+		rs=(ResultSet) sql.executeQuery("select origCity,origAddr,destCity,destAddr from carpooltb");
+		return rs;
 	}
 	
 	public static void main(String args[]) throws Exception

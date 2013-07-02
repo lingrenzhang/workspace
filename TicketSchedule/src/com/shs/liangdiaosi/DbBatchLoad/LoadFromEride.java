@@ -121,6 +121,7 @@ public class LoadFromEride {
 	        }
 	}
 	
+	
 	public static int getComDate(String commuteDate)
 	{
 		int comDate=0;

@@ -39,4 +39,14 @@
     <servlet-name>googleMapSupporting</servlet-name>
     <url-pattern>/servlet/googleMapSupporting</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LoadPosition</display-name>
+    <servlet-name>LoadPosition</servlet-name>
+    <servlet-class>com.shs.liangdiaosi.LoadPosition</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoadPosition</servlet-name>
+    <url-pattern>/servlet/LoadPosition</url-pattern>
+  </servlet-mapping>
 </web-app>
