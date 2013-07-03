@@ -7,6 +7,7 @@
       body { height: 100%; margin: 0; padding: 0 }
       #map-canvas { height: 100% }
     </style>
+    
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
     </script>
@@ -19,7 +20,6 @@
         };
         var map = new google.maps.Map(document.getElementById("map-canvas"),
             mapOptions);
-
         var input = document.getElementById('target');
       	var searchBox = new google.maps.places.SearchBox(input);
       	var markers = [];
@@ -29,35 +29,9 @@
           for (var i = 0, marker; marker = markers[i]; i++) {
               marker.setMap(null);
           }
-
-          markers = [];
-          var bounds = new google.maps.LatLngBounds();
-          for (var i = 0, place; place = places[i]; i++) {
-          var image = {
-            url: place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(25, 25)
-          };
-
-          var marker = new google.maps.Marker({
-            map: map,
-            icon: image,
-            title: place.name,
-            position: place.geometry.location
-          });
-
-          markers.push(marker);
-
-          bounds.extend(place.geometry.location);
-
+		  var place=places[0];
 		  document.getElementById("latitude").value=place.geometry.location.jb;
 		  document.getElementById("longitude").value=place.geometry.location.kb;
-          
-        }
-
-        map.fitBounds(bounds);
       	});
 
       	google.maps.event.addListener(map, 'bounds_changed', function() {
@@ -67,52 +41,44 @@
      }
      google.maps.event.addDomListener(window, 'load', initialize);
 
-
-
-
-
-
-      var geocoder, location1, location2, gDir;
-
-
-      function showLocation() {
-           var targetadd=document.getElementById("target");
-    	    geocoder.getLocations(targetadd.value, function (response) {
-    	        if (!response || response.Status.code != 200)
-    	        {
-    	            alert("Sorry, we were unable to geocode the first address");
-    	        }
-    	        else
-    	        {
-    	            location1 = {lat: response.Placemark[0].Point.coordinates[1], lon: response.Placemark[0].Point.coordinates[0], address: response.Placemark[0].address};
-    				document.getElementById("latitude").value=response.Placemark[0].Point.coordinates[1];
-    				document.getElementById("longitude").value=response.Placemark[0].Point.coordinates[0];
-    	        }
-    	    });
-    	}
-
-
-
-      
+     function upload()
+     {
+     }
     </script>
   </head>
   <body>
     <div id="panel">
-    	<input id="target"></input>
+    	<input id="target" width="500"></input>
+    	<input type="button" id="upload" value="upload" onclick="unload()"></input>
     </div>
+    	<table>
+		<tr>
+			<td>OrigLat</td>
+			<td><input id="origlat" name="origlat" value="0.00"></input></td>
+			<td>OrigLng</td>
+			<td><input id="origlng" name="origlng" value="0.00"></input></td>
+		</tr>
+		<tr>
+			<td>DestLat</td>
+			<td><input id="origlat" name="origlat" value="0.00"></input></td>
+			<td>DestLng</td>
+			<td><input id="origlng" name="origlng" value="0.00"></input></td>
+		</tr>
+	</table>
     <div id="communication">
     <form action="/TicketSchedule/servlet/googleMapSupporting" method="post">
-	<p>
+	<table>
 		<tr>
 			<td>Latitude</td>
 			<td><input id="latitude" name="latitude" value="0.00"></input></td>
 			<td>Longitude</td>
 			<td><input id="longitude" name="longitude" value="0.00"></input></td>
 		</tr>
+	</table>
 		Press the button to Import the latitude.
 		<input type="submit" value="Import DB" />
-	</p>
 	</form>
+
     </div>
     <div id="map-canvas"></div>
 
