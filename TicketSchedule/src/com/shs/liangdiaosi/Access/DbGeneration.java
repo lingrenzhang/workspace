@@ -63,10 +63,10 @@ public class DbGeneration {
 		"TIME",//"forwardFlexibility"
 		"TIME",//"backTime"
 		"TIME", //"backFlexibility"
-		"DECIMAL(8,6)",//"origLat"
-		"DECIMAL(9,6)",//"origLon",
-		"DECIMAL(8,6)",//"destLat",
-		"DECIMAL(9,6)",//"destLon"
+		"DECIMAL(10,6)",//"origLat"
+		"DECIMAL(10,6)",//"origLon",
+		"DECIMAL(10,6)",//"destLat",
+		"DECIMAL(10,6)",//"destLon"
 		"TIME"//"tripTime"
 	};
 

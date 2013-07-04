@@ -62,24 +62,58 @@ function initialize() {
  }
  google.maps.event.addDomListener(window, 'load', initialize);
 
- function ImportDb()
+ function loadLocation()
  {
-	    $("#orig").val("Shanghai").change(function(){google.maps.event.trigger(searchBoxO, 'places_changed');});
-
+        var i=document.getElementById("recordId").value;
 	    //google.maps.event.trigger(searchBoxO, 'places_changed');
-	    $("#dest").val("Beijing\r").change(function(){google.maps.event.trigger(searchBoxD, 'places_changed');});
 	    
-
+	    var orig=document.getElementById(i+"2").innerHTML;
+	    var dest=document.getElementById(i+"4").innerHTML;
+	    document.getElementById("orig").value=orig;
+	    document.getElementById("dest").value=dest;
 	    	    
  }
- 
+
+ function importDB()
+ {
+	 var xmlhttp;
+	 var str;
+	 str=document.getElementById("recordId").value+"&"+
+		 document.getElementById("origLat").value+"&"+
+	     document.getElementById("origLng").value+"&"+
+	     document.getElementById("destLat").value+"&"+
+	     document.getElementById("destLng").value;
+	  	  
+	  if (window.XMLHttpRequest)
+	  {
+	      xmlhttp=new XMLHttpRequest();
+	  }
+	  else
+	  {
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+	  xmlhttp.onreadystatechange=function()
+	  {
+	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+	    {
+		    var recordid=0;
+		    recordid=Number(document.getElementById("recordId").value);
+		    recordid=recordid+1;
+		    document.getElementById("recordId").value=recordid;
+	    }
+	  }
+	  xmlhttp.open("GET","./InsertGeo?"+str,true,null,null);
+	  xmlhttp.send(null); 
+		 
+ }
+
 </script>
 
 </head>
 <body>
 <div id="panel">
-    	<input id="orig" width="300px"></input>
-    	<input id="dest" width="300px"></input>
+    	<input id="orig" style = "width:300px" onkeydown="changeKey()"></input>
+    	<input id="dest" style="width:300px"></input>
 </div>
 
 <table>
@@ -96,12 +130,16 @@ function initialize() {
 			<td><input id="destLng" name="destLng" value="0.00"></input></td>
 	</tr>
 	<tr>
-		<td><input type="button" value="ImportDb" onclick="ImportDb()"></td>
+		<td><input type="button" value="loadLocation" onclick="loadLocation()"></td>
+	    <td><input id="recordId" type="text" value=""></input></td>
+	    <td><input type="button" value="importDB" onclick="importDB()"></td>
+
 	</tr>
 </table>
 <div id="map-canvas"></div>
 <table>
 	<tr>
+		<td align="center">OrderId</td>
 		<td align="center">OrigCity</td>
 		<td align="center">OrigAddress</td>
 		<td align="center">DestCity</td>
@@ -111,17 +149,18 @@ function initialize() {
 		<td align="center">TravelTime</td>
 	</tr>
   <% int i=1; %>
-  <% while(results.next()) {%>
+  <% while(results.next()) {%> 
+  <% i= results.getInt(1); %>
 	<tr>
-		<td align="center" id="<%=i%>1"><%=results.getString(1) %></td>
-	    <td align="center" id="<%=i%>2"><%=results.getString(2) %></td>
-	    <td align="center"><%=results.getString(3) %></td>
-	    <td align="center"><%=results.getString(4) %></td>
-	    <td align="center"></td>
-	    <td align="center"></td>
-	    <td align="center"></td>
+		<td align="center" id="<%=i%>1"><%=i %></td>
+		<td align="center" id="<%=i%>2"><%=results.getString(3) %>, <%=results.getString(2) %></td>
+	    <td align="center" id="<%=i%>3"><%=results.getString(3) %></td>
+	    <td align="center" id="<%=i%>4"><%=results.getString(5) %>, <%=results.getString(4) %></td>
+	    <td align="center" id="<%=i%>5"><%=results.getString(5) %></td>
+	    <td align="center" id="<%=i%>6"></td>
+	    <td align="center" id="<%=i%>7"></td>
+	    <td align="center" id="<%=i%>8"></td>
 	</tr>
-	<% i++; %>
 	<%} %>
 </table>
 

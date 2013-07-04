@@ -78,6 +78,11 @@ public class LoadFromEride {
 		                  int dayOfWeek=1234; //TODO: LoadFromEride.getDay(CommuteDate.getText(););
 		                  String origState=OrigState.getText();
 		                  String origCity=OrigCity.getText();
+		                  if (origCity!=null)
+		                  {
+		                	  origCity=origCity.substring(0, origCity.length()-2);
+              	  
+		                  }
 		                  String origNbhd = " ";
 		                  String origAddr;
 		                  if (OrigStreet!=null)
@@ -90,6 +95,11 @@ public class LoadFromEride {
 		                  }
 		                  String destState=DesState.getText();
 		                  String destCity=DesCity.getText();
+		                  if (destCity!=null)
+		                  {
+		                	  destCity=destCity.substring(0,destCity.length()-2);
+		                  }
+		                  
 		                  String destNbhd =" ";
 		                  String destAddr;
 		                  if (DesStreet!=null)

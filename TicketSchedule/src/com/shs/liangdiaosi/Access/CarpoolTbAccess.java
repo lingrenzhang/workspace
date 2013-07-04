@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 
 import com.mysql.jdbc.ResultSet;
 
@@ -105,8 +106,43 @@ public class CarpoolTbAccess {
 		ResultSet rs;
 		Connection con =CarpoolTbAccess.getConnection();
 		Statement sql=(Statement) con.createStatement();
-		rs=(ResultSet) sql.executeQuery("select origCity,origAddr,destCity,destAddr from carpooltb");
+		rs=(ResultSet) sql.executeQuery("select recordId,origCity,origAddr,destCity,destAddr from carpooltb");
 		return rs;
+	}
+	
+	public static void insertLocation(int recordId, Float origlat,Float origlng,Float destlat,Float destlng, boolean batch) throws ClassNotFoundException, SQLException
+	{
+		Connection con;
+		if(batch)
+		{
+			if (objConn==null)
+			{
+				objConn= CarpoolTbAccess.getConnection();
+			}
+			con=objConn;
+		}
+		else
+		{
+			con=CarpoolTbAccess.getConnection();
+		}
+		
+		//Do santity check here
+		
+		try
+		{
+			Statement sql=(Statement) con.createStatement();
+			sql.execute("update CarpoolTb set origLat="+origlat+
+					", origLon=" + origlng +
+					", destLat=" + destlat +
+					", destLon=" + destlng +
+					" where recordid="+recordId);
+		}
+		catch (SQLException e)
+		{
+			System.err.println("SQLException:"+e.getMessage());
+		}
+	
+		
 	}
 	
 	public static void main(String args[]) throws Exception

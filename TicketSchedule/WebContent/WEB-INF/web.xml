@@ -49,4 +49,14 @@
     <servlet-name>LoadPosition</servlet-name>
     <url-pattern>/servlet/LoadPosition</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>InsertGeo</display-name>
+    <servlet-name>InsertGeo</servlet-name>
+    <servlet-class>com.shs.liangdiaosi.InsertGeo</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InsertGeo</servlet-name>
+    <url-pattern>/servlet/InsertGeo</url-pattern>
+  </servlet-mapping>
 </web-app>
