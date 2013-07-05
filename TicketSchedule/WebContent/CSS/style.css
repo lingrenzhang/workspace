@@ -1,0 +1,24 @@
+
+#content_container {
+    margin: 0 auto;
+    padding: 15px 0 4px;
+    width: 940px;
+}
+
+#search_s {
+    border-bottom-left-radius: 4px;
+    border-right: 1px solid #BBBBBB !important;
+    border-top-left-radius: 4px;
+}
+
+.clickaway {
+    color: #999999;
+}
+
+.clearfix {
+    display: block;
+}
+
+.datepicker {
+    font-size: 1.3em !important;
+}

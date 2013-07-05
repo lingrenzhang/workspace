@@ -1,0 +1,503 @@
+html, body {
+    color: #404040;
+    font: 14px/21px "Helvetica Neue",Helvetica,"Lucida Grande",Arial,sans-serif;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+
+h3, strong {
+font-weight: bold;
+}
+
+a {
+text-decoration: none;
+color: #0d77b6;
+}
+
+#action {
+	position: relative;
+	margin-bottom: 30px;
+	color: #0d77b6;
+	border: 1px solid #bfbfbf;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
+	background-color: #e0ecf3;
+	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ecf8ff), color-stop(100%, #e0ecf3));
+	background-image: -webkit-linear-gradient(#ecf8ff,#e0ecf3);
+	background-image: -moz-linear-gradient(#ecf8ff,#e0ecf3);
+	background-image: -o-linear-gradient(#ecf8ff,#e0ecf3);
+	background-image: -ms-linear-gradient(#ecf8ff,#e0ecf3);
+	background-image: linear-gradient(#ecf8ff,#e0ecf3);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ecf8ff, endColorstr=#e0ecf3);
+}
+
+#action .item {
+	position: relative;
+	padding: 18px 20px;
+}
+
+#action h2 {
+font-size: 20px;
+font-weight: 500;
+margin-bottom: 5px;
+}
+
+#action p {
+font-size: 12px;
+color: #777;
+}
+
+#action .postride a.button {
+	position: absolute;
+	right: 20px;
+	top: 25px;
+}
+
+
+.button {
+display: inline-block;
+position: relative;
+height: 25px;
+line-height: 25px;
+font-size: 14px;
+font-weight: 500;
+text-align: center;
+padding: 0 12px;
+color: #404040;
+background-clip: padding-box;
+border: 1px solid #a7a7a7;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+-ms-border-radius: 3px;
+-o-border-radius: 3px;
+border-radius: 3px;
+background-color: #eeeeee;
+background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #e1e1e1));
+background-image: -webkit-linear-gradient(#ffffff,#e1e1e1);
+background-image: -moz-linear-gradient(#ffffff,#e1e1e1);
+background-image: -o-linear-gradient(#ffffff,#e1e1e1);
+background-image: -ms-linear-gradient(#ffffff,#e1e1e1);
+background-image: linear-gradient(#ffffff,#e1e1e1);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#e1e1e1);
+}
+
+.button.post {
+display: inline-block;
+position: relative;
+height: 25px;
+line-height: 25px;
+font-size: 14px;
+font-weight: 500;
+text-align: center;
+padding: 0 12px;
+color: #404040;
+background-clip: padding-box;
+border: 1px solid #a7a7a7;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+-ms-border-radius: 3px;
+-o-border-radius: 3px;
+border-radius: 3px;
+background-color: #eeeeee;
+background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #e1e1e1));
+background-image: -webkit-linear-gradient(#ffffff,#e1e1e1);
+background-image: -moz-linear-gradient(#ffffff,#e1e1e1);
+background-image: -o-linear-gradient(#ffffff,#e1e1e1);
+background-image: -ms-linear-gradient(#ffffff,#e1e1e1);
+background-image: linear-gradient(#ffffff,#e1e1e1);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#e1e1e1);
+font-weight: normal;
+border-color: #aaa;
+background-color: #ffe58f;
+background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffefb9), color-stop(100%, #ffdc63));
+background-image: -webkit-linear-gradient(#ffefb9,#ffdc63);
+background-image: -moz-linear-gradient(#ffefb9,#ffdc63);
+background-image: -o-linear-gradient(#ffefb9,#ffdc63);
+background-image: -ms-linear-gradient(#ffefb9,#ffdc63);
+background-image: linear-gradient(#ffefb9,#ffdc63);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffefb9, endColorstr=#ffdc63);
+}
+
+
+
+
+
+.ride_list .entry {
+padding: 12px;
+overflow: hidden;
+color: #333;
+border-bottom: 1px solid #b9b9b9;
+background-color: #fdfdfd;
+}
+
+
+.ride_list .entry .passenger_box {
+float: right;
+text-align: center;
+width: 75px;
+height: 65px;
+padding: 6px;
+}
+
+.ride_list .entry .passenger_box p {
+padding-top: 4px;
+font-size: 12px;
+line-height: 1.3em;
+color: #555;
+}
+
+.ride_list .entry .passenger_box p .icon {
+display: block;
+margin: 0 auto 3px auto;
+width: 24px;
+height: 22px;
+background: url(../2/images/passenger_flat.png) no-repeat left 0px;
+}
+
+
+.ride_list .entry .userpic {
+height: 75px;
+width: 75px;
+float: left;
+margin-right: 12px;
+position: relative;
+overflow: hidden;
+border: 2px solid #1199ea;
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+-ms-border-radius: 2px;
+-o-border-radius: 2px;
+border-radius: 2px;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+-ms-border-radius: 4px;
+-o-border-radius: 4px;
+border-radius: 4px;
+}
+
+.ride_list .entry .username {
+background: #000;
+background-color: rgba(0,0,0,0.5);
+color: #fff;
+position: absolute;
+bottom: 0;
+width: 56px;
+padding: 2px;
+line-height: 15px;
+padding-right: 17px;
+font-size: 11px;
+vertical-align: bottom;
+}
+
+.ride_list .entry .userpic img {
+width: 75px;
+height: 75px;
+}
+
+.ride_list .entry .userpic span.passenger {
+background: url(../2/images/button_passenger_icon.png) 0 -28px no-repeat;
+}
+
+.ride_list .entry .userpic span {
+height: 14px;
+width: 14px;
+position: absolute;
+bottom: 2px;
+right: 2px;
+}
+
+.ride_list .entry .inner_content {
+float: left;
+vertical-align: top;
+padding-top: 15px;
+width: 415px;
+}
+
+.ride_list .entry .inner_content h3 {
+font-size: 18px;
+font-weight: 500;
+margin-bottom: 0;
+padding-bottom: 3px;
+width: 415px;
+display: inline-block;
+overflow: hidden;
+}
+
+.ride_list .entry .inner_content h3 span.inner {
+display: inline-block;
+}
+
+.ride_list .entry h3 span.inner {
+border-bottom: 1px solid transparent;
+}
+
+.ride_list .entry .inner_content .trip_type.round_trip {
+background: url(../2/images/round_trip_medium.png) no-repeat center 0;
+}
+
+.ride_list .entry .inner_content .trip_type {
+display: inline-block;
+width: 15px;
+height: 11px;
+padding: 0 8px;
+opacity: 0.7;
+}
+
+
+.ride_list .entry .inner_content h4 {
+font-size: 12px;
+color: #999;
+font-weight: 400;
+}
+
+/*------------------------------------ Header --------------------------------*/
+#header_wrap {
+    padding-bottom: 7px;
+    position: relative;
+    width: 100%;
+    z-index: 101;
+}
+/*------------------------------------ --- --------------------------------*/
+
+/*------------------------------------ Content --------------------------------*/
+#content_wrapper {
+    margin: 0 auto;
+    width: 990px;
+}
+
+#search_index #content, 
+#search_routes #content {
+    margin-bottom: 70px;
+    overflow: hidden;
+    width: 940px;
+}
+
+/*---------head-------*/
+#search_index #content #head, 
+#search_routes #content #head {
+    margin-bottom: 30px;
+    overflow: hidden;
+	}
+}
+
+#search_index #content #head form.search, 
+#search_routes #content #head form.search {
+position: relative;
+}
+
+#search_index #content #head form.search .text_input, 
+#search_routes #content #head form.search .text_input {
+position: relative;
+float: left;
+margin-right: 10px;
+}
+
+#search_index #content #head form.search .text_input input.clickaway, 
+#search_routes #content #head form.search .text_input input.clickaway {
+    color: #999999;
+}
+
+
+#search_index #content #head form.search .text_input input[type="text"], 
+#search_routes #content #head form.search .text_input input[type="text"] {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #999999;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3) inset;
+    color: #404040;
+    font-family: inherit;
+    font-size: 13px;
+    height: 29px;
+    line-height: 19px;
+    outline: medium none;
+    padding-left: 27px;
+    width: 322px;
+}
+
+#search_index #content #head form.search .text_input.datetime .slim.datepicker, 
+#search_routes #content #head form.search .text_input.datetime .slim.datepicker {
+    font-size: 13px !important;
+}
+
+#search_index #content #head form.search .text_input.datetime input[type="text"], 
+#search_routes #content #head form.search .text_input.datetime input[type="text"] {
+    width: 71px;
+}
+
+
+#search_index #content #head form.search button.confirm, 
+#search_routes #content #head form.search button.confirm {
+    font-size: 17px;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 108px;
+}
+
+
+
+
+.button.confirm {
+    background-clip: padding-box;
+    background-color: #5BA53C;
+    background-image: linear-gradient(#8ABC6B, #579544);
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 1px 0 rgba(0, 0, 0, 0.6);
+    color: #FFFFFF !important;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 500;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 25px;
+    position: relative;
+    text-align: center;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+}
+
+
+#search_index #content #head form.search .text_input .pin, 
+#search_index #content #head form.search .text_input .datetime_icon, 
+#search_routes #content #head form.search .text_input .pin, 
+#search_routes #content #head form.search .text_input .datetime_icon {
+    background-position: center 7px;
+    background-repeat: no-repeat;
+    display: block;
+    height: 28px;
+    left: 7px;
+    position: absolute;
+    top: 1px;
+    width: 16px;
+}
+
+
+#search_index #content #head form.search .text_input .pin.start, 
+#search_routes #content #head form.search .text_input .pin.start {
+    background-image: url(/TicketSchedule/Picture/pin_start.png);
+}
+
+#search_index #content #head form.search .text_input .pin.end, 
+#search_routes #content #head form.search .text_input .pin.end {
+    background-image: url(/TicketSchedule/Picture/pin_end.png);
+}
+
+#search_index #content #head form.search .text_input .datetime_icon, 
+#search_routes #content #head form.search .text_input .datetime_icon {
+    background-image: url("/TicketSchedule/Picture/calendar_input_icon.png");
+    width: 15px;
+}
+
+#search_index #content #head form.search, 
+#search_routes #content #head form.search {
+	position: relative;
+}
+
+/*---------------- result ---------*/
+#search_index #content #results, #search_routes #content #results {
+	width: 640px;
+	float: left;
+}
+
+#search_index #content #results .ride_list, 
+#search_routes #content #results .ride_list {
+	border: 1px solid #a7a7a7;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	-ms-border-radius: 6px;
+	-o-border-radius: 6px;
+	border-radius: 6px;
+	background-color: #fcfcfc;
+}
+
+
+
+#search_index #content #results h3.headline, 
+#search_routes #content #results h3.headline {
+height: 30px;
+color: #777;
+text-shadow: 0 1px 0 #eee;
+line-height: 30px;
+padding: 0 14px;
+font-weight: 500;
+border-bottom: 1px solid #aab0b3;
+background-color: #eee;
+background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eeeeee), color-stop(100%, #d7d7d7));
+background-image: -webkit-linear-gradient(#eeeeee,#d7d7d7);
+background-image: -moz-linear-gradient(#eeeeee,#d7d7d7);
+background-image: -o-linear-gradient(#eeeeee,#d7d7d7);
+background-image: -ms-linear-gradient(#eeeeee,#d7d7d7);
+background-image: linear-gradient(#eeeeee,#d7d7d7);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#eeeeee, endColorstr=#d7d7d7);
+}
+
+
+#search_index #content #results h3.headline em, 
+#search_routes #content #results h3.headline em {
+font-style: normal;
+text-transform: uppercase;
+}
+
+#search_index #content #results h3.headline span, 
+#search_routes #content #results h3.headline span {
+font-weight: 300;
+}
+
+/*-----------action----------*/
+
+#search_index #content #action, 
+#search_routes #content #action {
+border: none;
+margin: 0;
+-webkit-border-radius: 0 0 5px 5px;
+-moz-border-radius: 0 0 5px 5px;
+-ms-border-radius: 0 0 5px 5px;
+-o-border-radius: 0 0 5px 5px;
+border-radius: 0 0 5px 5px;
+}
+
+
+#search_index #content a.post, 
+#search_routes #content a.post {
+border-color: #a7a7a7;
+height: 30px;
+font-size: 16px;
+line-height: 30px;
+padding: 0 25px;
+}
+
+#action .postride a.button {
+	position: absolute;
+	right: 20px;
+	top: 25px;
+}
+
+#search_index #content #results .page_list, 
+#search_routes #content #results .page_list {
+	font-size: 13px;
+	padding-top: 10px;
+	overflow: hidden;
+}
+/*------------------------------------ Content --------------------------------*/
+
+
+/*------------------------------------ Footer --------------------------------*/
+
+#footer {
+    font-size: 14px;
+    margin: 0 auto;
+    padding: 20px 0 30px;
+    text-align: center;
+    width: 940px;
+}
+
+
+
+/*------------------------------------ --- --------------------------------*/
