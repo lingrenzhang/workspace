@@ -22,3 +22,7 @@
 .datepicker {
     font-size: 1.3em !important;
 }
+
+.last {
+margin-right: 0 !important;
+}

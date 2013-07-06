@@ -129,6 +129,35 @@
 				</div>
 			</div>
 			<div id="info">
+				<div class="floatable">
+					<div class="floatwrap">
+						<div class="filters">
+							<h3>Filters<span class="pint"></span></h3>
+							<div class="inner">
+								<span class="label">Show posts by</span>
+								<div class="filterset postsby" data-name="filter_type">
+									<a class="filter first active" data-filter="both" href>All</a>
+									<a class="filter first" data-filter="offer" href>
+										<span>Drivers</span>
+									</a>
+									<a class="filter last passengers" data-filter="need" href>
+										<span>Passengers</span>
+									</a>
+								</div>
+								<span class="label">Vehicle type</span>
+								<div class="filterset vehicletype" data-name="filter_vehicle">
+									<a class="filter first active" data-filter="both" href>All</a>
+									<a class="filter car" data-filter="car" href>
+										<span>Car</span>
+									</a>
+									<a class="filter last bus" data=filter="bus" href>
+										<span>Bus</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
