@@ -110,6 +110,35 @@ window.onscroll = function(){
 						</div>
 					</a>
 					
+					<a href="http://www.baidu.com">
+						<div class="entry">
+							<div class="price_box">
+								<div class="seats">
+									<span class="count">2</span>
+									<span class="left">seat let</span>
+								</div>
+								<p>
+									<b>$30</b>
+									" / seat"
+								</p>
+							</div>
+							<div class="userpic">
+								<div class="username"></div>
+								<img src="" alt="Profile Picture"></img>
+								<span class="passenger"></span>
+							</div>
+							<div class="inner_content">
+								<h3>
+									<span class="inner">
+										<span class="trip_type round_trip"></span>
+									</span>
+								</h3>
+								<h4>
+								</h4>
+							</div>
+						</div>
+					</a>
+					
 					<div id="action">
 						<div class="item postride">
 							<h2>
