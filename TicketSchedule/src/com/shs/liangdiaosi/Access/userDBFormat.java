@@ -10,7 +10,7 @@ public class userDBFormat {
 		"recordId",
 		"commute", 
 		"roundtrip", 
-		"userType", 
+		"userType", // true means driver, false means passenger
 		"dayOfWeek", 
 		"tripDate",
 		"origState",
