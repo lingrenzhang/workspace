@@ -8,7 +8,20 @@
 <link href="./CSS/master.css" type="text/css" rel="stylesheet">
 <link href="./CSS/style.css" type="text/css" rel="stylesheet">
 
-<script src="../JS/jquery-1.10.1.js"></script>
+<script src="./JS/jquery-1.10.1.js"></script>
+<script>
+window.onscroll = function(){
+    var t = document.documentElement.scrollTop || document.body.scrollTop; 
+    
+    if( t >= 65 ) {
+    	var div = document.getElementById("floatwrap");
+    	div.className="floatwrap fixed";
+    } else {
+    	var div = document.getElementById("floatwrap");
+    	div.className="floatwrap";
+    }
+}
+</script>
 
 <title>Search for rides - HitRide</title>
 </head>
@@ -130,7 +143,7 @@
 			</div>
 			<div id="info">
 				<div class="floatable">
-					<div class="floatwrap">
+					<div class="floatwrap" id="floatwrap">
 						<div class="filters">
 							<h3>Filters<span class="pint"></span></h3>
 							<div class="inner">
