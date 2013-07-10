@@ -18,6 +18,7 @@ public class rideInfoParameters implements Comparable<rideInfoParameters>{
 
 	// for drivers only
 	public Integer seatsAvailable;
+	public Double detourFactor; // deprecate
 	
 	// for both drivers and passengers.  Total price for trip, per day price for commute
 	public Double price;
@@ -33,8 +34,9 @@ public class rideInfoParameters implements Comparable<rideInfoParameters>{
 	public rideInfoParameters() {
 	}
 
-	public rideInfoParameters(ResultSet rs) throws SQLException {
-//		commute 	= rs.getBoolean("commute");
+	public rideInfoParameters(ResultSet rs, Boolean myArgsCommute) throws SQLException {
+		// assign every field
+		commute		= myArgsCommute; // come from table name, not table content
 		roundtrip 	= rs.getBoolean("roundtrip");
 		userType 	= rs.getBoolean("userType");
 		origLat 	= rs.getDouble("origLat");
@@ -56,20 +58,24 @@ public class rideInfoParameters implements Comparable<rideInfoParameters>{
 		// score will be determined by the ScoreCalculator
 
 		// for drivers only
-		//seatsAvailable	= rs.getInt("seatsAvailable");
+		seatsAvailable	= rs.getInt("seatsAvailable");
+		detourFactor	= rs.getDouble("detourFactor"); // deprecate
 		
 		// for both drivers and passengers.  Total price for trip, per day price for commute
-		//price 		= rs.getDouble("price");
+		price 		= rs.getDouble("price");
 		
-		// for commute only
-		forwardTime	= rs.getTime("forwardTime");
-		backTime	= rs.getTime("backTime");
-		forwardFlexibility 	= rs.getTime("forwardFlexibility");
-		backFlexibility		= rs.getTime("backFlexibility");	// for round trip only
-		//public Boolean[] dayOfWeek;
-		
-		// for travel only
-//		tripDate	= rs.getDate("tripDate");
+		if(commute){
+			// for commute only
+			forwardTime	= rs.getTime("forwardTime");
+			backTime	= rs.getTime("backTime");
+			forwardFlexibility 	= rs.getTime("forwardFlexibility");
+			backFlexibility		= rs.getTime("backFlexibility");	// for round trip only
+			dayOfWeek	= new Boolean[7];
+			//TODO change to getting results from the dayOfWeek String
+		} else {
+			// for travel only
+			tripDate	= rs.getDate("tripDate");
+		}
 	}
 
 	@Override

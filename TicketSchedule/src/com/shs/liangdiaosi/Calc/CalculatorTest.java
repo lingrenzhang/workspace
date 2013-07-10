@@ -8,6 +8,7 @@ public class CalculatorTest {
 	public static void main(String[] args) {
 		ScoreCalculator calc = new ScoreCalculator();
 		rideInfoParameters map = new rideInfoParameters();
+		map.commute = true;
 		map.roundtrip = false;
 		map.userType = false;
 		// Stanford coordinates

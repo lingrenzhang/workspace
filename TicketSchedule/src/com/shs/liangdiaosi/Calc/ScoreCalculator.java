@@ -85,14 +85,14 @@ public class ScoreCalculator {
 		try {
 			Connection con= userDBAccess.getConnection(false);
 			Statement sql=con.createStatement();
-			// TODO add check for commute and customize for commute and travel
-			String query = "Select * from carpooltb where roundtrip=" + myArgs.roundtrip.toString();
+			String tbName = (myArgs.commute) ? "carpooltb" : "traveltb"; // traveltb still under construction
+			String query = "Select * from " + tbName + " where roundtrip=" + myArgs.roundtrip.toString();
 			if(!myArgs.userType)
 				query += " AND userType";
 			// TODO add dayOfWeek logic
 			ResultSet rs = sql.executeQuery(query);
 			while(rs.next()){
-				rideInfoParameters rsParamObj = new rideInfoParameters(rs);
+				rideInfoParameters rsParamObj = new rideInfoParameters(rs, myArgs.commute);
 				rsParamObj.score = destScoreByCoordinates(myArgs, rsParamObj) * timeScore(myArgs, rsParamObj);
 				results.add(rsParamObj);
 			}
