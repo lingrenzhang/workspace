@@ -3,12 +3,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
+<%@ page import="com.shs.liangdiaosi.Calc.rideInfoParameters" %>
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <link href="./CSS/master.css" type="text/css" rel="stylesheet">
 <link href="./CSS/style.css" type="text/css" rel="stylesheet">
 
 <script src="./JS/jquery-1.10.1.js"></script>
+<script src="./JS/search.js"></script>
 <script>
 window.onscroll = function(){
     var t = document.documentElement.scrollTop || document.body.scrollTop; 

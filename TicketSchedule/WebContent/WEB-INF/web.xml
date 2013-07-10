@@ -59,4 +59,14 @@
     <servlet-name>InsertGeo</servlet-name>
     <url-pattern>/servlet/InsertGeo</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Search</display-name>
+    <servlet-name>Search</servlet-name>
+    <servlet-class>com.shs.liangdiaosi.Search</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Search</servlet-name>
+    <url-pattern>/servlet/Search</url-pattern>
+  </servlet-mapping>
 </web-app>
