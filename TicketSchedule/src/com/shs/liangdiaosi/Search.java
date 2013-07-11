@@ -34,6 +34,7 @@ public class Search extends HttpServlet {
 		request.getQueryString();
 		rideInfoParameters myArgs = new rideInfoParameters();
 		
+		myArgs.commute = true;
 		myArgs.roundtrip = false;
 		myArgs.userType = false;
 		// Stanford coordinates
@@ -50,10 +51,11 @@ public class Search extends HttpServlet {
 		myArgs.forwardTime = new Time(time_ms);
 		myArgs.forwardFlexibility = new Time(flex_ms);
 		
-		List<rideInfoParameters> resultList = new ArrayList();
+		List<rideInfoParameters> resultList = new ArrayList<rideInfoParameters>();
 		ScoreCalculator sc = new ScoreCalculator();
-		sc.filterByCoordinates(myArgs, 20);
+		resultList=sc.filterByCoordinates(myArgs, 20);
 		
+		request.setAttribute("results", resultList);
 		RequestDispatcher rd = request.getRequestDispatcher("/search.jsp");
 		rd.forward(request, response);
 		

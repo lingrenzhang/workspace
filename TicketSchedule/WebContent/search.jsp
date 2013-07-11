@@ -8,6 +8,25 @@
 <%@ page import="java.util.*"%>
 <%
 	List<rideInfoParameters> results = (List<rideInfoParameters>) request.getAttribute("Results");
+	if (results==null)
+	{
+		List<rideInfoParameters> riders= new ArrayList<rideInfoParameters>();
+		rideInfoParameters rideInfo1=new rideInfoParameters();
+		rideInfo1.username="Xiyao J";
+		rideInfo1.destCity="San Jose";
+		rideInfo1.origCity="San Francisco";
+		rideInfo1.userType=false;
+		riders.add(rideInfo1);
+		rideInfoParameters rideInfo2=new rideInfoParameters();
+		rideInfo2.username="Lingren Zhang";
+		rideInfo2.destCity="San Jose";
+		rideInfo2.origCity="San Francisco";
+		rideInfo2.userType=true;
+		rideInfo2.seatsAvailable=3;
+		rideInfo2.price=(double) 30;
+		riders.add(rideInfo2);
+		results=riders;
+	}
 	boolean commute = false;
 %>
 
@@ -155,23 +174,40 @@ window.onscroll = function(){
 					<h3 class="headline first">Departing<em>Today</em>
 						<span> - Friday, July 5th</span>
 					</h3>
-    				<a href="http://www.baidu.com">
+					<% Iterator<rideInfoParameters> itr = results.iterator(); %>
+					<% while (itr.hasNext()){ %>
+					<% 	rideInfoParameters rideInfo = itr.next(); %>
+    				<a href="./id;">
 						<div class="entry">
+						<% if (!rideInfo.userType){ %>
 							<div class="passenger_box">
 								<p>
-									<span class="icon"></span>
+									<span class="icon"></span><%=rideInfo.username %> is a 
 									<strong>passenger</strong>
 								</p>
 							</div>
+						<% }else{ %>
+							<div class="price_box">
+								<div class="seats">
+									<span class="count"><%=rideInfo.seatsAvailable %></span>
+									<span class="left">seat left</span>
+								</div>
+								<p>
+									<b>$<%=rideInfo.price %></b>
+									 / seat
+								</p>
+							</div>
+						<% } %>
 							<div class="userpic">
-								<div class="username"></div>
+								<div class="username"><%=rideInfo.username %></div>
 								<img src="" alt="Profile Picture"></img>
 								<span class="passenger"></span>
 							</div>
 							<div class="inner_content">
 								<h3>
-									<span class="inner">
+									<span class="inner"><%=rideInfo.origCity %>
 										<span class="trip_type round_trip"></span>
+										<%=rideInfo.destCity %>
 									</span>
 								</h3>
 								<h4>
@@ -179,6 +215,7 @@ window.onscroll = function(){
 							</div>
 						</div>
 					</a>
+					<% } %>
 					<a href="http://www.baidu.com">
 						<div class="entry">
 							<div class="passenger_box">
@@ -204,7 +241,6 @@ window.onscroll = function(){
 							</div>
 						</div>
 					</a>
-					
 					<a href="http://www.baidu.com">
 						<div class="entry">
 							<div class="price_box">
@@ -233,7 +269,7 @@ window.onscroll = function(){
 							</div>
 						</div>
 					</a>
-					
+
 					<div id="action">
 						<div class="item postride">
 							<h2>
