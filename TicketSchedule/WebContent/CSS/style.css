@@ -1,3 +1,6 @@
+.commute_day : hover {
+	cursor: hand;
+	}
 
 #content_container {
     margin: 0 auto;
@@ -26,3 +29,11 @@
 .last {
 margin-right: 0 !important;
 }
+
+#ui-datepicker-div {
+background-color: #FFF;
+background-image: none;
+font-size: 12px;
+z-index: 1000 !important;
+}
+

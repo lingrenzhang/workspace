@@ -384,23 +384,80 @@ margin-right: 10px;
 
 #search_index #content #head form.search .text_input.datetime input[type="text"], 
 #search_routes #content #head form.search .text_input.datetime input[type="text"] {
-    width: 71px;
+    width: 69px;
 }
 
 
+#search_index #content #head form.search .commute_input,
+#search_routes #content #head form.search .commute_input
+{
+	float: left;
+}
+
 #search_index #content #head form.search button.confirm, 
 #search_routes #content #head form.search button.confirm {
+	font-size: 17px;
+	padding:0;
+	margin:1px;
+	width: 108px;
+	float: right;
+	/*
     font-size: 17px;
     padding: 0;
     position: absolute;
     right: 0;
     top: 0;
     width: 108px;
+    */
 }
 
+#search_index #content #head form.search .commute_day,
+#search_routes #content #head form.search .commute_day{
+position:relative;
+float: left;
+margin-top: 5px;
+width: 19px;
+color: #404040;
+height: 22px;
+line-height: 22px;
+font-size: 12px;
+padding: 0 15px;
+border: 1px solid #808080;
+border-right: none;
+white-space: nowrap;
+background-color: #eeeeee;
+background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #e1e1e1));
+background-image: -webkit-linear-gradient(#ffffff,#e1e1e1);
+background-image: -moz-linear-gradient(#ffffff,#e1e1e1);
+background-image: -o-linear-gradient(#ffffff,#e1e1e1);
+background-image: -ms-linear-gradient(#ffffff,#e1e1e1);
+background-image: linear-gradient(#ffffff,#e1e1e1);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#e1e1e1);
+}
 
+#search_index #content #head form.search .commute_day.last
+{
+-webkit-border-radius: 0 4px 4px 0;
+-moz-border-radius: 0 4px 4px 0;
+-ms-border-radius: 0 4px 4px 0;
+-o-border-radius: 0 4px 4px 0;
+border-radius: 0 4px 4px 0;
+border-right: 1px solid #808080;
+}
 
+#search_index #content #head form.search .commute_day.first
+{
+-webkit-border-radius: 4px 0 0 4px;
+-moz-border-radius: 4px 0 0 4px;
+-ms-border-radius: 4px 0 0 4px;
+-o-border-radius: 4px 0 0 4px;
+border-radius: 4px 0 0 4px;
+}
 
+#search_index #content #head form.search .commute_day:hover
+{
+	cursor: hand;
+}
 .button.confirm {
     background-clip: padding-box;
     background-color: #5BA53C;
@@ -452,10 +509,10 @@ margin-right: 10px;
     width: 15px;
 }
 
-#search_index #content #head form.search, 
-#search_routes #content #head form.search {
-	position: relative;
-}
+
+
+
+
 
 /*---------------- result ---------*/
 #search_index #content #results, #search_routes #content #results {
