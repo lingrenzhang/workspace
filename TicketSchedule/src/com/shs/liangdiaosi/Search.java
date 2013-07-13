@@ -31,12 +31,15 @@ public class Search extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getQueryString();
+		String qs= request.getQueryString();
+		request.getAttribute("oLat");
 		rideInfoParameters myArgs = new rideInfoParameters();
-		
 		myArgs.commute = true;
 		myArgs.roundtrip = false;
 		myArgs.userType = false;
+		
+		if (qs==null)
+		{
 		// Stanford coordinates
 		myArgs.origLat = 37.42573;
 		myArgs.origLon = -122.166094;
@@ -44,7 +47,16 @@ public class Search extends HttpServlet {
 		// Ranch 99 Cupertino
 		myArgs.destLat = 37.338022;
 		myArgs.destLon = -122.015118;
-		
+		}
+		else
+		{
+			String[] args=qs.split("&");
+			
+			myArgs.origLat = Double.parseDouble(args[2].split("=")[1]); 
+			myArgs.origLon = Double.parseDouble(args[3].split("=")[1]); 
+			myArgs.destLat = Double.parseDouble(args[4].split("=")[1]); 
+			myArgs.destLon = Double.parseDouble(args[5].split("=")[1]); 
+		}
 		// Time
 		long time_ms = 1000*60*60*8; // 8 o'clock
 		long flex_ms = 1000*60*15; // 15 minutes
@@ -56,7 +68,7 @@ public class Search extends HttpServlet {
 		resultList=sc.filterByCoordinates(myArgs, 20);
 		
 		request.setAttribute("results", resultList);
-		RequestDispatcher rd = request.getRequestDispatcher("/search.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("../search.jsp");
 		rd.forward(request, response);
 		
 	}

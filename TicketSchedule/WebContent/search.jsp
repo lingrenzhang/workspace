@@ -4,10 +4,11 @@
 <html>
 <head>
 
-<%@ page import="com.shs.liangdiaosi.Calc.rideInfoParameters" %>
+<%@ page import="com.shs.liangdiaosi.Calc.*" %>
 <%@ page import="java.util.*"%>
+<%@ page import="java.sql.*"%>
 <%
-	List<rideInfoParameters> results = (List<rideInfoParameters>) request.getAttribute("Results");
+	List<rideInfoParameters> results = (List<rideInfoParameters>) request.getAttribute("results");
 	if (results==null)
 	{
 		List<rideInfoParameters> riders= new ArrayList<rideInfoParameters>();
@@ -34,9 +35,13 @@
 
 <link href="./CSS/master.css" type="text/css" rel="stylesheet">
 <link href="./CSS/style.css" type="text/css" rel="stylesheet">
+<link href="../CSS/master.css" type="text/css" rel="stylesheet">
+<link href="../CSS/style.css" type="text/css" rel="stylesheet">
 
 <script src="./JS/jquery-1.10.1.js"></script>
 <script src="./JS/search.js"></script>
+<script src="../JS/jquery-1.10.1.js"></script>
+<script src="../JS/search.js"></script>
 <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
 </script>
