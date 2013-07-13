@@ -105,7 +105,7 @@ window.onscroll = function(){
 <script>
 
 </script>
-<title>Search for rides - HitRide</title>
+<title>Hitch-a-Ride</title>
 </head>
 
 
@@ -210,9 +210,9 @@ window.onscroll = function(){
 							</div>
 							<div class="inner_content">
 								<h3>
-									<span class="inner"><%=rideInfo.origCity %>
+									<span class="inner"><%=rideInfo.origAddr + ", " + rideInfo.origCity %>
 										<span class="trip_type round_trip"></span>
-										<%=rideInfo.destCity %>
+										<%=rideInfo.destAddr + ", " + rideInfo.destCity %>
 									</span>
 								</h3>
 								<h4>
