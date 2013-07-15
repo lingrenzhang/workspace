@@ -28,7 +28,7 @@
 		riders.add(rideInfo2);
 		results=riders;
 	}
-	boolean commute = false;
+	boolean commute = true;
 %>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -116,6 +116,8 @@ window.onscroll = function(){
 	<div id="content_container">
 	<link href="./CSS/custom_jqueryui.css" 
 		type="text/css" rel="stylesheet">
+	<link href="../CSS/custom_jqueryui.css" 
+		type="text/css" rel="stylesheet">
 		<div id="content">
 			<div id="head">
 				<form class="search">
@@ -126,7 +128,6 @@ window.onscroll = function(){
 							autocomplete="off">
 						</input>
 					</div>
-					
 					<div class="text_input">
 						<label class="pin end" for="search_e"></label>
 						<input id="search_e" class="clickaway input_text" type="text" 
@@ -216,64 +217,14 @@ window.onscroll = function(){
 									</span>
 								</h3>
 								<h4>
+								From: <%=rideInfo.origAddr+", "+rideInfo.origCity+", "+rideInfo.origState  %>
+								To: <%=rideInfo.destAddr+ ", "+rideInfo.destCity+", "+rideInfo.destState  %>
 								</h4>
 							</div>
 						</div>
 					</a>
 					<% } %>
-					<a href="http://www.baidu.com">
-						<div class="entry">
-							<div class="passenger_box">
-								<p>
-									<span class="icon"></span> Xiyao is a 
-									<strong>passenger</strong>
-								</p>
-							</div>
-							<div class="userpic">
-								<div class="username">Xiyao J</div>
-								<img src="" alt="Profile Picture"></img>
-								<span class="passenger"></span>
-							</div>
-							<div class="inner_content">
-								<h3>
-									<span class="inner"> Stanford
-										<span class="trip_type round_trip"></span>
-										 Berkeley
-									</span>
-								</h3>
-								<h4>
-								</h4>
-							</div>
-						</div>
-					</a>
-					<a href="http://www.baidu.com">
-						<div class="entry">
-							<div class="price_box">
-								<div class="seats">
-									<span class="count">2</span>
-									<span class="left">seat let</span>
-								</div>
-								<p>
-									<b>$30</b>
-									" / seat"
-								</p>
-							</div>
-							<div class="userpic">
-								<div class="username"></div>
-								<img src="" alt="Profile Picture"></img>
-								<span class="passenger"></span>
-							</div>
-							<div class="inner_content">
-								<h3>
-									<span class="inner">
-										<span class="trip_type round_trip"></span>
-									</span>
-								</h3>
-								<h4>
-								</h4>
-							</div>
-						</div>
-					</a>
+					
 
 					<div id="action">
 						<div class="item postride">

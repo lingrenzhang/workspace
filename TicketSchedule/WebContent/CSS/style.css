@@ -1,3 +1,13 @@
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+margin: 0;
+padding: 0;
+}
+
+li {
+	list-style: none;
+}
+
 .commute_day : hover {
 	cursor: hand;
 	}
@@ -37,3 +47,398 @@ font-size: 12px;
 z-index: 1000 !important;
 }
 
+#wide_column_left {
+width: 635px;
+}
+
+#column_left, #wide_column_left {
+float: left;
+}
+
+
+
+form.standard dl {
+display: block;
+}
+
+form.standard dt {
+clear: both;
+display: block;
+float: left;
+font-size: 12px;
+font-weight: bold;
+line-height: 20px;
+margin-right: 16px;
+padding: 8px 0 2px 0;
+text-align: right;
+width: 160px;
+}
+
+form.standard dd {
+display: inline-block;
+float: left;
+font-size: 11px;
+padding-bottom: 16px;
+width: 400px;
+}
+
+form#add_ride dd {
+width: 450px;
+}
+
+form.standard dd.selection {
+padding-top: 6px;
+}
+
+.newAddRideStyle .bigradio {
+overflow: hidden;
+width: 160px;
+height: 90px;
+padding-left: 47px;
+border: 1px solid #ddd;
+float: left;
+}
+
+.newAddRideStyle .bigradio input, .newAddRideStyle .bigradio label {
+margin-top: 65px !important;
+padding: 0 0 0 10px !important;
+font-weight: 700;
+}
+
+form.standard dd input, form.standard dd textarea, .zdialog textarea {
+background: #FFFFFF url('/assets/bg_input_text.gif') top repeat-x;
+border: 1px solid #C1D5E8;
+float: left;
+font-size: 16px;
+height: 24px;
+line-height: 1.3em;
+padding: 4px 3px 3px 3px;
+width: 378px;
+}
+
+body {
+color: #404040;
+font: normal 14px/21px "Helvetica Neue", Helvetica, "Lucida Grande", Arial, sans-serif;
+}
+
+
+.newAddRideStyle #driverselect {
+background-image: url('/assets/icon-driver.jpg');
+margin-right: 15px;
+background-repeat: no-repeat;
+background-position: 50% 9px;
+}
+
+.newAddRideStyle #passengerselect {
+background-image: url('/assets/icon-passenger.jpg');
+background-repeat: no-repeat;
+background-position: 50% 9px;
+}
+
+
+
+#actionbar_search, .newAddRideStyle .bigradio, .newAddRideStyle .medradio, .event-banner img, #inbox .tooltip, #bookARide .initiated .priceFont, #bookARide button.confirm, #ride-summary, #payment .confirm, .blueboxoutline, .ui-dialog {
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+}
+
+.newAddRideStyle #step_1 input[type="text"] {
+width: 419px;
+}
+
+form.standard fieldset {
+border-bottom: 1px solid #D5DFE1;
+margin-bottom: 20px;
+}
+
+form#add_ride fieldset {
+border-bottom: 0;
+}
+
+form#add_ride #step_2 label, 
+form#add_ride #step_2, 
+form#add_ride #step_2 .timetable th, 
+form#add_ride #step_2 select {
+font-size: 14px;
+}
+
+.newAddRideStyle .triptabs {
+width: 570px !important;
+margin: 0 !important;
+margin-top: 10px;
+padding: 0 30px;
+float: left;
+border: 1px solid #ccc;
+}
+
+.newAddRideStyle #multipostwrapper {
+border: 1px solid #ccc;
+background-color: #f9f9f9;
+padding: 10px 20px 20px 20px;
+}
+
+.newAddRideStyle #singletripwrapper {
+background-color: #f0f0f0;
+overflow: auto;
+margin: 20px 0px 20px 0px;
+border: 1px solid #ccc;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+-webkit-box-shadow: inset 0px 3px 6px rgba(0,0,0,0.2);
+-moz-box-shadow: inset 0px 3px 6px rgba(0,0,0,0.2);
+}
+
+.newAddRideStyle .trip_num {
+margin: 10px 0px 0px 10px;
+font-size: 14px;
+font-style: italic;
+line-height: 32px;
+visibility: hidden;
+}
+
+.newAddRideStyle .trip_close {
+margin: 10px 10px 0px 0px;
+text-align: center;
+width: 15px;
+height: 15px;
+line-height: 11px;
+font-weight: bold;
+visibility: hidden;
+font-size: 14px;
+}
+
+.float_right {
+float: right;
+}
+
+.dot {
+width: 8px;
+height: 8px;
+margin: 20px 0 0 5px;
+background: transparent;
+}
+
+.newAddRideStyle .tripbox {
+padding: 30px 0px 40px 95px;
+width: 425px;
+}
+
+.newAddRideStyle #there_one_time {
+margin: 0 0 30px 13px;
+}
+
+
+
+
+.newAddRideStyle #singletripwrapper label {
+background-color: #f0f0f0;
+}
+.newAddRideStyle .triptabs label {
+font-weight: 700;
+}
+
+form.standard dd input.slim {
+width: 110px;
+}
+
+.ui-datepicker-trigger {
+position: block;
+height: 16px;
+width: 16px;
+margin-left: -23px;
+margin-top: 8px;
+z-index: 100;
+cursor: pointer;
+}
+
+.newAddRideStyle #singletripwrapper select {
+position: relative;
+top: -2px;
+}
+.newAddRideStyle .there_time, .newAddRideStyle .back_time {
+width: 140px;
+margin-left: 30px;
+}
+
+form.standard dd input.checkbox, 
+form.standard dd input.radio {
+background-image: none;
+border: 0;
+height: auto;
+margin-top: 4px;
+padding: 0;
+width: auto;
+}
+
+form.standard dd label {
+display: block;
+float: left;
+font-size: 12px;
+line-height: normal;
+padding: 6px 20px 0 8px;
+}
+
+.newAddRideStyle #add_ride #commute-table {
+border: 1px solid #ccc;
+border-top: 0;
+overflow: auto;
+width: 570px;
+}
+
+.newAddRideStyle #add_ride #commute-table ul {
+width: 570px;
+overflow: auto;
+float: left;
+width: 120px;
+}
+
+.newAddRideStyle #col1 {
+width: 160px !important;
+vertical-align: top;
+}
+
+.newAddRideStyle #add_ride #commute-table li.first {
+height: 45px;
+padding: 15px;
+background-color: #f9f9f9;
+}
+
+.newAddRideStyle #add_ride #commute-table li {
+height: 25px;
+padding: 5px 15px;
+border-top: 1px solid #ccc;
+}
+
+.newAddRideStyle #add_ride #commute-table select {
+width: 90px;
+margin-top: 4px;
+}
+form.standard dd select {
+margin-top: 9px;
+width: 175px;
+}
+
+.newAddRideStyle #add_ride #commute-table h3 {
+font-size: 14px;
+line-height: 1em;
+margin-bottom: 5px;
+}
+
+form#add_ride .th_time {
+position: relative;
+top: 5px;
+}
+
+.newAddRideStyle #add_ride #commute-table li.first p {
+font-size: 1.2em;
+line-height: 1.3em;
+}
+
+.newAddRideStyle #add_ride #commute-table p {
+color: #333;
+}
+
+form.standard dd p {
+clear: both;
+float: left;
+font-size: 11px;
+line-height: 15px;
+margin-top: 5px;
+}
+
+.newAddRideStyle #add_ride #commute-table label {
+line-height: 0.9em;
+padding-left: 1em;
+font-weight: normal;
+font-size: 1.2em !important;
+}
+
+.hidden {
+display: none;
+}
+
+.newAddRideStyle #col4 {
+width: 170px !important;
+overflow: hidden !important;
+vertical-align: top;
+}
+
+.newAddRideStyle #flex {
+width: 174px !important;
+font-weight: 400;
+}
+
+.newAddRideStyle #flexheader {
+overflow: auto;
+}
+
+.newAddRideStyle #flexheader span {
+float: left;
+font-size: 11px;
+}
+
+.newAddRideStyle #flexheader span.last {
+float: right;
+padding-right: 38px;
+}
+
+.newAddRideStyle #flexheader span {
+float: left;
+font-size: 11px;
+}
+
+.last {
+margin-right: 0 !important;
+}
+
+.newAddRideStyle #flex .pillbuttons {
+overflow: hidden;
+display: inline-block;
+}
+
+.newAddRideStyle #flex .pillbuttons div.first {
+border-left: 1px solid #999 !important;
+-moz-border-radius-topleft: 2px;
+-moz-border-radius-bottomleft: 2px;
+-webkit-border-top-left-radius: 2px;
+-webkit-border-bottom-left-radius: 2px;
+}
+
+.newAddRideStyle #flex .pillbuttons div {
+display: inline-block;
+font-size: 10px;
+padding: 0 5px;
+margin: 0;
+border-left: 0;
+font-weight: 400;
+color: #555;
+}
+
+button, #flex .pillbuttons div {
+-webkit-box-shadow: #EEEEEE 0 1px 0;
+background: #e5e5e5 url('/TicketSchedule/Picture/bg_button_grey.gif') top repeat-x scroll;
+border: 1px solid #999999;
+border-bottom-color: #888888;
+color: #333333;
+display: inline-block;
+font-size: 13px;
+font-weight: 500;
+height: auto;
+line-height: 17px;
+padding: 2px 8px 3px 8px;
+width: auto;
+}
+
+.newAddRideStyle #flex .pillbuttons div.chosen {
+color: #222;
+background: #e5e5e5 url('/TicketSchedule/Picture/bg_button_grey_depressed.gif') top repeat-x scroll;
+background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.0)));
+}
+
+.newAddRideStyle #flex .pillbuttons div.last {
+-moz-border-radius-topright: 2px;
+-moz-border-radius-bottomright: 2px;
+-webkit-border-top-right-radius: 2px;
+-webkit-border-bottom-right-radius: 2px;
+}
