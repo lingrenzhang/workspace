@@ -1,0 +1,10 @@
+﻿input.cb,input.rb{position:static;top:0px;left:0px;}
+img{display:none;}
+.qOption label{display:inline;}
+.sLogo img{display:inline;}
+div.qOption,div.qContent{clear:left;}
+.pgHdr{margin:5px 5px;padding:0;}
+.qContent{margin-left:2px;}
+input.open,textarea{width:200px;}
+.qBody img { display: inline; }
+.qOption label > img { display: none;}
