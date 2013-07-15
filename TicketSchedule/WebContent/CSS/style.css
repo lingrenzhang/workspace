@@ -442,3 +442,78 @@ background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0, 0, 0, 0.1)), t
 -webkit-border-top-right-radius: 2px;
 -webkit-border-bottom-right-radius: 2px;
 }
+
+
+.newAddRideStyle .input-arrows {
+width: 22px;
+float: left;
+border: 1px solid #bbb;
+height: 47px;
+margin-left: 5px;
+background: #fff;
+overflow: hidden;
+display: inline-block;
+}
+
+
+#actionbar_links a, .newAddRideStyle .input-arrows, .error, .success, #actionbar_addride a, #convo .divider .status, .booking_status, #payment p.tiny.errormsg, .redCancelButton, #convo .ride_details, #convo .ride_details .header {
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+}
+
+
+.newAddRideStyle .input-arrows img {
+margin: 4px 0 0 4px;
+overflow: hidden;
+}
+
+.newAddRideStyle .increment {
+border-bottom: 1px solid #bbb;
+}
+
+.newAddRideStyle .increment, .newAddRideStyle .decrement {
+display: block;
+height: 23px;
+background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0, 0, 0, 0.001)), to(rgba(0, 0, 0, 0.1)));
+}
+
+.newAddRideStyle #cost, .newAddRideStyle #seats {
+font-size: 2.6em;
+height: 40px;
+width: 65px !important;
+}
+
+.newAddRideStyle #dollarsign {
+float: left;
+font-size: 2.6em;
+line-height: 1.7em;
+padding-right: 10px;
+}
+
+.newAddRideStyle #step_3 dt {
+float: none;
+text-align: left;
+font-size: 1.3em;
+width: 600px;
+margin-bottom: 0.5em;
+margin-left: 12px;
+}
+
+.newAddRideStyle #step_3 dd {
+margin-left: 60px;
+}
+
+.newAddRideStyle #price-per {
+font-size: 1.7em;
+line-height: 3em;
+margin-left: 10px;
+}
+.newAddRideStyle #step_3 .badWord, .newAddRideStyle #seats {
+margin-left: 29px;
+}
+
+.newAddRideStyle #step_3 textarea.clickaway {
+width: 525px;
+height: 100px;
+}
