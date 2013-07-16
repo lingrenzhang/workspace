@@ -4,6 +4,10 @@ margin: 0;
 padding: 0;
 }
 
+html {
+cursor: default;
+}
+
 li {
 	list-style: none;
 }
@@ -397,6 +401,10 @@ overflow: hidden;
 display: inline-block;
 }
 
+.newAddRideStyle #flex .pillbuttons:hover {
+cursor : pointer;
+}
+
 .newAddRideStyle #flex .pillbuttons div.first {
 border-left: 1px solid #999 !important;
 -moz-border-radius-topleft: 2px;
@@ -516,4 +524,10 @@ margin-left: 29px;
 .newAddRideStyle #step_3 textarea.clickaway {
 width: 525px;
 height: 100px;
+}
+
+.newAddRideStyle #add_ride #commute-table a.edit {
+display: inline-block;
+line-height: 2em;
+background-color: #fff;
 }

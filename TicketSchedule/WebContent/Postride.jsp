@@ -20,6 +20,10 @@ $(document).ready(function(){
 		$(this).className=$(this).className + " active";
 	});
 
+	$("#back").change(function(){
+		
+	});
+	
 	$("#there_time_0").change(function(){
 		$("p.time-alias1").text($(this).children('option:selected').val());
 	});
@@ -28,13 +32,256 @@ $(document).ready(function(){
 		$("p.time-alias2").text($(this).children('option:selected').val());
 	});
 
-	$(".checkbox").change(function(){
-		if ($(this).prop('checked')==true)
-			alert("checked");
 
-	
+	$(".pillbuttons").children("div").click(function(){
+		switch ($(this).text())
+		{
+			case "0min":
+				this.className="first chosen";
+				this.parentNode.children[1].className="";
+				this.parentNode.children[2].className="last";
+				this.parentNode.children[3].value="0min";
+				break;
+			case "10-15min":
+				this.parentNode.children[0].className="first";
+				this.className="chosen";
+				this.parentNode.children[2].className="last";
+				this.parentNode.children[3].value="10-15min";
+				break;
+			case "30min+":
+				this.parentNode.children[0].className="first";
+				this.parentNode.children[1].className="";
+				this.className="last chosen";
+				this.parentNode.children[3].value="30min";
+				break;
+		}
+			
 	});
 	
+	$("a.edit").click(function(){
+		if ($(this).text()=="edit")
+		{
+			$(this).text("revert");
+			$(this).css("opacity", "0.6");
+			Id=$(this).attr("id");
+			num=Id.charAt(11);
+			switch (num)
+			{
+				case "1":
+					$("ul#col2").children("li:eq(1)").children("p")[0].className="time-alias1 hidden";
+					$("ul#col2").children("li:eq(1)").children("select")[0].className="slim";
+					$("ul#col3").children("li:eq(1)").children("p")[0].className="time-alias2 hidden";
+					$("ul#col3").children("li:eq(1)").children("select")[0].className="slim";
+					break;
+				case "2":
+					$("ul#col2").children("li:eq(2)").children("p")[0].className="time-alias1 hidden";
+					$("ul#col2").children("li:eq(2)").children("select")[0].className="slim";
+					$("ul#col3").children("li:eq(2)").children("p")[0].className="time-alias2 hidden";
+					$("ul#col3").children("li:eq(2)").children("select")[0].className="slim";
+					break;
+				case "3":
+					$("ul#col2").children("li:eq(3)").children("p")[0].className="time-alias1 hidden";
+					$("ul#col2").children("li:eq(3)").children("select")[0].className="slim";
+					$("ul#col3").children("li:eq(3)").children("p")[0].className="time-alias2 hidden";
+					$("ul#col3").children("li:eq(3)").children("select")[0].className="slim";
+					break;
+				case "4":
+					$("ul#col2").children("li:eq(4)").children("p")[0].className="time-alias1 hidden";
+					$("ul#col2").children("li:eq(4)").children("select")[0].className="slim";
+					$("ul#col3").children("li:eq(4)").children("p")[0].className="time-alias2 hidden";
+					$("ul#col3").children("li:eq(4)").children("select")[0].className="slim";
+					break;
+				case "5":
+					$("ul#col2").children("li:eq(5)").children("p")[0].className="time-alias1 hidden";
+					$("ul#col2").children("li:eq(5)").children("select")[0].className="slim";
+					$("ul#col3").children("li:eq(5)").children("p")[0].className="time-alias2 hidden";
+					$("ul#col3").children("li:eq(5)").children("select")[0].className="slim";
+					break;
+				case "6":
+					$("ul#col2").children("li:eq(6)").children("p")[0].className="time-alias1 hidden";
+					$("ul#col2").children("li:eq(6)").children("select")[0].className="slim";
+					$("ul#col3").children("li:eq(6)").children("p")[0].className="time-alias2 hidden";
+					$("ul#col3").children("li:eq(6)").children("select")[0].className="slim";
+					break;
+				case "7":
+					$("ul#col2").children("li:eq(7)").children("p")[0].className="time-alias1 hidden";
+					$("ul#col2").children("li:eq(7)").children("select")[0].className="slim";
+					$("ul#col3").children("li:eq(7)").children("p")[0].className="time-alias2 hidden";
+					$("ul#col3").children("li:eq(7)").children("select")[0].className="slim";
+					break;
+			}
+		}
+		else
+		{
+			$(this).text("edit");
+			$(this).css("opacity", "1");
+			Id=$(this).attr("id");
+			num=Id.charAt(11);
+			switch (num)
+			{
+				case "1":
+					$("ul#col2").children("li:eq(1)").children("p")[0].className="time-alias1";
+					$("ul#col2").children("li:eq(1)").children("select")[0].className="slim hidden";
+					$("ul#col3").children("li:eq(1)").children("p")[0].className="time-alias2";
+					$("ul#col3").children("li:eq(1)").children("select")[0].className="slim hidden";
+					break;
+				case "2":
+					$("ul#col2").children("li:eq(2)").children("p")[0].className="time-alias1";
+					$("ul#col2").children("li:eq(2)").children("select")[0].className="slim hidden";
+					$("ul#col3").children("li:eq(2)").children("p")[0].className="time-alias2";
+					$("ul#col3").children("li:eq(2)").children("select")[0].className="slim hidden";
+					break;
+				case "3":
+					$("ul#col2").children("li:eq(3)").children("p")[0].className="time-alias1";
+					$("ul#col2").children("li:eq(3)").children("select")[0].className="slim hidden";
+					$("ul#col3").children("li:eq(3)").children("p")[0].className="time-alias2";
+					$("ul#col3").children("li:eq(3)").children("select")[0].className="slim hidden";
+					break;
+				case "4":
+					$("ul#col2").children("li:eq(4)").children("p")[0].className="time-alias1";
+					$("ul#col2").children("li:eq(4)").children("select")[0].className="slim hidden";
+					$("ul#col3").children("li:eq(4)").children("p")[0].className="time-alias2";
+					$("ul#col3").children("li:eq(4)").children("select")[0].className="slim hidden";
+					break;
+				case "5":
+					$("ul#col2").children("li:eq(5)").children("p")[0].className="time-alias1";
+					$("ul#col2").children("li:eq(5)").children("select")[0].className="slim hidden";
+					$("ul#col3").children("li:eq(5)").children("p")[0].className="time-alias2";
+					$("ul#col3").children("li:eq(5)").children("select")[0].className="slim hidden";
+					break;
+				case "6":
+					$("ul#col2").children("li:eq(6)").children("p")[0].className="time-alias1";
+					$("ul#col2").children("li:eq(6)").children("select")[0].className="slim hidden";
+					$("ul#col3").children("li:eq(6)").children("p")[0].className="time-alias2";
+					$("ul#col3").children("li:eq(6)").children("select")[0].className="slim hidden";
+					break;
+				case "7":
+					$("ul#col2").children("li:eq(7)").children("p")[0].className="time-alias1";
+					$("ul#col2").children("li:eq(7)").children("select")[0].className="slim hidden";
+					$("ul#col3").children("li:eq(7)").children("p")[0].className="time-alias2";
+					$("ul#col3").children("li:eq(7)").children("select")[0].className="slim hidden";
+					break;
+			}
+		}
+	});
+	
+	$(".checkbox").change(function(){
+		if ($(this).prop('checked')==true)
+		{
+			Id=$(this).attr("id");
+			num=Id.charAt(6);
+			switch (num)
+			{
+				case "1":
+					$("ul#col2").children("li:eq(1)").children("p").css("color","black");
+					$("ul#col2").children("li:eq(1)").children("select").removeAttr("disabled");
+					$("ul#col3").children("li:eq(1)").children("p").css("color","black");
+					$("ul#col3").children("li:eq(1)").children("select").removeAttr("disabled");
+					$("ul#col4").children("li:eq(1)").children("a").css("visibility","visible");
+					break;
+				case "2":
+					$("ul#col2").children("li:eq(2)").children("p").css("color","black");
+					$("ul#col2").children("li:eq(2)").children("select").removeAttr("disabled");
+					$("ul#col3").children("li:eq(2)").children("p").css("color","black");
+					$("ul#col3").children("li:eq(2)").children("select").removeAttr("disabled");
+					$("ul#col4").children("li:eq(2)").children("a").css("visibility","visible");
+					break;
+				case "3":
+					$("ul#col2").children("li:eq(3)").children("p").css("color","black");
+					$("ul#col2").children("li:eq(3)").children("select").removeAttr("disabled");
+					$("ul#col3").children("li:eq(3)").children("p").css("color","black");
+					$("ul#col3").children("li:eq(3)").children("select").removeAttr("disabled");
+					$("ul#col4").children("li:eq(3)").children("a").css("visibility","visible");
+					break;
+				case "4":
+					$("ul#col2").children("li:eq(4)").children("p").css("color","black");
+					$("ul#col2").children("li:eq(4)").children("select").removeAttr("disabled");
+					$("ul#col3").children("li:eq(4)").children("p").css("color","black");
+					$("ul#col3").children("li:eq(4)").children("select").removeAttr("disabled");
+					$("ul#col4").children("li:eq(4)").children("a").css("visibility","visible");
+					break;
+				case "5":
+					$("ul#col2").children("li:eq(5)").children("p").css("color","black");
+					$("ul#col2").children("li:eq(5)").children("select").removeAttr("disabled");
+					$("ul#col3").children("li:eq(5)").children("p").css("color","black");
+					$("ul#col3").children("li:eq(5)").children("select").removeAttr("disabled");
+					$("ul#col4").children("li:eq(5)").children("a").css("visibility","visible");
+					break;
+				case "6":
+					$("ul#col2").children("li:eq(6)").children("p").css("color","black");
+					$("ul#col2").children("li:eq(6)").children("select").removeAttr("disabled");
+					$("ul#col3").children("li:eq(6)").children("p").css("color","black");
+					$("ul#col3").children("li:eq(6)").children("select").removeAttr("disabled");
+					$("ul#col4").children("li:eq(6)").children("a").css("visibility","visible");
+					break;
+				case "7":
+					$("ul#col2").children("li:eq(7)").children("p").css("color","black");
+					$("ul#col2").children("li:eq(7)").children("select").removeAttr("disabled");
+					$("ul#col3").children("li:eq(7)").children("p").css("color","black");
+					$("ul#col3").children("li:eq(7)").children("select").removeAttr("disabled");
+					$("ul#col4").children("li:eq(7)").children("a").css("visibility","visible");
+					break;
+					
+			}
+		}
+		else
+		{
+			Id=$(this).attr("id");
+			num=Id.charAt(6);
+			switch (num)
+			{
+				case "1":
+					$("ul#col2").children("li:eq(1)").children("p").css("color","rgb(187, 187, 187)");
+					$("ul#col2").children("li:eq(1)").children("select").attr("disabled","disabled");
+					$("ul#col3").children("li:eq(1)").children("p").css("color","rgb(187, 187, 187)");
+					$("ul#col3").children("li:eq(1)").children("select").attr("disabled","disabled");
+					$("ul#col4").children("li:eq(1)").children("a").css("visibility","hidden");
+					break;
+				case "2":
+					$("ul#col2").children("li:eq(2)").children("p").css("color","rgb(187, 187, 187)");
+					$("ul#col2").children("li:eq(2)").children("select").attr("disabled","disabled");
+					$("ul#col3").children("li:eq(2)").children("p").css("color","rgb(187, 187, 187)");
+					$("ul#col3").children("li:eq(2)").children("select").attr("disabled","disabled");
+					$("ul#col4").children("li:eq(2)").children("a").css("visibility","hidden");
+					break;
+				case "3":
+					$("ul#col2").children("li:eq(3)").children("p").css("color","rgb(187, 187, 187)");
+					$("ul#col2").children("li:eq(3)").children("select").attr("disabled","disabled");
+					$("ul#col3").children("li:eq(3)").children("p").css("color","rgb(187, 187, 187)");
+					$("ul#col3").children("li:eq(3)").children("select").attr("disabled","disabled");
+					$("ul#col4").children("li:eq(3)").children("a").css("visibility","hidden");
+					break;
+				case "4":
+					$("ul#col2").children("li:eq(4)").children("p").css("color","rgb(187, 187, 187)");
+					$("ul#col2").children("li:eq(4)").children("select").attr("disabled","disabled");
+					$("ul#col3").children("li:eq(4)").children("p").css("color","rgb(187, 187, 187)");
+					$("ul#col3").children("li:eq(4)").children("select").attr("disabled","disabled");
+					$("ul#col4").children("li:eq(4)").children("a").css("visibility","hidden");
+					break;
+				case "5":
+					$("ul#col2").children("li:eq(5)").children("p").css("color","rgb(187, 187, 187)");
+					$("ul#col2").children("li:eq(5)").children("select").attr("disabled","disabled");
+					$("ul#col3").children("li:eq(5)").children("p").css("color","rgb(187, 187, 187)");
+					$("ul#col3").children("li:eq(5)").children("select").attr("disabled","disabled");
+					$("ul#col4").children("li:eq(5)").children("a").css("visibility","hidden");
+					break;
+				case "6":
+					$("ul#col2").children("li:eq(6)").children("p").css("color","rgb(187, 187, 187)");
+					$("ul#col2").children("li:eq(6)").children("select").attr("disabled","disabled");
+					$("ul#col3").children("li:eq(6)").children("p").css("color","rgb(187, 187, 187)");
+					$("ul#col3").children("li:eq(6)").children("select").attr("disabled","disabled");
+					$("ul#col4").children("li:eq(6)").children("a").css("visibility","hidden");
+					break;
+				case "7":
+					$("ul#col2").children("li:eq(7)").children("p").css("color","rgb(187, 187, 187)");
+					$("ul#col2").children("li:eq(7)").children("select").attr("disabled","disabled");
+					$("ul#col3").children("li:eq(7)").children("p").css("color","rgb(187, 187, 187)");
+					$("ul#col3").children("li:eq(7)").children("select").attr("disabled","disabled");
+					$("ul#col4").children("li:eq(7)").children("a").css("visibility","hidden");
+					break;
+			}
+		}
+	});
 });
 
 </script>
@@ -82,7 +329,7 @@ $(document).ready(function(){
 				
 				<fieldset id="step_2" >
                 <dl>
-                    <input id="onetime-only" type="hidden" name="type" value="one-time">
+                    <input id="onetime-only" type="hidden" name="type" value="one-time"></input>
                     <dd class="triptabs" style="display: block;">
                    	<div id="multipostwrapper">
 	                        <div id="singletripwrapper">
@@ -258,12 +505,19 @@ $(document).ready(function(){
                                             <div id="flexheader">
                                                 <span>Firm</span> <span class="last">Flexible</span>
                                             </div>
-                                                                                                                                                                                    <div class="pillbuttons">
-                                                <div class="first">0min</div><div class="chosen">10-15min</div><div class="last">30min+</div>
-                                                <input type="hidden" id="flex_global" name="flex_global" value="10-15min">
-                                            </div>
+                                            <div class="pillbuttons">
+	                                            <div class="first">0min</div><div class="chosen">10-15min</div><div class="last">30min+</div>
+	                                            <input type="hidden" id="flex_global" name="flex_global" value="10-15min">
+	                                        </div>
                                         </div>
                                     </li>
+                                    <li><a class="edit" href="javascript:void(0)" id="edit_times_1" style="visibility: visible;">edit</a></li>
+                                 	<li><a class="edit" href="javascript:void(0)" id="edit_times_2" style="visibility: visible;">edit</a></li>
+                                 	<li><a class="edit" href="javascript:void(0)" id="edit_times_3" style="visibility: visible;">edit</a></li>
+                                 	<li><a class="edit" href="javascript:void(0)" id="edit_times_4" style="visibility: visible;">edit</a></li>
+                                 	<li><a class="edit" href="javascript:void(0)" id="edit_times_5" style="visibility: visible;">edit</a></li>
+                                 	<li><a class="edit" href="javascript:void(0)" id="edit_times_6" style="visibility: hidden;">edit</a></li>
+                                 	<li><a class="edit" href="javascript:void(0)" id="edit_times_7" style="visibility: hidden;">edit</a></li>
                                  </ul>
                             </div>
                         </div>
