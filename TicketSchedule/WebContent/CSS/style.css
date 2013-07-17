@@ -18,7 +18,7 @@ li {
 
 #content_container {
     margin: 0 auto;
-    padding: 15px 0 4px;
+    padding: 15px 200px 4px;
     width: 940px;
 }
 
@@ -133,13 +133,24 @@ background-repeat: no-repeat;
 background-position: 50% 9px;
 }
 
+.newAddRideStyle #commuteselect {
+background-image: url('/assets/icon-commute.jpg');
+margin-right: 15px;
+background-repeat: no-repeat;
+background-position: 50% 9px;
+}
+
 .newAddRideStyle #passengerselect {
 background-image: url('/assets/icon-passenger.jpg');
 background-repeat: no-repeat;
 background-position: 50% 9px;
 }
 
-
+.newAddRideStyle #travelselect {
+background-image: url('/assets/icon-travel.jpg');
+background-repeat: no-repeat;
+background-position: 50% 9px;
+}
 
 #actionbar_search, .newAddRideStyle .bigradio, .newAddRideStyle .medradio, .event-banner img, #inbox .tooltip, #bookARide .initiated .priceFont, #bookARide button.confirm, #ride-summary, #payment .confirm, .blueboxoutline, .ui-dialog {
 -webkit-border-radius: 4px;
@@ -152,13 +163,20 @@ width: 419px;
 }
 
 form.standard fieldset {
-border-bottom: 1px solid #D5DFE1;
-margin-bottom: 20px;
+border-bottom: 0px;
+border-top: 0px;
+/*border-bottom: 1px solid #D5DFE1;*/
+/*margin-bottom: 20px;*/
 }
 
-form#add_ride fieldset {
-border-bottom: 0;
+form#add_ride fieldset#step_1 {
+border-top: 1px solid #D5DFE1;
 }
+form#add_ride fieldset#step_3 {
+border-bottom: 1px solid #D5DFE1;
+}
+
+
 
 form#add_ride #step_2 label, 
 form#add_ride #step_2, 
@@ -171,9 +189,9 @@ font-size: 14px;
 width: 570px !important;
 margin: 0 !important;
 margin-top: 10px;
-padding: 0 30px;
+padding: 0 20px 0 40px;
 float: left;
-border: 1px solid #ccc;
+//border: 1px solid #ccc;
 }
 
 .newAddRideStyle #multipostwrapper {
@@ -503,13 +521,13 @@ padding-right: 10px;
 float: none;
 text-align: left;
 font-size: 1.3em;
-width: 600px;
+width: 400px;
 margin-bottom: 0.5em;
-margin-left: 12px;
+margin-left: 60px;
 }
 
 .newAddRideStyle #step_3 dd {
-margin-left: 60px;
+margin-left: 100px;
 }
 
 .newAddRideStyle #price-per {
@@ -522,7 +540,7 @@ margin-left: 29px;
 }
 
 .newAddRideStyle #step_3 textarea.clickaway {
-width: 525px;
+width: 470px;
 height: 100px;
 }
 
@@ -530,4 +548,35 @@ height: 100px;
 display: inline-block;
 line-height: 2em;
 background-color: #fff;
+}
+
+.newAddRideStyle .trip_close:hover {
+color: #444 !important;
+background: #ddd;
+}
+
+.newAddRideStyle #add_ride button.confirm {
+background: #6ea953 url('/assets/bg_button_confirm.gif') top repeat-x scroll;
+border: 1px solid #2f571c;
+border-bottom-color: #284d17;
+color: #FFFFFF;
+padding: 5px 15px;
+float: right;
+}
+
+.newAddRideStyle .changestep a, 
+.newAddRideStyle .changestep button {
+text-align: right;
+margin-left: 12px !important;
+display: inline-block;
+}
+
+button, button.confirm, #userpic-crop, #driver img, #passenger img, #cards img, #payment input, #driverresponse input, #driverresponse textarea, #bookingRequestConfirmation #sendMessageBox #recipientProfile img, #bookingRequestConfirmation #sendMessageBox #writeMessage textarea, .callout .callout_info, .general_confirm, .general_button, .ui-dialog-buttonpane button, .cancel, .newAddRideStyle #add_ride button.confirm, .newAddRideStyle .changestep a, #headerpic img, ul.actions button, .te_account img, #passengerProfile img {
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+border-radius: 2px;
+}
+
+button.confirm:hover, button.confirm:focus {
+cursor: pointer;
 }

@@ -23,6 +23,105 @@ $(document).ready(function(){
 	$("#back").change(function(){
 		
 	});
+
+	$(".increment").click(function(){
+		var value=parseInt(this.parentNode.previousElementSibling.value)+1;
+		this.parentNode.previousElementSibling.value=value;
+	});
+
+	$(".decrement").click(function(){
+		var value=parseInt(this.parentNode.previousElementSibling.value)-1;
+		if (value>=0)
+		{
+			this.parentNode.previousElementSibling.value=value;
+		}
+	});
+	
+	$("#offerid").click(function(){
+		$(".cost-visibility").children("label").text("How much are you willing to contribute?");
+		$(".cost-visibility").fadeIn(1000);
+		$(".seats-visibility").fadeOut(1000);
+
+	});
+
+	$("#needid").click(function(){
+		$(".cost-visibility").children("label").text("How much do you want each passenger to contribute?");
+		$(".cost-visibility").fadeIn(1000);
+		$(".seats-visibility").fadeIn(1000);
+	});
+	
+	
+	$("#commuteid").click(function(){
+		$("#multipostwrapper").fadeOut(1000,function(){
+			$("#there_repeating").fadeIn(1000);
+		});
+	});
+
+	$("#travelid").click(function(){
+		$("#there_repeating").fadeOut(1000,function(){
+		$("#multipostwrapper").fadeIn(1000);
+		});
+	});
+	
+	$(".trip_close").click(function(){
+		$(this.parentNode).fadeOut("slow").remove();
+		var numtrip=parseInt($("#num_trips").val())-1;
+		$("#num_trips").val(numtrip);
+		if (numtrip>1)
+		{
+			$("#multi_trips").val("1");
+		}
+		else
+		{
+			$("#multi_trips").val("0");
+			$(".trip_num").css("visibility","hidden");
+			$(".trip_close").css("visibility","hidden");
+		}
+		
+		var a=$(".singletripwrapper");
+		if (numtrip>1)
+		{
+			
+			for (var i=1;i<=numtrip;i++)
+			{
+				$(a[i-1]).children(".trip_num").text("Trip "+i);
+				$(a[i-1]).find(".there").attr("id","there_trip"+i);
+				$(a[i-1]).find(".there").attr("name","there_trip"+i);
+				$(a[i-1]).find(".depart-date").attr("for","depart-date-trip"+i);
+				//To add
+			}
+			
+		}
+	});
+
+	$("#add_multi").click(function(){
+		var numtrip=parseInt($("#num_trips").val())+1;
+		$("#num_trips").val(numtrip);
+		if (numtrip>1)
+		{
+			$("#multi_trips").val("1");
+		}
+		else
+		{
+			$("#multi_trips").val("0");
+		}
+		
+		$(".singletripwrapper:last").clone(true).insertAfter(".singletripwrapper:last");
+		$(".trip_num").css("visibility","visible");
+		$(".trip_close").css("visibility","visible");
+		var a=$(".singletripwrapper");
+		if (numtrip>1)
+		{
+			for (var i=1;i<=numtrip;i++)
+			{
+				$(a[i-1]).children(".trip_num").text("Trip "+i);
+				$(a[i-1]).find(".there").attr("id","there_trip"+i);
+				$(a[i-1]).find(".there").attr("name","there_trip"+i);
+				$(a[i-1]).find(".depart-date").attr("for","depart-date-trip"+i);
+			}
+			
+		}
+	});
 	
 	$("#there_time_0").change(function(){
 		$("p.time-alias1").text($(this).children('option:selected').val());
@@ -317,12 +416,20 @@ $(document).ready(function(){
                        		<input class="clickaway ac_input" type="text" placeholder="e.g. San Diego, CA" name="e" id="e" maxlength="400" value="e.g. San Diego, CA" autocomplete="off">
                         	<p>Only the closest crossstreets are shown in your listing (e.g. 1st &amp; Main)</p>
                 	    </dd>
-						<dd class="changestep">
-							<span class="errormsg"></span> 
-							<button id="addride-whereto-button" type="button" class="confirm clickaway_confirm next">
-							<span>Next Step</span> 
-							<img src="http://www.zimride.com/assets/forward-arrow-white.png"></button>
-						</dd>
+                	    
+						<dt>
+							<label>Commute Type</label>
+						</dt>
+						<dd class="selection" id="commuteType">
+							<div class="bigradio" id="commuteselect">
+                           		<input type="radio" name="commuteType" id="commuteid" value="commute" class="radio">
+                           		<label for="commuteid">Commute</label>
+                        	</div>
+							<div class="bigradio" id="travelselect">
+                	           	<input type="radio" name="commuteType" id="travelid" value="commute" class="radio">
+                 		       	<label for="travelid">Travel</label>
+                 		  	</div>
+                        </dd>
 					
 					</dl>
 				</fieldset>
@@ -331,12 +438,13 @@ $(document).ready(function(){
                 <dl>
                     <input id="onetime-only" type="hidden" name="type" value="one-time"></input>
                     <dd class="triptabs" style="display: block;">
-                   	<div id="multipostwrapper">
-	                        <div id="singletripwrapper">
-	                        	<span class="trip_num">Trip 0</span>
+                   	<div id="multipostwrapper" style="display: none">
+	                        <div id="singletripwrapper" class="singletripwrapper">
+	                        	<span class="trip_num">Trip 1</span>
 	                        	<span class="float_right trip_close dot">×</span><br>
 	                        	<div class="tripbox">
 	                               <div id="there_one_time">
+	                               		<input type="hidden" id="there_trip" name="there_trip" class="there" value="1">
 	                            	    <label for="depart-date" class="depart-date">Depart</label>
 		                                <input type="text" name="date" id="depart-date" class="slim datepicker depart-date hasDatepicker" maxlength="10" value="07/14/2013">
 		                                <img class="ui-datepicker-trigger" src="/TicketSchedule/Picture/icon_calendar.png" alt="..." title="...">
@@ -416,7 +524,7 @@ $(document).ready(function(){
 	                        	<input type="hidden" name="num_trips" id="num_trips" value="1">
                      </div>
 
-					<div id="there_repeating" style="display: block;">
+					<div id="there_repeating" style="display: none;">
                             <div id="commute-table">
 								<ul id="col1">
                                     <li class="first"><p>Choose your times and flexibility:</p></li>
@@ -523,31 +631,23 @@ $(document).ready(function(){
                         </div>
 
                     </dd>
-                    <dd class="changestep">
-                    	<span class="errormsg" style="opacity: 0.5;">Hold on! Are you a driver or a passenger?</span> 
-                    	<a href="javascript:void(0)" class="back">
-                    	<img alt="Back Arrow" src="http://www.zimride.com/assets/icon_back.png"> back</a> 
-                    	<button id="addride-whattime-button" type="button" class="confirm float_right next">
-                    	<span>Next Step</span> 
-                    	<img src="http://www.zimride.com/assets/forward-arrow-white.png"></button>
-                    </dd>
                </dl>
             </fieldset>
             
             <fieldset id="step_3" class="" style="">
                 <dl>
-                    <dt><label for="cost">How much do you want each passenger to contribute?</label></dt>
-                    <dd>
+                    <dt class="cost-visibility" style="display: none"><label for="cost">How much do you want each passenger to contribute?</label></dt>
+                    <dd class="cost-visibility" style="display: none">
                         <span id="dollarsign">$</span> <input type="text" name="cost" id="cost" class="slim align_right" maxlength="6" value="0">
                         <div class="input-arrows">
                             <a href="javascript:void(0)" class="increment"><img src="/TicketSchedule/Picture/increment.png"></a>
                             <a href="javascript:void(0)" class="decrement"><img src="/TicketSchedule/Picture/decrement.png"></a>
                         </div>
                         <span id="price-per">each way</span>
-                        <p>suggested price of $<span id="suggested_price">75.00</span> <span id="suggested_price_text">based on the Zimride average for this trip</span></p>
+                        <p>suggested price of $<span id="suggested_price">75.00</span> <span id="suggested_price_text">based on the average distance for this trip</span></p>
                     </dd>
-                    <dt class="seats-visibility"><label for="seats">Number of available seats</label></dt>
-                    <dd class="seats-visibility">
+                    <dt class="seats-visibility" style="display: none"><label for="seats">Number of available seats</label></dt>
+                    <dd class="seats-visibility" style="display: none">
                         <input type="text" name="seats" id="seats" class="slim align_right" maxlength="1" value="2">
                         <div class="input-arrows">
                             <a href="javascript:void(0)" class="increment"><img src="/TicketSchedule/Picture/increment.png"></a>
@@ -557,8 +657,7 @@ $(document).ready(function(){
                     <dt><label for="notes">Notes</label></dt>
                     <dd><textarea id="notes" cols="30" rows="3" name="notes" class="clickaway badWord" placeholder="Any other details..." style="color: rgb(153, 153, 153);">Any other details...</textarea></dd>
                     <dd class="changestep"><span class="errormsg" style="opacity: 0;"></span> 
-                            <a href="javascript:void(0)" class="back"><img alt="back_icon" src="http://www.zimride.com/assets/icon_back.png"> back</a>
-                    <span id="form_submit"><button type="submit" id="form-addride-button" class="clickaway_confirm confirm  requires_login">Post Ride</button></span><br>
+                    	<span id="form_submit"><button type="submit" id="form-addride-button" class="clickaway_confirm confirm  requires_login">Post Ride</button></span><br>
                    </dd>
                 </dl>
             </fieldset>
