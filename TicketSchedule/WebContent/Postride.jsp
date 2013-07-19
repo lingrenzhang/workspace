@@ -7,8 +7,13 @@
 
 <link href="./CSS/style.css" type="text/css" rel="stylesheet">
 <script src="./JS/jquery-1.10.1.js"></script>
+<script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
+</script>
 <script>
 $(document).ready(function(){
+
+	//------------------------register listener-------------------------
 	$(".datetime_icon").click(function(){
     var search= $("#search_date").offset();
     var datepicker=$("#ui-datepicker-div");
@@ -381,6 +386,105 @@ $(document).ready(function(){
 			}
 		}
 	});
+
+	//------------------------register listener end-----------------------------
+
+	//------------------------initialize map------------------------------------
+	var mapOptions = {
+		      center: new google.maps.LatLng(37.4, -122.0),
+		      zoom: 9,
+		      mapTypeId: google.maps.MapTypeId.ROADMAP
+		    };
+	var map = new google.maps.Map(document.getElementById("post-map-canvas"),mapOptions);
+
+	var orig = document.getElementById('s');
+	var searchBoxO = new google.maps.places.SearchBox(orig);
+	var omarkers= [];
+	var dest = document.getElementById('e');
+	var searchBoxD = new google.maps.places.SearchBox(dest);
+	var dmarkers = [];
+	var bounds = new google.maps.LatLngBounds();
+
+	google.maps.event.addListener(searchBoxO, 'places_changed', function() {
+	  	  var places = searchBoxO.getPlaces();
+
+	  	  for (var i = 0, marker; marker = omarkers[i]; i++) {
+	        marker.setMap(null);
+	      }
+
+	      omarkers = [];
+	      
+	      for (var i = 0, place; place = places[i]; i++) {
+	        var image = {
+	          url: place.icon,
+	          size: new google.maps.Size(71, 71),
+	          origin: new google.maps.Point(0, 0),
+	          anchor: new google.maps.Point(17, 34),
+	          scaledSize: new google.maps.Size(25, 25)
+	        };
+
+	        var marker = new google.maps.Marker({
+	            map: map,
+	            icon: image,
+	            title: place.name,
+	            position: place.geometry.location
+	          });
+	        omarkers.push(marker);
+
+	        bounds.extend(place.geometry.location);
+	      }
+	      map.fitBounds(bounds);
+
+		      
+	  	  place = places[0];
+		  document.getElementById("origLat").value=place.geometry.location.jb;
+		  document.getElementById("origLng").value=place.geometry.location.kb;
+	});
+
+	google.maps.event.addListener(searchBoxD, 'places_changed', function() {
+	   	  var places = searchBoxD.getPlaces();
+	   	  for (var i = 0, marker; marker = dmarkers[i]; i++) {
+	        dmarker.setMap(null);
+	      }
+
+	      dmarkers = [];
+	      for (var i = 0, place; place = places[i]; i++) {
+	        var image = {
+	          url: place.icon,
+	          size: new google.maps.Size(71, 71),
+	          origin: new google.maps.Point(0, 0),
+	          anchor: new google.maps.Point(17, 34),
+	          scaledSize: new google.maps.Size(25, 25)
+	        };
+
+	        var marker = new google.maps.Marker({
+	            map: map,
+	            icon: image,
+	            title: place.name,
+	            position: place.geometry.location
+	          });
+	        dmarkers.push(marker);
+
+	        bounds.extend(place.geometry.location);
+	      }
+	      map.fitBounds(bounds);
+	      place = places[0];
+		  document.getElementById("destLat").value=place.geometry.location.jb;
+		  document.getElementById("destLng").value=place.geometry.location.kb;
+	});
+		   	
+	google.maps.event.addListener(map, 'bounds_changed', function() {
+	   	  var bounds = map.getBounds();
+	      searchBoxO.setBounds(bounds);
+	});
+
+	google.maps.event.addListener(map, 'bounds_changed', function() {
+	    var bounds = map.getBounds();
+	    searchBoxD.setBounds(bounds);
+	  });
+	  
+	google.maps.event.addDomListener(window, 'load', initialize);
+		 
 });
 
 </script>
@@ -390,7 +494,7 @@ $(document).ready(function(){
 <div id="content_wrapper">
 	<div id="content_container" class="clearfix">
 		<div id="wide_column_left" class="newAddRideStyle">
-			<form action="/servlet/Postride" method="post" id="add_ride" class="standard requires_login_results">
+			<form action="/servlet/Postride" method="post" id="add_ride" class="standard requires_login_results" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
 				<fieldset id="step_1">
 					<dl>
 						<dt>
@@ -408,12 +512,12 @@ $(document).ready(function(){
                         
                         <dt><label for="s">Starting From</label></dt>
                         <dd>
-                        	<input type="text" class="clickaway ac_input" placeholder="e.g. University Road, Santa Barbara, CA" name="s" id="s" maxlength="400" value="e.g. University Road, Santa Barbara, CA" autocomplete="off">
+                        	<input type="text" class="clickaway ac_input" placeholder="e.g. University Road, Santa Barbara, CA" name="s" id="s" maxlength="400"  autocomplete="off">
                         </dd>
                         
                         <dt><label for="e">Going To</label></dt>
                         <dd>
-                       		<input class="clickaway ac_input" type="text" placeholder="e.g. San Diego, CA" name="e" id="e" maxlength="400" value="e.g. San Diego, CA" autocomplete="off">
+                       		<input class="clickaway ac_input" type="text" placeholder="e.g. San Diego, CA" name="e" id="e" maxlength="400" autocomplete="off">
                         	<p>Only the closest crossstreets are shown in your listing (e.g. 1st &amp; Main)</p>
                 	    </dd>
                 	    
@@ -662,6 +766,8 @@ $(document).ready(function(){
                 </dl>
             </fieldset>
 			</form>
+		</div>
+		<div id="post-map-canvas">
 		</div>
 	</div>
 </div>

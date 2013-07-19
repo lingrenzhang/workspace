@@ -1,31 +1,91 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
   <head>
+    <title>Navigation functions (heading)</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>Places search box</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places"></script>
+    <link href="./CSS/map.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=geometry"></script>
     <script>
+	var poly;
+	var geodesicPoly;
+	var marker1;
+	var marker2;
+	
 	function initialize() {
-        var mapOptions = {
-                center: new google.maps.LatLng(-34.397, 150.644),
-                zoom: 8,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-              };
-
- 	var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
- 	var defaultBounds = new google.maps.LatLngBounds(
-  	    new google.maps.LatLng(-33.8902, 151.1759),
-  	    new google.maps.LatLng(-33.8474, 151.2631));
-  	map.fitBounds(defaultBounds);
-
-  	
+	  var mapOptions = {
+	    zoom: 4,
+	    center: new google.maps.LatLng(34, -40.605),
+	    mapTypeId: google.maps.MapTypeId.ROADMAP
+	  };
+	
+	  var map = new google.maps.Map(document.getElementById('map-canvas'),
+	      mapOptions);
+	
+	  map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+	      document.getElementById('info'));
+	
+	
+	  marker1 = new google.maps.Marker({
+	    map: map,
+	    draggable: true,
+	    position: new google.maps.LatLng(40.71435280, -74.0059731)
+	  });
+	
+	  marker2 = new google.maps.Marker({
+	    map: map,
+	    draggable: true,
+	    position: new google.maps.LatLng(48.8566140, 2.35222190)
+	  });
+	
+	  var bounds = new google.maps.LatLngBounds(marker1.getPosition(),
+	      marker2.getPosition());
+	  map.fitBounds(bounds);
+	
+	  google.maps.event.addListener(marker1, 'position_changed', update);
+	  google.maps.event.addListener(marker2, 'position_changed', update);
+	
+	  var polyOptions = {
+	    strokeColor: '#FF0000',
+	    strokeOpacity: 1.0,
+	    strokeWeight: 3,
+	    map: map,
+	  };
+	  poly = new google.maps.Polyline(polyOptions);
+	
+	  var geodesicOptions = {
+	    strokeColor: '#CC0099',
+	    strokeOpacity: 1.0,
+	    strokeWeight: 3,
+	    geodesic: true,
+	    map: map
+	  };
+	  geodesicPoly = new google.maps.Polyline(geodesicOptions);
+	
+	  update();
+	}
+	
+	function update() {
+	  var path = [marker1.getPosition(), marker2.getPosition()];
+	  poly.setPath(path);
+	  geodesicPoly.setPath(path);
+	  var heading = google.maps.geometry.spherical.computeHeading(path[0],
+	      path[1]);
+	  document.getElementById('heading').value = heading;
+	  document.getElementById('origin').value = path[0].toString();
+	  document.getElementById('destination').value = path[1].toString();
+	}
+	
+	google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
   </head>
   <body>
-    <div id="panel">
-      <input id="target" type="text" placeholder="Search Box">
-    </div>
     <div id="map-canvas"></div>
+    <div id="panel" style="margin-left:-320px">
+      Origin: <input type="text" readonly id="origin">
+      Destination: <input type="text" readonly id="destination">
+      Heading: <input type="text" readonly id="heading"> degrees
+    </div>
   </body>
 </html>

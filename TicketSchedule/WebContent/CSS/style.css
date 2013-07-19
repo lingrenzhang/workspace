@@ -18,8 +18,8 @@ li {
 
 #content_container {
     margin: 0 auto;
-    padding: 15px 200px 4px;
-    width: 940px;
+    padding: 15px 100px 4px;
+    width: 1000px;
 }
 
 #search_s {
@@ -579,4 +579,20 @@ border-radius: 2px;
 
 button.confirm:hover, button.confirm:focus {
 cursor: pointer;
+}
+
+
+.newAddRideStyle #add_ride .ac_input {
+font-size: 1.4em !important;
+padding-left: 8px !important;
+width: 419px;
+}
+
+
+#post-map-canvas
+{
+	float:right;
+	width:320px;
+	height:300px;
+	margin-left:30px;
 }

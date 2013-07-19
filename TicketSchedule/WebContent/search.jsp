@@ -120,7 +120,7 @@ window.onscroll = function(){
 		type="text/css" rel="stylesheet">
 		<div id="content">
 			<div id="head">
-				<form class="search">
+				<form class="search" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
 					<div class="text_input">
 						<label class="pin start" for="search_s"></label>
 						<input id="search_s" class="clickaway input_text" type="text" 

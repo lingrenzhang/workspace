@@ -1,0 +1,158 @@
+.login-form {
+padding: 35px 15px 15px;
+}
+
+#login_panel{
+	width : 220px;
+	height: 215px;
+	}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+margin: 0;
+padding: 0;
+}
+
+.login-form dl {
+line-height: 20px;
+position: relative;
+}
+
+
+.clearfix, .feed, .feed-content .headline, .comment {
+display: block;
+}
+
+
+.clearfix, .feed, .feed-content .headline, .comment {
+display: inline-block;
+}
+
+
+.box, .hbox, .clearfix {
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+margin: 0;
+padding: 0;
+}
+
+
+.login-form dl.top dd, .login-form dl.pwd dd, .login-form dl.code dd {
+position: relative;
+width: 186px;
+background: #FFF url(http://a.xnimg.cn/n/apps/login/v6/cssimg/bg.png) 0 -76px no-repeat;
+border: 1px solid #adb6c9;
+border-radius: 3px;
+height: 32px;
+box-shadow: 0 0 1px #FFF;
+padding: 1px;
+}
+
+.login-form .input-text {
+background: transparent;
+background: url(about:blank) no-repeat\9;
+font-size: 14px;
+height: 32px;
+line-height: 32px\9;
+padding: 0;
+margin: 0 0 0 30px;
+width: 155px;
+border: 0;
+}
+
+.login-form dl.top label, .login-form dl.pwd label {
+left: 4px;
+position: absolute;
+top: 4px;
+z-index: 2;
+background: url(http://a.xnimg.cn/n/apps/login/v6/cssimg/ico.png) 8px -84px no-repeat;
+text-indent: -9999em;
+width: 25px;
+height: 25px;
+}
+
+.login .login-form .errors_div {
+padding: 0 0 0 5px;
+margin: 0;
+background: 0;
+border: 0;
+font-weight: bold;
+text-align: center;
+color: #e83827;
+position: absolute;
+left: 0;
+top: -25px;
+width: 100%;
+}
+
+input[type=text], input[type=password] {
+border: 1px solid #bdc7d8;
+padding: .4ex;
+width: 120px;
+}
+
+.login-form dl.pwd {
+margin: 15px 0 0;
+}
+
+.login-form dl {
+line-height: 20px;
+position: relative;
+}
+
+.login-form dl.pwd label {
+background-position: 8px -112px;
+}
+
+.login-form dl.pwd .pwdtip, .login-form dl.code .codetip {
+position: absolute;
+background: transparent;
+color: #888;
+font-size: 14px;
+left: 30px;
+text-indent: 0;
+top: 7px;
+width: 100px;
+visibility: visible;
+cursor: text;
+font-weight: normal;
+}
+
+.login-form dl.pwd label {
+background-position: 8px -112px;
+}
+
+.login-form dl.savepassword {
+margin: 5px 0;
+}
+
+.login-form .labelCheckbox {
+font-weight: normal;
+color: #333;
+float: left;
+font-size: 12px;
+line-height: 27px;
+}
+
+.login-form .getpassword {
+float: right;
+margin-top: 3px;
+}
+
+a:link, a:visited {
+color: #005eac;
+text-decoration: none;
+}
+
+body {
+font-size: 9pt;
+font-family: Tahoma,Verdana,STHeiTi,simsun,sans-serif;
+}
+
+.savepassword, #codeimg{
+	width :190px;
+}
+
+#switch{
+	float: right;
+}
