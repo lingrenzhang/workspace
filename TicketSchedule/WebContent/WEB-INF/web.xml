@@ -69,4 +69,14 @@
     <servlet-name>Search</servlet-name>
     <url-pattern>/servlet/Search</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CheckCode</display-name>
+    <servlet-name>CheckCode</servlet-name>
+    <servlet-class>com.shs.liangdiaosi.CheckCode</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CheckCode</servlet-name>
+    <url-pattern>/servlet/CheckCode</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -20,14 +20,14 @@
 				<dt><label for="email">username</label></dt>
 				<dd style="border-color: rgb(173, 182, 201);">
 					<span id="errorMessage" class="errors_div" style="display:none;"></span>
-					<input type="text" name="email" class="input-text" id="email" tabindex="1" value="" style="color: rgb(136, 136, 136);">
+					<input type="text" name="email" class="input-text" id="email" tabindex="1" value="" placeholder="Username" style="color: rgb(136, 136, 136);" >
 				</dd>
 			</dl>
 			<dl class="pwd clearfix">
 				<dt><label for="password">password</label></dt>
 				<dd>
-					<input type="password" id="password" name="password" error="Please enter your password" class="input-text" tabindex="2" autocomplete="off">
-					<label class="pwdtip" id="pwdTip" for="password">Password</label>
+					<input type="password" id="password" name="password" placeholder="password" error="Please enter your password" class="input-text" tabindex="2" autocomplete="off">
+					<!--  <label class="pwdtip" id="pwdTip" for="password">Password</label>-->
 				</dd>
 			</dl>
 			<div class="caps-lock-tips" id="capsLockMessage" style="display:none"></div>
@@ -43,16 +43,16 @@
 				</dl>
 			<dl id="codeimg" class="codeimg clearfix">
 		<dt></dt>
-		<dd><img id="verifyPic_login" src="http://icode.renren.com/getcode.do?t=web_login&amp;rnd=Math.random()">
+		<dd><img id="verifyPic_login" src="./servlet/CheckCode">
 			<a href="javascript:refreshCode_login();" id="swith">Switch</a>
 	
 		</dd>
 		</dl>
 		<dl id="code" class="code clearfix">
-		<dt><label for="code">Code:</label></dt>
+		<dt><label for="code"></label></dt>
 		<dd>
-		<input id="icode" type="text" name="icode" class="input-text" tabindex="3" autocomplete="off">
-		<label class="codetip" id="codeTip" for="icode">Code</label>
+		<input id="icode" type="text" name="icode" class="input-text" tabindex="3" placeholder="Code" autocomplete="off">
+		<!--  <label class="codetip" id="codeTip" for="icode">Code</label> -->
 		</dd>
 		</dl>
 		<dl class="bottom">
