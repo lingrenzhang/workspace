@@ -11,6 +11,8 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
 </script>
 <script>
+
+
 $(document).ready(function(){
 
 	//------------------------register listener-------------------------
@@ -439,6 +441,36 @@ $(document).ready(function(){
 	  	  place = places[0];
 		  document.getElementById("origLat").value=place.geometry.location.jb;
 		  document.getElementById("origLng").value=place.geometry.location.kb;
+		  var djb=document.getElementById("destLat").value;
+		  var dkb=document.getElementById("destLng").value;
+		  if (djb !="" && dkb!="")
+		  {
+			  var xmlhttp;
+			  if (window.XMLHttpRequest)
+			    {// code for IE7+, Firefox, Chrome, Opera, Safari
+			    xmlhttp=new XMLHttpRequest();
+			    }
+			  else
+			    {// code for IE6, IE5
+			    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			    }
+			  xmlhttp.open("get", "http://maps.googleapis.com/maps/api/distancematrix/json?origins="+
+					  place.geometry.location.jb+","+place.geometry.location.kb+
+					  "&destinations="+djb+","+dkb+"&sensor=false", true);  
+		      xmlhttp.onreadystatechange = function(){
+		    	  if(xmlhttp.readyState == 4 && xmlhttp.status==200)  
+		    	    {  
+		    	     var info = xmlhttp.responseText;  
+		    	     eval("var json= " + info);  
+		    	     var distance=json.rows[0].elements[0].distance.value;
+		    	     var dtime=json.rows[0].elements[0].duration.value;
+
+		    	     document.getElementById("distance").value = distance;  
+		    	     document.getElementById("dtime").value = dtime; 
+		    	     }  
+		      };  
+		      xmlhttp.send(null);  
+		  }
 	});
 
 	google.maps.event.addListener(searchBoxD, 'places_changed', function() {
@@ -471,6 +503,37 @@ $(document).ready(function(){
 	      place = places[0];
 		  document.getElementById("destLat").value=place.geometry.location.jb;
 		  document.getElementById("destLng").value=place.geometry.location.kb;
+		  var ojb=document.getElementById("origLat").value;
+		  var okb=document.getElementById("origLng").value;
+		  if (ojb !="" && okb!="")
+		  {
+			  var xmlhttp;
+			  if (window.XMLHttpRequest)
+			    {// code for IE7+, Firefox, Chrome, Opera, Safari
+			    xmlhttp=new XMLHttpRequest();
+			    }
+			  else
+			    {// code for IE6, IE5
+			    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			    }
+			  xmlhttp.open("get", "http://maps.googleapis.com/maps/api/distancematrix/json?origins="+
+					  ojb+","+okb+
+					  "&destinations="+place.geometry.location.jb+","+place.geometry.location.kb+
+					  "&sensor=false", true);  
+		      xmlhttp.onreadystatechange = function(){
+		    	  if(xmlhttp.readyState == 4 && xmlhttp.status==200)  
+		    	    {  
+		    	     var info = xmlhttp.responseText;  
+		    	     eval("var json= " + info);  
+		    	     var distance=json.rows[0].elements[0].distance.value;
+		    	     var dtime=json.rows[0].elements[0].duration.value;
+
+		    	     document.getElementById("distance").value = distance;  
+		    	     document.getElementById("dtime").value = dtime; 
+		    	     }  
+		      };  
+		      xmlhttp.send(null);  
+		  }
 	});
 		   	
 	google.maps.event.addListener(map, 'bounds_changed', function() {
@@ -769,6 +832,8 @@ $(document).ready(function(){
             <input type="text" class="hidden" id="origLng" name="origLng" value=""></input>
             <input type="text" class="hidden" id="destLat" name="destLat" value=""></input>
             <input type="text" class="hidden" id="destLng" name="destLng" value=""></input>
+            <input type="text" class="hidden" id="distance" name="distance" value=""></input>
+            <input type="text" class="hidden" id="dtime" name="dtime" value=""></input>
             
             
 			</form>

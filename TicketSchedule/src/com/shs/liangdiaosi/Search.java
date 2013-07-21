@@ -82,8 +82,22 @@ public class Search extends HttpServlet {
 		myArgs.origLon = Double.parseDouble(request.getParameter("origLng"));
 		myArgs.destLat = Double.parseDouble(request.getParameter("destLat"));
 		myArgs.destLon = Double.parseDouble(request.getParameter("destLng"));
+		if (request.getParameter("who")!=null)
+		{
 		myArgs.userType = request.getParameter("who").equals("offer");
-		myArgs.commute = request.getParameter("commuteType").equals("commute");
+		}
+		else
+		{
+			myArgs.userType=false;
+		}
+		if (request.getParameter("commuteType")!=null)
+		{
+			myArgs.commute = request.getParameter("commuteType").equals("commute");
+		}
+		else
+		{
+			myArgs.commute = true;
+		}
 		myArgs.roundtrip = false;
 		
 		String time = request.getParameter("there_time_0");
