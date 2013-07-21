@@ -8,8 +8,12 @@
 <link href="./CSS/style.css" type="text/css" rel="stylesheet">
 <link href="./CSS/custom_login.css" type="text/css" rel="stylesheet">
 <script src="./JS/jquery-1.10.1.js"></script>
-
-<title>Insert title here</title>
+<script>
+function refreshCode_login(){
+	document.getElementById("verifyPic_login").src="./servlet/CheckCode";
+}
+</script>
+<title>Login</title>
 </head>
 <body>
 <div id="content_wrapper">

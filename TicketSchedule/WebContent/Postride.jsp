@@ -140,23 +140,23 @@ $(document).ready(function(){
 	$(".pillbuttons").children("div").click(function(){
 		switch ($(this).text())
 		{
-			case "0min":
+			case "10min":
 				this.className="first chosen";
 				this.parentNode.children[1].className="";
 				this.parentNode.children[2].className="last";
-				this.parentNode.children[3].value="0min";
+				this.parentNode.children[3].value="10";
 				break;
-			case "10-15min":
+			case "20min":
 				this.parentNode.children[0].className="first";
 				this.className="chosen";
 				this.parentNode.children[2].className="last";
-				this.parentNode.children[3].value="10-15min";
+				this.parentNode.children[3].value="20";
 				break;
-			case "30min+":
+			case "30min":
 				this.parentNode.children[0].className="first";
 				this.parentNode.children[1].className="";
 				this.className="last chosen";
-				this.parentNode.children[3].value="30min";
+				this.parentNode.children[3].value="30";
 				break;
 		}
 			
@@ -494,7 +494,7 @@ $(document).ready(function(){
 <div id="content_wrapper">
 	<div id="content_container" class="clearfix">
 		<div id="wide_column_left" class="newAddRideStyle">
-			<form action="/servlet/Postride" method="post" id="add_ride" class="standard requires_login_results" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
+			<form action="/TicketSchedule/servlet/Search" method="Post" id="add_ride" class="standard requires_login_results" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
 				<fieldset id="step_1">
 					<dl>
 						<dt>
@@ -718,8 +718,8 @@ $(document).ready(function(){
                                                 <span>Firm</span> <span class="last">Flexible</span>
                                             </div>
                                             <div class="pillbuttons">
-	                                            <div class="first">0min</div><div class="chosen">10-15min</div><div class="last">30min+</div>
-	                                            <input type="hidden" id="flex_global" name="flex_global" value="10-15min">
+	                                            <div class="first">10min</div><div class="chosen">20min</div><div class="last">30min</div>
+	                                            <input type="hidden" id="flex_global" name="flex_global" value="20">
 	                                        </div>
                                         </div>
                                     </li>
@@ -765,6 +765,12 @@ $(document).ready(function(){
                    </dd>
                 </dl>
             </fieldset>
+            <input type="text" class="hidden" id="origLat" name="origLat" value=""></input>
+            <input type="text" class="hidden" id="origLng" name="origLng" value=""></input>
+            <input type="text" class="hidden" id="destLat" name="destLat" value=""></input>
+            <input type="text" class="hidden" id="destLng" name="destLng" value=""></input>
+            
+            
 			</form>
 		</div>
 		<div id="post-map-canvas">

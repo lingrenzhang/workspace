@@ -234,7 +234,7 @@ window.onscroll = function(){
 							</h2>
 							<p>Post a ride as a driver or passenger and get notified when new matches are found!							
 							</p>
-							<a class="button post" href="">Post a ride</a>
+							<a class="button post" href="../Postride.jsp">Post a ride</a>
 						</div>
 					</div>
 				</div>

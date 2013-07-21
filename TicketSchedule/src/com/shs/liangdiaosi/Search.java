@@ -77,7 +77,32 @@ public class Search extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		rideInfoParameters myArgs = new rideInfoParameters();
+		myArgs.origLat = Double.parseDouble(request.getParameter("origLat"));
+		myArgs.origLon = Double.parseDouble(request.getParameter("origLng"));
+		myArgs.destLat = Double.parseDouble(request.getParameter("destLat"));
+		myArgs.destLon = Double.parseDouble(request.getParameter("destLng"));
+		myArgs.userType = request.getParameter("who").equals("offer");
+		myArgs.commute = request.getParameter("commuteType").equals("commute");
+		myArgs.roundtrip = false;
+		
+		String time = request.getParameter("there_time_0");
+		int flex = Integer.parseInt(request.getParameter("flex_global"));
+		
+		long time_ms = 1000*60*60*8; // 8 o'clock
+		long flex_ms = 1000*60*flex; // 15 minutes
+		myArgs.forwardTime = new Time(time_ms);
+		myArgs.forwardFlexibility = new Time(flex_ms);
+		
+		//TO DO: Sanity check
+		
+		List<rideInfoParameters> resultList = new ArrayList<rideInfoParameters>();
+		ScoreCalculator sc = new ScoreCalculator();
+		resultList=sc.filterByCoordinates(myArgs, 20);
+		
+		request.setAttribute("results", resultList);
+		RequestDispatcher rd = request.getRequestDispatcher("../search.jsp");
+		rd.forward(request, response);
 	}
 
 }
