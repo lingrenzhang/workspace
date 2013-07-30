@@ -79,4 +79,14 @@
     <servlet-name>CheckCode</servlet-name>
     <url-pattern>/servlet/CheckCode</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Login</display-name>
+    <servlet-name>Login</servlet-name>
+    <servlet-class>com.shs.liangdiaosi.Login</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Login</servlet-name>
+    <url-pattern>/servlet/Login</url-pattern>
+  </servlet-mapping>
 </web-app>

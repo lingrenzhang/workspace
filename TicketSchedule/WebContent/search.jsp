@@ -272,7 +272,7 @@ window.onscroll = function(){
 <script>
 
 </script>
-<title>Hitch-a-Ride</title>
+<title>Search</title>
 </head>
 
 

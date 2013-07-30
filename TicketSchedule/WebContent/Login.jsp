@@ -13,13 +13,14 @@ function refreshCode_login(){
 	document.getElementById("verifyPic_login").src="./servlet/CheckCode";
 }
 </script>
+
 <title>Login</title>
 </head>
 <body>
 <div id="content_wrapper">
 	<div id="content_container" class="clearfix">
 		<div id="login_panel">
-		<form method="post" id="login-Form" class="login-form" action="./Login.jsp">
+		<form method="post" id="login-Form" class="login-form" action="./servlet/Login">
 			<dl class="top clearfix">
 				<dt><label for="email">username</label></dt>
 				<dd style="border-color: rgb(173, 182, 201);">
@@ -37,39 +38,39 @@ function refreshCode_login(){
 			<div class="caps-lock-tips" id="capsLockMessage" style="display:none"></div>
 			<dl class="savepassword clearfix">
 				<dt>
-				<label title="Do not click it in pub environment" for="autoLogin" class="labelCheckbox">
+					<label title="Do not click it in pub environment" for="autoLogin" class="labelCheckbox">
 					<input type="checkbox" name="autoLogin" id="autoLogin" value="true" tabindex="4">AutoLogin</input>
-				</label>
+					</label>
 				</dt>
 				<dd>
-				<span class="getpassword" id="getpassword"><a href="" stats="home_findpassword">Forget PWD?</a></span>
+					<span class="getpassword" id="getpassword"><a href="" stats="home_findpassword">Forget PWD?</a></span>
 				</dd>
-				</dl>
-			<dl id="codeimg" class="codeimg clearfix">
-		<dt></dt>
-		<dd><img id="verifyPic_login" src="./servlet/CheckCode">
-			<a href="javascript:refreshCode_login();" id="swith">Switch</a>
+			</dl>
+			<dl id="codeimg" class="codeimg hidden">
+				<dt></dt>
+				<dd><img id="verifyPic_login" src="./servlet/CheckCode">
+					<a href="javascript:refreshCode_login();" id="swith">Switch</a>
 	
-		</dd>
-		</dl>
-		<dl id="code" class="code clearfix">
-		<dt><label for="code"></label></dt>
-		<dd>
-		<input id="icode" type="text" name="icode" class="input-text" tabindex="3" placeholder="Code" autocomplete="off">
-		<!--  <label class="codetip" id="codeTip" for="icode">Code</label> -->
-		</dd>
-		</dl>
-		<dl class="bottom">
-			<input type="hidden" name="origURL" value="">
-			<input type="hidden" name="key_id" value="1">
-			<input type="hidden" name="captcha_type" id="captcha_type" value="web_login">
-			<input type="submit" id="login" class="input-submit login-btn" stats="loginPage_login_button" value="Login" tabindex="5">
-		</dl>
+				</dd>
+			</dl>
+			<dl id="code" class="code hidden">
+				<dt><label for="code"></label></dt>
+				<dd>
+					<input id="icode" type="text" name="icode" class="input-text" tabindex="3" placeholder="Code" autocomplete="off">
+					<!--  <label class="codetip" id="codeTip" for="icode">Code</label> -->
+				</dd>
+			</dl>
+			<dl class="bottom">
+				<input type="hidden" name="origURL" value="">
+				<input type="hidden" name="key_id" value="1">
+				<input type="hidden" name="captcha_type" id="captcha_type" value="web_login">
+				<input type="submit" id="login" class="input-submit login-btn" stats="loginPage_login_button" value="Login" tabindex="5">
+			</dl>
 		</form>
 			
 		</div>
 	</div>
 </div>
-
+<input type="text" class="hidden" value="1"></input>
 </body>
 </html>

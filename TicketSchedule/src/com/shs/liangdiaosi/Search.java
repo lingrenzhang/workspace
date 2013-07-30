@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -78,6 +79,27 @@ public class Search extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		rideInfoParameters myArgs = new rideInfoParameters();
+		if (request.getParameter("commuteType")!=null)
+		{
+			myArgs.commute = request.getParameter("commuteType").equals("commute");
+		}
+		else
+		{
+			myArgs.commute = true;
+		}
+		
+		Cookie[] cookies = request.getCookies();
+		if (cookies!=null&&cookies.length!=0){
+			for (int i=0; i<cookies.length;i++){
+				Cookie cookie=cookies[i];
+				String cookieName=cookie.getName();
+				if(cookieName.equals("IsLogin"))
+				{
+					System.out.println("Already Login");
+					
+				}
+			}
+		}
 		myArgs.origLat = Double.parseDouble(request.getParameter("origLat"));
 		myArgs.origLon = Double.parseDouble(request.getParameter("origLng"));
 		myArgs.destLat = Double.parseDouble(request.getParameter("destLat"));
@@ -90,14 +112,7 @@ public class Search extends HttpServlet {
 		{
 			myArgs.userType=false;
 		}
-		if (request.getParameter("commuteType")!=null)
-		{
-			myArgs.commute = request.getParameter("commuteType").equals("commute");
-		}
-		else
-		{
-			myArgs.commute = true;
-		}
+		
 		myArgs.roundtrip = false;
 		
 		String time = request.getParameter("there_time_0");

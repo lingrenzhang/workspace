@@ -108,7 +108,7 @@ function initialize() {
  }
 
 </script>
-
+<title>Load Position</title>
 </head>
 <body>
 <div id="panel">

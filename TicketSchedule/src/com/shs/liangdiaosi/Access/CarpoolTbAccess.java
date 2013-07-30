@@ -110,6 +110,15 @@ public class CarpoolTbAccess {
 		return rs;
 	}
 	
+	public static ResultSet listAllGeoPosi() throws ClassNotFoundException, SQLException
+	{
+		ResultSet rs;
+		Connection con =CarpoolTbAccess.getConnection();
+		Statement sql=(Statement) con.createStatement();
+		rs=(ResultSet) sql.executeQuery("select recordId,origLat,origLon,destLat,destLon from carpooltb");
+		return rs;
+	}
+	
 	public static void insertLocation(int recordId, Float origlat,Float origlng,Float destlat,Float destlng, boolean batch) throws ClassNotFoundException, SQLException
 	{
 		Connection con;
@@ -135,6 +144,37 @@ public class CarpoolTbAccess {
 					", origLon=" + origlng +
 					", destLat=" + destlat +
 					", destLon=" + destlng +
+					" where recordid="+recordId);
+		}
+		catch (SQLException e)
+		{
+			System.err.println("SQLException:"+e.getMessage());
+		}
+	}
+	
+	public static void insertDisDua(int recordId, int dist,int dura, boolean batch) throws ClassNotFoundException, SQLException
+	{
+		Connection con;
+		if(batch)
+		{
+			if (objConn==null)
+			{
+				objConn= CarpoolTbAccess.getConnection();
+			}
+			con=objConn;
+		}
+		else
+		{
+			con=CarpoolTbAccess.getConnection();
+		}
+		
+		//Do santity check here
+		
+		try
+		{
+			Statement sql=(Statement) con.createStatement();
+			sql.execute("update CarpoolTb set dist="+dist+
+					", dura=" + dura +
 					" where recordid="+recordId);
 		}
 		catch (SQLException e)
