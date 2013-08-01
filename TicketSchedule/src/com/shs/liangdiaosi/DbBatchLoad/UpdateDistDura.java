@@ -23,7 +23,11 @@ public class UpdateDistDura {
 		ResultSet rs;
 		rs = CarpoolTbAccess.listAllGeoPosi();
 		//while (rs.next())
-		for (int i=0;i<1;i++) //due to api call limitation.
+		for (int i=0;i<2000;i++)
+		{
+			rs.next(); //363,662
+		}
+		for (int i=2000;i<2200;i++) //due to api call limitation.
 		{
 			rs.next();	
 			int recordid = rs.getInt("recordid");
@@ -56,8 +60,11 @@ public class UpdateDistDura {
 		    int duration = elements.getJSONObject(0).getJSONObject("duration").getInt("value");
 		    int distance = elements.getJSONObject(0).getJSONObject("distance").getInt("value");
 		    
-		    
-
+		    CarpoolTbAccess.insertDisDua(recordid, distance, duration, true);
+		    if (duration!=0)
+		    {
+		    System.out.println(recordid+" : "+distance+"m, " +duration+"s, "+distance/duration);
+		    }
 		}
 	}
 	

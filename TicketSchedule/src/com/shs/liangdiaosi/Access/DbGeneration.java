@@ -40,7 +40,9 @@ public class DbGeneration {
 		"origLon",
 		"destLat",
 		"destLon",
-		"tripTime"
+		"tripTime",
+		"dist",
+		"dura"
 	};
 	public static final String[] CarpoolTbcolumnTypes = {
 		"VARCHAR(30)", //"userName"
@@ -67,7 +69,9 @@ public class DbGeneration {
 		"DECIMAL(10,6)",//"origLon",
 		"DECIMAL(10,6)",//"destLat",
 		"DECIMAL(10,6)",//"destLon"
-		"TIME"//"tripTime"
+		"TIME",//"tripTime"
+		"INT(10)",//"dist"
+		"INT(10)"//"dura"
 	};
 
 	

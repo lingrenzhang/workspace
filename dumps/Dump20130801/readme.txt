@@ -1,0 +1,1 @@
+This dump is with duration and distance information
