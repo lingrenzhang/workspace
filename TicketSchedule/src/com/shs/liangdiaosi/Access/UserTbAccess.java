@@ -1,51 +1,57 @@
 package com.shs.liangdiaosi.Access;
-import java.sql.*;
 
-public class userDBAccess 
-	{
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class UserTbAccess {
 	    //id char(20)
 	    //password char(20)
 	    //emailinformation char(30)
 	    //Maintain the DB matches this class content
+		public static Connection objConn; //This reference is used for batch job.
 		
-		private boolean test = false;
-		
-		public void setTest(boolean test){
-			this.test = test;
-		}
-		
-		public static Connection getConnection(boolean test) throws SQLException,	
+		public static Connection getConnection() throws SQLException,	
 		java.lang.ClassNotFoundException
 		{
 			String url = "jdbc:mysql://localhost/ticketschedule";
-			if(test) url += "_test"; // ticketschedule_test is the test db
 			Class.forName("com.mysql.jdbc.Driver");
 			String userName="admin";
 			String password="admin";
-			Connection con = DriverManager.getConnection(url,userName,password);
-			return con;
+			objConn = DriverManager.getConnection(url,userName,password);
+			return objConn;
 		}
 		
 		
-		public void insertValue(String id,String password,String emailinformation)
+		public void insertValue(String userName,String password,String email, String userLevel)
 		{
-			if (id==null)
+			if (userName==null)
 			{
-				id="";
+				userName="";
 			}
 			if (password==null)
 			{
 				password="";
 			}
-			if (emailinformation==null)
+			if (email==null)
 			{
-				emailinformation="";
+				email="";
+			}
+			if (userLevel==null)
+			{
+				userLevel="";
 			}
 			try
 			{
-				Connection con=getConnection(test);
-				Statement sql=con.createStatement();
-				sql.execute("insert into userInfo values(\"" + id +"\",\""+password+"\",\""+emailinformation+"\")");
+				Statement sql;
+				if (objConn==null)
+				{
+					getConnection();
+				}
+				sql=objConn.createStatement();
+				sql.execute("insert into userTb (userName,password,email,userLevel) values(\"" + userName +"\",\""+password+"\",\""+email+"\")");
 			}
 			catch (java.lang.ClassNotFoundException e){
 				System.err.println("ClassNotFoundException:"+e.getMessage());
@@ -61,9 +67,13 @@ public class userDBAccess
         	ResultSet result=null;
         	try
         	{
-	        	Connection con= getConnection(test);
-				Statement sql = con.createStatement();
-				String query = "select * from userInfo";
+				Statement sql;
+				if (objConn==null)
+				{
+					getConnection();
+				}
+				sql=objConn.createStatement();
+				String query = "select * from userTb";
 				result = sql.executeQuery(query);
 
         	}
@@ -82,9 +92,13 @@ public class userDBAccess
         	ResultSet result=null;
         	try
         	{
-	        	Connection con= getConnection(test);
-				Statement sql = con.createStatement();
-				String query = "select * from userInfo where id=\""+name+"\"";
+				Statement sql;
+				if (objConn==null)
+				{
+					getConnection();
+				}
+				sql=objConn.createStatement();
+				String query = "select * from userTb where userName=\""+name+"\"";
 				result = sql.executeQuery(query);
 
         	}
@@ -98,16 +112,19 @@ public class userDBAccess
 			return result;
         }
         
-        public ResultSet selectByRecordId(String RecordId)
+        public ResultSet selectByUserId(int userId)
         {
         	ResultSet result=null;
         	try
         	{
-	        	Connection con= getConnection(test);
-				Statement sql = con.createStatement();
-				String query = "select * from userInfo where id=\""+RecordId+"\"";
+				Statement sql;
+				if (objConn==null)
+				{
+					getConnection();
+				}
+				sql=objConn.createStatement();
+				String query = "select * from userTb where userId=\""+userId+"\"";
 				result = sql.executeQuery(query);
-
         	}
 			catch (java.lang.ClassNotFoundException e){
 				System.err.println("ClassNotFoundException:"+e.getMessage());
@@ -119,5 +136,14 @@ public class userDBAccess
 			return result;
         }
 		
-
+        protected void finalize(){
+        	if (objConn!=null){
+    			try {
+    				objConn.close();
+    			} catch (SQLException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}
+    		}
+        }
 }

@@ -9,6 +9,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.shs.liangdiaosi.Access.UserTbAccess;
 
 /**
  * Servlet implementation class Login
@@ -29,10 +32,18 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Check whether user is valid, default as valid now.
-		PrintWriter out = response.getWriter();
-		request.getSession().setAttribute("IsLogin", "true");
+		HttpSession session;
+		session = request.getSession();
+		String UserName = request.getParameter("email"); 
+		UserTbAccess userTb=new UserTbAccess();
+		userTb.selectByName("");
+		session.setAttribute("IsLogin", "true");
+		session.setAttribute("UserName", request.getParameter("email"));
+		session.setAttribute("", "");
+		
+
+		
 		request.getSession().setMaxInactiveInterval(60*30);
-		out.print("User: "+request.getParameter("username")+ " logon");
 		response.sendRedirect("/TicketSchedule/Postride.jsp");
 	}
 
@@ -45,9 +56,8 @@ public class Login extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		StringBuffer address = request.getRequestURL();
 		request.getSession().setAttribute("IsLogin", "true");
+		request.getSession().setAttribute("UserName", request.getParameter("email"));
 		request.getSession().setMaxInactiveInterval(60*30);
-		out.print("User: "+request.getParameter("email")+ " logon");
-		out.print(address);
 		response.sendRedirect("/TicketSchedule/Postride.jsp");
 		
 	}

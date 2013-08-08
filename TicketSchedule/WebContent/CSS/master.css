@@ -17,6 +17,42 @@ text-decoration: none;
 color: #0d77b6;
 }
 
+#header_wrap
+{
+	margin : 0 auto;
+	width: 990px;
+}
+#header_wrap #logo_wrap
+{
+	display: block;
+	position: absolute;
+	padding: 15px 60px 4px;
+	line-height: 14px;
+	margin: 0 auto;
+	width: 350px;
+	height:125px;
+}
+
+#logo
+{
+	padding-top:2px;
+	width: 319px;
+	height:123px;
+	background: url('/TicketSchedule/Picture/hitridelogo.jpg');
+}
+
+#header_wrap #user_info_wrap
+{
+	display: block;
+    position: absolute;
+    left: 500px;
+ 	padding: 15px 100px 4px;
+	line-height: 14px;
+	margin: 0 auto;
+	width: 500px;
+	height:125px;
+}
+
 #action {
 	position: relative;
 	margin-bottom: 30px;
@@ -324,8 +360,14 @@ font-weight: 400;
 
 /*------------------------------------ Content --------------------------------*/
 #content_wrapper {
-    margin: 0 auto;
+    margin: 123px auto;
     width: 990px;
+}
+
+#content_container {
+    margin: 0 auto;
+    padding: 15px 15px 4px 15px;
+    width: 1000px;
 }
 
 #search_index #content, 

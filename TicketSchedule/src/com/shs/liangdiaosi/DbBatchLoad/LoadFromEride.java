@@ -1,6 +1,5 @@
 package com.shs.liangdiaosi.DbBatchLoad;
 import com.shs.liangdiaosi.Access.CarpoolTbAccess;
-import com.shs.liangdiaosi.Access.userDBAccess;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,7 +21,7 @@ import org.htmlparser.util.NodeList;
 
 public class LoadFromEride {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-		Connection conn = userDBAccess.getConnection(true);
+		Connection conn = CarpoolTbAccess.getConnection();
     	 try {
 	            String sCurrentLine;
 	            String sTotalString;

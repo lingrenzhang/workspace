@@ -89,4 +89,14 @@
     <servlet-name>Login</servlet-name>
     <url-pattern>/servlet/Login</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MessageBox</display-name>
+    <servlet-name>MessageBox</servlet-name>
+    <servlet-class>com.shs.liangdiaosi.MessageBox</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MessageBox</servlet-name>
+    <url-pattern>/servlet/MessageBox</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -33,15 +33,11 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<link href="./CSS/master.css" type="text/css" rel="stylesheet">
-<link href="./CSS/style.css" type="text/css" rel="stylesheet">
-<link href="../CSS/master.css" type="text/css" rel="stylesheet">
-<link href="../CSS/style.css" type="text/css" rel="stylesheet">
+<link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
+<link href="/TicketSchedule/CSS/style.css" type="text/css" rel="stylesheet">
+<link href="/TicketSchedule/CSS/custom_jqueryui.css" type="text/css" rel="stylesheet">
 
-<script src="./JS/jquery-1.10.1.js"></script>
-<script src="./JS/search.js"></script>
-<script src="../JS/jquery-1.10.1.js"></script>
-<script src="../JS/search.js"></script>
+<script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
 <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
 </script>
@@ -258,7 +254,7 @@ $(document).ready(function(){
 window.onscroll = function(){
     var t = document.documentElement.scrollTop || document.body.scrollTop; 
     
-    if( t >= 65 ) {
+    if( t >= 180 ) {
     	var div = document.getElementById("floatwrap");
     	div.className="floatwrap fixed";
     } else {
@@ -278,13 +274,14 @@ window.onscroll = function(){
 
 <body id="search_index">
 <div id="header_wrap">
+	<div id="logo_wrap">
+		<div id="logo">
+		</div>
+	</div>
 </div>
-<div id="content_wrap">
+<div id="content_wrapper">
 	<div id="content_container">
-	<link href="./CSS/custom_jqueryui.css" 
-		type="text/css" rel="stylesheet">
-	<link href="../CSS/custom_jqueryui.css" 
-		type="text/css" rel="stylesheet">
+
 		<div id="content">
 			<div id="head">
 				<form class="search" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
@@ -350,7 +347,7 @@ window.onscroll = function(){
 					<% Iterator<rideInfoParameters> itr = results.iterator(); %>
 					<% while (itr.hasNext()){ %>
 					<% 	rideInfoParameters rideInfo = itr.next(); %>
-    				<a href="./id;">
+    				<a href="./MessageBox?id=<%=rideInfo.username %>;">
 						<div class="entry">
 						<% if (!rideInfo.userType){ %>
 							<div class="passenger_box">

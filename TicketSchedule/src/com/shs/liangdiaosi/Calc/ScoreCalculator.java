@@ -83,7 +83,7 @@ public class ScoreCalculator {
 		// find the top few matching records (and return recordID's) based on coordinates.
 		List<rideInfoParameters> results = new ArrayList<rideInfoParameters>();
 		try {
-			Connection con= userDBAccess.getConnection(false);
+			Connection con= CarpoolTbAccess.getConnection();
 			Statement sql=con.createStatement();
 			String tbName = (myArgs.commute) ? "carpooltb" : "traveltb"; // traveltb still under construction
 			String query = "Select * from " + tbName + " where roundtrip=" + myArgs.roundtrip.toString();

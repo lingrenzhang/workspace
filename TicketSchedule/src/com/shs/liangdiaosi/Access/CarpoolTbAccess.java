@@ -185,6 +185,18 @@ public class CarpoolTbAccess {
 		
 	}
 	
+	
+	protected void finalize(){
+		if (objConn!=null){
+			try {
+				objConn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public static void main(String args[]) throws Exception
 	{
 		//unit test the insert

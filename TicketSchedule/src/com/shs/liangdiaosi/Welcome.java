@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.shs.liangdiaosi.Access.userDBAccess;
+import com.shs.liangdiaosi.Access.UserTbAccess;
 
 /**
  * Servlet implementation class Welcome
@@ -45,8 +45,8 @@ public class Welcome extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=utf-8");
-		userDBAccess userDB=new userDBAccess();
-		userDB.insertValue(request.getParameter("name"), request.getParameter("pwd"), "");
+		UserTbAccess userDB=new UserTbAccess();
+		userDB.insertValue(request.getParameter("name"), request.getParameter("pwd"), "","");
 		response.sendRedirect("../ShowUser.jsp");
 
 	}

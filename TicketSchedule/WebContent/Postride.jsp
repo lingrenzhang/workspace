@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -9,12 +8,18 @@
 <% 
 	String IsLogin=null;
     IsLogin =(String) request.getSession().getAttribute("IsLogin");
+    String user=null;
+    if (IsLogin!= null)
+    {
+    	
+    }
 %>
     
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<link href="./CSS/style.css" type="text/css" rel="stylesheet">
-<script src="./JS/jquery-1.10.1.js"></script>
+<link href="/TicketSchedule/CSS/style.css" type="text/css" rel="stylesheet">
+<link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
+<script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
 <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
 </script>
@@ -567,6 +572,23 @@ $(document).ready(function(){
 <title>Post Ride</title>
 </head>
 <body>
+<div id="header_wrap">
+	<div id="logo_wrap">
+		<div id="logo">
+		</div>
+	</div>
+	<div id="user_info_wrap">
+		<div id="user_info">
+			user_info
+		</div>
+		<div id="user_level">
+			user_level
+		</div>
+		<div id="user_pic">
+			user_pic
+		</div>
+	</div>
+</div>
 <div id="content_wrapper">
 	<div id="content_container" class="clearfix">
 		<div id="wide_column_left" class="newAddRideStyle">
@@ -808,7 +830,7 @@ $(document).ready(function(){
                                  	<li><a class="edit" href="javascript:void(0)" id="edit_times_7" style="visibility: hidden;">edit</a></li>
                                  </ul>
                             </div>
-                        </div>
+                    </div>
 
                     </dd>
                </dl>
