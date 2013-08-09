@@ -22,14 +22,12 @@ public class UpdateDistDura {
 	{
 		ResultSet rs;
 		rs = CarpoolTbAccess.listAllGeoPosi();
-		//while (rs.next())
-		for (int i=0;i<2000;i++)
+		int counter=0;
+		//for(int i=0; i<1000; i++){
+		//	rs.next();
+		//}
+		while (rs.next())
 		{
-			rs.next(); //363,662
-		}
-		for (int i=2000;i<2200;i++) //due to api call limitation.
-		{
-			rs.next();	
 			int recordid = rs.getInt("recordid");
 			double origLat 	= rs.getDouble("origLat");
 			double origLon 	= rs.getDouble("origLon");
@@ -65,6 +63,16 @@ public class UpdateDistDura {
 		    {
 		    System.out.println(recordid+" : "+distance+"m, " +duration+"s, "+distance/duration);
 		    }
+
+		    counter++;
+			if(counter%10==0){
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	
