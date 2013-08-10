@@ -9,9 +9,15 @@
 	String IsLogin=null;
     IsLogin =(String) request.getSession().getAttribute("IsLogin");
     String user=null;
+    String name = "default";
+    String email = "default";
+    String level = "default";
+    String pic  = "default";
     if (IsLogin!= null)
     {
-    	
+    	name = (String) request.getSession().getAttribute("userName");
+    	email = (String) request.getSession().getAttribute("emailAddress");
+    	level = (String) request.getSession().getAttribute("userLevel");
     }
 %>
     
@@ -457,8 +463,8 @@ $(document).ready(function(){
 
 		      
 	  	  place = places[0];
-		  document.getElementById("origLat").value=place.geometry.location.jb;
-		  document.getElementById("origLng").value=place.geometry.location.kb;
+		  document.getElementById("origLat").value=place.geometry.location.lb;
+		  document.getElementById("origLng").value=place.geometry.location.mb;
 		  var djb=document.getElementById("destLat").value;
 		  var dkb=document.getElementById("destLng").value;
 		  if (djb !="" && dkb!="")
@@ -473,7 +479,7 @@ $(document).ready(function(){
 			    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 			    }
 			  xmlhttp.open("get", "http://maps.googleapis.com/maps/api/distancematrix/json?origins="+
-					  place.geometry.location.jb+","+place.geometry.location.kb+
+					  place.geometry.location.lb+","+place.geometry.location.mb+
 					  "&destinations="+djb+","+dkb+"&sensor=false", true);  
 		      xmlhttp.onreadystatechange = function(){
 		    	  if(xmlhttp.readyState == 4 && xmlhttp.status==200)  
@@ -519,8 +525,8 @@ $(document).ready(function(){
 	      }
 	      map.fitBounds(bounds);
 	      place = places[0];
-		  document.getElementById("destLat").value=place.geometry.location.jb;
-		  document.getElementById("destLng").value=place.geometry.location.kb;
+		  document.getElementById("destLat").value=place.geometry.location.lb;
+		  document.getElementById("destLng").value=place.geometry.location.mb;
 		  var ojb=document.getElementById("origLat").value;
 		  var okb=document.getElementById("origLng").value;
 		  if (ojb !="" && okb!="")
@@ -536,7 +542,7 @@ $(document).ready(function(){
 			    }
 			  xmlhttp.open("get", "http://maps.googleapis.com/maps/api/distancematrix/json?origins="+
 					  ojb+","+okb+
-					  "&destinations="+place.geometry.location.jb+","+place.geometry.location.kb+
+					  "&destinations="+place.geometry.location.lb+","+place.geometry.location.mb+
 					  "&sensor=false", true);  
 		      xmlhttp.onreadystatechange = function(){
 		    	  if(xmlhttp.readyState == 4 && xmlhttp.status==200)  
@@ -578,14 +584,17 @@ $(document).ready(function(){
 		</div>
 	</div>
 	<div id="user_info_wrap">
+
+		<div class="userpic">
+				<div class="username"><%=name %></div>
+				<img src=<%="/TicketSchedule/UserProfile/"+name+".jpg" %> alt="Profile Picture"></img>
+				<span class="passenger"></span>
+		</div>
 		<div id="user_info">
-			user_info
+			Welcome <%= name %> 
 		</div>
 		<div id="user_level">
-			user_level
-		</div>
-		<div id="user_pic">
-			user_pic
+			Level: <%= level %>
 		</div>
 	</div>
 </div>

@@ -30,6 +30,21 @@
 	}
 	boolean commute = true;
 %>
+<% 
+	String IsLogin=null;
+    IsLogin =(String) request.getSession().getAttribute("IsLogin");
+    String user=null;
+    String name = "default";
+    String email = "default";
+    String level = "default";
+    String pic  = "default";
+    if (IsLogin!= null)
+    {
+    	name = (String) request.getSession().getAttribute("userName");
+    	email = (String) request.getSession().getAttribute("emailAddress");
+    	level = (String) request.getSession().getAttribute("userLevel");
+    }
+%>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
@@ -238,15 +253,15 @@ $(document).ready(function(){
     google.maps.event.addListener(searchBoxO, 'places_changed', function() {
 	var places = searchBoxO.getPlaces();
 	place = places[0];
-	document.getElementById("origLat").value=place.geometry.location.jb;
-	document.getElementById("origLng").value=place.geometry.location.kb;
+	document.getElementById("origLat").value=place.geometry.location.lb;
+	document.getElementById("origLng").value=place.geometry.location.mb;
 	});
 
     google.maps.event.addListener(searchBoxD, 'places_changed', function() {
     	var places = searchBoxD.getPlaces();
     	place = places[0];
-    	document.getElementById("destLat").value=place.geometry.location.jb;
-    	document.getElementById("destLng").value=place.geometry.location.kb;
+    	document.getElementById("destLat").value=place.geometry.location.lb;
+    	document.getElementById("destLng").value=place.geometry.location.mb;
     	});
 });
 
@@ -276,6 +291,21 @@ window.onscroll = function(){
 <div id="header_wrap">
 	<div id="logo_wrap">
 		<div id="logo">
+		</div>
+	</div>
+	
+	<div id="user_info_wrap">
+
+		<div class="userpic">
+				<div class="username"><%=name %></div>
+				<img src=<%="/TicketSchedule/UserProfile/"+name+".jpg" %> alt="Profile Picture"></img>
+				<span class="passenger"></span>
+		</div>
+		<div id="user_info">
+			Welcome <%= name %> 
+		</div>
+		<div id="user_level">
+			Level: <%= level %>
 		</div>
 	</div>
 </div>
@@ -370,7 +400,7 @@ window.onscroll = function(){
 						<% } %>
 							<div class="userpic">
 								<div class="username"><%=rideInfo.username %></div>
-								<img src="" alt="Profile Picture"></img>
+								<img src=<%="/TicketSchedule/UserProfile/"+rideInfo.username+".jpg" %> alt="Profile Picture"></img>
 								<span class="passenger"></span>
 							</div>
 							<div class="inner_content">

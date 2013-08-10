@@ -2,6 +2,8 @@ package com.shs.liangdiaosi;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,19 +34,8 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Check whether user is valid, default as valid now.
-		HttpSession session;
-		session = request.getSession();
-		String UserName = request.getParameter("email"); 
-		UserTbAccess userTb=new UserTbAccess();
-		userTb.selectByName("");
-		session.setAttribute("IsLogin", "true");
-		session.setAttribute("UserName", request.getParameter("email"));
-		session.setAttribute("", "");
 		
-
-		
-		request.getSession().setMaxInactiveInterval(60*30);
-		response.sendRedirect("/TicketSchedule/Postride.jsp");
+		response.sendRedirect("/TicketSchedule/Login.jsp");
 	}
 
 	/**
@@ -53,13 +44,61 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		PrintWriter out = response.getWriter();
 		StringBuffer address = request.getRequestURL();
-		request.getSession().setAttribute("IsLogin", "true");
-		request.getSession().setAttribute("UserName", request.getParameter("email"));
-		request.getSession().setMaxInactiveInterval(60*30);
-		response.sendRedirect("/TicketSchedule/Postride.jsp");
-		
+		HttpSession session;
+		session = request.getSession();
+		String UserName = request.getParameter("email"); 
+		UserTbAccess userTb=new UserTbAccess();
+		ResultSet rs = userTb.selectByName(UserName,false);
+
+		try {
+			if (rs.next())
+			{
+				if(rs.getString("password").equalsIgnoreCase(request.getParameter("password")))
+				{
+					
+					session.setAttribute("IsLogin", "true");
+					session.setAttribute("userName", UserName);
+					session.setAttribute("emailAddress", rs.getString("emailAddress"));
+					session.setAttribute("userLevel",rs.getString("userLevel"));
+					
+					request.getSession().setMaxInactiveInterval(60*120);
+					String from = (String) session.getAttribute("fromLocation");
+					request.removeAttribute("fromLocation");
+					if (from!=null)
+					{
+						String queryString = (String)session.getAttribute("queryString");
+						session.removeAttribute("queryString");
+						if (queryString == null)
+						{
+							response.sendRedirect(from);
+						}
+						else
+						{
+							response.sendRedirect(from+"?"+queryString);
+						}
+					}
+					else
+					{
+						response.sendRedirect("/TicketSchedule/Postride.jsp");
+					}
+				}
+				else
+				{
+					request.setAttribute("isFailed", "true");
+					response.sendRedirect("/TicketSchedule/Login.jsp");
+				}
+			}
+			else
+			{
+				request.setAttribute("isFailed", "true");
+				response.sendRedirect("/TicketSchedule/Login.jsp");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
 	}
 
 }

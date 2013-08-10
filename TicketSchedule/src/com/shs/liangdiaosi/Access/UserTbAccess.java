@@ -87,20 +87,27 @@ public class UserTbAccess {
 			return result;
         }
         
-        public ResultSet selectByName(String name)
+        public ResultSet selectByName(String name, boolean batch)
         {
         	ResultSet result=null;
         	try
         	{
 				Statement sql;
-				if (objConn==null)
+				if (batch)
 				{
-					getConnection();
+					if (objConn==null)
+					{
+						getConnection();
+					}
+					sql=objConn.createStatement();
 				}
-				sql=objConn.createStatement();
+				else
+				{
+					Connection conn = getConnection();
+					sql=conn.createStatement();
+				}
 				String query = "select * from userTb where userName=\""+name+"\"";
 				result = sql.executeQuery(query);
-
         	}
 			catch (java.lang.ClassNotFoundException e){
 				System.err.println("ClassNotFoundException:"+e.getMessage());

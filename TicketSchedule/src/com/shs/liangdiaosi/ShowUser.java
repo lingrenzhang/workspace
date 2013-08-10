@@ -37,7 +37,7 @@ public class ShowUser extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UserTbAccess userDB=new UserTbAccess();
-		ResultSet rs=userDB.selectByName(request.getParameter("name"));
+		ResultSet rs=userDB.selectByName(request.getParameter("name"),false);
 		if (rs!=null)
 		{
 			request.setAttribute("results", rs);

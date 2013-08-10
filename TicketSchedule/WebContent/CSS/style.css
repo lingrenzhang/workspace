@@ -104,7 +104,7 @@ font-weight: 700;
 }
 
 form.standard dd input, form.standard dd textarea, .zdialog textarea {
-background: #FFFFFF url('/assets/bg_input_text.gif') top repeat-x;
+background: #FFFFFF url('/TicketSchedule/Picture/bg_input_text.gif') top repeat-x;
 border: 1px solid #C1D5E8;
 float: left;
 font-size: 16px;
