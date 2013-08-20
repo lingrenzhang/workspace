@@ -42,7 +42,7 @@
     {
     	name = (String) request.getSession().getAttribute("userName");
     	email = (String) request.getSession().getAttribute("emailAddress");
-    	level = (String) request.getSession().getAttribute("userLevel");
+    	level = request.getSession().getAttribute("userLevel").toString();
     }
 %>
 
@@ -253,15 +253,15 @@ $(document).ready(function(){
     google.maps.event.addListener(searchBoxO, 'places_changed', function() {
 	var places = searchBoxO.getPlaces();
 	place = places[0];
-	document.getElementById("origLat").value=place.geometry.location.lb;
-	document.getElementById("origLng").value=place.geometry.location.mb;
+	document.getElementById("origLat").value=place.geometry.location.mb;
+	document.getElementById("origLng").value=place.geometry.location.nb;
 	});
 
     google.maps.event.addListener(searchBoxD, 'places_changed', function() {
     	var places = searchBoxD.getPlaces();
     	place = places[0];
-    	document.getElementById("destLat").value=place.geometry.location.lb;
-    	document.getElementById("destLng").value=place.geometry.location.mb;
+    	document.getElementById("destLat").value=place.geometry.location.mb;
+    	document.getElementById("destLng").value=place.geometry.location.nb;
     	});
 });
 

@@ -166,11 +166,12 @@ font-family: Tahoma,Verdana,STHeiTi,simsun,sans-serif;
 	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 1px 0 rgba(0, 0, 0, 0.6);
 	color: #FFFFFF !important;
 	display: inline-block;
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: 500;
+	width:90px;
 	height: 30px;
 	line-height: 30px;
-	padding: 0 25px;
+	padding: 0 10px;
 	position: relative;
 	text-align: center;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
@@ -178,3 +179,24 @@ font-family: Tahoma,Verdana,STHeiTi,simsun,sans-serif;
 	float: right;
 }
 
+#register{
+	background-clip: padding-box;
+	background-color: #5BA53C;
+	background-image: linear-gradient(#8ABC6B, #579544);
+	border: 1px solid rgba(0, 0, 0, 0.4);
+	border-radius: 4px 4px 4px 4px;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 1px 0 rgba(0, 0, 0, 0.6);
+	color: #FFFFFF !important;
+	display: inline-block;
+	font-size: 16px;
+	font-weight: 500;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 10px;
+	position: relative;
+	text-align: center;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+	margin-top: 15px;
+	float: left;
+	width: 90px;
+}

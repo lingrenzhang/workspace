@@ -17,7 +17,7 @@
     {
     	name = (String) request.getSession().getAttribute("userName");
     	email = (String) request.getSession().getAttribute("emailAddress");
-    	level = (String) request.getSession().getAttribute("userLevel");
+    	level = request.getSession().getAttribute("userLevel").toString();
     }
 %>
     
@@ -463,8 +463,8 @@ $(document).ready(function(){
 
 		      
 	  	  place = places[0];
-		  document.getElementById("origLat").value=place.geometry.location.lb;
-		  document.getElementById("origLng").value=place.geometry.location.mb;
+		  document.getElementById("origLat").value=place.geometry.location.mb;
+		  document.getElementById("origLng").value=place.geometry.location.nb;
 		  var djb=document.getElementById("destLat").value;
 		  var dkb=document.getElementById("destLng").value;
 		  if (djb !="" && dkb!="")
@@ -479,7 +479,7 @@ $(document).ready(function(){
 			    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 			    }
 			  xmlhttp.open("get", "http://maps.googleapis.com/maps/api/distancematrix/json?origins="+
-					  place.geometry.location.lb+","+place.geometry.location.mb+
+					  place.geometry.location.mb+","+place.geometry.location.nb+
 					  "&destinations="+djb+","+dkb+"&sensor=false", true);  
 		      xmlhttp.onreadystatechange = function(){
 		    	  if(xmlhttp.readyState == 4 && xmlhttp.status==200)  
@@ -525,8 +525,8 @@ $(document).ready(function(){
 	      }
 	      map.fitBounds(bounds);
 	      place = places[0];
-		  document.getElementById("destLat").value=place.geometry.location.lb;
-		  document.getElementById("destLng").value=place.geometry.location.mb;
+		  document.getElementById("destLat").value=place.geometry.location.mb;
+		  document.getElementById("destLng").value=place.geometry.location.nb;
 		  var ojb=document.getElementById("origLat").value;
 		  var okb=document.getElementById("origLng").value;
 		  if (ojb !="" && okb!="")
@@ -542,7 +542,7 @@ $(document).ready(function(){
 			    }
 			  xmlhttp.open("get", "http://maps.googleapis.com/maps/api/distancematrix/json?origins="+
 					  ojb+","+okb+
-					  "&destinations="+place.geometry.location.lb+","+place.geometry.location.mb+
+					  "&destinations="+place.geometry.location.mb+","+place.geometry.location.nb+
 					  "&sensor=false", true);  
 		      xmlhttp.onreadystatechange = function(){
 		    	  if(xmlhttp.readyState == 4 && xmlhttp.status==200)  

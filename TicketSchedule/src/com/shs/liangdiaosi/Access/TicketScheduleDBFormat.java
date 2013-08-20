@@ -112,18 +112,22 @@ public class TicketScheduleDBFormat {
 	public static final String[] UserTbcolumns={
 		// login info
 		"userId",
-		"userName",
-		"password",
 		"emailAddress",
+		"password",
+		"givenname",
+		"surename",
+		"address",
 		"userLevel"
 	};
 	
 	public static final String[] UserTbcolumnTypes = {
-		"INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE",
-		"VARCHAR(30)", //"userName"
+		"INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE", //"userId"
+		"VARCHAR(50)", //"emailAddress"
 		"VARCHAR(30)", //"password"
-		"VARCHAR(30)",  //"emailAddress"
-		"VARCHAR(30)"
+		"VARCHAR(40)", //"givenname"
+		"VARCHAR(40)",  //"surename"
+		"VARCHAR(500)",  //"address"
+		"INT" //"userLevel"
 	};
 	
 	public static final String[] MessageTbcolumns={

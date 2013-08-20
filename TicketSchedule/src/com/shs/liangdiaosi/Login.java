@@ -43,7 +43,10 @@ public class Login extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+        String method = request.getParameter("method");
+        if (method.equals("register")){
+        	int i=1;
+        }
 		StringBuffer address = request.getRequestURL();
 		HttpSession session;
 		session = request.getSession();
@@ -58,7 +61,7 @@ public class Login extends HttpServlet {
 				{
 					
 					session.setAttribute("IsLogin", "true");
-					session.setAttribute("userName", UserName);
+					session.setAttribute("userName", rs.getString("givenname"));
 					session.setAttribute("emailAddress", rs.getString("emailAddress"));
 					session.setAttribute("userLevel",rs.getString("userLevel"));
 					

@@ -25,23 +25,11 @@ public class UserTbAccess {
 		}
 		
 		
-		public void insertValue(String userName,String password,String email, String userLevel)
+		public void insertValue(String userName,String password,String givenname, String surename,String address,int userLevel)
 		{
-			if (userName==null)
+			if (userLevel==0)
 			{
-				userName="";
-			}
-			if (password==null)
-			{
-				password="";
-			}
-			if (email==null)
-			{
-				email="";
-			}
-			if (userLevel==null)
-			{
-				userLevel="";
+				userLevel=1;
 			}
 			try
 			{
@@ -51,7 +39,13 @@ public class UserTbAccess {
 					getConnection();
 				}
 				sql=objConn.createStatement();
-				sql.execute("insert into userTb (userName,password,email,userLevel) values(\"" + userName +"\",\""+password+"\",\""+email+"\")");
+				sql.execute("insert into userTb (emailAddress,password,givenname,surename,address,userLevel) values(\"" 
+						+ userName + "\",\""
+						+ password + "\",\""
+						+ givenname + "\",\""
+						+ surename + "\",\""
+						+ address + "\","
+						+ userLevel + ")");
 			}
 			catch (java.lang.ClassNotFoundException e){
 				System.err.println("ClassNotFoundException:"+e.getMessage());
@@ -106,7 +100,7 @@ public class UserTbAccess {
 					Connection conn = getConnection();
 					sql=conn.createStatement();
 				}
-				String query = "select * from userTb where userName=\""+name+"\"";
+				String query = "select * from userTb where emailAddress=\""+name+"\"";
 				result = sql.executeQuery(query);
         	}
 			catch (java.lang.ClassNotFoundException e){

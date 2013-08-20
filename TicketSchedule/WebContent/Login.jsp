@@ -13,6 +13,14 @@
 function refreshCode_login(){
 	document.getElementById("verifyPic_login").src="./servlet/CheckCode";
 }
+
+$(document).ready(function(){
+
+	//------------------------register listener-------------------------
+	$("#register").click(function(){
+    	document.getElementById("method").value = "register";
+	});
+})
 </script>
 
 <title>Login</title>
@@ -65,7 +73,11 @@ function refreshCode_login(){
 				<input type="hidden" name="origURL" value="">
 				<input type="hidden" name="key_id" value="1">
 				<input type="hidden" name="captcha_type" id="captcha_type" value="web_login">
+				<input type="hidden" name="method" id="method" value = ""></input>
 				<input type="submit" id="login" class="input-submit login-btn" stats="loginPage_login_button" value="Login" tabindex="5">
+				<input type="button" id="register" class="input-submit regist-btn" stats="loginPage_regist_button" value="Register" tabindex="6"
+				 onclick="window.location = '/TicketSchedule/register.jsp'">
+				
 			</dl>
 		</form>
 			

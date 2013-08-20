@@ -1,0 +1,231 @@
+㈠ File类
+
+　　这个类包装了一个上传文件的所有信息。通过它，可以得到上传文件的文件名、文件大小、扩展名、文件数据等信息。
+
+　　File类主要提供以下方法：
+
+1、saveAs作用：将文件换名另存。
+
+原型：
+
+public void saveAs(java.lang.String destFilePathName)
+
+或
+
+public void saveAs(java.lang.String destFilePathName, int optionSaveAs)
+
+其中，destFilePathName是另存的文件名，optionSaveAs是另存的选项，该选项有三个值，分别是SAVEAS_PHYSICAL, SAVEAS_VIRTUAL，SAVEAS_AUTO。SAVEAS_PHYSICAL表明以操作系统的根目录为文件根目录另存文件， SAVEAS_VIRTUAL表明以Web应用程序的根目录为文件根目录另存文件，SAVEAS_AUTO则表示让组件决定，当Web应用程序的根目录存在另存文件的目录时，它会选择SAVEAS_VIRTUAL，否则会选择SAVEAS_PHYSICAL。
+
+例如，saveAs ("/upload/sample.zip",SAVEAS_PHYSICAL)执行后若Web服务器安装在C盘，则另存的文件名实际是c:\ upload\sample.zip。而saveAs("/upload/sample.zip",SAVEAS_VIRTUAL)执行后若Web应用程序的根目录是webapps/jspsmartupload，则另存的文件名实际是 webapps/jspsmartupload/upload/sample.zip。saveAs("/upload/sample.zip", SAVEAS_AUTO)执行时若Web应用程序根目录下存在upload目录，则其效果同saveAs("/upload/sample.zip", SAVEAS_VIRTUAL)，否则同saveAs("/upload/sample.zip",SAVEAS_PHYSICAL)。
+
+建议：对于Web程序的开发来说，最好使用SAVEAS_VIRTUAL，以便移植。
+
+2、isMissing
+
+作用：这个方法用于判断用户是否选择了文件，也即对应的表单项是否有值。选择了文件时，它返回false。未选文件时，它返回true。
+
+原型：public boolean isMissing()
+
+3、getFieldName
+
+作用：取HTML表单中对应于此上传文件的表单项的名字。
+
+原型：public String getFieldName()
+
+4、getFileName
+
+作用：取文件名（不含目录信息）
+
+原型：public String getFileName()
+
+5、getFilePathName
+
+作用：取文件全名（带目录）
+
+原型：public String getFilePathName
+
+6、getFileExt
+
+作用：取文件扩展名（后缀）
+
+原型：public String getFileExt()
+
+7、getSize
+
+作用：取文件长度（以字节计）
+
+原型：public int getSize()
+
+8、getBinaryData
+
+作用：取文件数据中指定位移处的一个字节，用于检测文件等处理。
+
+原型：public byte getBinaryData(int index)。其中，index表示位移，其值在0到getSize()-1之间。
+
+㈡ Files类
+
+　　这个类表示所有上传文件的集合，通过它可以得到上传文件的数目、大小等信息。有以下方法：
+
+1、getCount
+
+作用：取得上传文件的数目。
+
+原型：public int getCount()
+
+2、getFile
+
+作用：取得指定位移处的文件对象File（这是com.jspsmart.upload.File，不是java.io.File，注意区分）。
+
+原型：public File getFile(int index)。其中，index为指定位移，其值在0到getCount()-1之间。
+
+3、getSize
+
+作用：取得上传文件的总长度，可用于限制一次性上传的数据量大小。
+
+原型：public long getSize()
+
+4、getCollection
+
+作用：将所有上传文件对象以Collection的形式返回，以便其它应用程序引用，浏览上传文件信息。
+
+原型：public Collection getCollection()
+
+5、getEnumeration
+
+作用：将所有上传文件对象以Enumeration（枚举）的形式返回，以便其它应用程序浏览上传文件信息。
+
+原型：public Enumeration getEnumeration()
+
+㈢ Request类
+
+　　这个类的功能等同于JSP内置的对象request。只所以提供这个类，是因为对于文件上传表单，通过request对象无法获得表单项的值，必须通过jspSmartUpload组件提供的Request对象来获取。该类提供如下方法：
+
+1、getParameter
+
+作用：获取指定参数之值。当参数不存在时，返回值为null。
+
+原型：public String getParameter(String name)。其中，name为参数的名字。
+
+2、getParameterValues
+
+作用：当一个参数可以有多个值时，用此方法来取其值。它返回的是一个字符串数组。当参数不存在时，返回值为null。
+
+原型：public String[] getParameterValues(String name)。其中，name为参数的名字。
+
+3、getParameterNames
+
+作用：取得Request对象中所有参数的名字，用于遍历所有参数。它返回的是一个枚举型的对象。
+
+原型：public Enumeration getParameterNames()
+
+㈣ SmartUpload类这个类完成上传下载工作。
+
+A．上传与下载共用的方法：
+
+只有一个：initialize。
+
+作用：执行上传下载的初始化工作，必须第一个执行。
+
+原型：有多个，主要使用下面这个：
+
+public final void initialize(javax.servlet.jsp.PageContext pageContext)
+
+其中，pageContext为JSP页面内置对象（页面上下文）。
+
+B．上传文件使用的方法：
+
+1、upload
+
+作用：上传文件数据。对于上传操作，第一步执行initialize方法，第二步就要执行这个方法。
+
+原型：public void upload()
+
+2、save
+
+作用：将全部上传文件保存到指定目录下，并返回保存的文件个数。
+
+原型：public int save(String destPathName)
+
+和public int save(String destPathName,int option)
+
+其中，destPathName为文件保存目录，option为保存选项，它有三个值，分别是SAVE_PHYSICAL,SAVE_VIRTUAL和 SAVE_AUTO。（同File类的saveAs方法的选项之值类似）SAVE_PHYSICAL指示组件将文件保存到以操作系统根目录为文件根目录的目录下，SAVE_VIRTUAL指示组件将文件保存到以Web应用程序根目录为文件根目录的目录下，而SAVE_AUTO则表示由组件自动选择。
+
+注：save(destPathName)作用等同于save(destPathName,SAVE_AUTO)。
+
+3、getSize
+
+作用：取上传文件数据的总长度
+
+原型：public int getSize()
+
+4、getFiles
+
+作用：取全部上传文件，以Files对象形式返回，可以利用Files类的操作方法来获得上传文件的数目等信息。
+
+原型：public Files getFiles()
+
+5、getRequest
+
+作用：取得Request对象，以便由此对象获得上传表单参数之值。
+
+原型：public Request getRequest()
+
+6、setAllowedFilesList
+
+作用：设定允许上传带有指定扩展名的文件，当上传过程中有文件名不允许时，组件将抛出异常。
+
+原型：public void setAllowedFilesList(String allowedFilesList)
+
+其中，allowedFilesList为允许上传的文件扩展名列表，各个扩展名之间以逗号分隔。如果想允许上传那些没有扩展名的文件，可以用两个逗号表示。例如：setAllowedFilesList("doc,txt,,")将允许上传带doc和txt扩展名的文件以及没有扩展名的文件。
+
+7、setDeniedFilesList
+
+作用：用于限制上传那些带有指定扩展名的文件。若有文件扩展名被限制，则上传时组件将抛出异常。
+
+原型：public void setDeniedFilesList(String deniedFilesList)
+
+其中，deniedFilesList为禁止上传的文件扩展名列表，各个扩展名之间以逗号分隔。如果想禁止上传那些没有扩展名的文件，可以用两个逗号来表示。例如：setDeniedFilesList("exe,bat,,")将禁止上传带exe和bat扩展名的文件以及没有扩展名的文件。
+
+8、setMaxFileSize
+
+作用：设定每个文件允许上传的最大长度。
+
+原型：public void setMaxFileSize(long maxFileSize)
+
+其中，maxFileSize为为每个文件允许上传的最大长度，当文件超出此长度时，将不被上传。
+
+9、setTotalMaxFileSize
+
+作用：设定允许上传的文件的总长度，用于限制一次性上传的数据量大小。
+
+原型：public void setTotalMaxFileSize(long totalMaxFileSize)
+
+其中，totalMaxFileSize为允许上传的文件的总长度。
+
+C．下载文件常用的方法
+
+1、setContentDisposition
+
+作用：将数据追加到MIME文件头的CONTENT-DISPOSITION域。jspSmartUpload组件会在返回下载的信息时自动填写MIME文件头的CONTENT-DISPOSITION域，如果用户需要添加额外信息，请用此方法。
+
+原型：public void setContentDisposition(String contentDisposition)
+
+其中，contentDisposition为要添加的数据。如果contentDisposition为null，则组件将自动添加 "attachment;"，以表明将下载的文件作为附件，结果是IE浏览器将会提示另存文件，而不是自动打开这个文件（IE浏览器一般根据下载的文件扩展名决定执行什么操作，扩展名为doc的将用word程序打开，扩展名为pdf的将用acrobat程序打开，等等）。
+
+2、downloadFile
+
+作用：下载文件。
+
+原型：共有以下三个原型可用，第一个最常用，后两个用于特殊情况下的文件下载（如更改内容类型，更改另存的文件名）。
+
+① public void downloadFile(String sourceFilePathName)
+
+其中，sourceFilePathName为要下载的文件名（带目录的文件全名）
+
+② public void downloadFile(String sourceFilePathName,String contentType)
+
+其中，sourceFilePathName为要下载的文件名（带目录的文件全名）,contentType为内容类型（MIME格式的文件类型信息，可被浏览器识别）。
+
+③ public void downloadFile(String sourceFilePathName,String contentType,String destFileName)
+
+其中，sourceFilePathName为要下载的文件名（带目录的文件全名）,contentType为内容类型（MIME格式的文件类型信息，可被浏览器识别）,destFileName为下载后默认的另存文件名。
