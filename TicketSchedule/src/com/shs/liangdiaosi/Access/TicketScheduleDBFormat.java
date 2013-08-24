@@ -115,7 +115,7 @@ public class TicketScheduleDBFormat {
 		"emailAddress",
 		"password",
 		"givenname",
-		"surename",
+		"surname",
 		"address",
 		"userLevel"
 	};
@@ -125,7 +125,7 @@ public class TicketScheduleDBFormat {
 		"VARCHAR(50)", //"emailAddress"
 		"VARCHAR(30)", //"password"
 		"VARCHAR(40)", //"givenname"
-		"VARCHAR(40)",  //"surename"
+		"VARCHAR(40)",  //"surname"
 		"VARCHAR(500)",  //"address"
 		"INT" //"userLevel"
 	};
