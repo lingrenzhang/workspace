@@ -878,7 +878,7 @@ $(document).ready(function(){
             <input type="text" class="hidden" id="destLng" name="destLng" value=""></input>
             <input type="text" class="hidden" id="distance" name="distance" value=""></input>
             <input type="text" class="hidden" id="dtime" name="dtime" value=""></input>
-            
+            <input type="text" class="hidden" id="isPost" name="isPost" value="true"></input>
             
 			</form>
 		</div>

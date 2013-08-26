@@ -55,8 +55,8 @@ public class TicketScheduleDBFormat {
 		"TIME",//"backTime"
 		"TIME", //"backFlexibility"
 		"DECIMAL(10,6)",//"origLat"
-		"DECIMAL(10,6)",//"origLon",
-		"DECIMAL(10,6)",//"destLat",
+		"DECIMAL(10,6)",//"origLon"
+		"DECIMAL(10,6)",//"destLat"
 		"DECIMAL(10,6)",//"destLon"
 		"TIME",//"tripTime"
 		"INT(10)",//"dist"

@@ -185,6 +185,51 @@ public class CarpoolTbAccess {
 		
 	}
 	
+		
+	
+	
+	public static void postRide(String userName,boolean roundtrip,boolean userType, int dayOfWeek, String origState,String origCity,
+			String origNbhd, String origAddr,String destState,String destCity, String destNbhd, String destAddr, String detourFactor,
+			String forwardTime, String forwardFlexibility, String backTime, String backFlexibility, double origLat, double origLon, 
+			double destLat, double destLon, int dist, int dura, boolean batch) throws Exception
+	{
+		Connection con;
+		if(batch)
+		{
+			if (objConn==null)
+			{
+				objConn= CarpoolTbAccess.getConnection();
+			}
+			con=objConn;
+		}
+		else
+		{
+			con=CarpoolTbAccess.getConnection();
+		}
+		
+		//Do santity check here
+		if (detourFactor.length()>4)
+		{
+			throw new Exception("detourFactor longer than 3");
+		}
+		
+		try
+		{
+			Statement sql=(Statement) con.createStatement();
+			sql.execute("insert into CarpoolTb(userName,roundtrip,userType,dayOfweek,origState,origCity,origNbhd," +
+					"origAddr,destState,destCity,destNbhd,destAddr,detourFactor,forwardTime,forwardFlexibility,backTime," +
+					"backFlexibility,origLat,origLon,destLat,destLon,dist,dura) values(\"" + 
+					userName +"\","+roundtrip+","+ userType+","+dayOfWeek +",\""+origState+"\",\""+origCity+
+					"\",\""+origNbhd + "\",\"" + origAddr + "\",\"" + destState + "\",\""+ destCity + "\",\""+
+					destNbhd + "\",\""+ destAddr + "\",\"" + detourFactor + "\",\""+forwardTime + "\",\"" + 
+					forwardFlexibility + "\",\"" + backTime + "\",\""+ backFlexibility + "\"," +origLat+
+					","+origLon + "," + destLat + "," + destLon + ","+dist + "," + dura +")");
+		}
+		catch (SQLException e)
+		{
+			System.err.println("SQLException:"+e.getMessage());
+		}
+	}
 	
 	protected void finalize(){
 		if (objConn!=null){

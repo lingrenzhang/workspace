@@ -24,6 +24,13 @@ function validForm(){
 		|| (document.getelementById("surename").value == ""))
 	return false;
 }
+
+$(function() {
+    $("#divUp").load("uploadAvatar.htm?n=" + Math.random());
+})
+function OnAvatarUploaded(file) {
+    $("#img").attr("src", file + "?n=" + Math.random()); //avoid cache
+}
 </script>
 
 </head>
@@ -101,11 +108,13 @@ function validForm(){
 							</label>
 						</dt>
                         <dd>
-                       		<input type="file" class="optional" name="picture" id="picture" value="upload picture" autocomplete="off" onchange="showpic(this.value)">
-              
-                       		</input>
-                        	<p>Upload Picture</p>
-                        	<span id="pic"></span>
+                        	    <div style="height: 500px; clear: both; margin: 80px auto; width: 800px;">
+							        <div style="width: 175px; height: 175px; float: left; border: 1px solid #ccc;">
+							            <img src="" id="img" style="width: 175px; height: 175px" />
+							        </div>
+							        <div id="divUp" style="width: 520px; float: left; margin-left: 20px">
+							        </div>
+							    </div>
                 	    </dd>
 					</dl>
 				</fieldset>
