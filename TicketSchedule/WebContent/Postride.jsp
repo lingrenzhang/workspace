@@ -61,14 +61,14 @@ $(document).ready(function(){
 		}
 	});
 	
-	$("#offerid").click(function(){
+	$("#needid").click(function(){
 		$(".cost-visibility").children("label").text("How much are you willing to contribute?");
 		$(".cost-visibility").fadeIn(1000);
 		$(".seats-visibility").fadeOut(1000);
 
 	});
 
-	$("#needid").click(function(){
+	$("#offerid").click(function(){
 		$(".cost-visibility").children("label").text("How much do you want each passenger to contribute?");
 		$(".cost-visibility").fadeIn(1000);
 		$(".seats-visibility").fadeIn(1000);

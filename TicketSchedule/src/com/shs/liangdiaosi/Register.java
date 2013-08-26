@@ -38,9 +38,9 @@ public class Register extends HttpServlet {
 		String userName = request.getParameter("emailAddress");
 		String password = request.getParameter("password");
 		String givenname = request.getParameter("givenname");
-		String surename = request.getParameter("surename");
+		String surname = request.getParameter("surname");
 		String address = request.getParameter("address");
-		userTb.insertValue(userName, password, givenname, surename, address, 1);
+		userTb.insertValue(userName, password, givenname, surname, address, 1);
 
 		HttpSession session = request.getSession();
 		session.setAttribute("IsLogin", "true");

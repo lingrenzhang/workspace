@@ -21,7 +21,7 @@ function validForm(){
 		|| (document.getElementById("password").value =="")
 		|| (document.getElementById("emailAddress").value == "")
 		|| (document.getElementById("givenname").value == "")
-		|| (document.getelementById("surename").value == ""))
+		|| (document.getelementById("surname").value == ""))
 	return false;
 }
 
@@ -96,7 +96,7 @@ function OnAvatarUploaded(file) {
 							</label>
 						</dt>
                         <dd>
-                       		<input type="text" class="required" placeholder="XXXX" name="surename" id="surename" maxlength="100" autocomplete="off">
+                       		<input type="text" class="required" placeholder="XXXX" name="surname" id="surname" maxlength="100" autocomplete="off">
                         	<p>Enter your family name</p>
                 	    </dd>
 						
