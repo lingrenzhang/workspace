@@ -15,6 +15,7 @@ public class ScoreCalculator {
 	}
 	
 	private double timeScore(rideInfoParameters myArgs, rideInfoParameters rsParamObj) {
+//		return 1; // only consider destinations, like zimride
 		// TODO: also consider backTime for roundtrips
 		// TODO: think of a non-boolean function
 		// TODO: take into account time spent driving to pick-up location
@@ -109,6 +110,7 @@ public class ScoreCalculator {
 			while(rs.next()){
 				rideInfoParameters rsParamObj = new rideInfoParameters(rs, myArgs.commute);
 				rsParamObj.score = destScoreByCoordinates(myArgs, rsParamObj, false) * timeScore(myArgs, rsParamObj);
+//				System.out.println(rsParamObj.score);
 				results.add(rsParamObj);
 			}
     	} catch (ClassNotFoundException e) {
@@ -120,17 +122,23 @@ public class ScoreCalculator {
 		
 		//return results.subList(0, numRecords-1);
 		// turn off when exceeded API limit
-		return sortByDrivingDistance(results.subList(0, numRecords-1), myArgs);
+		int sortNum = 5;
+		return sortByDrivingDistance(results.subList(0, numRecords-1), myArgs, sortNum);
 	}
 	
 	// filter by coordinates first, then sort the filtered results by driving distance
-	public List<rideInfoParameters> sortByDrivingDistance(List<rideInfoParameters> results, rideInfoParameters myArgs){
+	public List<rideInfoParameters> sortByDrivingDistance(List<rideInfoParameters> results, rideInfoParameters myArgs, int sortNum){
 		List<rideInfoParameters> sortResults = new ArrayList<rideInfoParameters>();
-		for(rideInfoParameters rsParamObj : results){
+		for(int index = 0; index < sortNum; index++){
+			rideInfoParameters rsParamObj = results.get(index);
 			rsParamObj.score = destScoreByCoordinates(myArgs, rsParamObj, true) * timeScore(myArgs, rsParamObj);
 			sortResults.add(rsParamObj);
 		}
 		Collections.sort(sortResults);
+		for(int index = sortNum; index < results.size(); index++){
+			rideInfoParameters rsParamObj = results.get(index);
+			sortResults.add(rsParamObj);		
+		}
 		return sortResults;
 	}
 }
