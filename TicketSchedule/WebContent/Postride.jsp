@@ -463,8 +463,8 @@ $(document).ready(function(){
 
 		      
 	  	  place = places[0];
-		  document.getElementById("origLat").value=place.geometry.location.mb;
-		  document.getElementById("origLng").value=place.geometry.location.nb;
+		  document.getElementById("origLat").value=place.geometry.location.ob;
+		  document.getElementById("origLng").value=place.geometry.location.pb;
 		  var djb=document.getElementById("destLat").value;
 		  var dkb=document.getElementById("destLng").value;
 		  if (djb !="" && dkb!="")
@@ -479,7 +479,7 @@ $(document).ready(function(){
 			    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 			    }
 			  xmlhttp.open("get", "http://maps.googleapis.com/maps/api/distancematrix/json?origins="+
-					  place.geometry.location.mb+","+place.geometry.location.nb+
+					  place.geometry.location.ob+","+place.geometry.location.pb+
 					  "&destinations="+djb+","+dkb+"&sensor=false", true);  
 		      xmlhttp.onreadystatechange = function(){
 		    	  if(xmlhttp.readyState == 4 && xmlhttp.status==200)  
@@ -525,8 +525,8 @@ $(document).ready(function(){
 	      }
 	      map.fitBounds(bounds);
 	      place = places[0];
-		  document.getElementById("destLat").value=place.geometry.location.mb;
-		  document.getElementById("destLng").value=place.geometry.location.nb;
+		  document.getElementById("destLat").value=place.geometry.location.ob;
+		  document.getElementById("destLng").value=place.geometry.location.pb;
 		  var ojb=document.getElementById("origLat").value;
 		  var okb=document.getElementById("origLng").value;
 		  if (ojb !="" && okb!="")
@@ -542,7 +542,7 @@ $(document).ready(function(){
 			    }
 			  xmlhttp.open("get", "http://maps.googleapis.com/maps/api/distancematrix/json?origins="+
 					  ojb+","+okb+
-					  "&destinations="+place.geometry.location.mb+","+place.geometry.location.nb+
+					  "&destinations="+place.geometry.location.ob+","+place.geometry.location.pb+
 					  "&sensor=false", true);  
 		      xmlhttp.onreadystatechange = function(){
 		    	  if(xmlhttp.readyState == 4 && xmlhttp.status==200)  
