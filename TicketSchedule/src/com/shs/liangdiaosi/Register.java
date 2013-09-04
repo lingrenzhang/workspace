@@ -40,13 +40,17 @@ public class Register extends HttpServlet {
 		String givenname = request.getParameter("givenname");
 		String surname = request.getParameter("surname");
 		String address = request.getParameter("address");
-		userTb.insertValue(userName, password, givenname, surname, address, 1);
+		String avatarID = request.getParameter("avatarID"); //Not required field
+		if (avatarID==null)
+			avatarID="default.jpg";
+		userTb.insertValue(userName, password, givenname, surname, address, 1,avatarID);
 
 		HttpSession session = request.getSession();
 		session.setAttribute("IsLogin", "true");
 		session.setAttribute("userName", givenname);
 		session.setAttribute("emailAddress", userName);
 		session.setAttribute("userLevel",1);
+		session.setAttribute("avatarID",avatarID);
 					
 		request.getSession().setMaxInactiveInterval(60*120);
 		response.sendRedirect("/TicketSchedule/Postride.jsp");

@@ -37,12 +37,13 @@
     String name = "default";
     String email = "default";
     String level = "default";
-    String pic  = "default";
+    String avatarID  = "default.jpg";
     if (IsLogin!= null)
     {
     	name = (String) request.getSession().getAttribute("userName");
     	email = (String) request.getSession().getAttribute("emailAddress");
     	level = request.getSession().getAttribute("userLevel").toString();
+    	avatarID = (String) request.getSession().getAttribute("avatarID");
     }
 %>
 
@@ -298,7 +299,7 @@ window.onscroll = function(){
 
 		<div class="userpic">
 				<div class="username"><%=name %></div>
-				<img src=<%="/TicketSchedule/UserProfile/"+name+".jpg" %> alt="Profile Picture"></img>
+				<img src=<%="/TicketSchedule/UserProfile/"+avatarID %> alt="Profile Picture"></img>
 				<span class="passenger"></span>
 		</div>
 		<div id="user_info">

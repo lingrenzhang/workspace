@@ -24,7 +24,7 @@
   
             document.body.appendChild(io);   
   
-            return io              
+            return io;              
     },   
     createUploadForm: function(id, fileElementId, data)   
     {   
@@ -38,7 +38,7 @@
         $(oldElement).before(newElement);   
         $(oldElement).appendTo(form);   
            
-        //增加文本参数的支持   
+        //Add text parameter support
         if (data) {   
             for (var i in data) {   
                 $('<input type="hidden" name="' + i + '" value="' + data[i] + '" />').appendTo(form);   
@@ -56,7 +56,7 @@
     ajaxFileUpload: function(s) {   
         // TODO introduce global settings, allowing the client to modify them for all requests, not only timeout           
         s = jQuery.extend({}, jQuery.ajaxSettings, s);   
-        var id = new Date().getTime()           
+        var id = new Date().getTime();           
         var form = jQuery.createUploadForm(id, s.fileElementId, s.data);   
         var io = jQuery.createUploadIframe(id, s.secureuri);   
         var frameId = 'jUploadFrame' + id;   
@@ -68,7 +68,7 @@
         }               
         var requestDone = false;   
         // Create the request object   
-        var xml = {}      
+        var xml = {};      
         if ( s.global )   
             jQuery.event.trigger("ajaxSend", [xml, s]);   
         // Wait for a response to come back   
@@ -134,7 +134,7 @@
                 if ( s.complete )   
                     s.complete(xml, status);   
   
-                jQuery(io).unbind()   
+                jQuery(io).unbind();   
   
                 setTimeout(function()   
                                     {   try    
@@ -147,9 +147,9 @@
                                             jQuery.handleError(s, xml, null, e);   
                                         }                                      
   
-                                    }, 100)   
+                                    }, 100); 
   
-                xml = null  
+                xml = null;  
   
             }   
         }   
@@ -206,4 +206,15 @@
             //alert($('param', data).each(function(){alert($(this).attr('value'));}));   
         return data;   
     }   
-})  
+});  
+
+jQuery.extend({
+handleError: function( s, xhr, status, e ) {
+// If a local callback was specified, fire it
+if ( s.error )
+s.error( xhr, status, e );
+// If we have some XML response text (e.g. from an AJAX call) then log it in the console
+else if(xhr.responseText)
+console.log(xhr.responseText);
+}
+});

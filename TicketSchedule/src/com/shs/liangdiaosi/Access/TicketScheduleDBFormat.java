@@ -117,7 +117,8 @@ public class TicketScheduleDBFormat {
 		"givenname",
 		"surname",
 		"address",
-		"userLevel"
+		"userLevel",
+		"avatarID"
 	};
 	
 	public static final String[] UserTbcolumnTypes = {
@@ -127,7 +128,9 @@ public class TicketScheduleDBFormat {
 		"VARCHAR(40)", //"givenname"
 		"VARCHAR(40)",  //"surname"
 		"VARCHAR(500)",  //"address"
-		"INT" //"userLevel"
+		"INT", //"userLevel"
+		"VARCHAR(30)" //"avatarID"
+		
 	};
 	
 	public static final String[] MessageTbcolumns={

@@ -109,4 +109,14 @@
     <servlet-name>Register</servlet-name>
     <url-pattern>/servlet/Register</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AvaterService</display-name>
+    <servlet-name>AvaterService</servlet-name>
+    <servlet-class>com.shs.liangdiaosi.AvaterService</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AvaterService</servlet-name>
+    <url-pattern>/servlet/AvaterService</url-pattern>
+  </servlet-mapping>
 </web-app>

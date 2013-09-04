@@ -25,7 +25,7 @@ public class UserTbAccess {
 		}
 		
 		
-		public void insertValue(String userName,String password,String givenname, String surname,String address,int userLevel)
+		public void insertValue(String userName,String password,String givenname, String surname,String address,int userLevel,String avatarID)
 		{
 			if (userLevel==0)
 			{
@@ -39,13 +39,14 @@ public class UserTbAccess {
 					getConnection();
 				}
 				sql=objConn.createStatement();
-				sql.execute("insert into userTb (emailAddress,password,givenname,surname,address,userLevel) values(\"" 
+				sql.execute("insert into userTb (emailAddress,password,givenname,surname,address,userLevel,avatarID) values(\"" 
 						+ userName + "\",\""
 						+ password + "\",\""
 						+ givenname + "\",\""
 						+ surname + "\",\""
 						+ address + "\","
-						+ userLevel + ")");
+						+ userLevel + ",\""
+						+ avatarID +"\")");
 			}
 			catch (java.lang.ClassNotFoundException e){
 				System.err.println("ClassNotFoundException:"+e.getMessage());

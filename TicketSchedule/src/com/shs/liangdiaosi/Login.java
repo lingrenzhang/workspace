@@ -64,6 +64,7 @@ public class Login extends HttpServlet {
 					session.setAttribute("userName", rs.getString("givenname"));
 					session.setAttribute("emailAddress", rs.getString("emailAddress"));
 					session.setAttribute("userLevel",rs.getString("userLevel"));
+					session.setAttribute("avatarID", rs.getString("avatarID"));
 					
 					request.getSession().setMaxInactiveInterval(60*120);
 					String from = (String) session.getAttribute("fromLocation");
