@@ -254,15 +254,15 @@ $(document).ready(function(){
     google.maps.event.addListener(searchBoxO, 'places_changed', function() {
 	var places = searchBoxO.getPlaces();
 	place = places[0];
-	document.getElementById("origLat").value=place.geometry.location.mb;
-	document.getElementById("origLng").value=place.geometry.location.nb;
+	document.getElementById("origLat").value=place.geometry.location.ob;
+	document.getElementById("origLng").value=place.geometry.location.pb;
 	});
 
     google.maps.event.addListener(searchBoxD, 'places_changed', function() {
     	var places = searchBoxD.getPlaces();
     	place = places[0];
-    	document.getElementById("destLat").value=place.geometry.location.mb;
-    	document.getElementById("destLng").value=place.geometry.location.nb;
+    	document.getElementById("destLat").value=place.geometry.location.ob;
+    	document.getElementById("destLng").value=place.geometry.location.pb;
     	});
 });
 
