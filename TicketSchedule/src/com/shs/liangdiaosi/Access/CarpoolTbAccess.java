@@ -106,7 +106,7 @@ public class CarpoolTbAccess {
 		ResultSet rs;
 		Connection con =CarpoolTbAccess.getConnection();
 		Statement sql=(Statement) con.createStatement();
-		rs=(ResultSet) sql.executeQuery("select recordId,origCity,origAddr,destCity,destAddr from carpooltb");
+		rs=(ResultSet) sql.executeQuery("select recordId,origCity,origAddr,destCity,destAddr from carpoolTb");
 		return rs;
 	}
 	
@@ -115,7 +115,7 @@ public class CarpoolTbAccess {
 		ResultSet rs;
 		Connection con =CarpoolTbAccess.getConnection();
 		Statement sql=(Statement) con.createStatement();
-		rs=(ResultSet) sql.executeQuery("select recordId,origLat,origLon,destLat,destLon from carpooltb");
+		rs=(ResultSet) sql.executeQuery("select recordId,origLat,origLon,destLat,destLon from carpoolTb");
 		return rs;
 	}
 	

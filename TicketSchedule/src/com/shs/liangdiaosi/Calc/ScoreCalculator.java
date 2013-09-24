@@ -101,7 +101,7 @@ public class ScoreCalculator {
 		try {
 			Connection con= CarpoolTbAccess.getConnection();
 			Statement sql=con.createStatement();
-			String tbName = (myArgs.commute) ? "carpooltb" : "traveltb"; // traveltb still under construction
+			String tbName = (myArgs.commute) ? "carpoolTb" : "travelTb"; // traveltb still under construction
 			String query = "Select * from " + tbName + " where roundtrip=" + myArgs.roundtrip.toString();
 			if(!myArgs.userType)
 				query += " AND userType";
@@ -116,7 +116,9 @@ public class ScoreCalculator {
     	} catch (ClassNotFoundException e) {
 			System.err.println("ClassNotFoundException:"+e.getMessage());
 		} catch (SQLException e) {
-			System.err.println("SQLException:"+e.getMessage());
+            Error err=new Error("SQLException:"+e.getMessage());
+            throw err;
+			//System.err.println("SQLException:"+e.getMessage());
 		}
 		Collections.sort(results);
 		
