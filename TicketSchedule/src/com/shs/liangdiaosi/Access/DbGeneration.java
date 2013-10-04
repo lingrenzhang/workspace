@@ -28,10 +28,10 @@ public class DbGeneration {
 	public static Connection getConnection() throws SQLException,	
 	java.lang.ClassNotFoundException
 	{
-		String url = "jdbc:mysql://localhost/ticketschedule";
+		String url = "jdbc:mysql://rs.luzhuoer.info/ticketschedule";
 		Class.forName("com.mysql.jdbc.Driver");
-		String userName="admin";
-		String password="admin";
+		String userName="root";
+		String password="rideshare";
 		Connection con = DriverManager.getConnection(url,userName,password);
 		return con;
 	}
@@ -55,6 +55,8 @@ public class DbGeneration {
 		}
 		query += ")";
 		sql.executeUpdate(query);
+		sql.close();
+		con.close();
 	}
 	
 	public static void generateCarpoolTable() throws ClassNotFoundException, SQLException
@@ -76,6 +78,8 @@ public class DbGeneration {
 		}
 		query += ")";
 		sql.executeUpdate(query);
+		sql.close();
+		con.close();
 	}
 	
 	public static void generateTravelTb() throws ClassNotFoundException, SQLException
@@ -97,6 +101,8 @@ public class DbGeneration {
 		}
 		query += ")";
 		sql.executeUpdate(query);
+		sql.close();
+		con.close();
 		
 	}
 	
@@ -120,15 +126,17 @@ public class DbGeneration {
 		}
 		query += ")";
 		sql.executeUpdate(query);
+		sql.close();
+		con.close();
 		
 	}
 	public static void main(String args[]) throws ClassNotFoundException, SQLException
 	{
 		//Run this job to regenerate all the table definition.
 		//DbGeneration.generateUserTable();
-		//DbGeneration.generateCarpoolTable();
-		//DbGeneration.generateTravelTb();
-		//DbGeneration.generateMessageTb();
+		DbGeneration.generateCarpoolTable();
+		DbGeneration.generateTravelTb();
+		DbGeneration.generateMessageTb();
 		DbGeneration.generateUserTable();
 	}
 }

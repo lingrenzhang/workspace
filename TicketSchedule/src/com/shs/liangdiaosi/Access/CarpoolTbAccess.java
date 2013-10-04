@@ -20,10 +20,10 @@ public class CarpoolTbAccess {
 	public static Connection objConn; //This reference is used for batch job.
 	public static Connection getConnection() throws SQLException,java.lang.ClassNotFoundException
 	{
-		String url = "jdbc:mysql://localhost/ticketschedule";
+		String url = "jdbc:mysql://rs.lvzhuoer.info/ticketschedule";
 		Class.forName("com.mysql.jdbc.Driver");
-		String userName="admin";
-		String password="admin";
+		String userName="root";
+		String password="rideshare";
 		Connection con = (Connection) DriverManager.getConnection(url,userName,password);
 		return con;
 	}
