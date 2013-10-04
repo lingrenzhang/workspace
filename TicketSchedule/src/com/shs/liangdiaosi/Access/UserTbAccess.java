@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.lang.Error;
 
 public class UserTbAccess {
 	    //id char(20)
@@ -53,7 +54,9 @@ public class UserTbAccess {
 			}
 			catch (SQLException e)
 			{
-				System.err.println("SQLException:"+e.getMessage());
+                Error err=new Error("SQLException:"+e.getMessage());
+                throw err;
+				//System.err.println("SQLException:"+e.getMessage());
 			}
 		}
 		
