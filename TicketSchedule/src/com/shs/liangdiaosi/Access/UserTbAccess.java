@@ -17,10 +17,11 @@ public class UserTbAccess {
 		public static Connection getConnection() throws SQLException,	
 		java.lang.ClassNotFoundException
 		{
+			//String url = "jdbc:mysql://rs.luzhuoer.info/ticketschedule";
 			String url = "jdbc:mysql://localhost/ticketschedule";
 			Class.forName("com.mysql.jdbc.Driver");
-			String userName="admin";
-			String password="admin";
+			String userName="root";
+			String password="rideshare";
 			objConn = DriverManager.getConnection(url,userName,password);
 			return objConn;
 		}

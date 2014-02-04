@@ -55,7 +55,7 @@
 
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
 <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
 </script>
 <script>
 
@@ -254,15 +254,15 @@ $(document).ready(function(){
     google.maps.event.addListener(searchBoxO, 'places_changed', function() {
 	var places = searchBoxO.getPlaces();
 	place = places[0];
-	document.getElementById("origLat").value=place.geometry.location.nb;
-	document.getElementById("origLng").value=place.geometry.location.ob;
+	document.getElementById("origLat").value=place.geometry.location.lat();
+	document.getElementById("origLng").value=place.geometry.location.lng();
 	});
 
     google.maps.event.addListener(searchBoxD, 'places_changed', function() {
     	var places = searchBoxD.getPlaces();
     	place = places[0];
-    	document.getElementById("destLat").value=place.geometry.location.nb;
-    	document.getElementById("destLng").value=place.geometry.location.ob;
+    	document.getElementById("destLat").value=place.geometry.location.lat();
+    	document.getElementById("destLng").value=place.geometry.location.lng();
     	});
 });
 
@@ -320,14 +320,14 @@ window.onscroll = function(){
 						<label class="pin start" for="search_s"></label>
 						<input id="search_s" class="clickaway input_text" type="text" 
 							placeholder="Starting from..." name="s" alt="search_start" 
-							autocomplete="off">
+							autocomplete="off" value=<%=(request.getAttribute("orig") ==null) ? "Starting from..." : request.getAttribute("orig")%>>
 						</input>
 					</div>
 					<div class="text_input">
 						<label class="pin end" for="search_e"></label>
 						<input id="search_e" class="clickaway input_text" type="text" 
 						placeholder="Going to..." name="e" alt="search_end" 
-						autocomplete="off">
+						autocomplete="off" value=<%= (request.getAttribute("dest")==null) ? "Going to..." : request.getAttribute("dest") %>>
 					</div>
 					<div class="geo_internal" style="display:none">
 						<input id="origLat" name="oLat" value=""></input>

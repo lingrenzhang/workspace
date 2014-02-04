@@ -28,7 +28,8 @@ public class DbGeneration {
 	public static Connection getConnection() throws SQLException,	
 	java.lang.ClassNotFoundException
 	{
-		String url = "jdbc:mysql://rs.luzhuoer.info/ticketschedule";
+		//String url = "jdbc:mysql://rs.luzhuoer.info/ticketschedule";
+		String url = "jdbc:mysql://localhost/ticketschedule";
 		Class.forName("com.mysql.jdbc.Driver");
 		String userName="root";
 		String password="rideshare";
@@ -134,9 +135,9 @@ public class DbGeneration {
 	{
 		//Run this job to regenerate all the table definition.
 		//DbGeneration.generateUserTable();
-		DbGeneration.generateCarpoolTable();
-		DbGeneration.generateTravelTb();
-		DbGeneration.generateMessageTb();
+		//DbGeneration.generateCarpoolTable();
+		//DbGeneration.generateTravelTb();
+		//DbGeneration.generateMessageTb();
 		DbGeneration.generateUserTable();
 	}
 }

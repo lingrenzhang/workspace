@@ -28,7 +28,7 @@
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
 <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
 </script>
 <script>
 $(document).ready(function(){
@@ -417,11 +417,17 @@ $(document).ready(function(){
 	//------------------------register listener end-----------------------------
 
 	//------------------------initialize map------------------------------------
+	
+	var dLat="";
+	var dLng="";
+	var oLat="";
+	var oLng="";
+	
 	var mapOptions = {
 		      center: new google.maps.LatLng(37.4, -122.0),
 		      zoom: 9,
 		      mapTypeId: google.maps.MapTypeId.ROADMAP
-		    };
+    };
 	var map = new google.maps.Map(document.getElementById("post-map-canvas"),mapOptions);
 
 	var orig = document.getElementById('s');
@@ -464,37 +470,13 @@ $(document).ready(function(){
 
 		      
 	  	  place = places[0];
-		  document.getElementById("origLat").value=place.geometry.location.nb;
-		  document.getElementById("origLng").value=place.geometry.location.ob;
-		  var djb=document.getElementById("destLat").value;
-		  var dkb=document.getElementById("destLng").value;
-		  if (djb !="" && dkb!="")
+		  document.getElementById("origLat").value=place.geometry.location.lat();
+		  document.getElementById("origLng").value=place.geometry.location.lng();
+		  dLat=document.getElementById("destLat").value;
+		  dLng=document.getElementById("destLng").value;
+		  if (dLat !="" && dLng!="")
 		  {
-			  var xmlhttp;
-			  if (window.XMLHttpRequest)
-			    {// code for IE7+, Firefox, Chrome, Opera, Safari
-			    xmlhttp=new XMLHttpRequest();
-			    }
-			  else
-			    {// code for IE6, IE5
-			    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-			    }
-			  xmlhttp.open("get", "http://maps.googleapis.com/maps/api/distancematrix/json?origins="+
-					  place.geometry.location.nb+","+place.geometry.location.ob+
-					  "&destinations="+djb+","+dkb+"&sensor=false", true);  
-		      xmlhttp.onreadystatechange = function(){
-		    	  if(xmlhttp.readyState == 4 && xmlhttp.status==200)  
-		    	    {  
-		    	     var info = xmlhttp.responseText;  
-		    	     eval("var json= " + info);  
-		    	     var distance=json.rows[0].elements[0].distance.value;
-		    	     var dtime=json.rows[0].elements[0].duration.value;
-
-		    	     document.getElementById("distance").value = distance;  
-		    	     document.getElementById("dtime").value = dtime; 
-		    	     }  
-		      };  
-		      xmlhttp.send(null);  
+			  calculateDistances();
 		  }
 	});
 
@@ -526,38 +508,14 @@ $(document).ready(function(){
 	      }
 	      map.fitBounds(bounds);
 	      place = places[0];
-		  document.getElementById("destLat").value=place.geometry.location.nb;
-		  document.getElementById("destLng").value=place.geometry.location.ob;
-		  var ojb=document.getElementById("origLat").value;
-		  var okb=document.getElementById("origLng").value;
-		  if (ojb !="" && okb!="")
+		  document.getElementById("destLat").value=place.geometry.location.lat();
+		  document.getElementById("destLng").value=place.geometry.location.lng();
+		  oLat=document.getElementById("origLat").value;
+		  oLng=document.getElementById("origLng").value;
+		  
+		  if (oLat !="" && oLng!="")
 		  {
-			  var xmlhttp;
-			  if (window.XMLHttpRequest)
-			    {// code for IE7+, Firefox, Chrome, Opera, Safari
-			    xmlhttp=new XMLHttpRequest();
-			    }
-			  else
-			    {// code for IE6, IE5
-			    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-			    }
-			  xmlhttp.open("get", "http://maps.googleapis.com/maps/api/distancematrix/json?origins="+
-					  ojb+","+okb+
-					  "&destinations="+place.geometry.location.nb+","+place.geometry.location.ob+
-					  "&sensor=false", true);  
-		      xmlhttp.onreadystatechange = function(){
-		    	  if(xmlhttp.readyState == 4 && xmlhttp.status==200)  
-		    	    {  
-		    	     var info = xmlhttp.responseText;  
-		    	     eval("var json= " + info);  
-		    	     var distance=json.rows[0].elements[0].distance.value;
-		    	     var dtime=json.rows[0].elements[0].duration.value;
-
-		    	     document.getElementById("distance").value = distance;  
-		    	     document.getElementById("dtime").value = dtime; 
-		    	     }  
-		      };  
-		      xmlhttp.send(null);  
+			  calculateDistances();
 		  }
 	});
 		   	
@@ -571,8 +529,31 @@ $(document).ready(function(){
 	    searchBoxD.setBounds(bounds);
 	  });
 	  
-	google.maps.event.addDomListener(window, 'load', initialize);
-		 
+	
+	function calculateDistances() {
+	   var service = new google.maps.DistanceMatrixService();
+	   var orig = new google.maps.LatLng(oLat,oLng);
+	   var dest = new google.maps.LatLng(dLat,dLng);
+	   service.getDistanceMatrix(
+		    {
+		      origins: [orig],
+		      destinations: [dest],
+		      travelMode: google.maps.TravelMode.DRIVING,
+		      unitSystem: google.maps.UnitSystem.METRIC,
+		      avoidHighways: false,
+		      avoidTolls: false
+		    }, callback);
+		}
+	
+	function callback(response, status) {
+		  if (status != google.maps.DistanceMatrixStatus.OK) {
+		    alert('Error was: ' + status);
+		  } else {
+		   
+		    document.getElementById("distance").value =response.rows[0].elements[0].distance.value;
+		    document.getElementById("dtime").value =response.rows[0].elements[0].duration.value;
+		   }
+		}
 });
 
 </script>
@@ -648,8 +629,9 @@ $(document).ready(function(){
 				
 				<fieldset id="step_2" >
                 <dl>
-                    <input id="onetime-only" type="hidden" name="type" value="one-time"></input>
+
                     <dd class="triptabs" style="display: block;">
+                    <input id="onetime-only" type="hidden" name="type" value="one-time">
                    	<div id="multipostwrapper" style="display: none">
 	                        <div id="singletripwrapper" class="singletripwrapper">
 	                        	<span class="trip_num">Trip 1</span>
