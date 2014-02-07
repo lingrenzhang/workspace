@@ -437,7 +437,7 @@ $(document).ready(function(){
 	var searchBoxD = new google.maps.places.SearchBox(dest);
 	var dmarkers = [];
 	var bounds = new google.maps.LatLngBounds();
-
+	
 	google.maps.event.addListener(searchBoxO, 'places_changed', function() {
 	  	  var places = searchBoxO.getPlaces();
 

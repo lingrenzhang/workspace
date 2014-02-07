@@ -101,17 +101,17 @@ public class Search extends HttpServlet {
 		{
 			myArgs.origLat = Double.parseDouble(request.getParameter("origLat"));
 			myArgs.origLon = Double.parseDouble(request.getParameter("origLng"));
-			myArgs.destLat = Double.parseDouble(request.getParameter("destLat"));
-			myArgs.destLon = Double.parseDouble(request.getParameter("destLng"));
+
 		}
 		catch(Exception e)
 		{
-			System.out.println("Coordinate not initilized on client site.");
+			System.out.println("Orig coordinate not initilized on client site.");
 			System.out.println("Caculating from server");
 			//origLat,OrigLng for some reason not caculated. Compute it from the original space
 			String jsonoutput;
 			JSONObject json;
 			String start = request.getParameter("s");
+			start = start.replaceAll(" ","" );
 			//String getURL = "https://maps.googleapis.com/maps/api/place/autocomplete/xml?input=" + start +"&types=geocode&sensor=true&key=";
 			String getURL = "http://maps.googleapis.com/maps/api/geocode/json?address="+start+"&sensor=false";
 			jsonoutput=jsonquery(getURL);
@@ -129,13 +129,24 @@ public class Search extends HttpServlet {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		}
 			
+		try
+		{
+			myArgs.destLat = Double.parseDouble(request.getParameter("destLat"));
+			myArgs.destLon = Double.parseDouble(request.getParameter("destLng"));
+		}
+		catch (Exception e)
+		{
+			System.out.println("Target coordinate not initilized on client site.");
+			System.out.println("Caculating from server");
 			String end = request.getParameter("e");
+			end = end.replace(" ", "");
 			//getURL = "https://maps.googleapis.com/maps/api/place/autocomplete/xml?input=" + end +"&types=geocode&sensor=true&key=";
-			getURL = "http://maps.googleapis.com/maps/api/geocode/json?address="+end+"&sensor=false";
-			jsonoutput=jsonquery(getURL);
+			String getURL = "http://maps.googleapis.com/maps/api/geocode/json?address="+end+"&sensor=false";
+			String jsonoutput=jsonquery(getURL);
 			try {
-				json = new JSONObject(jsonoutput);
+				JSONObject json = new JSONObject(jsonoutput);
 			    myArgs.destAddr = json.getJSONArray("results").getJSONObject(0).getString("formatted_address");
 			    myArgs.destAddr = myArgs.destAddr.replaceAll(" ","" );
 			    request.setAttribute("destAddr", myArgs.destAddr);
@@ -147,6 +158,7 @@ public class Search extends HttpServlet {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			
 		}
 		
 		if (request.getParameter("who")!=null)
