@@ -20,18 +20,14 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
-
-
-
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.hitchride.access.CarpoolTbAccess;
 import com.hitchride.calc.*;
-import com.shs.liangdiaosi.Calc.ScoreCalculator;
-import com.shs.liangdiaosi.Calc.rideInfoParameters;
+import com.hitchride.calc.ScoreCalculator;
+import com.hitchride.calc.rideInfoParameters;
 /**
  * Servlet implementation class Search
  */

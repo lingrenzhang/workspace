@@ -46,12 +46,6 @@
 			</div>
 		</div>
 		<div class="entry">
-						<div class="passenger_box">
-								<p>
-									<span class="icon"></span><%=to %> is a 
-									<strong>passenger</strong>
-								</p>
-						</div>
 						<div class="userpic">
 								<div class="username"><%=messInfo.owner %></div>
 								<img src=<%="/TicketSchedule/UserProfile/"+messInfo.owner+".jpg" %> alt="Profile Picture"></img>

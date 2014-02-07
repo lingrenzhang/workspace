@@ -1,7 +1,7 @@
 package com.hitchride.access;
 import java.sql.*;
 
-import com.shs.liangdiaosi.Access.TicketScheduleDBFormat;
+import com.hitchride.access.TicketScheduleDBFormat;
 
 public class DbGeneration {
 
@@ -136,10 +136,10 @@ public class DbGeneration {
 	public static void main(String args[]) throws ClassNotFoundException, SQLException
 	{
 		//Run this job to regenerate all the table definition.
-		//DbGeneration.generateUserTable();
+		DbGeneration.generateUserTable();
 		//DbGeneration.generateCarpoolTable();
 		//DbGeneration.generateTravelTb();
-		DbGeneration.generateMessageTb();
+		//DbGeneration.generateMessageTb();
 		//DbGeneration.generateUserTable();
 	}
 }

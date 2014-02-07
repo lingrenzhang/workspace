@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hitchride.access.*;
 import com.mysql.jdbc.ResultSet;
-import com.shs.liangdiaosi.Access.CarpoolTbAccess;
+import com.hitchride.access.CarpoolTbAccess;
 
 /**
  * Servlet implementation class LoadPosition

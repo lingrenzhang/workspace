@@ -31,7 +31,7 @@ public class TicketScheduleDBFormat {
 		"tripTime",
 		"dist",
 		"dura",
-		"participant"
+		"participants"
 	};
 	
 	public static final String[] CarpoolTbcolumnTypes = {
@@ -62,7 +62,7 @@ public class TicketScheduleDBFormat {
 		"TIME",//"tripTime"
 		"INT(10)",//"dist"
 		"INT(10)",//"dura"
-		"VARCHAR(100)" //"participant"
+		"VARCHAR(120)" //"participants"
 	};
 
 	

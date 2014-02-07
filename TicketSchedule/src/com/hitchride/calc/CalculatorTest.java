@@ -3,8 +3,8 @@ package com.hitchride.calc;
 import java.sql.*;
 import java.util.*;
 
-import com.shs.liangdiaosi.Calc.ScoreCalculator;
-import com.shs.liangdiaosi.Calc.rideInfoParameters;
+import com.hitchride.calc.ScoreCalculator;
+import com.hitchride.calc.rideInfoParameters;
 
 public class CalculatorTest {
 

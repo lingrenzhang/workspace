@@ -45,10 +45,13 @@ public class MessageInfo {
 		    	origAddr = rs.getString("origAddr");
 		    	destCity = rs.getString("destCity");
 		    	destAddr = rs.getString("destAddr");
-		    	owner = rs.getString("user");
-		    	
-		    	String users = rs.getString("users");
-		    	loadUsers(users);
+		    	owner = rs.getString("userName");
+
+		    	String participants = rs.getString("participants");
+			    if (participants!=null && !participants.equals(""))
+			    {
+		    		loadUsers(participants);
+		    	}
 		    }
     
 		    else{

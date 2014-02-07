@@ -250,7 +250,7 @@ public class CarpoolTbAccess {
 		ResultSet rs;
 		Connection con =CarpoolTbAccess.getConnection();
 		Statement sql=(Statement) con.createStatement();
-		rs=(ResultSet) sql.executeQuery("select recordId,origCity,origAddr,destCity,destAddr from carpoolTb where recordId="+recordId);
+		rs=(ResultSet) sql.executeQuery("select recordId,origCity,origAddr,destCity,destAddr,userName,participants from carpoolTb where recordId="+recordId);
 		return rs;
 	}
 	

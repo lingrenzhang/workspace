@@ -16,6 +16,5 @@ public class GenerateTestingMessageDB {
 		messageTbAccess.insertMessage("coordinate6467@hotmail.com", "123", "This is a test", 1);
 		messageTbAccess.insertMessage("coordinate6467@hotmail.com", "abc", "This is a test", 1);
 		
-		
 	}
 }
