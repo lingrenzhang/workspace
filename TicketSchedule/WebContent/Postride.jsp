@@ -438,6 +438,9 @@ $(document).ready(function(){
 	var dmarkers = [];
 	var bounds = new google.maps.LatLngBounds();
 	
+	searchBoxO.onclick = function(){
+	   alert("onchange triggered");
+	}
 	google.maps.event.addListener(searchBoxO, 'places_changed', function() {
 	  	  var places = searchBoxO.getPlaces();
 
@@ -472,6 +475,8 @@ $(document).ready(function(){
 	  	  place = places[0];
 		  document.getElementById("origLat").value=place.geometry.location.lat();
 		  document.getElementById("origLng").value=place.geometry.location.lng();
+		  oLat=place.geometry.location.lat();
+		  oLng=place.geometry.location.lng();
 		  dLat=document.getElementById("destLat").value;
 		  dLng=document.getElementById("destLng").value;
 		  if (dLat !="" && dLng!="")
@@ -510,6 +515,8 @@ $(document).ready(function(){
 	      place = places[0];
 		  document.getElementById("destLat").value=place.geometry.location.lat();
 		  document.getElementById("destLng").value=place.geometry.location.lng();
+		  dLat=place.geometry.location.lat();
+		  dLng=place.geometry.location.lng();
 		  oLat=document.getElementById("origLat").value;
 		  oLng=document.getElementById("origLng").value;
 		  
@@ -823,8 +830,7 @@ $(document).ready(function(){
                                  </ul>
                             </div>
                     </div>
-
-                    </dd>
+                   </dd>
                </dl>
             </fieldset>
             

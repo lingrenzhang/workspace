@@ -1,4 +1,4 @@
-package com.shs.liangdiaosi.Access;
+package com.hitchride.access;
 
 //This class defines the table format inside schedule DB. Use DBGeneration to generate tables.
 public class TicketScheduleDBFormat {
@@ -30,7 +30,8 @@ public class TicketScheduleDBFormat {
 		"destLon",
 		"tripTime",
 		"dist",
-		"dura"
+		"dura",
+		"participant"
 	};
 	
 	public static final String[] CarpoolTbcolumnTypes = {
@@ -60,7 +61,8 @@ public class TicketScheduleDBFormat {
 		"DECIMAL(10,6)",//"destLon"
 		"TIME",//"tripTime"
 		"INT(10)",//"dist"
-		"INT(10)"//"dura"
+		"INT(10)",//"dura"
+		"VARCHAR(100)" //"participant"
 	};
 
 	
@@ -140,7 +142,9 @@ public class TicketScheduleDBFormat {
 		"receiverName",
 		"content",
 		"messageSenderStatus",
-		"messageReceiverStatus"
+		"messageReceiverStatus",
+		"Type",  //Commute of travel
+		"recordId"
 	};
 	public static final String[] MessageTbcolumnTypes = {
 		"INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE",
@@ -148,6 +152,8 @@ public class TicketScheduleDBFormat {
 		"VARCHAR(50)",
 		"VARCHAR(3000)",
 		"INT(2)",
-		"INT(2)"
+		"INT(2)",
+		"INT(1)",  //0 for commute 1 for travel
+		"INT"      //Associated message
 	};
 }

@@ -1,5 +1,5 @@
-package com.shs.liangdiaosi.DbBatchLoad;
-import com.shs.liangdiaosi.Access.CarpoolTbAccess;
+package com.hitchride.dbBatchLoad;
+import com.hitchride.access.CarpoolTbAccess;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.sql.*;
+
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;

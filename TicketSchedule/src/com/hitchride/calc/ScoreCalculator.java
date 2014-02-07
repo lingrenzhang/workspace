@@ -1,6 +1,8 @@
-package com.shs.liangdiaosi.Calc;
-import com.shs.liangdiaosi.Access.*;
-import com.shs.liangdiaosi.DbBatchLoad.GeoUtil;
+package com.hitchride.calc;
+import com.hitchride.access.*;
+import com.hitchride.dbBatchLoad.GeoUtil;
+import com.shs.liangdiaosi.Access.CarpoolTbAccess;
+import com.shs.liangdiaosi.Calc.rideInfoParameters;
 
 import java.io.IOException;
 import java.sql.*;

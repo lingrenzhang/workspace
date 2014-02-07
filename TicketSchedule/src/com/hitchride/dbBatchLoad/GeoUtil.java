@@ -1,4 +1,4 @@
-package com.shs.liangdiaosi.DbBatchLoad;
+package com.hitchride.dbBatchLoad;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -13,7 +13,7 @@
     <description></description>
     <display-name>Welcome</display-name>
     <servlet-name>Welcome</servlet-name>
-    <servlet-class>com.shs.liangdiaosi.Welcome</servlet-class>
+    <servlet-class>com.hitchride.Welcome</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Welcome</servlet-name>
@@ -23,7 +23,7 @@
     <description></description>
     <display-name>ShowUser</display-name>
     <servlet-name>ShowUser</servlet-name>
-    <servlet-class>com.shs.liangdiaosi.ShowUser</servlet-class>
+    <servlet-class>com.hitchride.ShowUser</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ShowUser</servlet-name>
@@ -33,7 +33,7 @@
     <description></description>
     <display-name>googleMapSupporting</display-name>
     <servlet-name>googleMapSupporting</servlet-name>
-    <servlet-class>com.shs.liangdiaosi.googleMapSupporting</servlet-class>
+    <servlet-class>com.hitchride.googleMapSupporting</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>googleMapSupporting</servlet-name>
@@ -43,7 +43,7 @@
     <description></description>
     <display-name>LoadPosition</display-name>
     <servlet-name>LoadPosition</servlet-name>
-    <servlet-class>com.shs.liangdiaosi.LoadPosition</servlet-class>
+    <servlet-class>com.hitchride.LoadPosition</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>LoadPosition</servlet-name>
@@ -53,7 +53,7 @@
     <description></description>
     <display-name>InsertGeo</display-name>
     <servlet-name>InsertGeo</servlet-name>
-    <servlet-class>com.shs.liangdiaosi.InsertGeo</servlet-class>
+    <servlet-class>com.hitchride.InsertGeo</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>InsertGeo</servlet-name>
@@ -63,7 +63,7 @@
     <description></description>
     <display-name>Search</display-name>
     <servlet-name>Search</servlet-name>
-    <servlet-class>com.shs.liangdiaosi.Search</servlet-class>
+    <servlet-class>com.hitchride.Search</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Search</servlet-name>
@@ -73,7 +73,7 @@
     <description></description>
     <display-name>CheckCode</display-name>
     <servlet-name>CheckCode</servlet-name>
-    <servlet-class>com.shs.liangdiaosi.CheckCode</servlet-class>
+    <servlet-class>com.hitchride.CheckCode</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CheckCode</servlet-name>
@@ -83,7 +83,7 @@
     <description></description>
     <display-name>Login</display-name>
     <servlet-name>Login</servlet-name>
-    <servlet-class>com.shs.liangdiaosi.Login</servlet-class>
+    <servlet-class>com.hitchride.Login</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
@@ -93,7 +93,7 @@
     <description></description>
     <display-name>MessageBox</display-name>
     <servlet-name>MessageBox</servlet-name>
-    <servlet-class>com.shs.liangdiaosi.MessageBox</servlet-class>
+    <servlet-class>com.hitchride.MessageBox</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>MessageBox</servlet-name>
@@ -103,7 +103,7 @@
     <description></description>
     <display-name>Register</display-name>
     <servlet-name>Register</servlet-name>
-    <servlet-class>com.shs.liangdiaosi.Register</servlet-class>
+    <servlet-class>com.hitchride.Register</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Register</servlet-name>
@@ -113,7 +113,7 @@
     <description></description>
     <display-name>AvaterService</display-name>
     <servlet-name>AvaterService</servlet-name>
-    <servlet-class>com.shs.liangdiaosi.AvaterService</servlet-class>
+    <servlet-class>com.hitchride.AvaterService</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AvaterService</servlet-name>

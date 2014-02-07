@@ -1,28 +1,24 @@
-package com.shs.liangdiaosi;
+package com.hitchride;
 
 import java.io.IOException;
-
 import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mysql.jdbc.ResultSet;
-import com.shs.liangdiaosi.Access.*;
-
+import com.hitchride.access.CarpoolTbAccess;
 /**
- * Servlet implementation class LoadPosition
+ * Servlet implementation class InsertGeo
  */
-public class LoadPosition extends HttpServlet {
+public class InsertGeo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoadPosition() {
+    public InsertGeo() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,10 +27,20 @@ public class LoadPosition extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ResultSet rs;
+		System.out.println("EnterInsGeoServlet");
+		String q=request.getQueryString();
+		System.out.println(q);
+		String[] arg=q.split("&");
+		//String check;
+		int recordId=Integer.parseInt(arg[0]);
+		float origlat=Float.parseFloat(arg[1]);
+		float origlng=Float.parseFloat(arg[2]);
+		float destlat=Float.parseFloat(arg[3]);
+		float destlng=Float.parseFloat(arg[4]);
 		try {
-			rs = CarpoolTbAccess.listAllLocation();
-			request.setAttribute("ResultList",rs);
+			System.out.println("Inserting record: " + recordId + " "+origlat +":"+origlng+";"+
+					destlat+":"+destlng+";");
+			CarpoolTbAccess.insertLocation(recordId, origlat, origlng, destlat, destlng,true);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,10 +48,7 @@ public class LoadPosition extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/LoadPosition.jsp");
-		rd.forward(request, response);
+		response.getWriter().write("Done");
 	}
 
 	/**

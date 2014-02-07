@@ -1,4 +1,4 @@
-package com.shs.liangdiaosi;
+package com.hitchride;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,12 +21,17 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.shs.liangdiaosi.Access.CarpoolTbAccess;
-import com.shs.liangdiaosi.Calc.*;
+import com.hitchride.access.CarpoolTbAccess;
+import com.hitchride.calc.*;
+import com.shs.liangdiaosi.Calc.ScoreCalculator;
+import com.shs.liangdiaosi.Calc.rideInfoParameters;
 /**
  * Servlet implementation class Search
  */
@@ -101,7 +106,9 @@ public class Search extends HttpServlet {
 		{
 			myArgs.origLat = Double.parseDouble(request.getParameter("origLat"));
 			myArgs.origLon = Double.parseDouble(request.getParameter("origLng"));
-
+			String start = request.getParameter("s");
+			start = start.replaceAll(" ","" );
+			request.setAttribute("orig", start);
 		}
 		catch(Exception e)
 		{
@@ -120,7 +127,7 @@ public class Search extends HttpServlet {
 				json = new JSONObject(jsonoutput);
 			    myArgs.origAddr = json.getJSONArray("results").getJSONObject(0).getString("formatted_address");
 			    myArgs.origAddr = myArgs.origAddr.replaceAll(" ","" );
-			    request.setAttribute("origAddr", myArgs.origAddr);
+			    request.setAttribute("orig", myArgs.origAddr);
 			    JSONObject geometry = json.getJSONArray("results").getJSONObject(0).getJSONObject("geometry");
 			    myArgs.origLat =geometry.getJSONObject("location").getDouble("lat");
 			    myArgs.origLon =geometry.getJSONObject("location").getDouble("lng");
@@ -135,6 +142,9 @@ public class Search extends HttpServlet {
 		{
 			myArgs.destLat = Double.parseDouble(request.getParameter("destLat"));
 			myArgs.destLon = Double.parseDouble(request.getParameter("destLng"));
+			String end = request.getParameter("e");
+			end = end.replace(" ", "");
+			request.setAttribute("dest", end);
 		}
 		catch (Exception e)
 		{
@@ -149,7 +159,7 @@ public class Search extends HttpServlet {
 				JSONObject json = new JSONObject(jsonoutput);
 			    myArgs.destAddr = json.getJSONArray("results").getJSONObject(0).getString("formatted_address");
 			    myArgs.destAddr = myArgs.destAddr.replaceAll(" ","" );
-			    request.setAttribute("destAddr", myArgs.destAddr);
+			    request.setAttribute("dest", myArgs.destAddr);
 			    JSONObject geometry = json.getJSONArray("results").getJSONObject(0).getJSONObject("geometry");
 			    myArgs.destLat =geometry.getJSONObject("location").getDouble("lat");
 			    myArgs.destLon =geometry.getJSONObject("location").getDouble("lng");

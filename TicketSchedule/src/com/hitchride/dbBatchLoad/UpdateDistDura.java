@@ -1,4 +1,4 @@
-package com.shs.liangdiaosi.DbBatchLoad;
+package com.hitchride.dbBatchLoad;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,8 +13,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+
+
+import com.hitchride.access.CarpoolTbAccess;
 import com.mysql.jdbc.ResultSet;
-import com.shs.liangdiaosi.Access.CarpoolTbAccess;
 
 public class UpdateDistDura {
 

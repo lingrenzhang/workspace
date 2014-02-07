@@ -4,7 +4,7 @@
 <html>
 <head>
 
-<%@ page import="com.shs.liangdiaosi.Calc.*" %>
+<%@ page import="com.hitchride.calc.*" %>
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
 <%
@@ -378,7 +378,7 @@ window.onscroll = function(){
 					<% Iterator<rideInfoParameters> itr = results.iterator(); %>
 					<% while (itr.hasNext()){ %>
 					<% 	rideInfoParameters rideInfo = itr.next(); %>
-    				<a href="./MessageBox?id=<%=rideInfo.username %>;">
+    				<a href="./MessageBox?id=<%=rideInfo.username %>&rid=<%=1 %>&type=commute">
 						<div class="entry">
 						<% if (!rideInfo.userType){ %>
 							<div class="passenger_box">

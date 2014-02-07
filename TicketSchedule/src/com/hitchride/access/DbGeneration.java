@@ -1,5 +1,7 @@
-package com.shs.liangdiaosi.Access;
+package com.hitchride.access;
 import java.sql.*;
+
+import com.shs.liangdiaosi.Access.TicketScheduleDBFormat;
 
 public class DbGeneration {
 
@@ -137,7 +139,7 @@ public class DbGeneration {
 		//DbGeneration.generateUserTable();
 		//DbGeneration.generateCarpoolTable();
 		//DbGeneration.generateTravelTb();
-		//DbGeneration.generateMessageTb();
-		DbGeneration.generateUserTable();
+		DbGeneration.generateMessageTb();
+		//DbGeneration.generateUserTable();
 	}
 }

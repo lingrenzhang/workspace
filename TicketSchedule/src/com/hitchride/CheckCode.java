@@ -1,4 +1,4 @@
-package com.shs.liangdiaosi;
+package com.hitchride;
 
 import java.awt.Color;
 import java.awt.Font;

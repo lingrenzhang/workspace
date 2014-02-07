@@ -1,4 +1,4 @@
-package com.shs.liangdiaosi.Calc;
+package com.hitchride.calc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

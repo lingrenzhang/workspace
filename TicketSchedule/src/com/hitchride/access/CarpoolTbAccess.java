@@ -1,12 +1,7 @@
-package com.shs.liangdiaosi.Access;
-
-
-
-
+package com.hitchride.access;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
@@ -248,6 +243,15 @@ public class CarpoolTbAccess {
 		//unit test the insert
 		CarpoolTbAccess.insertValue("xiyao", true, true, 67, "CA", "SanJose", "origNbhd", "origAddr", "destState", "destCity", "destNbhd", "destAddr", "0.33", "07:00:00", "00:15:00", "18:00:00", "00:15:00", true);
 		CarpoolTbAccess.insertValue("xiyao", true, true, 67, "CA", "SanJose", "origNbhd", "origAddr", "destState", "destCity", "destNbhd", "destAddr", "0.33", "07:00:00", "00:15:00", "18:00:00", "00:15:00", true);		
+	}
+
+	public static ResultSet getForMessageBox(String recordId) throws ClassNotFoundException, SQLException
+	{
+		ResultSet rs;
+		Connection con =CarpoolTbAccess.getConnection();
+		Statement sql=(Statement) con.createStatement();
+		rs=(ResultSet) sql.executeQuery("select recordId,origCity,origAddr,destCity,destAddr from carpoolTb where recordId="+recordId);
+		return rs;
 	}
 	
 }
