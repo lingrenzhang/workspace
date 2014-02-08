@@ -102,9 +102,9 @@ public class Search extends HttpServlet {
 		{
 			myArgs.origLat = Double.parseDouble(request.getParameter("origLat"));
 			myArgs.origLon = Double.parseDouble(request.getParameter("origLng"));
-			String start = request.getParameter("s");
-			start = start.replaceAll(" ","" );
-			request.setAttribute("orig", start);
+		    myArgs.origAddr = request.getParameter("s");
+		    myArgs.origAddr = myArgs.origAddr.replaceAll(" ","" );
+			request.setAttribute("orig", myArgs.origAddr);
 		}
 		catch(Exception e)
 		{
@@ -138,9 +138,10 @@ public class Search extends HttpServlet {
 		{
 			myArgs.destLat = Double.parseDouble(request.getParameter("destLat"));
 			myArgs.destLon = Double.parseDouble(request.getParameter("destLng"));
-			String end = request.getParameter("e");
-			end = end.replace(" ", "");
-			request.setAttribute("dest", end);
+		    myArgs.destAddr = request.getParameter("e");
+		    myArgs.destAddr = myArgs.destAddr.replaceAll(" ","" );
+		    request.setAttribute("dest", myArgs.destAddr);
+
 		}
 		catch (Exception e)
 		{
