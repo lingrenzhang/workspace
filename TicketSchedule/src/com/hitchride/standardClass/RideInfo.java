@@ -37,9 +37,11 @@ public abstract class RideInfo implements Comparable<rideInfoParameters>{
 	// for travel only
 	public Date tripDate;
 
+	//Normally used when initialize from client input.
 	public RideInfo() {
 	}
 
+	//Initialize from DB.
 	public RideInfo(ResultSet rs, Boolean myArgsCommute) throws SQLException {
 		// assign every field
 		commute		= myArgsCommute; // come from table name, not table content
