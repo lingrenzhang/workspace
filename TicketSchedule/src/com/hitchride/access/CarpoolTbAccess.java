@@ -254,4 +254,13 @@ public class CarpoolTbAccess {
 		return rs;
 	}
 	
+	public static ResultSet rideInitialLoad() throws ClassNotFoundException, SQLException
+	{
+		ResultSet rs;
+		Connection con =CarpoolTbAccess.getConnection();
+		Statement sql=(Statement) con.createStatement();
+		rs=(ResultSet) sql.executeQuery("select * from carpoolTb");
+		return rs;
+	}
+	
 }

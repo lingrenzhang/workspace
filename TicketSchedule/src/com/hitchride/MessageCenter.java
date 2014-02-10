@@ -13,15 +13,15 @@ import com.hitchride.access.MessageTbAccess;
 import com.hitchride.standardClass.MessageInfo;
 
 /**
- * Servlet implementation class MessageBox
+ * Servlet implementation class MessageCenter
  */
-public class MessageBox extends HttpServlet {
+public class MessageCenter extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MessageBox() {
+    public MessageCenter() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,7 +34,7 @@ public class MessageBox extends HttpServlet {
 		boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
 		if (!islogin)
 		{
-			request.getSession().setAttribute("fromLocation", "/TicketSchedule/servlet/MessageBox");
+			request.getSession().setAttribute("fromLocation", "/TicketSchedule/servlet/MessageCenter");
 			request.getSession().setAttribute("queryString", request.getQueryString());
 			request.getSession().setMaxInactiveInterval(60*30);
 			response.sendRedirect("/TicketSchedule/Login.jsp");
@@ -51,7 +51,7 @@ public class MessageBox extends HttpServlet {
 		    MessageInfo messageInfo = new MessageInfo(rid);
 		    request.setAttribute("messageInfo",messageInfo);
 
-			RequestDispatcher rd = request.getRequestDispatcher("/MessageBox.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/MessageCenter.jsp");
 			rd.forward(request, response);
 		}
 	}

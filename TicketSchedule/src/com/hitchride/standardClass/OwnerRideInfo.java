@@ -11,7 +11,10 @@ import com.hitchride.global.Environment;
 //It will push its status change to desired users through observant design pattern
 public class OwnerRideInfo extends RideInfo implements RideStatusChange{
 	private Vector<RideListener> _rideListeners = new Vector<RideListener>();
+	
+	private int _ownerId;
 	private Vector<ParticipantRide> _prides = new Vector<ParticipantRide>();
+
 	
 	@Override
 	public void attach(RideListener rideListener) {
@@ -49,5 +52,17 @@ public class OwnerRideInfo extends RideInfo implements RideStatusChange{
     {
     	super(rs,myArgsCommute);
     }
+    
+    public int get_ownerId() {
+		return _ownerId;
+	}
+
+	public void set_ownerId(int _ownerId) {
+		this._ownerId = _ownerId;
+	}
+
+
+
+    
     
 }

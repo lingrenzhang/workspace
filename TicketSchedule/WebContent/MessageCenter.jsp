@@ -10,14 +10,14 @@
 %>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>MessageBox</title>
+<title>MessageCenter</title>
 
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
-<link href="/TicketSchedule/CSS/messagebox.css" type="text/css" rel="stylesheet">
+<link href="/TicketSchedule/CSS/messagecenter.css" type="text/css" rel="stylesheet">
 
 </head>
 <body>
-<div id="MessageBox">
+<div id="MessageCenter">
 	<div id="header_wrap">
 		<div id="logo_wrap">
 			<div id="logo">
