@@ -43,7 +43,8 @@
     	name = (String) request.getSession().getAttribute("userName");
     	email = (String) request.getSession().getAttribute("emailAddress");
     	level = request.getSession().getAttribute("userLevel").toString();
-    	avatarID = (String) request.getSession().getAttribute("avatarID");
+    	//avatarID = (String) request.getSession().getAttribute("avatarID");
+    	avatarID = (String) request.getSession().getAttribute("givenname")+".jpg";
     }
 %>
 
@@ -378,7 +379,7 @@ window.onscroll = function(){
 					<% Iterator<rideInfoParameters> itr = results.iterator(); %>
 					<% while (itr.hasNext()){ %>
 					<% 	rideInfoParameters rideInfo = itr.next(); %>
-    				<a href="./MessageCenter?id=<%=rideInfo.username %>&rid=<%=1 %>&type=commute">
+    				<a href="./MessageCenter?id=<%=rideInfo.username %>&rid=<%=rideInfo.recordId %>&type=commute">
 						<div class="entry">
 						<% if (!rideInfo.userType){ %>
 							<div class="passenger_box">
@@ -401,7 +402,7 @@ window.onscroll = function(){
 						<% } %>
 							<div class="userpic">
 								<div class="username"><%=rideInfo.username %></div>
-								<img src=<%="/TicketSchedule/UserProfile/"+rideInfo.username+".jpg" %> alt="Profile Picture"></img>
+								<img src=<%="/TicketSchedule/UserProfile/"+"default"+".jpg" %> alt="Profile Picture"></img>
 								<span class="passenger"></span>
 							</div>
 							<div class="inner_content">

@@ -29,14 +29,14 @@
 			<div class="user_info" id="from">
 				<div class="userpic">
 						<div class="username"><%=from %></div>
-						<img src=<%="/TicketSchedule/UserProfile/"+from+".jpg" %> alt="Profile Picture"></img>
+						<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
 						<span class="passenger"></span>
 				</div>
 			</div>
 			<div class="user_info" id="to">
 				<div class="userpic">
 					<div class="username"><%=to %></div>
-					<img src=<%="/TicketSchedule/UserProfile/"+to+".jpg" %> alt="Profile Picture"></img>
+					<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
 					<span class="passenger"></span>
 				</div>
 			</div>
@@ -46,8 +46,8 @@
 		</div>
 		<div class="entry">
 			<div class="userpic">
-				<div class="username"><%=messInfo.owner %></div>
-				<img src=<%="/TicketSchedule/UserProfile/"+messInfo.owner+".jpg" %> alt="Profile Picture"></img>
+				<div class="username"><%=messInfo.owner.get_name() %></div>
+				<img src=<%="/TicketSchedule/UserProfile/"+messInfo.owner.get_avatarID() %> alt="Profile Picture"></img>
 				<span class="passenger"></span>
 			</div>
 			<div class="inner_content">

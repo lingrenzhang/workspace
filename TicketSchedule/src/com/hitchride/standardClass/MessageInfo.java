@@ -7,6 +7,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import com.hitchride.access.CarpoolTbAccess;
+import com.hitchride.global.Environment;
 import com.mysql.jdbc.ResultSet;
 //This class is to represent the standard format of dataStructure for Message Box.
 //Shield the front end from direct access to DB. Using runtime object for performance increase
@@ -23,7 +24,7 @@ public class MessageInfo {
 	public String origAddr;
 	public String destCity;
 	public String destAddr;
-	public String owner;
+	public User owner;
 	public Hashtable<String,Integer> userstatus; //User Defined type,saved as pure string in mySQL DB.
 	                                        //Change when verify mySQL support array type
 	public List<String> messages;           //Messages associated with this particular ride.
@@ -45,7 +46,8 @@ public class MessageInfo {
 		    	origAddr = rs.getString("origAddr");
 		    	destCity = rs.getString("destCity");
 		    	destAddr = rs.getString("destAddr");
-		    	owner = rs.getString("userName");
+		    	String ownerName = rs.getString("userName");
+		    	owner = Environment.getEnv().getUser(ownerName);
 
 		    	String participants = rs.getString("participants");
 			    if (participants!=null && !participants.equals(""))
