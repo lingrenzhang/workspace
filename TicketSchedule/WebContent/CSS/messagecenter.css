@@ -85,3 +85,21 @@
 	text-align: center;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
 }
+
+.discussion_timeline_wrapper
+{
+	display: block;
+	position: relative;
+	float: left;
+	padding: 15px 10px 4px 60px;
+	line-height: 14px;
+	margin: 0 auto;
+	width: 500px;
+}
+
+.entry
+{
+	display: block;
+	postion: relative;
+	height: 120px;
+}

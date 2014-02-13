@@ -1,21 +1,31 @@
 package com.hitchride.standardClass;
 
-import java.util.Vector;
-
-
-//User passively updates i
-public class User implements RideListener,UserInfo,UserPersistentStorage{
+public class Owner implements RideListener,UserInfo,UserStatus {
 	private int _uid;
 	private String _name;
 	private String _avatarID;
 	
-	public Vector<RideInfo> rides= new Vector<RideInfo>();
+	private int _status;
+	
+	public Owner(UserInfo userInfo) {
+		this.set_avatarID(userInfo.get_avatarID());
+		this.set_name(userInfo.get_name());
+		this.set_uid(userInfo.get_uid());
+	}
+
+
+
 	@Override
-	public void updateRideInfo() {
-		// TODO Auto-generated method stub
+	public int get_status() {
+		return this._status;
+	}
+
+
+	@Override
+	public void set_status(int status) {
+		this._status =status;
 		
 	}
-	
 	@Override
 	public int get_uid() {
 		return _uid;
@@ -42,6 +52,12 @@ public class User implements RideListener,UserInfo,UserPersistentStorage{
 		this._avatarID = _avatarID;
 	}
 
+	@Override
+	public void updateRideInfo() {
+		// TODO Auto-generated method stub
+		
+	}
 
-	
+
+
 }

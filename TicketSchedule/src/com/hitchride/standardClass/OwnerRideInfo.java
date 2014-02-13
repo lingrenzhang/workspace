@@ -11,11 +11,9 @@ import com.hitchride.global.Environment;
 //It will push its status change to desired users through observant design pattern
 public class OwnerRideInfo extends RideInfo implements RideStatusChange{
 	private Vector<RideListener> _rideListeners = new Vector<RideListener>();
-	
 	private int _ownerId;
 	private Vector<ParticipantRide> _prides = new Vector<ParticipantRide>();
 
-	
 	@Override
 	public void attach(RideListener rideListener) {
 		_rideListeners.addElement(rideListener);
@@ -37,13 +35,13 @@ public class OwnerRideInfo extends RideInfo implements RideStatusChange{
 
 	public void attachUser(int UID)
 	{
-		User user = Environment.getEnv().getUser(UID);
+		User user = (User) Environment.getEnv().getUser(UID);
 		attach(user);
 	}
 	
 	public void detachUser(int UID)
 	{
-		User user = Environment.getEnv().getUser(UID);
+		User user = (User) Environment.getEnv().getUser(UID);
 		detach(user);
 	}
 	
@@ -51,6 +49,7 @@ public class OwnerRideInfo extends RideInfo implements RideStatusChange{
     public OwnerRideInfo(ResultSet rs, Boolean myArgsCommute) throws SQLException
     {
     	super(rs,myArgsCommute);
+    	
     }
     
     public int get_ownerId() {
@@ -59,6 +58,14 @@ public class OwnerRideInfo extends RideInfo implements RideStatusChange{
 
 	public void set_ownerId(int _ownerId) {
 		this._ownerId = _ownerId;
+	}
+
+	public Vector<ParticipantRide> get_prides() {
+		return _prides;
+	}
+
+	public void set_prides(Vector<ParticipantRide> _prides) {
+		this._prides = _prides;
 	}
 
 

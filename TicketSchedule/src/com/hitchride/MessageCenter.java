@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hitchride.access.MessageTbAccess;
-import com.hitchride.standardClass.MessageInfo;
+import com.hitchride.standardClass.Topic;
 
 /**
  * Servlet implementation class MessageCenter
@@ -48,8 +48,8 @@ public class MessageCenter extends HttpServlet {
 			String type = pars[2].split("=")[1];
 			request.setAttribute("to", id);
 			request.setAttribute("rid",rid );
-		    MessageInfo messageInfo = new MessageInfo(rid);
-		    request.setAttribute("messageInfo",messageInfo);
+		    Topic topic = new Topic(rid);
+		    request.setAttribute("topic",topic);
 
 			RequestDispatcher rd = request.getRequestDispatcher("/MessageCenter.jsp");
 			rd.forward(request, response);

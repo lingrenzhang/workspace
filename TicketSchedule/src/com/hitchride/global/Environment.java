@@ -7,8 +7,11 @@ import java.util.Hashtable;
 
 import com.hitchride.access.CarpoolTbAccess;
 import com.hitchride.access.UserTbAccess;
+import com.hitchride.standardClass.Message;
+import com.hitchride.standardClass.Topic;
 import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.User;
+import com.hitchride.standardClass.UserInfo;
 
 
 
@@ -16,11 +19,11 @@ import com.hitchride.standardClass.User;
 public class Environment {
 	private static Environment env;
 	private Environment(){
-		_users = new Hashtable<Integer,User>(100000);
+		_users = new Hashtable<Integer,UserInfo>(100000);
 		initialAllUser();
 		_availRides = new Hashtable<Integer,OwnerRideInfo>();
 		initialAvaRideLoad();
-		_actUsers = new Hashtable<Integer,User>(10000);
+		_actUsers = new Hashtable<Integer,UserInfo>(10000);
 		_nactuser=0;
 	}
 	
@@ -78,22 +81,25 @@ public class Environment {
 	}
 	
 	//All user object reference can be directly accessed through UID
-	public Hashtable<Integer,User> _users; //All Users. Represent by UID.
+	public Hashtable<Integer,UserInfo> _users; //All Users. Represent by UID.
 	//All Act user object reference can be directly accessed through UID
-	public Hashtable<Integer,User> _actUsers; //Active users. Represent by UID.
+	public Hashtable<Integer,UserInfo> _actUsers; //Active users. Represent by UID.
 	//All OwnerRideInfo reference can be directly accessed through RID
 	public Hashtable<Integer,OwnerRideInfo> _availRides;  //All available rides. Represent by RID.
 	
+	public Hashtable<Integer,Message> _allMessages;
+	
+	
 	public int _nactuser;
 	
-	public User getUser(int UID)
+	public UserInfo getUser(int UID)
 	{
-		User user = _users.get(UID);
+		UserInfo user = _users.get(UID);
 		return user;
 	}
-	public User getActUser(int UID)
+	public UserInfo getActUser(int UID)
 	{
-		User user = _actUsers.get(UID);
+		UserInfo user = _actUsers.get(UID);
 		return user;
 	}
 	
@@ -104,19 +110,19 @@ public class Environment {
 	}
 
 	public void addActiveUser(int uID) {
-	     User user = _users.get(uID);
+	     UserInfo user = _users.get(uID);
 	     _actUsers.put(uID, user);
 	     _nactuser++;
 	}
 	
 	//Return the first user object when String name matches
 	//Temper solution, think about DB structure later.
-	public User getUser(String name)
+	public UserInfo getUser(String name)
 	{
-		Enumeration<User> enu = _users.elements();
+		Enumeration<UserInfo> enu = _users.elements();
 		while (enu.hasMoreElements())
 		{
-			User result = enu.nextElement();
+			UserInfo result = enu.nextElement();
 			if (result.get_name().equalsIgnoreCase(name))
 			return result;
 		}

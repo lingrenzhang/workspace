@@ -16,7 +16,7 @@ public abstract class RideInfo implements Comparable<rideInfoParameters>{
 	
 	// for output only
 	public String username; //owner name
-	public int ownerId;
+	public int ownerId; //Require to compute now... Will reorg DB structure.
 	public List<Integer> participant;
 	
 	public Integer recordId;
@@ -64,8 +64,8 @@ public abstract class RideInfo implements Comparable<rideInfoParameters>{
 		String destNbhd	= rs.getString("destNbhd");
 		String destAddr	= rs.getString("destAddr");
 		
-		origLoc = new GeoInfo(origAddr+origNbhd+origCity+origState,origLat,origLon);
-		destLoc = new GeoInfo(destAddr+destNbhd+destCity+destState,destLat,destLon);
+		origLoc = new GeoInfo(origAddr+origNbhd,origCity+origState,origLat,origLon);
+		destLoc = new GeoInfo(destAddr+destNbhd,destCity+destState,destLat,destLon);
 		// score will be determined by the ScoreCalculator
 
 		// for drivers only

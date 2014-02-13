@@ -1,7 +1,12 @@
 package com.hitchride.standardClass;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 //Maintain with google API reference.
 public class GeoInfo {
+	public int geoId; //Track as dummy
 	private int _status=0; //1:Only Location initialized,2:Only Lat,Lon initialized,3:Fully initialized
 	private double _lat, _lon;
 	public String _state, _city, _nbhd, _addr;
@@ -25,6 +30,14 @@ public class GeoInfo {
 		_status = 3;
 	}
 	
+	public GeoInfo(String addr, String city, double lat, double lon) {
+		this._lat = lat;
+		this._lon = lon;
+		this._addr=addr;
+		this._city=city;
+		this._formatedAddr=addr+","+city;
+		_status = 3;
+	}
 	public double get_lat() {
 		switch (_status)
 		{
@@ -69,4 +82,5 @@ public class GeoInfo {
 				return null;
 		}
 	}
+
 }

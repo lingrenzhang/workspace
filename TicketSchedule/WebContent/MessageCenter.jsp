@@ -2,11 +2,11 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<%@ page import="com.hitchride.standardClass.MessageInfo"%>
+<%@ page import="com.hitchride.standardClass.Topic"%>
 <%
 	String from = (String) request.getSession().getAttribute("userName");
     String to = (String) request.getAttribute("to");
-    MessageInfo messInfo = (MessageInfo) request.getAttribute("messageInfo");
+    Topic topicInfo = (Topic) request.getAttribute("topic");
 %>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -44,26 +44,27 @@
 				<button type="submit" id="sendbutton">Send</button>
 			</div>
 		</div>
-		<div class="entry">
-			<div class="userpic">
-				<div class="username"><%=messInfo.owner.get_name() %></div>
-				<img src=<%="/TicketSchedule/UserProfile/"+messInfo.owner.get_avatarID() %> alt="Profile Picture"></img>
-				<span class="passenger"></span>
+
+		<div class="discussion_timeline_wrapper">
+	        <div class="entry">
+				<div class="userpic">
+					<div class="username"><%=topicInfo.owner.get_name() %></div>
+					<img src=<%="/TicketSchedule/UserProfile/"+topicInfo.owner.get_avatarID() %> alt="Profile Picture"></img>
+					<span class="passenger"></span>
+				</div>
+				<div class="inner_content">
+					<h3>
+						<span class="inner"><%=topicInfo.ownerRide.origLoc._city %>
+						<span class="trip_type round_trip"><%=topicInfo.ownerRide.destLoc._city %></span>
+						</span>
+					</h3>
+					<h4>
+						From: <%=topicInfo.ownerRide.origLoc._addr+", "+topicInfo.ownerRide.origLoc._city%>
+						To: <%=topicInfo.ownerRide.origLoc._addr+ ", "+topicInfo.ownerRide.origLoc._city%>
+					</h4>
+				</div>
 			</div>
-			<div class="inner_content">
-				<h3>
-					<span class="inner"><%=messInfo.origCity %>
-					<span class="trip_type round_trip"><%=messInfo.destCity %></span>
-					</span>
-				</h3>
-				<h4>
-					From: <%=messInfo.origAddr+", "+messInfo.origCity%>
-					To: <%=messInfo.destAddr+ ", "+messInfo.destCity%>
-				</h4>
-			</div>
-		</div>
-		<div class="discussion-timeline js-quote-selection-container">
-	        <div class="js-discussion">
+	        <div class="discussion_wrapper">
           	   <div class="timeline-comment-wrapper js-comment-container">
   			   <a href="/seanjiang86"><img alt="Xiyao Jiang" class="timeline-comment-avatar" height="48" src="https://0.gravatar.com/avatar/9560c50251e98d726b253a2a12e44d12?d=https%3A%2F%2Fidenticons.github.com%2F657103d3557fac4f3d1e0d7fdd951ab6.png&amp;r=x&amp;s=140" width="48"></a>
 				<div class="timeline-comment timeline-comment-current-user">
