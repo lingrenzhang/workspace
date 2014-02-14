@@ -4,14 +4,16 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.hitchride.calc.rideInfoParameters;
 
 //RideInfo saves the ride information.
-public abstract class RideInfo implements Comparable<rideInfoParameters>{
+public abstract class RideInfo{
 	// assign all not-applicable fields to null
-	public Boolean commute, roundtrip, userType;
+	public boolean commute, roundtrip, userType;
 	public GeoInfo origLoc,destLoc;
 	
 	// for output only
@@ -19,15 +21,14 @@ public abstract class RideInfo implements Comparable<rideInfoParameters>{
 	public int ownerId; //Require to compute now... Will reorg DB structure.
 	public List<Integer> participant;
 	
-	public Integer recordId;
-	public Double score; // we rank results based on match score
+	public int recordId;
 
 	// for drivers only
-	public Integer seatsAvailable;
-	public Double detourFactor; // deprecate
+	public int seatsAvailable;
+	public double detourFactor; // deprecate
 	
 	// for both drivers and passengers.  Total price for trip, per day price for commute
-	public Double price;
+	public double price;
 	
 	// for commute only
 	public Time forwardTime, forwardFlexibility;
@@ -39,6 +40,30 @@ public abstract class RideInfo implements Comparable<rideInfoParameters>{
 
 	//Normally used when initialize from client input.
 	public RideInfo() {
+		
+	}
+	
+	//Normally used when initialize from client input.
+	public RideInfo(RideInfo r) {
+		
+		this.commute = r.commute;
+		this.roundtrip = r.roundtrip;
+		this.userType = r.userType;
+		this.origLoc =  r.origLoc.clone();
+		this.destLoc = r.destLoc.clone();
+		
+		// for output only
+		this.username = r.username;
+		this.ownerId = r.ownerId;
+
+		/*
+		this.participant = new ArrayList<Integer>(r.participant.size());
+        for (Iterator<Integer> parI = r.participant.iterator();parI.hasNext();)
+        {
+        	this.participant.add(parI.next());
+        }
+		*/
+        this.recordId = r.recordId;
 	}
 
 	//Initialize from DB.
@@ -89,10 +114,6 @@ public abstract class RideInfo implements Comparable<rideInfoParameters>{
 		}
 	}
 
-	@Override
-	public int compareTo(rideInfoParameters that) {
-			return -(this.score).compareTo(that.score); // from high to low
-	}
 }
 
 

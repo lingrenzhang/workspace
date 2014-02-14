@@ -27,6 +27,17 @@ public class Environment {
 		_nactuser=0;
 	}
 	
+	//All user object reference can be directly accessed through UID
+	public Hashtable<Integer,UserInfo> _users; //All Users. Represent by UID.
+	//All Act user object reference can be directly accessed through UID
+	public Hashtable<Integer,UserInfo> _actUsers; //Active users. Represent by UID.
+	//All OwnerRideInfo reference can be directly accessed through RID
+	//public Hashtable<Integer,OwnerRideInfo> _availRides;  //All available rides. Represent by RID.
+	public Hashtable<Integer,OwnerRideInfo> _availRides;
+	public Hashtable<Integer,Message> _allMessages;
+	public Hashtable<Integer,Topic> _topics;
+	public int _nactuser;
+
 	private void initialAllUser() {
 		UserTbAccess utb = new UserTbAccess();
 		System.out.println("_users initializing: Loaded from DB.");
@@ -80,17 +91,7 @@ public class Environment {
 		
 	}
 	
-	//All user object reference can be directly accessed through UID
-	public Hashtable<Integer,UserInfo> _users; //All Users. Represent by UID.
-	//All Act user object reference can be directly accessed through UID
-	public Hashtable<Integer,UserInfo> _actUsers; //Active users. Represent by UID.
-	//All OwnerRideInfo reference can be directly accessed through RID
-	public Hashtable<Integer,OwnerRideInfo> _availRides;  //All available rides. Represent by RID.
-	
-	public Hashtable<Integer,Message> _allMessages;
-	
-	
-	public int _nactuser;
+
 	
 	public UserInfo getUser(int UID)
 	{
@@ -103,7 +104,7 @@ public class Environment {
 		return user;
 	}
 	
-	public OwnerRideInfo get(int RID)
+	public OwnerRideInfo getOwnerRide(int RID)
 	{
 		OwnerRideInfo ownerRide = _availRides.get(RID);
 		return ownerRide;

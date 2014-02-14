@@ -2,6 +2,8 @@
 package com.hitchride.standardClass;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -31,10 +33,17 @@ public class Topic {
 		try {
 			ownerRide = Environment.getEnv()._availRides.get(Integer.parseInt(rid));
 			UserInfo ownerInfo = Environment.getEnv().getUser(ownerRide.username);
-			
 			owner = new Owner(ownerInfo);
 		
-			parRides = ownerRide.get_prides();
+			parRides = new ArrayList<ParticipantRide>();
+			//parRides = ownerRide.get_prides();
+			Enumeration<Integer> e =DummyData.getDummyEnv().getAllPartRide();
+			while (e.hasMoreElements())
+			{
+				Integer key = e.nextElement();
+				ParticipantRide pRide = DummyData.getDummyEnv().get_participantRide(key);
+				parRides.add(pRide);
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

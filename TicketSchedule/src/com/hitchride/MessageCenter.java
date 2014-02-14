@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hitchride.access.MessageTbAccess;
+import com.hitchride.standardClass.Message;
 import com.hitchride.standardClass.Topic;
 
 /**
@@ -46,7 +47,6 @@ public class MessageCenter extends HttpServlet {
 			String id = pars[0].split("=")[1];
 			String rid = pars[1].split("=")[1];
 			String type = pars[2].split("=")[1];
-			request.setAttribute("to", id);
 			request.setAttribute("rid",rid );
 		    Topic topic = new Topic(rid);
 		    request.setAttribute("topic",topic);
@@ -60,12 +60,14 @@ public class MessageCenter extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String from = request.getParameter("from");
-		String to = request.getParameter("to");
-		String message = request.getParameter("notes");
+
+		int from = Integer.parseInt(request.getParameter("from"));
+		int to = Integer.parseInt(request.getParameter("to"));
+		String messageContent = request.getParameter("notes");
 		int recordID = Integer.parseInt(request.getParameter("recordID"));
-		MessageTbAccess messageTb = new MessageTbAccess();
-		messageTb.insertMessage(from, to, message,recordID);
+		Message message = new Message(messageContent,from,to,recordID);
+		message.insertToDB();
+
 		response.sendRedirect("/TicketSchedule/servlet/Search");
 	}
 

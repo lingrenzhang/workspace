@@ -3,9 +3,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <%@ page import="com.hitchride.standardClass.Topic"%>
+<%@ page import="com.hitchride.standardClass.ParticipantRide"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.Iterator"%>
 <%
 	String from = (String) request.getSession().getAttribute("userName");
-    String to = (String) request.getAttribute("to");
     Topic topicInfo = (Topic) request.getAttribute("topic");
 %>
 <head>
@@ -33,13 +35,22 @@
 						<span class="passenger"></span>
 				</div>
 			</div>
-			<div class="user_info" id="to">
-				<div class="userpic">
-					<div class="username"><%=to %></div>
-					<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
-					<span class="passenger"></span>
+			<% List<ParticipantRide> parRides= topicInfo.parRides; 
+			   for (Iterator<ParticipantRide> parRideI = parRides.iterator(); parRideI.hasNext();) 
+			   {
+				   ParticipantRide parRide = parRideI.next();
+			 %> 
+			
+				<div class="user_info" id="to">
+					<div class="userpic">
+						<div class="username"><%=parRide.username %></div>
+						<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
+						<span class="passenger"></span>
+					</div>
 				</div>
-			</div>
+			<%
+			   }
+			%>
 			<div>
 				<button type="submit" id="sendbutton">Send</button>
 			</div>
@@ -188,6 +199,15 @@
 
             </div>
         </div>
+	    <div class="topic_wrapper">
+	    	<div class="schedule_wrapper">
+	    	    abc
+	    	</div>
+	    	<div class="bargin_wrapper">
+	    		def
+	    	</div>
+	    </div>
+
 	</div>           
 </div>
 </body>

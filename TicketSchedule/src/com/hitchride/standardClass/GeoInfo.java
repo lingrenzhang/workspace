@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 //Maintain with google API reference.
-public class GeoInfo {
+public class GeoInfo implements Cloneable{
 	public int geoId; //Track as dummy
 	private int _status=0; //1:Only Location initialized,2:Only Lat,Lon initialized,3:Fully initialized
 	private double _lat, _lon;
@@ -83,4 +83,17 @@ public class GeoInfo {
 		}
 	}
 
+	@Override
+	public GeoInfo clone() 
+	{
+		GeoInfo geoCopy = null;
+		try {
+			geoCopy = (GeoInfo)super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} //All values are value type
+		return geoCopy;
+		
+	}
 }

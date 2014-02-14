@@ -3,7 +3,7 @@
 	display: block;
 	position: relative;
 	float: left;
-	padding: 15px 10px 4px 60px;
+	padding: 15px 10px 4px 10px;
 	line-height: 14px;
 	margin: 0 auto;
 	width: 210px;
@@ -91,7 +91,7 @@
 	display: block;
 	position: relative;
 	float: left;
-	padding: 15px 10px 4px 60px;
+	padding: 15px 10px 4px 10px;
 	line-height: 14px;
 	margin: 0 auto;
 	width: 500px;
@@ -102,4 +102,27 @@
 	display: block;
 	postion: relative;
 	height: 120px;
+}
+
+.topic_wrapper
+{
+	display: block;
+	postion: relative;
+	float: right;
+	width: 200px;
+	padding: 15px 10px 4px 10px;
+}
+
+.schedule_wrapper
+{
+	display: block;
+	postion: relative;
+
+	
+}
+
+.bargain_wrapper
+{
+	display: block;
+	postion: relative;
 }

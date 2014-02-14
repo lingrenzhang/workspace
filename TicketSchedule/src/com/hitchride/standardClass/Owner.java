@@ -13,8 +13,6 @@ public class Owner implements RideListener,UserInfo,UserStatus {
 		this.set_uid(userInfo.get_uid());
 	}
 
-
-
 	@Override
 	public int get_status() {
 		return this._status;
