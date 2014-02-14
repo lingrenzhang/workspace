@@ -5,7 +5,7 @@ public class Owner implements RideListener,UserInfo,UserStatus {
 	private String _name;
 	private String _avatarID;
 	
-	private int _status;
+	private int _userStatus;
 	
 	public Owner(UserInfo userInfo) {
 		this.set_avatarID(userInfo.get_avatarID());
@@ -14,14 +14,14 @@ public class Owner implements RideListener,UserInfo,UserStatus {
 	}
 
 	@Override
-	public int get_status() {
-		return this._status;
+	public int get_userStatus() {
+		return this._userStatus;
 	}
 
 
 	@Override
-	public void set_status(int status) {
-		this._status =status;
+	public void set_userStatus(int userStatus) {
+		this._userStatus =userStatus;
 		
 	}
 	@Override

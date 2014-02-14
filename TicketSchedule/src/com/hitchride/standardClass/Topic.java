@@ -37,6 +37,7 @@ public class Topic {
 		
 			parRides = new ArrayList<ParticipantRide>();
 			//parRides = ownerRide.get_prides();
+			//TO DO: User dummy participant ride now
 			Enumeration<Integer> e =DummyData.getDummyEnv().getAllPartRide();
 			while (e.hasMoreElements())
 			{
@@ -44,6 +45,7 @@ public class Topic {
 				ParticipantRide pRide = DummyData.getDummyEnv().get_participantRide(key);
 				parRides.add(pRide);
 			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

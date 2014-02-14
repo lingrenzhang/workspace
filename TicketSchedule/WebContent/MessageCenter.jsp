@@ -40,12 +40,20 @@
 			   {
 				   ParticipantRide parRide = parRideI.next();
 			 %> 
-			
 				<div class="user_info" id="to">
 					<div class="userpic">
 						<div class="username"><%=parRide.username %></div>
 						<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
 						<span class="passenger"></span>
+					</div>
+					<div class="user_status">
+						<%=parRide.get_status() %>
+					</div>
+					<div class="user_match">
+						<%="Location: " + parRide.get_Match().getLocationMatching() %><br>
+						<%="Schedule: "+ parRide.get_Match().getSchedulingMatching() %><br>
+						<%="Bargin  : " + parRide.get_Match().getBarginMatching() %><br>
+						Use img later
 					</div>
 				</div>
 			<%
@@ -201,10 +209,10 @@
         </div>
 	    <div class="topic_wrapper">
 	    	<div class="schedule_wrapper">
-	    	    abc
+	    	    Schedule
 	    	</div>
 	    	<div class="bargin_wrapper">
-	    		def
+	    		BarginInfo
 	    	</div>
 	    </div>
 

@@ -119,4 +119,14 @@
     <servlet-name>AvaterService</servlet-name>
     <url-pattern>/servlet/AvaterService</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateParticipant</display-name>
+    <servlet-name>UpdateParticipant</servlet-name>
+    <servlet-class>com.hitchride.UpdateParticipant</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateParticipant</servlet-name>
+    <url-pattern>/servlet/UpdateParticipant</url-pattern>
+  </servlet-mapping>
 </web-app>

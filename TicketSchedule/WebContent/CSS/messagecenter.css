@@ -40,6 +40,21 @@
 	border-radius: 4px;
 }
 
+.user_status
+{
+	display: block;
+	positon: relative;
+	float: right;
+	width: 118px;
+}
+.user_match
+{
+	display: block;
+	positon: relative;
+	float: right;
+	width: 118px;
+	
+}
 
 
 #message_wrapper

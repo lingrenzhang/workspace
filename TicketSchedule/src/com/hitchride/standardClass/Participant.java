@@ -5,9 +5,8 @@ public class Participant implements RideListener,UserInfo,UserStatus
 	private int _uid;
 	private String _name;
 	private String _avatarID;
+	private int _userStatus;
 	
-	private int _status;
-
 	public Participant(UserInfo userInfo) {
 		this.set_avatarID(userInfo.get_avatarID());
 		this.set_name(userInfo.get_name());
@@ -16,17 +15,7 @@ public class Participant implements RideListener,UserInfo,UserStatus
 	
 	
 	
-	@Override
-	public int get_status() {
-		return this._status;
-	}
-	
-	
-	@Override
-	public void set_status(int status) {
-		this._status =status;
-		
-	}
+
 	@Override
 	public int get_uid() {
 		return _uid;
@@ -56,6 +45,21 @@ public class Participant implements RideListener,UserInfo,UserStatus
 	@Override
 	public void updateRideInfo() {
 		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public int get_userStatus() {
+		// TODO Auto-generated method stub
+		return this._userStatus;
+	}
+
+
+	@Override
+	public void set_userStatus(int userStatus) {
+		// TODO Auto-generated method stub
+		this._userStatus = userStatus;
 		
 	}
 

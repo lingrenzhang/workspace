@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Random;
-
 import java.util.Enumeration;
+
 import com.hitchride.standardClass.GeoInfo;
+import com.hitchride.standardClass.MatchScore;
 import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.RideInfo;
@@ -20,6 +21,8 @@ public class DummyData {
 	private List<OwnerRideInfo> _ownerRide;
 	
 	public Hashtable<Integer,ParticipantRide> _partRides;  //All available rides. Represent by RID.
+
+	public Hashtable<Integer, MatchScore> _dummyMatching;
 	
 	private DummyData(){
 		
@@ -27,6 +30,7 @@ public class DummyData {
 		_users = new ArrayList<User>();
 		_ownerRide = new ArrayList<OwnerRideInfo>();
         _partRides = new Hashtable<Integer,ParticipantRide>();
+
 		initializeGeo(10);
 		initializeUser(); 
 		initializeOwnerRide();
@@ -34,6 +38,7 @@ public class DummyData {
 		initializeMessage();
 	}
 	
+
 	private void initializeMessage() {
 		
 		
@@ -76,8 +81,9 @@ public class DummyData {
 			}
 	}
 		
-	
 
+		
+	
 	public static DummyData getDummyEnv(){
 		if (null == dummy){
 			dummy = new DummyData();
@@ -94,6 +100,13 @@ public class DummyData {
 	public Enumeration<Integer> getAllPartRide() {
 		
 		return _partRides.keys();
+	}
+
+
+	public void updatePartRideStat(int prid, int pstatus) {
+		ParticipantRide pride = _partRides.get(prid);
+		pride.set_status(pstatus);
+		
 	}
 
 	
