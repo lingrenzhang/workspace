@@ -50,10 +50,9 @@
 						<%=parRide.get_status() %>
 					</div>
 					<div class="user_match">
-						<%="Location: " + parRide.get_Match().getLocationMatching() %><br>
-						<%="Schedule: "+ parRide.get_Match().getSchedulingMatching() %><br>
-						<%="Bargin  : " + parRide.get_Match().getBarginMatching() %><br>
-						Use img later
+						<div class="match_Loc" style="width : <%=parRide.get_Match().getLocationMatching() %>px "></div>
+						<div class="match_Sch" style="width : <%=parRide.get_Match().getSchedulingMatching() %>px "></div>
+						<div class="match_Bar" stype="width : <%=parRide.get_Match().getBarginMatching() %>px "></div>
 					</div>
 				</div>
 			<%
@@ -209,7 +208,39 @@
         </div>
 	    <div class="topic_wrapper">
 	    	<div class="schedule_wrapper">
-	    	    Schedule
+	    	    <table class="schedule_commute">
+	    	    	<thead>
+	    	    		<tr>
+	    	    			<th><span title="Sunday">Su</span></th>
+	    	    			<th><span title="Monday">Mo</span></th>
+	    	    			<th><span title="Tuesday">Tu</span></th>
+	    	    			<th><span title="Wedensday">We</span></th>
+	    	    			<th><span title="Thursday">Th</span></th>
+	    	    			<th><span title="Friday">Fr</span></th>
+	    	    			<th><span title="Saturday">Sa</span></th>
+	    	    		</tr>
+	    	    	</thead>
+	    	    	<tbody>
+	    	    		<tr>
+	    	    			<td><img src="/TicketSchedule/Picture/4-3.png"></td>
+	    	    			<td><img src="/TicketSchedule/Picture/4-3.png"></td>
+	    	    			<td><img src="/TicketSchedule/Picture/4-3.png"></td>
+							<td><img src="/TicketSchedule/Picture/4-3.png"></td>
+							<td><img src="/TicketSchedule/Picture/4-3.png"></td>
+							<td><img src="/TicketSchedule/Picture/4-3.png"></td>
+							<td><img src="/TicketSchedule/Picture/4-3.png"></td>
+	    	    		</tr>
+	    	    		<tr>
+	    	    			<td><img src="/TicketSchedule/Picture/4-3.png"></td>
+	    	    			<td><img src="/TicketSchedule/Picture/4-3.png"></td>
+	    	    			<td><img src="/TicketSchedule/Picture/4-3.png"></td>
+							<td><img src="/TicketSchedule/Picture/4-3.png"></td>
+							<td><img src="/TicketSchedule/Picture/4-3.png"></td>
+							<td><img src="/TicketSchedule/Picture/4-3.png"></td>
+							<td><img src="/TicketSchedule/Picture/4-3.png"></td>
+	    	    		</tr>
+	    	    	</tbody>
+	    	    </table>
 	    	</div>
 	    	<div class="bargin_wrapper">
 	    		BarginInfo

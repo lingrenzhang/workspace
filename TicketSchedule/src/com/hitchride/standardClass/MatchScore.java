@@ -1,5 +1,7 @@
 package com.hitchride.standardClass;
 
+import java.util.Random;
+
 public class MatchScore implements Matching {
 
 	private int _LocationMatching;
@@ -11,9 +13,10 @@ public class MatchScore implements Matching {
 	
 	public MatchScore()
 	{
-		this._LocationMatching = 50;
-		this._ScheduleingMatching = 50;
-		this._BargingMatching = 50;
+		Random rnd = new Random();
+		this._LocationMatching = rnd.nextInt(100);
+		this._ScheduleingMatching = rnd.nextInt(100);
+		this._BargingMatching = rnd.nextInt(100);
 	}
 	
 	public MatchScore(OwnerRideInfo ownerRide, ParticipantRide partRide)

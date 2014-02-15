@@ -141,3 +141,36 @@
 	display: block;
 	postion: relative;
 }
+
+.match_Loc
+{
+	display: blcok;
+	possiton: relative;
+	height: 13px;
+	width: 100px;
+	margin: 2px 0px 2px 0px ;
+	padding: 2px 0px 2px 10px ;
+	background-color: #8080E0;
+}
+
+.match_Sch
+{
+	display: blcok;
+	possiton: relative;
+	height: 13px;
+	width: 100px;
+	margin: 2px 0px 2px 0px ;
+	padding: 2px 0px 2px 10px ;
+	background-color: #80E080;
+}
+
+.match_Bar
+{
+	display: blcok;
+	possiton: relative;
+	height: 13px;
+	width: 100px;
+	padding: 2px 0px 2px 10px ;
+	margin: 2px 0px 2px 0px ;
+	background-color: #E08080;
+}
