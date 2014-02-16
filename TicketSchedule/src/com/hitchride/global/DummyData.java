@@ -8,10 +8,12 @@ import java.util.Enumeration;
 
 import com.hitchride.standardClass.GeoInfo;
 import com.hitchride.standardClass.MatchScore;
+import com.hitchride.standardClass.Message;
 import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.User;
+import com.hitchride.standardClass.UserInfo;
 
 public class DummyData {
 	private static DummyData dummy;
@@ -21,8 +23,8 @@ public class DummyData {
 	private List<OwnerRideInfo> _ownerRide;
 	
 	public Hashtable<Integer,ParticipantRide> _partRides;  //All available rides. Represent by RID.
-
 	public Hashtable<Integer, MatchScore> _dummyMatching;
+	public Hashtable<Integer, Message> _dummyMessage; //Attach message to ownerRide (topic) on initialize in production.
 	
 	private DummyData(){
 		
@@ -30,18 +32,39 @@ public class DummyData {
 		_users = new ArrayList<User>();
 		_ownerRide = new ArrayList<OwnerRideInfo>();
         _partRides = new Hashtable<Integer,ParticipantRide>();
+        _dummyMessage = new Hashtable<Integer,Message>();
+        
 
 		initializeGeo(10);
 		initializeUser(); 
 		initializeOwnerRide();
 		initializeParticipantRide(4);
-		initializeMessage();
+		initializeMessage(5);
 	}
 	
 
-	private void initializeMessage() {
-		
-		
+	private void initializeMessage(int numofMessages) {
+		Random rnd = new Random();
+		for (int i=0;i<numofMessages+2;i++)
+		{
+			
+			Message msg = new Message("This is for test. I want to join your ride"
+									,Environment.getEnv().getUser(rnd.nextInt(50))
+									,Environment.getEnv().getUser(rnd.nextInt(50))
+									,Environment.getEnv().getOwnerRide(838)
+					);
+			_dummyMessage.put(i, msg);
+			System.out.println("Msg "+ i + ": initialized.");
+			
+			i++;
+			msg = new Message(rnd.nextInt(4),rnd.nextInt(4)
+					,Environment.getEnv().getUser(rnd.nextInt(50))
+					,Environment.getEnv().getUser(rnd.nextInt(50))
+					,Environment.getEnv().getOwnerRide(838)
+					);
+			_dummyMessage.put(i, msg);
+			System.out.println("Msg "+ i + ": initialized.");
+		}
 	}
 
 	private void initializeParticipantRide(int numofRides) {

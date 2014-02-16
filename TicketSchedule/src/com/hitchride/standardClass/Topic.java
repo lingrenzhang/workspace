@@ -46,6 +46,15 @@ public class Topic {
 				parRides.add(pRide);
 			}
 			
+			messages = new ArrayList<Message>();
+			e =DummyData.getDummyEnv()._dummyMessage.keys();
+			while (e.hasMoreElements())
+			{
+				Integer key = e.nextElement();
+				Message message = DummyData.getDummyEnv()._dummyMessage.get(key);
+				messages.add(message);
+			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

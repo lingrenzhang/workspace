@@ -132,6 +132,7 @@
 {
 	display: block;
 	postion: relative;
+	height: 120px;
 
 	
 }
@@ -140,6 +141,7 @@
 {
 	display: block;
 	postion: relative;
+
 }
 
 .match_Loc
@@ -173,4 +175,26 @@
 	padding: 2px 0px 2px 10px ;
 	margin: 2px 0px 2px 0px ;
 	background-color: #E08080;
+}
+
+.sysMess_wrapper
+{
+padding-left: 15px;
+padding-right: 15px;
+color: #777;
+background-color: #f7f7f7;
+border-bottom: 1px solid #eee;
+border-top-left-radius: 4px;
+border-top-right-radius: 4px;
+}
+
+.discussion
+{
+padding: 3px 15px 3px 15px;
+color: #777;
+background-color: rgba(65,131,196,0.1);
+border-bottom: 1px solid #eee;
+border-radius: 4px;
+
+margin: 0px 0px 2px 0px;
 }

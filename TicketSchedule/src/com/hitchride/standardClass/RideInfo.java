@@ -13,6 +13,9 @@ import com.hitchride.calc.rideInfoParameters;
 //RideInfo saves the ride information.
 public abstract class RideInfo{
 	// assign all not-applicable fields to null
+	
+	public int recordId;
+	
 	public boolean commute, roundtrip, userType;
 	public GeoInfo origLoc,destLoc;
 	
@@ -20,11 +23,10 @@ public abstract class RideInfo{
 	public String username; //owner name
 	public int ownerId; //Require to compute now... Will reorg DB structure.
 	public List<Integer> participant;
-	
-	public int recordId;
 
 	// for drivers only
 	public int seatsAvailable;
+	public int curSeatsAvail;
 	public double detourFactor; // deprecate
 	
 	// for both drivers and passengers.  Total price for trip, per day price for commute
@@ -112,6 +114,20 @@ public abstract class RideInfo{
 			// for travel only
 			tripDate	= rs.getDate("tripDate");
 		}
+	}
+	
+	public String getBarMessage()
+	{
+		String barMessage="";
+		if (this.userType)
+		{
+			barMessage = "Provides " + this.seatsAvailable +" seats with" +  this.price + " each";
+		}
+		else
+		{
+			barMessage = "Wants to share a ride for " +  this.price ;
+		}
+		return barMessage;
 	}
 
 }
