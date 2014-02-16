@@ -129,4 +129,14 @@
     <servlet-name>UpdateParticipant</servlet-name>
     <url-pattern>/servlet/UpdateParticipant</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MessageService</display-name>
+    <servlet-name>MessageService</servlet-name>
+    <servlet-class>com.hitchride.MessageService</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MessageService</servlet-name>
+    <url-pattern>/servlet/MessageService</url-pattern>
+  </servlet-mapping>
 </web-app>

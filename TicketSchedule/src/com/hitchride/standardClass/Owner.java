@@ -1,16 +1,11 @@
 package com.hitchride.standardClass;
 
-public class Owner implements RideListener,UserInfo,UserStatus {
-	private int _uid;
-	private String _name;
-	private String _avatarID;
+public class Owner extends User implements RideListener,UserStatus {
 	
 	private int _userStatus;
 	
 	public Owner(UserInfo userInfo) {
-		this.set_avatarID(userInfo.get_avatarID());
-		this.set_name(userInfo.get_name());
-		this.set_uid(userInfo.get_uid());
+		super(userInfo);
 	}
 
 	@Override
@@ -24,31 +19,7 @@ public class Owner implements RideListener,UserInfo,UserStatus {
 		this._userStatus =userStatus;
 		
 	}
-	@Override
-	public int get_uid() {
-		return _uid;
-	}
-	public void set_uid(int _uid) {
-		this._uid = _uid;
-	}
 
-	@Override
-	public String get_name() {
-		return _name;
-	}
-
-	public void set_name(String _name) {
-		this._name = _name;
-	}
-
-	@Override
-	public String get_avatarID() {
-		return _avatarID;
-	}
-
-	public void set_avatarID(String _avatarID) {
-		this._avatarID = _avatarID;
-	}
 
 	@Override
 	public void updateRideInfo() {

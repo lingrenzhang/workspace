@@ -5,10 +5,11 @@
 <%@ page import="com.hitchride.standardClass.Topic"%>
 <%@ page import="com.hitchride.standardClass.ParticipantRide"%>
 <%@ page import="com.hitchride.standardClass.Message"%>
+<%@ page import="com.hitchride.standardClass.User"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Iterator"%>
 <%
-	String from = (String) request.getSession().getAttribute("userName");
+	User user = (User) request.getSession().getAttribute("user");
     Topic topicInfo = (Topic) request.getAttribute("topic");
 %>
 <head>
@@ -31,7 +32,7 @@
 		<div class="user_wrapper">
 			<div class="user_info" id="from">
 				<div class="userpic">
-						<div class="username"><%=from %></div>
+						<div class="username"><%=user.get_name() %></div>
 						<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
 						<span class="passenger"></span>
 				</div>
@@ -53,15 +54,12 @@
 					<div class="user_match">
 						<div class="match_Loc" style="width : <%=parRide.get_Match().getLocationMatching() %>px "></div>
 						<div class="match_Sch" style="width : <%=parRide.get_Match().getSchedulingMatching() %>px "></div>
-						<div class="match_Bar" stype="width : <%=parRide.get_Match().getBarginMatching() %>px "></div>
+						<div class="match_Bar" style="width : <%=parRide.get_Match().getBarginMatching() %>px "></div>
 					</div>
 				</div>
 			<%
 			   }
 			%>
-			<div>
-				<button type="submit" id="sendbutton">Send</button>
-			</div>
 		</div>
 
 		<div class="discussion_timeline_wrapper">
@@ -104,18 +102,35 @@
 				    <%} %>
 				<%} %>
 			</div>
+			<div class="comment_wrapper">
+				<div class="comment_header">
+					<strong>
+						<a href="#userinfo" class="auther"><%=user.get_name()%></a>
+					</strong>
+				</div>
+				<form action="./MessageService" method="post">
+					<div class="comment_content">
+						<textarea name="comment" id="comment_body" placeholder="Leave a comment" class="comment-form-textarea"></textarea>
+					</div>
+					<button type="submit" id="comment">comment</button>	
+					<input class="hidden" name="fromId" value=<%=user.get_uid() %>>
+					<input class="hidden" name="toId" value=<%=topicInfo.ownerRide.get_ownerId() %>>
+					<input class="hidden" name="rideId" value=<%=topicInfo.ownerRide.recordId %>>
+			
+				</form>
+			</div>
             <div class="sysMess_wrapper">
             <% for(Iterator<Message> mI=topicInfo.messages.iterator();mI.hasNext();)
 				  { Message message =mI.next();
 				    if (message.isSystemMessage())
 				    {
-				%>
-					<span class="time"><%=message.getMessageGenerateDate().toString() %>
-					</span><br>
-					<span class="message_content"><%=message.getMessageContent() %>
-					</span><br>
-				   <%} %>
+			%>
+				<span class="time"><%=message.getMessageGenerateDate().toString() %>
+				</span><br>
+				<span class="message_content"><%=message.getMessageContent() %>
+				</span><br>
 				<%} %>
+			<%} %>
             </div>
         </div>
 	    <div class="topic_wrapper">

@@ -81,25 +81,7 @@
 
 }
 
-#sendbutton
-{
-	background-clip: padding-box;
-	background-color: #5BA53C;
-	background-image: linear-gradient(#8ABC6B, #579544);
-	border: 1px solid rgba(0, 0, 0, 0.4);
-	border-radius: 4px 4px 4px 4px;
-	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 1px 0 rgba(0, 0, 0, 0.6);
-	color: #FFFFFF !important;
-	display: inline-block;
-	font-size: 16px;
-	font-weight: 500;
-	height: 28px;
-	line-height: 28px;
-	padding: 0 25px;
-	position: relative;
-	text-align: center;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
-}
+
 
 .discussion_timeline_wrapper
 {
@@ -168,8 +150,8 @@
 
 .match_Bar
 {
-	display: blcok;
-	possiton: relative;
+	display: block;
+	positon: relative;
 	height: 13px;
 	width: 100px;
 	padding: 2px 0px 2px 10px ;
@@ -179,22 +161,77 @@
 
 .sysMess_wrapper
 {
-padding-left: 15px;
-padding-right: 15px;
-color: #777;
-background-color: #f7f7f7;
-border-bottom: 1px solid #eee;
-border-top-left-radius: 4px;
-border-top-right-radius: 4px;
+	display:block;
+	position: relative;
+	padding-left: 15px;
+	padding-right: 15px;
+	color: #777;
+	background-color: #f7f7f7;
+	border-bottom: 1px solid #eee;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
 }
 
 .discussion
 {
-padding: 3px 15px 3px 15px;
-color: #777;
-background-color: rgba(65,131,196,0.1);
-border-bottom: 1px solid #eee;
-border-radius: 4px;
+	padding: 3px 15px 3px 15px;
+	color: #777;
+	background-color: rgba(65,131,196,0.1);
+	border-bottom: 1px solid #eee;
+	border-radius: 4px;
+	margin: 0px 0px 2px 0px;
+}
 
-margin: 0px 0px 2px 0px;
+.comment_wrapper
+{
+	position: relative;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	margin: 0 0 5px 0;
+	height:96px;
+}
+.comment_header {
+	padding: 3px 15px 0px 15px;
+	color: #777;
+	background-color: rgba(65,131,196,0.1);
+	border-bottom: 1px solid #eee;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
+.comment_content{
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	
+}
+
+#comment
+{
+	background-clip: padding-box;
+	background-color: #5BA53C;
+	background-image: linear-gradient(#8ABC6B, #579544);
+	border: 1px solid rgba(0, 0, 0, 0.4);
+	border-radius: 4px 4px 4px 4px;
+	color: #FFFFFF !important;
+	display: inline-block;
+	font-size: 13px;
+	font-weight: 500;
+	padding: 2px 15px 2px 15px;
+    margin: 48px 30px 2px 0px;
+	text-align: center;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+	float: right;
+}
+
+.comment-form-textarea
+{
+	display: block;
+	width: 300px;
+	height: 60px;
+	margin:5px 15px 5px 15px;
+	padding: 2px 15px 2px 15px;
+	resize: vertical;
+	border: none;
+	float:left;
 }

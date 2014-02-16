@@ -8,12 +8,28 @@ public class User implements RideListener,UserInfo{
 	private int _uid;
 	private String _name;
 	private String _avatarID;
-	
+	private String _emailAddress;
+	private int _userLevel;
+		
 	public Vector<RideInfo> rides= new Vector<RideInfo>();
+	
+	public User()
+	{
+		
+	}
+	
+	public User(UserInfo user)
+	{
+		this.set_uid(user.get_uid());
+		this.set_name(user.get_name());
+		this.set_userLevel(user.get_userLevel());
+		this.set_avatarID(user.get_avatarID());
+		this.set_emailAddress(user.get_avatarID());
+	}
+	
 	@Override
 	public void updateRideInfo() {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override
@@ -42,7 +58,29 @@ public class User implements RideListener,UserInfo{
 		this._avatarID = _avatarID;
 	}
 
-	
+	public void set_userLevel(String userLevel) {
+		int userlevel = Integer.parseInt(userLevel);
+		this._userLevel = userlevel;
+	}
+	public void set_userLevel(int userLevel) {
+		
+		this._userLevel = userLevel;
+		
+	}
 
+	@Override
+	public int get_userLevel() {
+		return this._userLevel;
+	}
+
+	@Override
+	public String get_emailAddress() {
+		return this._emailAddress;
+	}
+
+	public void set_emailAddress(String emailAddress) {
+		this._emailAddress = emailAddress;
+		
+	}
 	
 }

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import com.hitchride.access.UserTbAccess;
 import com.hitchride.global.Environment;
+import com.hitchride.standardClass.User;
 
 /**
  * Servlet implementation class Login
@@ -62,10 +63,14 @@ public class Login extends HttpServlet {
 				{
 					
 					session.setAttribute("IsLogin", "true");
-					session.setAttribute("userName", rs.getString("givenname"));
-					session.setAttribute("emailAddress", rs.getString("emailAddress"));
-					session.setAttribute("userLevel",rs.getString("userLevel"));
-					session.setAttribute("avatarID", rs.getString("avatarID"));
+					User user = new User();
+					user.set_name(rs.getString("givenname"));
+					user.set_uid(rs.getInt("userid"));
+					user.set_avatarID(rs.getString("avatarID"));
+					user.set_userLevel(rs.getString("userLevel"));
+					user.set_emailAddress(rs.getString("emailAddress"));
+					session.setAttribute("user", user);
+
 					int UID=rs.getInt("userID");
 					Environment.getEnv().addActiveUser(UID);
 					

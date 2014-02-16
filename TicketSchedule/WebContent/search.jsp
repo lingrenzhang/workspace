@@ -7,6 +7,7 @@
 <%@ page import="com.hitchride.calc.*" %>
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
+<%@ page import="com.hitchride.standardClass.User" %>
 <%
 	List<rideInfoParameters> results = (List<rideInfoParameters>) request.getAttribute("results");
 	if (results==null)
@@ -32,20 +33,17 @@
 %>
 <% 
 	String IsLogin=null;
-    IsLogin =(String) request.getSession().getAttribute("IsLogin");
-    String user=null;
-    String name = "default";
-    String email = "default";
-    String level = "default";
-    String avatarID  = "default.jpg";
-    if (IsLogin!= null)
-    {
-    	name = (String) request.getSession().getAttribute("userName");
-    	email = (String) request.getSession().getAttribute("emailAddress");
-    	level = request.getSession().getAttribute("userLevel").toString();
-    	//avatarID = (String) request.getSession().getAttribute("avatarID");
-    	avatarID = (String) request.getSession().getAttribute("givenname")+".jpg";
-    }
+	IsLogin =(String) request.getSession().getAttribute("IsLogin");
+	User user = new User();
+	user.set_name("default");
+	user.set_emailAddress("default");
+	user.set_avatarID("default.jpg");
+	user.set_userLevel(0);
+	
+	if (IsLogin!= null)
+	{
+		user = (User) request.getSession().getAttribute("user");
+	}
 %>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -299,15 +297,15 @@ window.onscroll = function(){
 	<div id="user_info_wrap">
 
 		<div class="userpic">
-				<div class="username"><%=name %></div>
-				<img src=<%="/TicketSchedule/UserProfile/"+avatarID %> alt="Profile Picture"></img>
+				<div class="username"><%=user.get_name() %></div>
+				<img src=<%="/TicketSchedule/UserProfile/"+user.get_avatarID() %> alt="Profile Picture"></img>
 				<span class="passenger"></span>
 		</div>
 		<div id="user_info">
-			Welcome <%= name %> 
+			Welcome <%= user.get_name() %> 
 		</div>
 		<div id="user_level">
-			Level: <%= level %>
+			Level: <%= user.get_userLevel() %>
 		</div>
 	</div>
 </div>

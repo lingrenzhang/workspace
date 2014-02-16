@@ -33,6 +33,8 @@ public class Topic {
 		try {
 			ownerRide = Environment.getEnv()._availRides.get(Integer.parseInt(rid));
 			UserInfo ownerInfo = Environment.getEnv().getUser(ownerRide.username);
+			ownerRide.set_ownerId(ownerInfo.get_uid());
+			
 			owner = new Owner(ownerInfo);
 		
 			parRides = new ArrayList<ParticipantRide>();

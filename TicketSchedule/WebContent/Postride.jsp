@@ -4,21 +4,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
+<%@page import="com.hitchride.standardClass.User" %>
 <% 
 	String IsLogin=null;
     IsLogin =(String) request.getSession().getAttribute("IsLogin");
-    String user=null;
-    String name = "default";
-    String email = "default";
-    String level = "default";
-    String avatarID  = "default.jpg";
+    User user = new User();
+    user.set_name("default");
+    user.set_emailAddress("default");
+    user.set_avatarID("default.jpg");
+    user.set_userLevel(0);
+
     if (IsLogin!= null)
     {
-    	name = (String) request.getSession().getAttribute("userName");
-    	email = (String) request.getSession().getAttribute("emailAddress");
-    	level = request.getSession().getAttribute("userLevel").toString();
-    	avatarID = (String)request.getSession().getAttribute("avatarID");
+    	user = (User) request.getSession().getAttribute("user");
     }
 %>
     
@@ -575,15 +573,15 @@ $(document).ready(function(){
 	<div id="user_info_wrap">
 
 		<div class="userpic">
-				<div class="username"><%=name %></div>
-				<img src=<%="/TicketSchedule/UserProfile/"+avatarID %> alt="Profile Picture"></img>
+				<div class="username"><%=user.get_name() %></div>
+				<img src=<%="/TicketSchedule/UserProfile/"+user.get_avatarID() %> alt="Profile Picture"></img>
 				<span class="passenger"></span>
 		</div>
 		<div id="user_info">
-			Welcome <%= name %> 
+			Welcome <%=user.get_name() %> 
 		</div>
 		<div id="user_level">
-			Level: <%= level %>
+			Level: <%=user.get_userLevel() %>
 		</div>
 	</div>
 </div>
