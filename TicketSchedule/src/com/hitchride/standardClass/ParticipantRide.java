@@ -3,7 +3,7 @@ package com.hitchride.standardClass;
 //This class is to represent participantRide information
 public class ParticipantRide extends RideInfo{
 
-	private int assoOwnerRideId; //Topic the ParticipantRide associating with.
+	private int _assoOwnerRideId; //Topic the ParticipantRide associating with.
     private MatchScore _Match;
     private int _status; //0 for not associating with Pride -> 1 (drive by participant)
     					 //1 for link to owner, waiting response ->0,2,3 (drive by owner)
@@ -12,7 +12,6 @@ public class ParticipantRide extends RideInfo{
                          //4 for participant Confirm -> (Deal done.)
 	public ParticipantRide(RideInfo part) {
 		super(part);
-		this.assoOwnerRideId = 10;
 		this.set_Match(new MatchScore());
 		set_status(1);
 	}
@@ -28,5 +27,14 @@ public class ParticipantRide extends RideInfo{
 	public void set_Match(MatchScore _Match) {
 		this._Match = _Match;
 	}
+	
+	public int get_assoOwnerRideId() {
+		return _assoOwnerRideId;
+	}
+	public void set_assoOwnerRideId(int _assoOwnerRideId) {
+		this._assoOwnerRideId = _assoOwnerRideId;
+	}
+	
+	
 
 }

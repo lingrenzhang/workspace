@@ -640,7 +640,7 @@ $(document).ready(function(){
                    	<div id="multipostwrapper" style="display: none">
 	                        <div id="singletripwrapper" class="singletripwrapper">
 	                        	<span class="trip_num">Trip 1</span>
-	                        	<span class="float_right trip_close dot">×</span><br>
+	                        	<span class="float_right trip_close dot">ï¿½</span><br>
 	                        	<div class="tripbox">
 	                               <div id="there_one_time">
 	                               		<input type="hidden" id="there_trip" name="there_trip" class="there" value="1">

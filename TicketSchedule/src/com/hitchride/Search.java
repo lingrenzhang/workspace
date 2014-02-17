@@ -20,14 +20,20 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
+
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.hitchride.access.CarpoolTbAccess;
 import com.hitchride.calc.*;
-import com.hitchride.calc.ScoreCalculator;
-import com.hitchride.calc.rideInfoParameters;
+import com.hitchride.standardClass.GeoInfo;
+import com.hitchride.standardClass.RideInfo;
+import com.hitchride.standardClass.Schedule;
+import com.hitchride.standardClass.User;
 /**
  * Servlet implementation class Search
  */
@@ -189,7 +195,7 @@ public class Search extends HttpServlet {
 
 		if (request.getSession().getAttribute("IsLogin")!=null)
 		{
-			String userName = (String) request.getSession().getAttribute("userName");
+			User user = (User) request.getSession().getAttribute("user");
 			boolean roundtrip = true;
 			boolean userType = request.getParameter("who").equals("offer");
 			//int dayOfWeek = Integer.parseInt(request.getParameter(""));
@@ -249,7 +255,6 @@ public class Search extends HttpServlet {
 			int bflx = Integer.parseInt(backFlexibility);
 			myArgs.backFlexibility = new Time(bflx*60000);
 			
-			
 			//String backFlexibility = "30";
 
 			int dist=0;
@@ -281,14 +286,41 @@ public class Search extends HttpServlet {
 			
 			}
 			
+			/*Not insert the new ride, or put the ride to normal ride queue. Only valid after decide to join a new ride.
+	
 			try {
-				CarpoolTbAccess.postRide(userName, roundtrip, userType, dayOfWeek, "", "", "", myArgs.origAddr, "",
+				CarpoolTbAccess.postRide(user.get_name(), roundtrip, userType, dayOfWeek, "", "", "", myArgs.origAddr, "",
 						"", "", myArgs.destAddr, detourFactor, forwardTime, forwardFlexibility, backTime, backFlexibility, 
 						myArgs.origLat, myArgs.origLon, myArgs.destLat, myArgs.destLon, dist, dura, false);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			*/
+			//Temporary saved in memory before deciding whether to put it as participant or ownerride
+			RideInfo ride = new RideInfo();
+			ride.username = user.get_name();
+			ride.userId = user.get_uid();
+
+			ride.userType = userType;
+
+			GeoInfo orig = new GeoInfo(myArgs.origAddr,myArgs.origLat,myArgs.origLon);
+			ride.origLoc=orig;
+			GeoInfo dest = new GeoInfo(myArgs.destAddr,myArgs.destLat,myArgs.destLon);
+			ride.destLoc=dest;
+			
+			Schedule schedule= new Schedule();
+			schedule.set_isRoundTrip(roundtrip);
+			schedule.set_dayOfWeek(dayOfWeek);
+			schedule.forwardTime=myArgs.forwardTime;
+			schedule.backTime=myArgs.backTime;
+			schedule.forwardFlexibility=myArgs.forwardFlexibility;
+			schedule.backFlexibility = myArgs.backFlexibility;
+			ride.schedule = schedule;
+			
+			ride.dist = dist;
+			ride.dura = dura;
+			
 		}
 		
 		

@@ -6,11 +6,17 @@
 <%@ page import="com.hitchride.standardClass.ParticipantRide"%>
 <%@ page import="com.hitchride.standardClass.Message"%>
 <%@ page import="com.hitchride.standardClass.User"%>
+<%@ page import="com.hitchride.standardClass.Participant"%>
+<%@ page import="com.hitchride.standardClass.MatchScore"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Iterator"%>
 <%
-	User user = (User) request.getSession().getAttribute("user");
     Topic topicInfo = (Topic) request.getAttribute("topic");
+    Boolean isOwnerMode = (Boolean) request.getAttribute("isOwnerMode");
+    Boolean alreadyPart = (Boolean) request.getAttribute("alreadyPart");
+    Participant user = (Participant) request.getAttribute("participant");
+    Boolean isCommute = topicInfo.ownerRide.schedule.isCommute();
+    MatchScore score = new MatchScore();
 %>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -29,14 +35,26 @@
 		</div>
 	</div>
 	<div id="content_wrapper">
+
 		<div class="user_wrapper">
+		    <%if (!isOwnerMode) 
+	    	{%>
 			<div class="user_info" id="from">
 				<div class="userpic">
 						<div class="username"><%=user.get_name() %></div>
 						<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
 						<span class="passenger"></span>
 				</div>
+				<div class="user_status">
+					<%=user.get_userStatus() %>
+				</div>
+				<div class="user_match">
+					<div class="match_Loc" style="width : <%=score.getLocationMatching() %>px "></div>
+					<div class="match_Sch" style="width : <%=score.getSchedulingMatching() %>px "></div>
+					<div class="match_Bar" style="width : <%=score.getBarginMatching() %>px "></div>
+				</div>
 			</div>
+			<%}%>
 			<% List<ParticipantRide> parRides= topicInfo.parRides; 
 			   for (Iterator<ParticipantRide> parRideI = parRides.iterator(); parRideI.hasNext();) 
 			   {
@@ -116,7 +134,7 @@
 					<input class="hidden" name="fromId" value=<%=user.get_uid() %>>
 					<input class="hidden" name="toId" value=<%=topicInfo.ownerRide.get_ownerId() %>>
 					<input class="hidden" name="rideId" value=<%=topicInfo.ownerRide.recordId %>>
-			
+			        <input class="hidden" name="method" value="create">
 				</form>
 			</div>
             <div class="sysMess_wrapper">

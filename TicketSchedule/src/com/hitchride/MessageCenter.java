@@ -2,6 +2,7 @@ package com.hitchride;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hitchride.access.MessageTbAccess;
 import com.hitchride.standardClass.Message;
+import com.hitchride.standardClass.Participant;
+import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.Topic;
+import com.hitchride.standardClass.User;
 
 /**
  * Servlet implementation class MessageCenter
@@ -50,7 +54,36 @@ public class MessageCenter extends HttpServlet {
 			request.setAttribute("rid",rid );
 		    Topic topic = new Topic(rid);
 		    request.setAttribute("topic",topic);
+		    User user = (User) request.getSession().getAttribute("user");
+		    Boolean isOwnerMode = (user.get_uid() == topic.ownerRide.get_ownerId());
+		    request.setAttribute("isOwnerMode", isOwnerMode);
+		    Participant puser=null;
+		    if (!isOwnerMode)
+		    {
+			    Boolean alreadyPart = false;
+			    for(Iterator<ParticipantRide> prI = topic.parRides.iterator(); prI.hasNext();)
+			    {
+			    	    ParticipantRide pride=prI.next();
+			    		if (pride.userId==user.get_uid())
+			    		{
+			    			puser = new Participant(pride.get_user());
+			    			alreadyPart = true;
+			    		}
+			    }
+			    if (!alreadyPart)
+			    {
+			    	puser = new Participant(user); //Wrapper user as participant
+			    	puser.set_userStatus(0);
 
+			    }
+			    request.setAttribute("alreadyPart", alreadyPart);
+			    request.setAttribute("participant", puser);
+		    }
+		    else
+		    {
+		    	
+		    }
+		    
 			RequestDispatcher rd = request.getRequestDispatcher("/MessageCenter.jsp");
 			rd.forward(request, response);
 		}

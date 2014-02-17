@@ -27,6 +27,12 @@ public class Owner extends User implements RideListener,UserStatus {
 		
 	}
 
+	@Override
+	public String statusExplain() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

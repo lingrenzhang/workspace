@@ -27,7 +27,8 @@ public class Topic {
 	public OwnerRideInfo ownerRide;
 	public List<ParticipantRide> parRides;
 
-	public List<Message> messages;           
+	public List<Message> messages;      
+	private int _topicId;
  
 	public Topic(String rid) {
 		try {
@@ -45,7 +46,10 @@ public class Topic {
 			{
 				Integer key = e.nextElement();
 				ParticipantRide pRide = DummyData.getDummyEnv().get_participantRide(key);
-				parRides.add(pRide);
+				if (pRide.get_assoOwnerRideId()==ownerRide.recordId)
+				{
+					parRides.add(pRide);
+				}
 			}
 			
 			messages = new ArrayList<Message>();
@@ -54,8 +58,13 @@ public class Topic {
 			{
 				Integer key = e.nextElement();
 				Message message = DummyData.getDummyEnv()._dummyMessage.get(key);
-				messages.add(message);
+				if (message.getOwnerRide().recordId ==ownerRide.recordId)
+				{
+					messages.add(message);
+				}
 			}
+			
+			Environment.getEnv().insert_topic(this);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -85,6 +94,16 @@ public class Topic {
 			System.out.println("Warning: Malformat of user field in CarpoolDB.");
 		}
 		
+	}
+
+
+	public int get_topicId() {
+		return _topicId;
+	}
+
+
+	public void set_topicId(int _topicId) {
+		this._topicId = _topicId;
 	}
 	
 	//TO DO: Update persistent storage if found status flag is 1 in finalizer.

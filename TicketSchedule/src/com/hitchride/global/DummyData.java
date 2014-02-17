@@ -26,6 +26,8 @@ public class DummyData {
 	public Hashtable<Integer, MatchScore> _dummyMatching;
 	public Hashtable<Integer, Message> _dummyMessage; //Attach message to ownerRide (topic) on initialize in production.
 	
+	private int messageCount =0;
+	
 	private DummyData(){
 		
 		_geoinfo = new ArrayList<GeoInfo>();
@@ -38,23 +40,23 @@ public class DummyData {
 		initializeGeo(10);
 		initializeUser(); 
 		initializeOwnerRide();
-		initializeParticipantRide(4);
-		initializeMessage(5);
+		initializeParticipantRide(5);
+		initializeMessage(6);
 	}
 	
 
 	private void initializeMessage(int numofMessages) {
 		Random rnd = new Random();
-		for (int i=0;i<numofMessages+2;i++)
+		for (int i=0;i<numofMessages;i++)
 		{
-			
 			Message msg = new Message("This is for test. I want to join your ride"
 									,Environment.getEnv().getUser(rnd.nextInt(50))
 									,Environment.getEnv().getUser(rnd.nextInt(50))
 									,Environment.getEnv().getOwnerRide(838)
 					);
-			_dummyMessage.put(i, msg);
-			System.out.println("Msg "+ i + ": initialized.");
+			_dummyMessage.put(messageCount, msg);
+			messageCount++;
+			System.out.println("Msg "+ messageCount + ": initialized.");
 			
 			i++;
 			msg = new Message(rnd.nextInt(4),rnd.nextInt(4)
@@ -62,8 +64,9 @@ public class DummyData {
 					,Environment.getEnv().getUser(rnd.nextInt(50))
 					,Environment.getEnv().getOwnerRide(838)
 					);
-			_dummyMessage.put(i, msg);
-			System.out.println("Msg "+ i + ": initialized.");
+			_dummyMessage.put(messageCount, msg);
+			messageCount++;
+			System.out.println("Msg "+ messageCount + ": initialized.");
 		}
 	}
 
@@ -76,10 +79,17 @@ public class DummyData {
 			int key = rnt.nextInt(2000);
 			RideInfo part = Environment.getEnv().getOwnerRide(key);
 			ParticipantRide pRide = new ParticipantRide(part);
+			pRide.set_assoOwnerRideId(838);
 			_partRides.put(key,pRide);
 			
+			i++;
+			key = rnt.nextInt(2000);
+			part = Environment.getEnv().getOwnerRide(key);
+			pRide = new ParticipantRide(part);
+			pRide.set_assoOwnerRideId(1838);
+			_partRides.put(key,pRide);
 		}
-		
+	
 	}
 
 	private void initializeOwnerRide() {
@@ -132,5 +142,9 @@ public class DummyData {
 		
 	}
 
+	public void insert_message(Message message) {
+		_dummyMessage.put(this.messageCount,message);
+		messageCount++;
+	}
 	
 }

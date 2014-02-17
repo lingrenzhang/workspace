@@ -29,7 +29,7 @@ public class OwnerRideInfo extends RideInfo implements RideStatusChange{
 		Enumeration<RideListener> enumeration = _rideListeners.elements();
 		while (enumeration.hasMoreElements())
 		{
-			enumeration.nextElement().updateRideInfo();
+			enumeration.nextElement().updateRideInfo(); //Matching information requires recaculate.
 		}
 	}
 

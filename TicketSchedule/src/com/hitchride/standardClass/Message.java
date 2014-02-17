@@ -26,6 +26,20 @@ public class Message implements MessageInfo,PersistentStorage{
 		this._isSystemMessage = false;
 	}
 	
+	public Message(String content, int fromID, int toID,int ownerRideID)
+	{
+		User from = (User) Environment.getEnv().getUser(fromID);
+		this._from = from;
+		User to = (User) Environment.getEnv().getUser(toID);
+		this._to = to;
+		OwnerRideInfo ownerRide = Environment.getEnv().getOwnerRide(ownerRideID);
+		this._ownerRide = ownerRide;
+		this._messageContent = content;
+		Date date = new Date();
+		this._generateDate = date;
+	}
+	
+	
 	//System generated message
 	public Message(int fstatus,int astatus, UserInfo from, UserInfo to,OwnerRideInfo ownerRide)
 	{
@@ -80,18 +94,8 @@ public class Message implements MessageInfo,PersistentStorage{
 		this._isSystemMessage= true;
 	}
 	
-	public Message(String content, int fromID, int toID,int ownerRideID)
-	{
-		User from = (User) Environment.getEnv().getUser(fromID);
-		this._from = from;
-		User to = (User) Environment.getEnv().getUser(toID);
-		this._to = to;
-		OwnerRideInfo ownerRide = Environment.getEnv().getOwnerRide(ownerRideID);
-		this._ownerRide = ownerRide;
-		this._messageContent = content;
-		Date date = new Date();
-		this._generateDate = date;
-	}
+
+	
 	
 	@Override
 	public String getMessageContent() {

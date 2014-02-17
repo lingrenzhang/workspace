@@ -4,7 +4,6 @@ public class Participant extends User implements RideListener,UserStatus
 {
 	private int _userStatus;
 	
-	
 	public Participant()
 	{
 		
@@ -17,7 +16,6 @@ public class Participant extends User implements RideListener,UserStatus
 	@Override
 	public void updateRideInfo() {
 		// TODO Auto-generated method stub
-		
 	}
 
 
@@ -34,6 +32,22 @@ public class Participant extends User implements RideListener,UserStatus
 		this._userStatus = userStatus;
 		
 	}
-
+	@Override
+	public String statusExplain() {
+		switch (_userStatus)
+		{
+			case 0:
+				return "Not associated with ownerRide";
+			case 1:
+				return "Waiting owner response";
+			case 2:
+				return "Owner requires more info";
+			case 3:
+				return "Accepted wating your confirm";
+			case 4:
+				return "Deal";
+		}
+		return null;
+	}
 
 }

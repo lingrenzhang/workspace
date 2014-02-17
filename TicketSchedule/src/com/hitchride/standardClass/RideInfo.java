@@ -9,34 +9,35 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.hitchride.calc.rideInfoParameters;
+import com.hitchride.global.Environment;
 
 //RideInfo saves the ride information.
-public abstract class RideInfo{
+//Template design mode for ownerRide and participantRide
+public class RideInfo{
 	// assign all not-applicable fields to null
 	
 	public int recordId;
 	
-	public boolean commute, roundtrip, userType;
+	public boolean userType;
 	public GeoInfo origLoc,destLoc;
+	public int dist,dura;
 	
 	// for output only
-	public String username; //owner name
-	public int ownerId; //Require to compute now... Will reorg DB structure.
-	public List<Integer> participant;
-
+	private User _user;
+	public int userId; //Require to compute now... Will reorg DB structure.
+    public String username;
+	
 	// for drivers only
 	public int seatsAvailable;
 	public int curSeatsAvail;
 	public double detourFactor; // deprecate
-	
 	// for both drivers and passengers.  Total price for trip, per day price for commute
 	public double price;
 	
-	// for commute only
-	public Time forwardTime, forwardFlexibility;
-	public Time backTime, backFlexibility;	// for round trip only
-	public Boolean[] dayOfWeek;
 	
+	public Schedule schedule;
+	// for commute only
+
 	// for travel only
 	public Date tripDate;
 
@@ -46,17 +47,24 @@ public abstract class RideInfo{
 	}
 	
 	//Normally used when initialize from client input.
+	//Used when we want to deriver participantRide or ownerRide from the ride info.
 	public RideInfo(RideInfo r) {
-		
-		this.commute = r.commute;
-		this.roundtrip = r.roundtrip;
+		//share the same schedule,origLoc,destLoc object. 
+		//Original RideInfo r is mostly a temporarily generated form associating with Post Ride page before
+		//attach it to real topic. Life cycle can be terminated after register to participantRide.
+		//this.schedule = r.schedule.clone();
+		//this.origLoc =  r.origLoc.clone();
+		//this.destLoc = r.destLoc.clone();
+		this.schedule = r.schedule;
 		this.userType = r.userType;
-		this.origLoc =  r.origLoc.clone();
-		this.destLoc = r.destLoc.clone();
-		
-		// for output only
+		this.origLoc = r.origLoc;
+		this.destLoc = r.destLoc;
+
+		this.userId = r.userId;
 		this.username = r.username;
-		this.ownerId = r.ownerId;
+		this._user = r.get_user();  //participantRide and ownerRide share the same user object. 
+		                     //Used to process the ride associating with participant ride.
+
 
 		/*
 		this.participant = new ArrayList<Integer>(r.participant.size());
@@ -71,8 +79,9 @@ public abstract class RideInfo{
 	//Initialize from DB.
 	public RideInfo(ResultSet rs, Boolean myArgsCommute) throws SQLException {
 		// assign every field
-		commute		= myArgsCommute; // come from table name, not table content
-		roundtrip 	= rs.getBoolean("roundtrip");
+		schedule = new Schedule();
+		schedule.set_isCommute(myArgsCommute); // come from table name, not table content
+		schedule.set_isRoundTrip(rs.getBoolean("roundtrip"));
 		userType 	= rs.getBoolean("userType");
 		double origLat = rs.getDouble("origLat");
 		double origLon = rs.getDouble("origLon");
@@ -80,7 +89,8 @@ public abstract class RideInfo{
 		double destLon 	= rs.getDouble("destLon");
 		
 		// for output only
-		username	= rs.getString("username");
+		username = rs.getString("username");
+		//user = (User) Environment.getEnv().getUser(username); For this routine, fully initialized after username table ready.
 		recordId	= rs.getInt("recordId");
 		String origState = rs.getString("origState");
 		String origCity	 = rs.getString("origCity");
@@ -102,17 +112,16 @@ public abstract class RideInfo{
 		// for both drivers and passengers.  Total price for trip, per day price for commute
 		price 		= rs.getDouble("price");
 		
-		if(commute){
+		if(schedule.isCommute()){
 			// for commute only
-			forwardTime	= rs.getTime("forwardTime");
-			backTime	= rs.getTime("backTime");
-			forwardFlexibility 	= rs.getTime("forwardFlexibility");
-			backFlexibility		= rs.getTime("backFlexibility");	// for round trip only
-			dayOfWeek	= new Boolean[7];
-			//TODO change to getting results from the dayOfWeek String
+			schedule.forwardTime = rs.getTime("forwardTime");
+			schedule.backTime	= rs.getTime("backTime");
+			schedule.forwardFlexibility 	= rs.getTime("forwardFlexibility");
+			schedule.backFlexibility		= rs.getTime("backFlexibility");	// for round trip only
+			int dayOfWeek = rs.getInt("dayofweek");
+			schedule.set_dayOfWeek(dayOfWeek);
 		} else {
-			// for travel only
-			tripDate	= rs.getDate("tripDate");
+ 			schedule.tripDate	= rs.getDate("tripDate");
 		}
 	}
 	
@@ -121,14 +130,35 @@ public abstract class RideInfo{
 		String barMessage="";
 		if (this.userType)
 		{
-			barMessage = "Provides " + this.seatsAvailable +" seats with" +  this.price + " each";
+			barMessage = "Provides " + this.seatsAvailable +" seats at price " +  this.price + " each.";
 		}
 		else
 		{
-			barMessage = "Wants to share a ride for " +  this.price ;
+			barMessage = "Willing to contribute " +  this.price+ " for the ride."  ;
 		}
 		return barMessage;
 	}
+	
+	
+	
+    public User get_user()
+    {
+    	if (this._user != null)
+    	{
+    		return this._user;
+    	}
+    	
+    	if (this.userId>0)
+    	{
+    		return (User) Environment.getEnv().getUser(userId);
+    	}
+    	
+    	if (this.username!=null)
+    	{
+    		return (User) Environment.getEnv().getUser(username);
+    	}
+    	return null;
+    }
 
 }
 

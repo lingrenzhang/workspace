@@ -39,16 +39,23 @@ public class MessageService extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String method = request.getParameter("method");
 		int rideId = Integer.parseInt(request.getParameter("rideId"));
-		int fromId = Integer.parseInt(request.getParameter("fromId"));
-		int toId = Integer.parseInt(request.getParameter("toId"));
-		String messageContent = request.getParameter("comment");
-		User from = (User) Environment.getEnv().getUser(fromId);
-		User to = (User) Environment.getEnv().getUser(toId);
 		OwnerRideInfo ownRide = (OwnerRideInfo) Environment.getEnv().getOwnerRide(rideId);
-		Message message = new Message(messageContent,from,to,ownRide);
-		DummyData.getDummyEnv()._dummyMessage.put(ownRide.recordId, message);
-		
+		if (method.equalsIgnoreCase("delete"))
+		{
+			DummyData.getDummyEnv()._dummyMessage.remove(ownRide.recordId); //Should be message unique ID finally.
+		}
+		if (method.equalsIgnoreCase("create"))
+		{
+			int fromId = Integer.parseInt(request.getParameter("fromId"));
+			int toId = Integer.parseInt(request.getParameter("toId"));
+			String messageContent = request.getParameter("comment");
+			User from = (User) Environment.getEnv().getUser(fromId);
+			User to = (User) Environment.getEnv().getUser(toId);
+			Message message = new Message(messageContent,from,to,ownRide);
+			DummyData.getDummyEnv().insert_message(message); //Should be message unique ID.
+		}
 		response.sendRedirect("/TicketSchedule/servlet/MessageCenter?id="+ownRide.username+"&rid="+ownRide.recordId+"&type=commute");
 
 	}

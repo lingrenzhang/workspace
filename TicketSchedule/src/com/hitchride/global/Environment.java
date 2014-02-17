@@ -25,6 +25,7 @@ public class Environment {
 		initialAvaRideLoad();
 		_actUsers = new Hashtable<Integer,UserInfo>(10000);
 		_nactuser=0;
+		_topics= new Hashtable<Integer,Topic>(1000);
 	}
 	
 	//All user object reference can be directly accessed through UID
@@ -35,7 +36,9 @@ public class Environment {
 	//public Hashtable<Integer,OwnerRideInfo> _availRides;  //All available rides. Represent by RID.
 	public Hashtable<Integer,OwnerRideInfo> _availRides;
 	public Hashtable<Integer,Message> _allMessages;
-	public Hashtable<Integer,Topic> _topics;
+	private Hashtable<Integer,Topic> _topics;
+	private int _topicKey=0;
+	private int _messageCount=0;
 	public int _nactuser;
 
 	private void initialAllUser() {
@@ -128,5 +131,26 @@ public class Environment {
 			return result;
 		}
 		return null;
+	}
+
+	public Topic get_topic(int key) {
+		return _topics.get(key);
+	}
+
+	public void insert_topic(Topic topic) {
+		topic.set_topicId(this._topicKey);
+		_topics.put(this._topicKey,topic);
+		this._topicKey++;
+	}
+	
+	public void delete_topic(int key)
+	{
+		_topics.remove(key);
+	}
+	
+	
+	public void insert_message(Message message) {
+		_allMessages.put(this._messageCount,message);
+		this._topicKey++;
 	}
 }
