@@ -8,6 +8,8 @@ import java.util.Hashtable;
 import com.hitchride.access.CarpoolTbAccess;
 import com.hitchride.access.UserTbAccess;
 import com.hitchride.standardClass.Message;
+import com.hitchride.standardClass.ParticipantRide;
+import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Topic;
 import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.User;
@@ -21,22 +23,34 @@ public class Environment {
 	private Environment(){
 		_users = new Hashtable<Integer,UserInfo>(100000);
 		initialAllUser();
-		_availRides = new Hashtable<Integer,OwnerRideInfo>();
+		_availRides = new Hashtable<Integer,RideInfo>();
+		_topicRides = new Hashtable<Integer,OwnerRideInfo>();
 		initialAvaRideLoad();
 		_actUsers = new Hashtable<Integer,UserInfo>(10000);
 		_nactuser=0;
 		_topics= new Hashtable<Integer,Topic>(1000);
+		initialTopics();
 	}
 	
+	private void initialTopics() {
+		Topic topic = new Topic(838);
+		_topics.put(838,topic);
+		System.out.println("Topic "+topic + "initialized." );
+		
+	}
+
 	//All user object reference can be directly accessed through UID
 	public Hashtable<Integer,UserInfo> _users; //All Users. Represent by UID.
 	//All Act user object reference can be directly accessed through UID
 	public Hashtable<Integer,UserInfo> _actUsers; //Active users. Represent by UID.
 	//All OwnerRideInfo reference can be directly accessed through RID
 	//public Hashtable<Integer,OwnerRideInfo> _availRides;  //All available rides. Represent by RID.
-	public Hashtable<Integer,OwnerRideInfo> _availRides;
+	public Hashtable<Integer,RideInfo> _availRides;
+	public Hashtable<Integer,OwnerRideInfo> _topicRides;
 	public Hashtable<Integer,Message> _allMessages;
-	private Hashtable<Integer,Topic> _topics;
+	public Hashtable<Integer,Topic> _topics;
+	
+	private int _availRidesKey = 0;
 	private int _topicKey=0;
 	private int _messageCount=0;
 	public int _nactuser;
@@ -72,8 +86,12 @@ public class Environment {
 			ResultSet rides = CarpoolTbAccess.rideInitialLoad();
 			while(rides.next())
 			{
-				OwnerRideInfo ride = new OwnerRideInfo(rides,true);
+				RideInfo ride = new RideInfo(rides,true);
 				_availRides.put(ride.recordId,ride);
+
+				OwnerRideInfo ownerRide = new OwnerRideInfo(ride);
+				_topicRides.put(ride.recordId,ownerRide);
+                _availRidesKey=ride.recordId+1;
 				i++;
 				//System.out.println("Ride "+ ride.recordId + " initialized");
 			}
@@ -109,7 +127,7 @@ public class Environment {
 	
 	public OwnerRideInfo getOwnerRide(int RID)
 	{
-		OwnerRideInfo ownerRide = _availRides.get(RID);
+		OwnerRideInfo ownerRide = _topicRides.get(RID);
 		return ownerRide;
 	}
 
@@ -152,5 +170,13 @@ public class Environment {
 	public void insert_message(Message message) {
 		_allMessages.put(this._messageCount,message);
 		this._topicKey++;
+	}
+	
+	public void inser_availride(RideInfo part)
+	{
+		this._availRidesKey++;
+		part.recordId = _availRidesKey;
+		this._availRides.put(this._availRidesKey, part);
+
 	}
 }

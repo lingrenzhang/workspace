@@ -10,10 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.hitchiride.util.QueryStringParser;
 import com.hitchride.access.MessageTbAccess;
+import com.hitchride.global.Environment;
 import com.hitchride.standardClass.Message;
 import com.hitchride.standardClass.Participant;
 import com.hitchride.standardClass.ParticipantRide;
+import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Topic;
 import com.hitchride.standardClass.User;
 
@@ -46,38 +49,49 @@ public class MessageCenter extends HttpServlet {
 		}
 		else
 		{
-			String qs = request.getQueryString();
-			String[] pars = qs.split("&");
-			String id = pars[0].split("=")[1];
-			String rid = pars[1].split("=")[1];
-			String type = pars[2].split("=")[1];
+			QueryStringParser qsPar = new QueryStringParser(request.getQueryString());
+
+			String id = qsPar.getString("id");
+			int rid = qsPar.getInt("rid");
+			String type = qsPar.getString("type");
+			
 			request.setAttribute("rid",rid );
-		    Topic topic = new Topic(rid);
-		    request.setAttribute("topic",topic);
+		    Topic topic = Environment.getEnv().get_topic(rid);
+		    request.getSession().setAttribute("topic",topic);
 		    User user = (User) request.getSession().getAttribute("user");
-		    Boolean isOwnerMode = (user.get_uid() == topic.ownerRide.get_ownerId());
+		    Boolean isOwnerMode = (user.get_uid() == topic.ownerRide._rideInfo.get_user().get_uid());
 		    request.setAttribute("isOwnerMode", isOwnerMode);
-		    Participant puser=null;
+		    
 		    if (!isOwnerMode)
 		    {
 			    Boolean alreadyPart = false;
 			    for(Iterator<ParticipantRide> prI = topic.parRides.iterator(); prI.hasNext();)
 			    {
 			    	    ParticipantRide pride=prI.next();
-			    		if (pride.userId==user.get_uid())
+			    		if (pride._rideinfo.get_user().get_uid()==user.get_uid())
 			    		{
-			    			puser = new Participant(pride.get_user());
 			    			alreadyPart = true;
 			    		}
+
+			    }
+			    for(Iterator<ParticipantRide> prI = topic._requestPride.iterator(); prI.hasNext();)
+			    {
+			    	    ParticipantRide pride=prI.next();
+			    		if (pride._rideinfo.get_user().get_uid()==user.get_uid())
+			    		{
+			    			alreadyPart = true;
+			    		}
+
 			    }
 			    if (!alreadyPart)
 			    {
-			    	puser = new Participant(user); //Wrapper user as participant
-			    	puser.set_userStatus(0);
+			    	RideInfo ride = (RideInfo) request.getSession().getAttribute("actRide");
+			    	ParticipantRide pride = new ParticipantRide(ride);
+			    	pride.set_status(0);
+				    request.setAttribute("participantRide", pride);
 
 			    }
 			    request.setAttribute("alreadyPart", alreadyPart);
-			    request.setAttribute("participant", puser);
 		    }
 		    else
 		    {
@@ -99,6 +113,9 @@ public class MessageCenter extends HttpServlet {
 		String messageContent = request.getParameter("notes");
 		int recordID = Integer.parseInt(request.getParameter("recordID"));
 		Message message = new Message(messageContent,from,to,recordID);
+		
+		Topic topic  = (Topic) request.getSession().getAttribute("topic");
+		topic.messages.add(message);
 		message.insertToDB();
 
 		response.sendRedirect("/TicketSchedule/servlet/Search");

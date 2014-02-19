@@ -7,6 +7,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 import com.hitchride.access.CarpoolTbAccess;
 import com.hitchride.global.DummyData;
@@ -21,23 +22,23 @@ import com.mysql.jdbc.ResultSet;
 //Not sure the detailed mySQL multi-table relationship supporting level.
 //Think about more complicate use like trigger, cascade, etc later when necessary. 
 public class Topic {
-		
-	public Owner owner;
+	private int _topicId; 	//Same as owner ID
+	public User owner;
 	//public List<Participant> participants;
 	public OwnerRideInfo ownerRide;
 	public List<ParticipantRide> parRides;
+	public List<ParticipantRide> _requestPride = new ArrayList<ParticipantRide>();
 
 	public List<Message> messages;      
-	private int _topicId;
+
  
-	public Topic(String rid) {
+	public Topic(int rid) {
 		try {
-			ownerRide = Environment.getEnv()._availRides.get(Integer.parseInt(rid));
-			UserInfo ownerInfo = Environment.getEnv().getUser(ownerRide.username);
-			ownerRide.set_ownerId(ownerInfo.get_uid());
-			
-			owner = new Owner(ownerInfo);
-		
+			ownerRide = Environment.getEnv()._topicRides.get(rid);
+			this._topicId=rid;
+			UserInfo ownerInfo = Environment.getEnv().getUser(ownerRide._rideInfo.username);
+			owner =(User) ownerInfo;
+					
 			parRides = new ArrayList<ParticipantRide>();
 			//parRides = ownerRide.get_prides();
 			//TO DO: User dummy participant ride now
@@ -46,7 +47,7 @@ public class Topic {
 			{
 				Integer key = e.nextElement();
 				ParticipantRide pRide = DummyData.getDummyEnv().get_participantRide(key);
-				if (pRide.get_assoOwnerRideId()==ownerRide.recordId)
+				if (pRide.get_assoOwnerRideId()==ownerRide._rideInfo.recordId)
 				{
 					parRides.add(pRide);
 				}
@@ -58,13 +59,11 @@ public class Topic {
 			{
 				Integer key = e.nextElement();
 				Message message = DummyData.getDummyEnv()._dummyMessage.get(key);
-				if (message.getOwnerRide().recordId ==ownerRide.recordId)
+				if (message.getOwnerRide()._rideInfo.recordId ==ownerRide._rideInfo.recordId)
 				{
 					messages.add(message);
 				}
 			}
-			
-			Environment.getEnv().insert_topic(this);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

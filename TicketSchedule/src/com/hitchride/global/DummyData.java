@@ -22,10 +22,12 @@ public class DummyData {
 	private List<User> _users;
 	private List<OwnerRideInfo> _ownerRide;
 	
+	
+	public Hashtable<Integer,ParticipantRide> _freeRides;  //All rides. Represent by RID.
 	public Hashtable<Integer,ParticipantRide> _partRides;  //All available rides. Represent by RID.
 	public Hashtable<Integer, MatchScore> _dummyMatching;
 	public Hashtable<Integer, Message> _dummyMessage; //Attach message to ownerRide (topic) on initialize in production.
-	
+	public int _partRidesCount = 1;
 	private int messageCount =0;
 	
 	private DummyData(){
@@ -77,15 +79,15 @@ public class DummyData {
 		for (int i=0;i<numofRides;i++)
 		{
 			int key = rnt.nextInt(2000);
-			RideInfo part = Environment.getEnv().getOwnerRide(key);
-			ParticipantRide pRide = new ParticipantRide(part);
+			OwnerRideInfo ownerRide = Environment.getEnv().getOwnerRide(key);
+			ParticipantRide pRide = new ParticipantRide(ownerRide._rideInfo);
 			pRide.set_assoOwnerRideId(838);
 			_partRides.put(key,pRide);
 			
 			i++;
 			key = rnt.nextInt(2000);
-			part = Environment.getEnv().getOwnerRide(key);
-			pRide = new ParticipantRide(part);
+			ownerRide = Environment.getEnv().getOwnerRide(key);
+			pRide = new ParticipantRide(ownerRide._rideInfo);
 			pRide.set_assoOwnerRideId(1838);
 			_partRides.put(key,pRide);
 		}
@@ -147,4 +149,13 @@ public class DummyData {
 		messageCount++;
 	}
 	
+	public void inser_pride(ParticipantRide part)
+	{
+		this._partRides.put(this._partRidesCount, part);
+		
+		part._rideinfo.recordId=this._partRidesCount;
+		part._pid = this._partRidesCount;
+		
+		this._partRidesCount++;
+	}
 }

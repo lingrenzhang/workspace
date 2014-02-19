@@ -12,6 +12,9 @@ import com.hitchride.global.DummyData;
 import com.hitchride.global.Environment;
 import com.hitchride.standardClass.Message;
 import com.hitchride.standardClass.OwnerRideInfo;
+import com.hitchride.standardClass.ParticipantRide;
+import com.hitchride.standardClass.RideInfo;
+import com.hitchride.standardClass.Topic;
 import com.hitchride.standardClass.UserInfo;
 
 /**
@@ -38,15 +41,31 @@ public class StatusService extends HttpServlet {
 		int fromUser = qs.getInt("fromUser");
 		int toUser = qs.getInt("toUser");
 		int oRId = qs.getInt("ownRideId");
+		RideInfo ride = (RideInfo) request.getSession().getAttribute("actRide");
+		Topic topic = (Topic) request.getSession().getAttribute("topic");
 
 		UserInfo fromU = Environment.getEnv().getUser(fromUser);
 		UserInfo toU = Environment.getEnv().getUser(toUser);
 		OwnerRideInfo ori = Environment.getEnv().getOwnerRide(oRId);
+		
+		if ((fromSta==0) && (toSta==1))
+		{
+			ParticipantRide pride = new ParticipantRide(ride);
+			pride.set_assoOwnerRideId(ori._rideInfo.recordId);
+			pride.set_status(1);
+			topic._requestPride.add(pride);
+		}
+		if (toSta==0)
+		{
+			ParticipantRide pride = DummyData.getDummyEnv()._partRides.get(ride.recordId);
+			topic.parRides.remove(pride);
+		}
 		Message msg = new Message(fromSta, toSta, fromU, toU, ori);
 		{
-			Environment.getEnv().insert_message(msg);
+			DummyData.getDummyEnv().insert_message(msg);
+			topic.messages.add(msg);
 		}
-		
+
 	}
 
 	/**

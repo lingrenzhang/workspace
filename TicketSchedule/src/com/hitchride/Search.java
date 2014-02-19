@@ -24,13 +24,19 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.hitchride.access.CarpoolTbAccess;
 import com.hitchride.calc.*;
+import com.hitchride.global.DummyData;
+import com.hitchride.global.Environment;
 import com.hitchride.standardClass.GeoInfo;
+import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Schedule;
 import com.hitchride.standardClass.User;
@@ -198,19 +204,7 @@ public class Search extends HttpServlet {
 			User user = (User) request.getSession().getAttribute("user");
 			boolean roundtrip = true;
 			boolean userType = request.getParameter("who").equals("offer");
-			//int dayOfWeek = Integer.parseInt(request.getParameter(""));
 			int dayOfWeek = 1234;
-			//String origState = request.getParameter("");
-			//String origCity = request.getParameter("");
-			//String origNbhd = request.getParameter("");
-			//origAddr = request.getParameter("s");
-			//request.setAttribute("origAddr", origAddr);
-			//String destState = request.getParameter("");
-			//String destCity = request.getParameter("");
-			//String destNbhd = request.getParameter("");
-			//destAddr = request.getParameter("e");
-			//request.setAttribute("destAddr", destAddr);
-			//String detourFactor = request.getParameter("");
 			String detourFactor = "0.2";
 			String forwardTime = request.getParameter("there_time_0");
 			String[] ftime = forwardTime.split(":");
@@ -321,6 +315,12 @@ public class Search extends HttpServlet {
 			ride.dist = dist;
 			ride.dura = dura;
 			
+			//ParticipantRide pride = new ParticipantRide(ride);
+			//pride.set_status(0);
+			Environment.getEnv().inser_availride(ride);
+			user.rides.add(ride);
+
+			request.getSession().setAttribute("actRide", ride);
 		}
 		
 		

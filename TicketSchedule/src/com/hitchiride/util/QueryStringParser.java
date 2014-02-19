@@ -10,6 +10,7 @@ public class QueryStringParser {
 	//Only support string now.
 	public QueryStringParser(String queryString)
 	{
+		content = new Hashtable<String,String>(10);
 		String[] units = queryString.split("&");
 		for(int i=0;i<units.length;i++)
 		{
@@ -27,7 +28,7 @@ public class QueryStringParser {
 	
 	public int getInt(String key)
 	{
-		int value = Integer.parseInt("content.get(key)");
+		int value = Integer.parseInt(content.get(key));
 		return value;
 	}
 }

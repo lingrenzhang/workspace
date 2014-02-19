@@ -9,10 +9,15 @@ import com.hitchride.global.Environment;
 
 //Each OwnerRideInfo represents a travel topic
 //It will push its status change to desired users through observant design pattern
-public class OwnerRideInfo extends RideInfo implements RideStatusChange{
+public class OwnerRideInfo implements RideStatusChange{
 	private Vector<RideListener> _rideListeners = new Vector<RideListener>();
 	private int _ownerId;
+	public RideInfo _rideInfo;
+	private Vector<GeoInfo> middlepoint = new Vector<GeoInfo>();
 	private Vector<ParticipantRide> _prides = new Vector<ParticipantRide>();
+	//
+
+	
 
 	@Override
 	public void attach(RideListener rideListener) {
@@ -46,10 +51,10 @@ public class OwnerRideInfo extends RideInfo implements RideStatusChange{
 	}
 	
 	
-    public OwnerRideInfo(ResultSet rs, Boolean myArgsCommute) throws SQLException
+    public OwnerRideInfo(RideInfo rideInfo) throws SQLException
     {
-    	super(rs,myArgsCommute);
-    	
+    	this._rideInfo = rideInfo;
+    	//this._ownerId = rideInfo.get_user().get_uid();
     }
     
     public int get_ownerId() {

@@ -12,6 +12,7 @@ import com.hitchride.global.DummyData;
 import com.hitchride.global.Environment;
 import com.hitchride.standardClass.Message;
 import com.hitchride.standardClass.OwnerRideInfo;
+import com.hitchride.standardClass.Topic;
 import com.hitchride.standardClass.User;
 
 /**
@@ -44,7 +45,7 @@ public class MessageService extends HttpServlet {
 		OwnerRideInfo ownRide = (OwnerRideInfo) Environment.getEnv().getOwnerRide(rideId);
 		if (method.equalsIgnoreCase("delete"))
 		{
-			DummyData.getDummyEnv()._dummyMessage.remove(ownRide.recordId); //Should be message unique ID finally.
+			DummyData.getDummyEnv()._dummyMessage.remove(ownRide._rideInfo.recordId); //Should be message unique ID finally.
 		}
 		if (method.equalsIgnoreCase("create"))
 		{
@@ -55,8 +56,10 @@ public class MessageService extends HttpServlet {
 			User to = (User) Environment.getEnv().getUser(toId);
 			Message message = new Message(messageContent,from,to,ownRide);
 			DummyData.getDummyEnv().insert_message(message); //Should be message unique ID.
+			Topic topic  = (Topic) request.getSession().getAttribute("topic");
+			topic.messages.add(message);
 		}
-		response.sendRedirect("/TicketSchedule/servlet/MessageCenter?id="+ownRide.username+"&rid="+ownRide.recordId+"&type=commute");
+		response.sendRedirect("/TicketSchedule/servlet/MessageCenter?id="+ownRide._rideInfo.username+"&rid="+ownRide._rideInfo.recordId+"&type=commute");
 
 	}
 

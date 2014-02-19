@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.hitchride.access.UserTbAccess;
 import com.hitchride.calc.rideInfoParameters;
 import com.hitchride.global.Environment;
 
@@ -155,7 +156,11 @@ public class RideInfo{
     	
     	if (this.username!=null)
     	{
-    		return (User) Environment.getEnv().getUser(username);
+    		UserTbAccess utb = new UserTbAccess();
+    		this.userId = utb.getIDbyName(username);
+    		User user = (User) Environment.getEnv().getUser(userId);
+            this._user=user;
+    		return user;
     	}
     	return null;
     }

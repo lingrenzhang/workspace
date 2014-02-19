@@ -142,6 +142,32 @@ public class UserTbAccess {
 			return result;
         }
 		
+        public int getIDbyName(String name) 
+        {
+
+        	Statement sql;
+        	ResultSet rs;
+        	try
+        	{
+				if (objConn==null)
+				{
+					getConnection();
+						
+				}
+				sql=objConn.createStatement();
+	        	String query = "select userid from usertb where givenname= '"+name+"'";
+	        	rs = sql.executeQuery(query);
+	        	rs.next();
+	        }catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        return rs.getInt(0);
+	    }
+        			
         protected void finalize(){
         	if (objConn!=null){
     			try {
