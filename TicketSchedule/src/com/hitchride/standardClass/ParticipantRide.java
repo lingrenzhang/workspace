@@ -1,7 +1,7 @@
 package com.hitchride.standardClass;
 
 //This class is to represent participantRide information
-public class ParticipantRide {
+public class ParticipantRide extends RideInfo{
     public RideInfo _rideinfo;
     public int _pid;
 	private int _assoOwnerRideId; //Topic the ParticipantRide associating with.

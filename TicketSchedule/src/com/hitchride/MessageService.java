@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.hitchride.global.AllRides;
 import com.hitchride.global.DummyData;
 import com.hitchride.global.Environment;
 import com.hitchride.standardClass.Message;
@@ -42,7 +43,7 @@ public class MessageService extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String method = request.getParameter("method");
 		int rideId = Integer.parseInt(request.getParameter("rideId"));
-		OwnerRideInfo ownRide = (OwnerRideInfo) Environment.getEnv().getOwnerRide(rideId);
+		OwnerRideInfo ownRide = (OwnerRideInfo) AllRides.getRides().getOwnerRide(rideId);
 		if (method.equalsIgnoreCase("delete"))
 		{
 			DummyData.getDummyEnv()._dummyMessage.remove(ownRide._rideInfo.recordId); //Should be message unique ID finally.

@@ -147,6 +147,7 @@ public class UserTbAccess {
 
         	Statement sql;
         	ResultSet rs;
+        	int result=0;
         	try
         	{
 				if (objConn==null)
@@ -158,6 +159,7 @@ public class UserTbAccess {
 	        	String query = "select userid from usertb where givenname= '"+name+"'";
 	        	rs = sql.executeQuery(query);
 	        	rs.next();
+	        	result = rs.getInt(1);
 	        }catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -165,7 +167,7 @@ public class UserTbAccess {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	        return rs.getInt(0);
+	        return result;
 	    }
         			
         protected void finalize(){

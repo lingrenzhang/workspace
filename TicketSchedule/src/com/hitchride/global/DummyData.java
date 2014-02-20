@@ -54,7 +54,7 @@ public class DummyData {
 			Message msg = new Message("This is for test. I want to join your ride"
 									,Environment.getEnv().getUser(rnd.nextInt(50))
 									,Environment.getEnv().getUser(rnd.nextInt(50))
-									,Environment.getEnv().getOwnerRide(838)
+									,AllRides.getRides().getOwnerRide(838)
 					);
 			_dummyMessage.put(messageCount, msg);
 			messageCount++;
@@ -64,7 +64,7 @@ public class DummyData {
 			msg = new Message(rnd.nextInt(4),rnd.nextInt(4)
 					,Environment.getEnv().getUser(rnd.nextInt(50))
 					,Environment.getEnv().getUser(rnd.nextInt(50))
-					,Environment.getEnv().getOwnerRide(838)
+					,AllRides.getRides().getOwnerRide(838)
 					);
 			_dummyMessage.put(messageCount, msg);
 			messageCount++;
@@ -79,14 +79,14 @@ public class DummyData {
 		for (int i=0;i<numofRides;i++)
 		{
 			int key = rnt.nextInt(2000);
-			OwnerRideInfo ownerRide = Environment.getEnv().getOwnerRide(key);
+			OwnerRideInfo ownerRide = AllRides.getRides().getOwnerRide(key);
 			ParticipantRide pRide = new ParticipantRide(ownerRide._rideInfo);
 			pRide.set_assoOwnerRideId(838);
 			_partRides.put(key,pRide);
 			
 			i++;
 			key = rnt.nextInt(2000);
-			ownerRide = Environment.getEnv().getOwnerRide(key);
+			ownerRide = AllRides.getRides().getOwnerRide(key);
 			pRide = new ParticipantRide(ownerRide._rideInfo);
 			pRide.set_assoOwnerRideId(1838);
 			_partRides.put(key,pRide);

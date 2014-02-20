@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hitchiride.util.QueryStringParser;
+import com.hitchride.global.AllRides;
 import com.hitchride.global.DummyData;
 import com.hitchride.global.Environment;
 import com.hitchride.standardClass.Message;
@@ -46,7 +47,7 @@ public class StatusService extends HttpServlet {
 
 		UserInfo fromU = Environment.getEnv().getUser(fromUser);
 		UserInfo toU = Environment.getEnv().getUser(toUser);
-		OwnerRideInfo ori = Environment.getEnv().getOwnerRide(oRId);
+		OwnerRideInfo ori = AllRides.getRides().getOwnerRide(oRId);
 		
 		if ((fromSta==0) && (toSta==1))
 		{

@@ -2,6 +2,7 @@ package com.hitchride.standardClass;
 
 import java.util.Date;
 
+import com.hitchride.global.AllRides;
 import com.hitchride.global.Environment;
 
 public class Message implements MessageInfo,PersistentStorage{
@@ -32,7 +33,7 @@ public class Message implements MessageInfo,PersistentStorage{
 		this._from = from;
 		User to = (User) Environment.getEnv().getUser(toID);
 		this._to = to;
-		OwnerRideInfo ownerRide = Environment.getEnv().getOwnerRide(ownerRideID);
+		OwnerRideInfo ownerRide = AllRides.getRides().getOwnerRide(ownerRideID);
 		this._ownerRide = ownerRide;
 		this._messageContent = content;
 		Date date = new Date();

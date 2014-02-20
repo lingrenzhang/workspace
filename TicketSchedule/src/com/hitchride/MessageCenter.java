@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hitchiride.util.QueryStringParser;
 import com.hitchride.access.MessageTbAccess;
+import com.hitchride.global.AllRides;
+import com.hitchride.global.AllTopics;
 import com.hitchride.global.Environment;
 import com.hitchride.standardClass.Message;
 import com.hitchride.standardClass.Participant;
@@ -56,7 +58,7 @@ public class MessageCenter extends HttpServlet {
 			String type = qsPar.getString("type");
 			
 			request.setAttribute("rid",rid );
-		    Topic topic = Environment.getEnv().get_topic(rid);
+		    Topic topic = AllTopics.getTopics().get_topic(rid);
 		    request.getSession().setAttribute("topic",topic);
 		    User user = (User) request.getSession().getAttribute("user");
 		    Boolean isOwnerMode = (user.get_uid() == topic.ownerRide._rideInfo.get_user().get_uid());

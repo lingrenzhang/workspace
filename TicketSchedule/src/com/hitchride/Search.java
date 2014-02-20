@@ -27,12 +27,14 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.hitchride.access.CarpoolTbAccess;
 import com.hitchride.calc.*;
+import com.hitchride.global.AllRides;
 import com.hitchride.global.DummyData;
 import com.hitchride.global.Environment;
 import com.hitchride.standardClass.GeoInfo;
@@ -317,7 +319,7 @@ public class Search extends HttpServlet {
 			
 			//ParticipantRide pride = new ParticipantRide(ride);
 			//pride.set_status(0);
-			Environment.getEnv().inser_availride(ride);
+			AllRides.getRides().inser_availride(ride);
 			user.rides.add(ride);
 
 			request.getSession().setAttribute("actRide", ride);

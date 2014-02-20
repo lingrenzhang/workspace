@@ -156,9 +156,9 @@ public class RideInfo{
     	
     	if (this.username!=null)
     	{
-    		UserTbAccess utb = new UserTbAccess();
-    		this.userId = utb.getIDbyName(username);
-    		User user = (User) Environment.getEnv().getUser(userId);
+    		//UserTbAccess utb = new UserTbAccess();
+    		//this.userId = utb.getIDbyName(username);
+    		User user = (User) Environment.getEnv().getUser(username);
             this._user=user;
     		return user;
     	}

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Vector;
 
 import com.hitchride.access.CarpoolTbAccess;
+import com.hitchride.global.AllRides;
 import com.hitchride.global.DummyData;
 import com.hitchride.global.Environment;
 import com.mysql.jdbc.ResultSet;
@@ -34,7 +35,7 @@ public class Topic {
  
 	public Topic(int rid) {
 		try {
-			ownerRide = Environment.getEnv()._topicRides.get(rid);
+			ownerRide = AllRides.getRides()._topicRides.get(rid);
 			this._topicId=rid;
 			UserInfo ownerInfo = Environment.getEnv().getUser(ownerRide._rideInfo.username);
 			owner =(User) ownerInfo;
