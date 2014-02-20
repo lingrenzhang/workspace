@@ -5,24 +5,24 @@ import java.util.Vector;
 
 //User passively updates i
 public class User implements RideListener,UserInfo{
+	//UserInfo
 	private int _uid;
 	private String _name;
 	private String _avatarID;
-	private String _emailAddress;
 	private int _userLevel;
-		
+	private String _emailAddress;
+	
 	public Vector<RideInfo> rides= new Vector<RideInfo>();
+	
 	
 	public User()
 	{
-		
 	}
 	
 	public User(UserInfo user)
 	{
 		this.set_uid(user.get_uid());
 		this.set_name(user.get_name());
-		this.set_userLevel(user.get_userLevel());
 		this.set_avatarID(user.get_avatarID());
 		this.set_emailAddress(user.get_avatarID());
 	}
@@ -82,5 +82,6 @@ public class User implements RideListener,UserInfo{
 		this._emailAddress = emailAddress;
 		
 	}
+	
 	
 }

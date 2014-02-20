@@ -156,4 +156,21 @@ public class TicketScheduleDBFormat {
 		"INT(1)",  //0 for commute 1 for travel
 		"INT"      //Associated message
 	};
+	
+	
+	public static final String[] UserHisTbcolumns={
+		// login info
+		"userid",
+		"reputation",
+		"totalmiles",
+		"dealcount",
+		"judgecount"
+	};
+	public static final String[] UserHisTbcolumnTypes = {
+		"INT UNSIGNED NOT NULL UNIQUE",
+		"INT(10)",
+		"INT(10)",
+		"INT(5)",
+		"INT(5)",
+	};
 }

@@ -26,10 +26,13 @@ public class AllTopics {
 	private int _topicKey=0;
 	
 	private void initialTopics() {
-		Topic topic = new Topic(838);
-		_topics.put(838,topic);
-		System.out.println("Topic "+topic + "initialized." );
-		
+		for (int i=1;i<2199;i++)
+		{
+			Topic topic = new Topic(i);
+			_topics.put(i,topic);
+			System.out.println("Topic "+topic + "initialized." );
+		}
+	
 	}
 	
 	

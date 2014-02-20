@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hitchiride.util.QueryStringParser;
 import com.hitchride.access.MessageTbAccess;
 import com.hitchride.global.AllRides;
 import com.hitchride.global.AllTopics;
@@ -21,6 +20,7 @@ import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Topic;
 import com.hitchride.standardClass.User;
+import com.hitchride.util.QueryStringParser;
 
 /**
  * Servlet implementation class MessageCenter

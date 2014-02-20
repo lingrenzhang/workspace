@@ -133,13 +133,38 @@ public class DbGeneration {
 		con.close();
 		
 	}
+	
+	public static void generateUserHisTb() throws ClassNotFoundException, SQLException
+	{
+		Connection con= DbGeneration.getConnection();
+		// check if table exists
+    	DatabaseMetaData dbm = con.getMetaData();
+    	ResultSet tables = dbm.getTables(null, null, "UserHisTb", null);
+    	if(tables.next()){
+    		Statement sql=con.createStatement();
+    		String query = "drop table UserHisTb";
+    		sql.executeUpdate(query);
+    	}
+    	Statement sql = con.createStatement();
+		String query = "CREATE TABLE UserHisTb (";
+		for(int i=0; i<TicketScheduleDBFormat.UserHisTbcolumns.length; i++){
+			if(i>0) query += ", ";
+			query += TicketScheduleDBFormat.UserHisTbcolumns[i] + " " + TicketScheduleDBFormat.UserHisTbcolumnTypes[i];
+		}
+		query += ")";
+		sql.executeUpdate(query);
+		sql.close();
+		con.close();
+		
+	}
 	public static void main(String args[]) throws ClassNotFoundException, SQLException
 	{
 		//Run this job to regenerate all the table definition.
-		DbGeneration.generateUserTable();
+		//DbGeneration.generateUserTable();
 		//DbGeneration.generateCarpoolTable();
 		//DbGeneration.generateTravelTb();
 		//DbGeneration.generateMessageTb();
 		//DbGeneration.generateUserTable();
+		DbGeneration.generateUserHisTb();
 	}
 }

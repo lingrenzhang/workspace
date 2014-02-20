@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.lang.Error;
 
+import com.hitchride.global.SQLServerConf;
+
 public class UserTbAccess {
 	    //id char(20)
 	    //password char(20)
@@ -17,12 +19,8 @@ public class UserTbAccess {
 		public static Connection getConnection() throws SQLException,	
 		java.lang.ClassNotFoundException
 		{
-			//String url = "jdbc:mysql://rs.luzhuoer.info/ticketschedule";
-			String url = "jdbc:mysql://localhost/ticketschedule";
-			Class.forName("com.mysql.jdbc.Driver");
-			String userName="root";
-			String password="rideshare";
-			objConn = DriverManager.getConnection(url,userName,password);
+			Class.forName(SQLServerConf.ServerURL);
+			objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
 			return objConn;
 		}
 		

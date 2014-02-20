@@ -1,4 +1,4 @@
-package com.hitchiride.util;
+package com.hitchride.util;
 import java.util.Hashtable;
 
 public class QueryStringParser {
