@@ -16,7 +16,7 @@ public class CarpoolTbAccess {
 	public static Connection objConn; //This reference is used for batch job.
 	public static Connection getConnection() throws SQLException,java.lang.ClassNotFoundException
 	{
-		Class.forName(SQLServerConf.ServerURL);
+		Class.forName(SQLServerConf.DriverName);
 		objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
 		return objConn;
 	}
