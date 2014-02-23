@@ -63,8 +63,14 @@
 	    		false);
 	    xmlhttp.send();
 	    document.getElementById("comment_wrapper").setAttribute("class", "comment_wrapper");
+	    document.getElementById("user_operation").innerHTML = "<div>Waiting owner accept</div>";
     }
   	
+    function accept()
+    {
+    	alert(2);
+    	
+    }
 
 </script>
 <head>
@@ -95,7 +101,7 @@
 						<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
 						<span class="passenger"></span>
 				</div>
-				<div class="user_operation">
+				<div class="user_operation" id="user_operation">
 					<button type=button onclick="join()">Join</button>
 				</div>
 				<div class="user_match">
@@ -117,7 +123,11 @@
 						<span class="passenger"></span>
 					</div>
 					<div class="user_status">
-						<%=parRide.get_status() %>
+						<%if (!isOwnerMode){ %>
+							<%= (parRide.userId == user.get_uid())? parRide.get_status_user_control() : parRide.get_status_message()  %>
+					    <%}else {%>
+					        <%= parRide.get_status_owner_control()%>
+					    <%} %>
 					</div>
 					<div class="user_match">
 						<div class="match_Loc" style="width : <%=parRide.get_Match().getLocationMatching() %>px "></div>
@@ -140,7 +150,11 @@
 						<span class="passenger"></span>
 					</div>
 					<div class="user_status">
-						<%=parRide.get_status() %>
+						<%if (!isOwnerMode){ %>
+							<%= (parRide.userId == user.get_uid())? parRide.get_status_user_control() : parRide.get_status_message()  %>
+					    <%}else {%>
+					        <%= parRide.get_status_owner_control()%>
+					    <%} %>
 					</div>
 					<div class="user_match">
 						<div class="match_Loc" style="width : <%=parRide.get_Match().getLocationMatching() %>px "></div>

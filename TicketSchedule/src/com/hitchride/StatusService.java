@@ -15,6 +15,7 @@ import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Topic;
+import com.hitchride.standardClass.User;
 import com.hitchride.standardClass.UserInfo;
 import com.hitchride.util.QueryStringParser;
 
@@ -52,6 +53,7 @@ public class StatusService extends HttpServlet {
 		if ((fromSta==0) && (toSta==1))
 		{
 			ParticipantRide pride = new ParticipantRide(ride);
+			pride.set_user((User) fromU);
 			pride.set_assoOwnerRideId(ori._rideInfo.recordId);
 			pride.set_status(1);
 			topic._requestPride.add(pride);

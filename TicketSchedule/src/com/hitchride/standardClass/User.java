@@ -13,7 +13,9 @@ public class User implements RideListener,UserInfo{
 	private String _emailAddress;
 	
 	public Vector<RideInfo> rides= new Vector<RideInfo>();
-	
+	public int numofrides;
+	public int numofMessage;
+	public int numofnewMessage;
 	
 	public User()
 	{

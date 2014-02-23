@@ -66,18 +66,12 @@ public class AllRides {
 		System.out.println("#"+i+" rides loaded.");
 	}
 	
-
-	
-	
 	
 	public OwnerRideInfo getOwnerRide(int RID)
 	{
 		OwnerRideInfo ownerRide = _topicRides.get(RID);
 		return ownerRide;
 	}
-	
-
-
 	
 	public void inser_availride(RideInfo part)
 	{

@@ -305,6 +305,9 @@ window.onscroll = function(){
 		<div id="user_info">
 			Welcome <%= user.get_name() %> 
 		</div>
+		<div id="message_info">
+		    <a href = messages>You have 8 new messages</a>
+		</div>
 		<div id="user_level">
 			Level: <%= user.get_userLevel() %>
 		</div>

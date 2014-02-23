@@ -126,6 +126,13 @@ public class RideInfo{
 		}
 	}
 	
+	public void set_user(User user)
+	{
+		this._user = user;
+		this.userId = user.get_uid();
+		this.username = user.get_name();
+	}
+	
 	public String getBarMessage()
 	{
 		String barMessage="";

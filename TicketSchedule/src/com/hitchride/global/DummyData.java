@@ -74,18 +74,19 @@ public class DummyData {
 
 	private void initializeParticipantRide(int numofRides) {
 		_partRides.clear();
-		Random rnt = new Random();
+		Random rnd = new Random();
 		//Use OwnerRide as fakeParticipantRide
 		for (int i=0;i<numofRides;i++)
 		{
-			int key = rnt.nextInt(2000);
+			int key = rnd.nextInt(2000);
 			OwnerRideInfo ownerRide = AllRides.getRides().getOwnerRide(key);
 			ParticipantRide pRide = new ParticipantRide(ownerRide._rideInfo);
 			pRide.set_assoOwnerRideId(838);
+			pRide.set_status(rnd.nextInt(4)+1);
 			_partRides.put(key,pRide);
 			
 			i++;
-			key = rnt.nextInt(2000);
+			key = rnd.nextInt(2000);
 			ownerRide = AllRides.getRides().getOwnerRide(key);
 			pRide = new ParticipantRide(ownerRide._rideInfo);
 			pRide.set_assoOwnerRideId(1838);
