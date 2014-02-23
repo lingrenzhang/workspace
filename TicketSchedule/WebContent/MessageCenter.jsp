@@ -66,9 +66,100 @@
 	    document.getElementById("user_operation").innerHTML = "<div>Waiting owner accept</div>";
     }
   	
-    function accept()
+    
+    function accept(event)
     {
-    	alert(2);
+    	var xmlhttp;
+    	if (window.XMLHttpRequest)
+    	{// code for IE7+, Firefox, Chrome, Opera, Safari
+    	    xmlhttp=new XMLHttpRequest();
+    	}
+    	else
+    	{// code for IE6, IE5
+    	    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    	}
+    	if (isOwnerMode)
+    	{
+    		toUser = event.currentTarget.parentElement.getAttribute("uid");
+    	}
+        var fromStatus = event.currentTarget.parentElement.getAttribute("fromStatus");
+        var toStatus;
+    	if (fromStatus == 3)
+    	{
+    		toStatus = 4;
+    	}
+    	if (fromStatus == 1)
+    	{
+    		toStatus = 3;
+    	}
+    	if (fromStatus == 2)
+    	{
+    		if (isOwnerMode)
+    		{
+    			toStatus= 3;
+    		}
+    		else
+    		{
+    			toStatus = 1;
+    		}
+    	}
+
+    	xmlhttp.open("GET","/TicketSchedule/servlet/StatusService?fromStatus="+fromStatus
+    	 +"&toStatus="+toStatus+"&fromUser="+fromUser+"&toUser="+toUser+"&ownRideId="+rideId,
+ 	    		false);
+ 	    xmlhttp.send();
+ 	    window.location.reload();
+    	
+    }
+    
+    
+    function moreinfo(event)
+    {
+    	var xmlhttp;
+    	if (window.XMLHttpRequest)
+    	{// code for IE7+, Firefox, Chrome, Opera, Safari
+    	    xmlhttp=new XMLHttpRequest();
+    	}
+    	else
+    	{// code for IE6, IE5
+    	    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    	}
+    	if (isOwnerMode)
+    	{
+    		toUser = event.currentTarget.parentElement.getAttribute("uid");
+    	}
+        var fromStatus = event.currentTarget.parentElement.getAttribute("fromStatus");
+        var toStatus = 2;
+        xmlhttp.open("GET","/TicketSchedule/servlet/StatusService?fromStatus="+fromStatus
+           	 +"&toStatus="+toStatus+"&fromUser="+fromUser+"&toUser="+toUser+"&ownRideId="+rideId,
+        	    		false);
+	    xmlhttp.send();
+	    window.location.reload();
+    	
+    }
+    
+    function decline(event)
+    {
+    	var xmlhttp;
+    	if (window.XMLHttpRequest)
+    	{// code for IE7+, Firefox, Chrome, Opera, Safari
+    	    xmlhttp=new XMLHttpRequest();
+    	}
+    	else
+    	{// code for IE6, IE5
+    	    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    	}
+    	if (isOwnerMode)
+    	{
+    		toUser = event.currentTarget.parentElement.getAttribute("uid");
+    	}
+        var fromStatus = event.currentTarget.parentElement.getAttribute("fromStatus");
+        var toStatus = 0;
+        xmlhttp.open("GET","/TicketSchedule/servlet/StatusService?fromStatus="+fromStatus
+           	 +"&toStatus="+toStatus+"&fromUser="+fromUser+"&toUser="+toUser+"&ownRideId="+rideId,
+        	    		false);
+	    xmlhttp.send();
+	    window.location.reload();
     	
     }
 

@@ -1,6 +1,7 @@
 package com.hitchride;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -50,19 +51,128 @@ public class StatusService extends HttpServlet {
 		UserInfo toU = Environment.getEnv().getUser(toUser);
 		OwnerRideInfo ori = AllRides.getRides().getOwnerRide(oRId);
 		
-		if ((fromSta==0) && (toSta==1))
+		int status = 10*fromSta + toSta;
+		ParticipantRide pride=null;
+		switch (status)
 		{
-			ParticipantRide pride = new ParticipantRide(ride);
-			pride.set_user((User) fromU);
-			pride.set_assoOwnerRideId(ori._rideInfo.recordId);
-			pride.set_status(1);
-			topic._requestPride.add(pride);
+			case 1:
+				pride = new ParticipantRide(ride);
+				pride.set_user((User) fromU);
+				pride.set_assoOwnerRideId(ori._rideInfo.recordId);
+				pride.set_status(1);
+				topic._requestPride.add(pride);
+		    	break;
+			case 10:
+				for (Iterator<ParticipantRide> prideI=topic._requestPride.iterator(); prideI.hasNext();)
+				{
+				    ParticipantRide pridet = prideI.next();
+				    if (pridet.get_userId() == toU.get_uid()){
+				    	pride = pridet;
+				    }
+					
+        		}
+				pride.set_assoOwnerRideId(-1);
+				pride.set_status(0);
+				topic._requestPride.remove(pride);
+				break;
+			case 12:
+				for (Iterator<ParticipantRide> prideI=topic._requestPride.iterator(); prideI.hasNext();)
+				{
+				    ParticipantRide pridet = prideI.next();
+				    if (pridet.get_userId() == toU.get_uid()){
+				    	pride = pridet;
+				    }
+					
+        		}
+				pride.set_status(2);
+				topic._requestPride.remove(pride);
+				topic.parRides.add(pride);
+				break;
+			case 13:
+				for (Iterator<ParticipantRide> prideI=topic._requestPride.iterator(); prideI.hasNext();)
+				{
+				    ParticipantRide pridet = prideI.next();
+				    if (pridet.get_userId() == toU.get_uid()){
+				    	pride = pridet;
+				    }
+        		}
+				pride.set_status(3);
+				topic._requestPride.remove(pride);
+				topic.parRides.add(pride);
+				break;
+			case 20:
+				for (Iterator<ParticipantRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
+				{
+				    ParticipantRide pridet = prideI.next();
+				    if (pridet.get_userId() == fromU.get_uid() ||pridet.get_userId() == toU.get_uid()){
+				    	pride = pridet;
+				    }
+        		}
+				pride.set_assoOwnerRideId(-1);
+				pride.set_status(0);
+				topic.parRides.remove(pride);
+				break;
+			case 21:
+				for (Iterator<ParticipantRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
+				{
+				    ParticipantRide pridet = prideI.next();
+				    if (pridet.get_userId() == fromU.get_uid()){
+				    	pride = pridet;
+				    }
+        		}
+				pride.set_status(1);
+				topic.parRides.remove(pride);
+				topic._requestPride.add(pride);
+				break;
+			case 23:
+				for (Iterator<ParticipantRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
+				{
+				    ParticipantRide pridet = prideI.next();
+				    if (pridet.get_userId() == toU.get_uid()){
+				    	pride = pridet;
+				    }
+        		}
+				pride.set_status(3);
+				break;
+			case 30:
+				for (Iterator<ParticipantRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
+				{
+				    ParticipantRide pridet = prideI.next();
+				    if (pridet.get_userId() == fromU.get_uid()){
+				    	pride = pridet;
+				    }
+        		}
+				pride.set_assoOwnerRideId(-1);
+				pride.set_status(0);
+				topic.parRides.remove(pride);
+				break;
+			case 32:
+				for (Iterator<ParticipantRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
+				{
+				    ParticipantRide pridet = prideI.next();
+				    if (pridet.get_userId() == fromU.get_uid()){
+				    	pride = pridet;
+				    }
+        		}
+				pride.set_status(2);
+				break;
+			case 34:
+				for (Iterator<ParticipantRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
+				{
+				    ParticipantRide pridet = prideI.next();
+				    if (pridet.get_userId() == fromU.get_uid()){
+				    	pride = pridet;
+				    }
+        		}
+				pride.set_status(4);
+				break;
+			default:
+				System.out.println("Not leagal status change.");
+				break;
 		}
-		if (toSta==0)
-		{
-			ParticipantRide pride = DummyData.getDummyEnv()._partRides.get(ride.recordId);
-			topic.parRides.remove(pride);
-		}
+		
+		
+		
 		Message msg = new Message(fromSta, toSta, fromU, toU, ori);
 		{
 			DummyData.getDummyEnv().insert_message(msg);

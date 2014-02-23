@@ -1,6 +1,7 @@
 package com.hitchride.standardClass;
 
 //This class is to represent participantRide information
+//Having close relation to UI. Think about decouple it.
 public class ParticipantRide extends RideInfo{
     public RideInfo _rideinfo;
     public int _pid;
@@ -43,12 +44,16 @@ public class ParticipantRide extends RideInfo{
 					+"<button type=button onclick=\"join()\">Join</button>"
 					+"</div>";
 			case 1: return "Waiting owner accept";
-			case 2: return "Owner want more info";
+			case 2: return "In discussion"
+			        + "<div class=\"user_operation\" id=\"user_operation\" uid="+this.get_userId()+ " fromStatus=2>"
+					+ "<img src=\"/TicketSchedule/Picture/Accept.png\" alt=\"Accept\" onclick=\"accept(event)\"></img>"
+					+ "<img src=\"/TicketSchedule/Picture/Decline.png\" alt=\"Decline\" onclick=\"decline(event)\"></img>"
+					+"</div>";
 			case 3: return "Request accepted, confirm please"
-					+ "<div class=\"user_operation\" id=\"user_operation\">"
-					+"<img src=\"/TicketSchedule/Picture/Accept.png\" alt=\"Accept\" onclick=\"accept()\"></img>"
-					+"<img src=\"/TicketSchedule/Picture/MoreInfo.png\" alt=\"MoreInfo\" onclick=\"moreinfo()\"></img>"
-					+"<img src=\"/TicketSchedule/Picture/Decline.png\" alt=\"Decline\" onclick=\"decline()\"></img>"
+					+ "<div class=\"user_operation\" id=\"user_operation\" uid="+this.get_userId()+" fromStatus=3>"
+					+ "<img src=\"/TicketSchedule/Picture/Accept.png\" alt=\"Accept\" onclick=\"accept(event)\"></img>"
+					+ "<img src=\"/TicketSchedule/Picture/MoreInfo.png\" alt=\"MoreInfo\" onclick=\"moreinfo(event)\"></img>"
+					+ "<img src=\"/TicketSchedule/Picture/Decline.png\" alt=\"Decline\" onclick=\"decline(event)\"></img>"
 					+"</div>";
 			case 4: return "<img src=\"/TicketSchedule/Picture/Dealdone.png\" alt=\"Dealdone\"></img>";
 		}
@@ -60,12 +65,16 @@ public class ParticipantRide extends RideInfo{
 		{
 			case 0: break;
 			case 1: return "Waiting your accept"+
-					"<div class=\"owner_operation\" id=\"owner_operation\">"
-			        +"<img src=\"/TicketSchedule/Picture/Accept.png\" alt=\"Accept\" onclick=\"accept()\"></img>"
-					+"<img src=\"/TicketSchedule/Picture/MoreInfo.png\" alt=\"MoreInfo\" onclick=\"moreinfo()\"></img>"
-					+"<img src=\"/TicketSchedule/Picture/Decline.png\" alt=\"Decline\" onclick=\"decline()\"></img>"
+					"<div class=\"owner_operation\" id=\"owner_operation\" uid="+this.get_userId()+" fromStatus=1>"
+			        +"<img src=\"/TicketSchedule/Picture/Accept.png\" alt=\"Accept\" onclick=\"accept(event)\"></img>"
+					+"<img src=\"/TicketSchedule/Picture/MoreInfo.png\" alt=\"MoreInfo\" onclick=\"moreinfo(event)\"></img>"
+					+"<img src=\"/TicketSchedule/Picture/Decline.png\" alt=\"Decline\" onclick=\"decline(event)\"></img>"
 					+"</div>";
-			case 2: return "Waiting more info";
+			case 2: return "In discussion"+
+					"<div class=\"owner_operation\" id=\"owner_operation\" uid="+this.get_userId()+" fromStatus=2>"
+					+"<img src=\"/TicketSchedule/Picture/Accept.png\" alt=\"Accept\" onclick=\"accept(event)\"></img>"
+					+"<img src=\"/TicketSchedule/Picture/Decline.png\" alt=\"Decline\" onclick=\"decline(event)\"></img>"
+					+"</div>";
 			case 3: return "Waiting confirm";
 			case 4: return "<img src=\"/TicketSchedule/Picture/Dealdone.png\" alt=\"Dealdone\"></img>";
 		}
@@ -86,6 +95,11 @@ public class ParticipantRide extends RideInfo{
 	}
 	public void set_assoOwnerRideId(int _assoOwnerRideId) {
 		this._assoOwnerRideId = _assoOwnerRideId;
+	}
+	
+	public int get_userId()
+	{
+		return this._rideinfo.get_user().get_uid();
 	}
 
 }

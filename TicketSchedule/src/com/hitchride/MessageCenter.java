@@ -53,10 +53,7 @@ public class MessageCenter extends HttpServlet {
 		{
 			QueryStringParser qsPar = new QueryStringParser(request.getQueryString());
 
-			String id = qsPar.getString("id");
 			int rid = qsPar.getInt("rid");
-			String type = qsPar.getString("type");
-			
 			request.setAttribute("rid",rid );
 		    Topic topic = AllTopics.getTopics().get_topic(rid);
 		    request.getSession().setAttribute("topic",topic);

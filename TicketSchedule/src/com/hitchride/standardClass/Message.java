@@ -74,10 +74,13 @@ public class Message implements MessageInfo,PersistentStorage{
 			case 21:
 				content = "Participant: " + from.get_name() + " updated the request.";
 				break;
+			case 23:
+				content = "Owner: " + from.get_name() + " confirmed the request.";
+				break;
 			case 30:
 				content = "Participant: " + from.get_name() + " quit the ride.";
 				break;
-			case 31:
+			case 32:
 				content = "Participant: " + from.get_name() + " updated the request.";
 				break;
 			case 34:
@@ -85,7 +88,7 @@ public class Message implements MessageInfo,PersistentStorage{
 				//Log, persistent storage
 				break;
 			default:
-				content = "Not leagal status change.";
+				content = "Not leagal status change. " + status;
 				break;
 		}	
 		
