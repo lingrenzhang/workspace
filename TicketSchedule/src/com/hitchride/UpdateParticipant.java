@@ -32,7 +32,7 @@ public class UpdateParticipant extends HttpServlet {
 		boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
 		if (!islogin)
 		{
-			request.getSession().setAttribute("fromLocation", "/TicketSchedule/servlet/MessageCenter");
+			request.getSession().setAttribute("fromLocation", "/TicketSchedule/servlet/RideCenter");
 			request.getSession().setAttribute("queryString", request.getQueryString());
 			request.getSession().setMaxInactiveInterval(60*30);
 			response.sendRedirect("/TicketSchedule/Login.jsp");

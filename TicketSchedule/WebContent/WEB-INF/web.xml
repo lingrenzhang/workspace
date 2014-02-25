@@ -91,13 +91,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>MessageCenter</display-name>
-    <servlet-name>MessageCenter</servlet-name>
-    <servlet-class>com.hitchride.MessageCenter</servlet-class>
+    <display-name>RideCenter</display-name>
+    <servlet-name>RideCenter</servlet-name>
+    <servlet-class>com.hitchride.RideCenter</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>MessageCenter</servlet-name>
-    <url-pattern>/servlet/MessageCenter</url-pattern>
+    <servlet-name>RideCenter</servlet-name>
+    <url-pattern>/servlet/RideCenter</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>

@@ -3,50 +3,51 @@ package com.hitchride.standardClass;
 import java.util.Date;
 
 import com.hitchride.global.AllRides;
+import com.hitchride.global.AllTopics;
+import com.hitchride.global.DummyData;
 import com.hitchride.global.Environment;
 
 public class Message implements MessageInfo,PersistentStorage{
 
 	private UserInfo _from;
 	private UserInfo _to;
+	private Topic _topic;
 	private String _messageContent;
 	private Date _generateDate;
 	private OwnerRideInfo _ownerRide;
 	private boolean _isSystemMessage;
 	
-	
-	
-	public Message(String content, UserInfo from, UserInfo to,OwnerRideInfo ownerRide)
+	public Message(String content, UserInfo from, UserInfo to,Topic topic)
 	{
 		this._from = from;
 		this._to = to;
-		this._ownerRide = ownerRide;
+		this._topic = topic;
 		this._messageContent = content;
 		Date date = new Date();
 		this._generateDate = date;
 		this._isSystemMessage = false;
 	}
 	
-	public Message(String content, int fromID, int toID,int ownerRideID)
+	public Message(String content, int fromID, int toID,int topicID)
 	{
 		User from = (User) Environment.getEnv().getUser(fromID);
 		this._from = from;
 		User to = (User) Environment.getEnv().getUser(toID);
 		this._to = to;
-		OwnerRideInfo ownerRide = AllRides.getRides().getOwnerRide(ownerRideID);
-		this._ownerRide = ownerRide;
+		_topic = AllTopics.getTopics().get_topic(topicID);
 		this._messageContent = content;
 		Date date = new Date();
 		this._generateDate = date;
+		
 	}
 	
 	
 	//System generated message
-	public Message(int fstatus,int astatus, UserInfo from, UserInfo to,OwnerRideInfo ownerRide)
+	public Message(int fstatus,int astatus, UserInfo from, UserInfo to,Topic topic)
 	{
 		this._from = from;
 		this._to = to;
-		this._ownerRide = ownerRide;
+		this._topic = topic;
 		String content="";
 		 //0 for not associating with Pride -> 1 (drive by participant)
 		 //1 for waiting owner response ->0,2,3 (drive by owner)
@@ -153,5 +154,14 @@ public class Message implements MessageInfo,PersistentStorage{
     public boolean isSystemMessage()
     {
     	return this._isSystemMessage;
+    }
+    
+    public void sendMessage()
+    {
+		DummyData.getDummyEnv().insert_message(this); //Should be message unique ID.
+		_topic.messages.add(this);
+		User to =  (User) _to;
+		to.message.add(this);
+		to.numofnewMessage++;
     }
 }

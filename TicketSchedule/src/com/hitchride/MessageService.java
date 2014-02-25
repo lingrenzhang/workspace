@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hitchride.global.AllRides;
+import com.hitchride.global.AllTopics;
 import com.hitchride.global.DummyData;
 import com.hitchride.global.Environment;
 import com.hitchride.standardClass.Message;
@@ -42,11 +43,12 @@ public class MessageService extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String method = request.getParameter("method");
-		int rideId = Integer.parseInt(request.getParameter("rideId"));
-		OwnerRideInfo ownRide = (OwnerRideInfo) AllRides.getRides().getOwnerRide(rideId);
+		int topicId = Integer.parseInt(request.getParameter("topicId"));
+		//OwnerRideInfo ownRide = (OwnerRideInfo) AllRides.getRides().getOwnerRide(rideId);
+		Topic topic = AllTopics.getTopics().get_topic(topicId);
 		if (method.equalsIgnoreCase("delete"))
 		{
-			DummyData.getDummyEnv()._dummyMessage.remove(ownRide._rideInfo.recordId); //Should be message unique ID finally.
+			//Should be message unique ID finally.
 		}
 		if (method.equalsIgnoreCase("create"))
 		{
@@ -55,12 +57,11 @@ public class MessageService extends HttpServlet {
 			String messageContent = request.getParameter("comment");
 			User from = (User) Environment.getEnv().getUser(fromId);
 			User to = (User) Environment.getEnv().getUser(toId);
-			Message message = new Message(messageContent,from,to,ownRide);
-			DummyData.getDummyEnv().insert_message(message); //Should be message unique ID.
-			Topic topic  = (Topic) request.getSession().getAttribute("topic");
-			topic.messages.add(message);
+			Message message = new Message(messageContent,from,to,topic);
+			message.sendMessage();
+
 		}
-		response.sendRedirect("/TicketSchedule/servlet/MessageCenter?id="+ownRide._rideInfo.username+"&rid="+ownRide._rideInfo.recordId+"&type=commute");
+		response.sendRedirect("/TicketSchedule/servlet/RideCenter?topicId="+topic.get_topicId()+"&type=commute");
 
 	}
 

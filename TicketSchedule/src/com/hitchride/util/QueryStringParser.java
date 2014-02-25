@@ -6,17 +6,23 @@ public class QueryStringParser {
 	
 	//private boolean isStrongKeyCheck=false;
 	//private boolean isStrongValueCheck=false;
-	
 	//Only support string now.
-	public QueryStringParser(String queryString)
+	public QueryStringParser(String queryString) throws NullPointerException
 	{
 		content = new Hashtable<String,String>(10);
 		String[] units = queryString.split("&");
-		for(int i=0;i<units.length;i++)
+		if (units!=null)
 		{
-			String key = units[i].split("=")[0];
-			String value = units[i].split("=")[1];
-			content.put(key, value);
+			for(int i=0;i<units.length;i++)
+			{
+				String key = units[i].split("=")[0];
+				String value = units[i].split("=")[1];
+				content.put(key, value);
+			}
+		}
+		else
+		{
+			throw new NullPointerException("Input parameter can not be null");
 		}
 	}
 	

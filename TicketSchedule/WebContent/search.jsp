@@ -381,7 +381,7 @@ window.onscroll = function(){
 					<% Iterator<rideInfoParameters> itr = results.iterator(); %>
 					<% while (itr.hasNext()){ %>
 					<% 	rideInfoParameters rideInfo = itr.next(); %>
-    				<a href="./MessageCenter?id=<%=rideInfo.username %>&rid=<%=rideInfo.recordId %>&type=commute">
+    				<a href="./RideCenter?topicId=<%=rideInfo.recordId %>&type=commute">
 						<div class="entry">
 						<% if (!rideInfo.userType){ %>
 							<div class="passenger_box">

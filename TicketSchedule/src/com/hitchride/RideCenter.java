@@ -23,15 +23,15 @@ import com.hitchride.standardClass.User;
 import com.hitchride.util.QueryStringParser;
 
 /**
- * Servlet implementation class MessageCenter
+ * Servlet implementation class RideCenter
  */
-public class MessageCenter extends HttpServlet {
+public class RideCenter extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MessageCenter() {
+    public RideCenter() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,7 +44,7 @@ public class MessageCenter extends HttpServlet {
 		boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
 		if (!islogin)
 		{
-			request.getSession().setAttribute("fromLocation", "/TicketSchedule/servlet/MessageCenter");
+			request.getSession().setAttribute("fromLocation", "/TicketSchedule/servlet/RideCenter");
 			request.getSession().setAttribute("queryString", request.getQueryString());
 			request.getSession().setMaxInactiveInterval(60*30);
 			response.sendRedirect("/TicketSchedule/Login.jsp");
@@ -53,9 +53,8 @@ public class MessageCenter extends HttpServlet {
 		{
 			QueryStringParser qsPar = new QueryStringParser(request.getQueryString());
 
-			int rid = qsPar.getInt("rid");
-			request.setAttribute("rid",rid );
-		    Topic topic = AllTopics.getTopics().get_topic(rid);
+			int topicId = qsPar.getInt("topicId");
+		    Topic topic = AllTopics.getTopics().get_topic(topicId);
 		    request.getSession().setAttribute("topic",topic);
 		    User user = (User) request.getSession().getAttribute("user");
 		    Boolean isOwnerMode = (user.get_uid() == topic.ownerRide._rideInfo.get_user().get_uid());
@@ -97,7 +96,7 @@ public class MessageCenter extends HttpServlet {
 		    	
 		    }
 		    
-			RequestDispatcher rd = request.getRequestDispatcher("/MessageCenter.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/RideCenter.jsp");
 			rd.forward(request, response);
 		}
 	}

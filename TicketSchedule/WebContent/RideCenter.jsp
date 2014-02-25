@@ -21,7 +21,7 @@
 
 <script>
     var isOwnerMode = <%=isOwnerMode%>
-	var rideId = <%=topicInfo.ownerRide._rideInfo.recordId%>;
+	var topicId = <%=topicInfo.get_topicId()%>;
 	var isalreadyPart;
     var fromUser;
     var toUser;
@@ -59,7 +59,7 @@
       {// code for IE6, IE5
       xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
       }
-	    xmlhttp.open("GET","/TicketSchedule/servlet/StatusService?fromStatus=0&toStatus=1&fromUser="+fromUser+"&toUser="+toUser+"&ownRideId="+rideId,
+	    xmlhttp.open("GET","/TicketSchedule/servlet/StatusService?fromStatus=0&toStatus=1&fromUser="+fromUser+"&toUser="+toUser+"&topicId="+topicId,
 	    		false);
 	    xmlhttp.send();
 	    document.getElementById("comment_wrapper").setAttribute("class", "comment_wrapper");
@@ -105,7 +105,7 @@
     	}
 
     	xmlhttp.open("GET","/TicketSchedule/servlet/StatusService?fromStatus="+fromStatus
-    	 +"&toStatus="+toStatus+"&fromUser="+fromUser+"&toUser="+toUser+"&ownRideId="+rideId,
+    	 +"&toStatus="+toStatus+"&fromUser="+fromUser+"&toUser="+toUser+"&topicId="+topicId,
  	    		false);
  	    xmlhttp.send();
  	    window.location.reload();
@@ -131,7 +131,7 @@
         var fromStatus = event.currentTarget.parentElement.getAttribute("fromStatus");
         var toStatus = 2;
         xmlhttp.open("GET","/TicketSchedule/servlet/StatusService?fromStatus="+fromStatus
-           	 +"&toStatus="+toStatus+"&fromUser="+fromUser+"&toUser="+toUser+"&ownRideId="+rideId,
+           	 +"&toStatus="+toStatus+"&fromUser="+fromUser+"&toUser="+toUser+"&topicId="+topicId,
         	    		false);
 	    xmlhttp.send();
 	    window.location.reload();
@@ -156,7 +156,7 @@
         var fromStatus = event.currentTarget.parentElement.getAttribute("fromStatus");
         var toStatus = 0;
         xmlhttp.open("GET","/TicketSchedule/servlet/StatusService?fromStatus="+fromStatus
-           	 +"&toStatus="+toStatus+"&fromUser="+fromUser+"&toUser="+toUser+"&ownRideId="+rideId,
+           	 +"&toStatus="+toStatus+"&fromUser="+fromUser+"&toUser="+toUser+"&topicId="+topicId,
         	    		false);
 	    xmlhttp.send();
 	    window.location.reload();
@@ -166,15 +166,15 @@
 </script>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>MessageCenter</title>
+<title>RideCenter</title>
 
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
-<link href="/TicketSchedule/CSS/messagecenter.css" type="text/css" rel="stylesheet">
+<link href="/TicketSchedule/CSS/ridecenter.css" type="text/css" rel="stylesheet">
 
 </head>
 <body onload="initialize()">
 
-<div id="MessageCenter">
+<div id="RideCenter">
 	<div id="header_wrap">
 		<div id="logo_wrap">
 			<div id="logo">
@@ -312,7 +312,7 @@
 					<button type="submit" id="comment">comment</button>	
 					<input class="hidden" name="fromId" id="fromId" value=<%=user.get_uid() %>>
 					<input class="hidden" name="toId" id="toId" value=<%=topicInfo.ownerRide.get_ownerId() %>>
-					<input class="hidden" name="rideId" id="rideId" value=<%=topicInfo.ownerRide._rideInfo.recordId %>>
+					<input class="hidden" name="topicId" id="topicId" value=<%=topicInfo.get_topicId()%>>
 			        <input class="hidden" name="method" value="create">
 				</form>
 			</div>

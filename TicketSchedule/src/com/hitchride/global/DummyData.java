@@ -51,10 +51,11 @@ public class DummyData {
 		Random rnd = new Random();
 		for (int i=0;i<numofMessages;i++)
 		{
+			/*
 			Message msg = new Message("This is for test. I want to join your ride"
 									,Environment.getEnv().getUser(rnd.nextInt(50))
 									,Environment.getEnv().getUser(rnd.nextInt(50))
-									,AllRides.getRides().getOwnerRide(838)
+									,AllTopics.getTopics().get_topic(838)
 					);
 			_dummyMessage.put(messageCount, msg);
 			messageCount++;
@@ -64,11 +65,12 @@ public class DummyData {
 			msg = new Message(rnd.nextInt(4),rnd.nextInt(4)
 					,Environment.getEnv().getUser(rnd.nextInt(50))
 					,Environment.getEnv().getUser(rnd.nextInt(50))
-					,AllRides.getRides().getOwnerRide(838)
+					,AllTopics.getTopics().get_topic(838)
 					);
 			_dummyMessage.put(messageCount, msg);
 			messageCount++;
 			System.out.println("Msg "+ messageCount + ": initialized.");
+			*/
 		}
 	}
 
