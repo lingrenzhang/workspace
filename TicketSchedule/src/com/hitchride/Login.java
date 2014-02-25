@@ -63,15 +63,19 @@ public class Login extends HttpServlet {
 				{
 					
 					session.setAttribute("IsLogin", "true");
-					User user = new User();
+
+					/*
 					user.set_name(rs.getString("givenname"));
 					user.set_uid(rs.getInt("userid"));
 					user.set_avatarID(rs.getString("avatarID"));
 					user.set_userLevel(rs.getString("userLevel"));
 					user.set_emailAddress(rs.getString("emailAddress"));
 					session.setAttribute("user", user);
+					*/
 
 					int UID=rs.getInt("userID");
+					User user = (User) Environment.getEnv().getUser(UID);
+					session.setAttribute("user", user);
 					Environment.getEnv().addActiveUser(UID);
 					
 					request.getSession().setMaxInactiveInterval(60*120);

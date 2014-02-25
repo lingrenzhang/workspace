@@ -58,6 +58,10 @@ public class OwnerRideInfo extends RideInfo implements RideStatusChange{
     }
     
     public int get_ownerId() {
+    	if (_ownerId==0)
+    	{
+    		this._ownerId = this._rideInfo.get_user().get_uid();
+    	}
 		return _ownerId;
 	}
 

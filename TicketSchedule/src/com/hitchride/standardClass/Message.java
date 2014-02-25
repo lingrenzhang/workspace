@@ -100,7 +100,74 @@ public class Message implements MessageInfo,PersistentStorage{
 	}
 	
 
+	public String getHTMLMessageforJS()
+	{
+		StringBuilder result = new StringBuilder();
+		if (isSystemMessage()){
+			result.append("<span class=\\\"time\\\">");
+			result.append(this.getMessageGenerateDate().toString());
+			result.append("</span><br>");
+			result.append("<span class=\\\"message_content\\\">");
+			result.append(this.getMessageContent());
+			result.append("</span><br>");
+		}else{
+			result.append("<strong>");
+		    result.append("<a href=\\\"#userinfo\\\" class=\\\"auther\\\">");
+		    result.append(this.getFrom().get_name()+" ");
+		    result.append("</a></strong>");
+		    result.append("<span>comments on ");
+	        result.append(this.getMessageGenerateDate().toString());
+	        result.append("</span><br>");
+	        result.append("<span class=\\\"message_content\\\">");
+	        result.append(this.getMessageContentforJS());
+            result.append("</span>");
+            result.append("<br>");
+		}
+		return result.toString();
+	}
 	
+	public String getHTMLMessage()
+	{
+		StringBuilder result = new StringBuilder();
+		if (isSystemMessage()){
+			result.append("<span class=\"time\">");
+			result.append(this.getMessageGenerateDate().toString());
+			result.append("</span><br>");
+			result.append("<span class=\"message_content\">");
+			result.append(this.getMessageContent());
+			result.append("</span><br>");
+		}else{
+			result.append("<strong>");
+		    result.append("<a href=\"#userinfo\" class=\"auther\">");
+		    result.append(this.getFrom().get_name()+" ");
+		    result.append("</a></strong>");
+		    result.append("<span>comments on ");
+	        result.append(this.getMessageGenerateDate().toString());
+	        result.append("</span><br>");
+	        result.append("<span class=\"message_content\">");
+	        result.append(this.getMessageContent());
+            result.append("</span>");
+            result.append("<br>");
+		}
+		
+		return result.toString();
+	}
+	public String getCompleteMessage()
+	{
+		StringBuilder result = new StringBuilder();
+		if (isSystemMessage())
+			{ result.append("System message at ");}
+		else{ result.append(getFrom().get_name()+" says at ");}
+		result.append(getMessageGenerateDate()+"\r\n");
+		result.append(getMessageContent()+"\r\n");
+		return result.toString();
+	}
+	
+	public String getMessageContentforJS()
+	{
+		String message =_messageContent.replace("\r\n", "<br>");
+		return message;
+	}
 	
 	@Override
 	public String getMessageContent() {

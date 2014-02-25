@@ -4,6 +4,8 @@
 <html>
 
 <%@ page import="com.hitchride.standardClass.User"%>
+<%@ page import="com.hitchride.standardClass.Message"%>
+<%@ page import="java.util.Iterator"%>
 <%
     User user = (User) request.getSession().getAttribute("user");
 %>
@@ -90,12 +92,15 @@
 	  		+	 "<li><a href=\"javascript:getHistory()\">History</a></li>"
 			+	 "<li><a href=\"javascript:getProfile()\">Profile</a></li>"
 			+"</ul>";
- 		var string = "";
- 		string = "<div class=\"panel-heading\">Your message</div>"
+ 		var content = "";
+ 		content = "<div class=\"panel-heading\">Your message</div>"
 			 + "<div class=\"panel-body\">";
-	    string = string + "123";
-	    string = string+"</div></div>";
-		document.getElementById("panel-1").innerHTML = string;
+	    <%for( Iterator<Message> mesI = user.message.iterator();mesI.hasNext();){ %>
+	    content = content + "<%= mesI.next().getHTMLMessageforJS()%>";
+	    <%}%>
+	    
+	    content = content+"</div></div>";
+		document.getElementById("panel-1").innerHTML = content;
 		document.getElementById("panel-2").innerHTML = "";
 		document.getElementById("panel-3").innerHTML = "";
 		

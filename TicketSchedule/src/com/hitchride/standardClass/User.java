@@ -13,7 +13,7 @@ public class User implements RideListener,UserInfo{
 	private String _emailAddress;
 	
 	public Vector<RideInfo> rides= new Vector<RideInfo>();
-	public Vector<Message> message; //Load the message in memory. 
+	public Vector<Message> message = new Vector<Message>();; //Load the message in memory. 
 	//Switch to message unique ID when persistent storage involved.
 	public int numofrides;
 	public int numofMessage;
@@ -29,6 +29,7 @@ public class User implements RideListener,UserInfo{
 		this.set_name(user.get_name());
 		this.set_avatarID(user.get_avatarID());
 		this.set_emailAddress(user.get_avatarID());
+
 	}
 	
 	@Override
