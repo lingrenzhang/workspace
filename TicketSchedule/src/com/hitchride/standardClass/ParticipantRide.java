@@ -14,7 +14,8 @@ public class ParticipantRide extends RideInfo{
     					 //3 for owner commit -> 0,1,4 (drive by participant, log)
                          //4 for participant Confirm -> (Deal done.)
 	public ParticipantRide(RideInfo rideinfo) {
-		this._rideinfo = rideinfo;
+		super(rideinfo);
+		this._rideinfo = rideinfo; //Double copy, finally more one.
 		this._pid = rideinfo.recordId;
 		this.set_Match(new MatchScore());
 		set_status(0);

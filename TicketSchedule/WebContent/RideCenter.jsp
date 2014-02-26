@@ -62,8 +62,7 @@
 	    xmlhttp.open("GET","/TicketSchedule/servlet/StatusService?fromStatus=0&toStatus=1&fromUser="+fromUser+"&toUser="+toUser+"&topicId="+topicId,
 	    		false);
 	    xmlhttp.send();
-	    document.getElementById("comment_wrapper").setAttribute("class", "comment_wrapper");
-	    document.getElementById("user_operation").innerHTML = "<div>Waiting owner accept</div>";
+	    window.location.reload();
     }
   	
     

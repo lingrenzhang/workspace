@@ -53,8 +53,9 @@ public class OwnerRideInfo extends RideInfo implements RideStatusChange{
 	
     public OwnerRideInfo(RideInfo rideInfo) throws SQLException
     {
+    	super(rideInfo);
     	this._rideInfo = rideInfo;
-    	//this._ownerId = rideInfo.get_user().get_uid();
+    	this._ownerId = rideInfo.get_user().get_uid();
     }
     
     public int get_ownerId() {

@@ -60,6 +60,8 @@ public class StatusService extends HttpServlet {
 				pride.set_assoOwnerRideId(topic.get_topicId());
 				pride.set_status(1);
 				topic._requestPride.add(pride);
+				//Global status change
+				DummyData.getDummyEnv()._partRides.put(pride._pid, pride);
 		    	break;
 			case 10:
 				for (Iterator<ParticipantRide> prideI=topic._requestPride.iterator(); prideI.hasNext();)
@@ -73,6 +75,7 @@ public class StatusService extends HttpServlet {
 				pride.set_assoOwnerRideId(-1);
 				pride.set_status(0);
 				topic._requestPride.remove(pride);
+				DummyData.getDummyEnv()._partRides.remove(pride.recordId);
 				break;
 			case 12:
 				for (Iterator<ParticipantRide> prideI=topic._requestPride.iterator(); prideI.hasNext();)
@@ -110,6 +113,8 @@ public class StatusService extends HttpServlet {
 				pride.set_assoOwnerRideId(-1);
 				pride.set_status(0);
 				topic.parRides.remove(pride);
+				
+				DummyData.getDummyEnv()._partRides.remove(pride.recordId);
 				break;
 			case 21:
 				for (Iterator<ParticipantRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
@@ -144,6 +149,7 @@ public class StatusService extends HttpServlet {
 				pride.set_assoOwnerRideId(-1);
 				pride.set_status(0);
 				topic.parRides.remove(pride);
+				DummyData.getDummyEnv()._partRides.remove(pride.recordId);
 				break;
 			case 32:
 				for (Iterator<ParticipantRide> prideI=topic.parRides.iterator(); prideI.hasNext();)

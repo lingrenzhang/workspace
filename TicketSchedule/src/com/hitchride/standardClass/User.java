@@ -13,7 +13,7 @@ public class User implements RideListener,UserInfo{
 	private String _emailAddress;
 	
 	public Vector<RideInfo> rides= new Vector<RideInfo>();
-	public Vector<Message> message = new Vector<Message>();; //Load the message in memory. 
+	public Vector<Message> message = new Vector<Message>(); //Load the message in memory. 
 	//Switch to message unique ID when persistent storage involved.
 	public int numofrides;
 	public int numofMessage;
@@ -88,5 +88,26 @@ public class User implements RideListener,UserInfo{
 		
 	}
 	
+	public String getUserWrapper()
+	{
+		StringBuilder result = new StringBuilder(300);
+		result.append("<div class=\"userpic\">");
+		result.append("<div class=\"username\">"+this.get_name()+"</div>");
+		result.append("<img src=\"/TicketSchedule/UserProfile/"+this.get_avatarID()+"\" alt=\"Profile Picture\"></img>");
+		result.append("<span class=\"passenger\"></span>");
+		result.append("</div>");
+		result.append("<div id=\"user_info\">");
+		result.append("Welcome "+ this.get_name());
+		result.append("</div>");
+        result.append("<div id=\"message_info\">");
+        result.append("<a href=\"/TicketSchedule/UserCenter.jsp\">You have "+this.numofnewMessage + " new messages</a>");
+        result.append("</div>");
+        result.append("<div id=\"user_level\">");
+        result.append("Level: "+ this.get_userLevel());
+        result.append("</div>");
+
+
+		return result.toString();
 	
+	}
 }

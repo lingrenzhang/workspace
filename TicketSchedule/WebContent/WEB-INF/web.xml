@@ -149,4 +149,14 @@
     <servlet-name>StatusService</servlet-name>
     <url-pattern>/servlet/StatusService</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UserCenter</display-name>
+    <servlet-name>UserCenter</servlet-name>
+    <servlet-class>com.hitchride.UserCenter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserCenter</servlet-name>
+    <url-pattern>/servlet/UserCenter</url-pattern>
+  </servlet-mapping>
 </web-app>

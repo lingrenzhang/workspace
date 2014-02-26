@@ -107,5 +107,4 @@ public class Topic {
 	}
 	
 	//TO DO: Update persistent storage if found status flag is 1 in finalizer.
-	
 }

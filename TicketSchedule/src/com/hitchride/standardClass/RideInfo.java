@@ -172,6 +172,23 @@ public class RideInfo{
     	return null;
     }
 
+    
+    public String getGeoHTML()
+    {
+    	StringBuilder result = new StringBuilder();
+    	result.append("<div class=\"geo\"> From: ");
+    	result.append(origLoc.get_formatedAddr()+"<br>");
+    	result.append("To: "+destLoc.get_formatedAddr()+"</div>");
+    	return result.toString();
+    }
+    public String getScheduleHTML()
+    {
+    	StringBuilder result = new StringBuilder();
+    	result.append("<div class=\"schedule\"> ");
+    	result.append(schedule.getSchedule(true));
+    	result.append("</div>");
+    	return result.toString();
+    }
 }
 
 

@@ -296,21 +296,7 @@ window.onscroll = function(){
 	</div>
 	
 	<div id="user_info_wrap">
-
-		<div class="userpic">
-				<div class="username"><%=user.get_name() %></div>
-				<img src=<%="/TicketSchedule/UserProfile/"+user.get_avatarID() %> alt="Profile Picture"></img>
-				<span class="passenger"></span>
-		</div>
-		<div id="user_info">
-			Welcome <%= user.get_name() %> 
-		</div>
-		<div id="message_info">
-		    <a href = messages>You have 8 new messages</a>
-		</div>
-		<div id="user_level">
-			Level: <%= user.get_userLevel() %>
-		</div>
+		<%=user.getUserWrapper() %>
 	</div>
 </div>
 <div id="content_wrapper">

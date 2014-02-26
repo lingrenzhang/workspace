@@ -206,6 +206,7 @@ public class Search extends HttpServlet {
 			User user = (User) request.getSession().getAttribute("user");
 			boolean roundtrip = true;
 			boolean userType = request.getParameter("who").equals("offer");
+			boolean isCommute = request.getParameter("commuteType").equals("commute");
 			int dayOfWeek = 1234;
 			String detourFactor = "0.2";
 			String forwardTime = request.getParameter("there_time_0");
@@ -306,6 +307,7 @@ public class Search extends HttpServlet {
 			ride.destLoc=dest;
 			
 			Schedule schedule= new Schedule();
+			schedule.set_isCommute(isCommute);
 			schedule.set_isRoundTrip(roundtrip);
 			schedule.set_dayOfWeek(dayOfWeek);
 			schedule.forwardTime=myArgs.forwardTime;

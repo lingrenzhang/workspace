@@ -34,6 +34,23 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="./bootstrap/js/bootstrap.js"></script>
  <script>
+ 	function loadContent(url)
+ 	{
+ 		var xmlhttp;
+ 	    if (window.XMLHttpRequest)
+ 	    {// code for IE7+, Firefox, Chrome, Opera, Safari
+ 	      	xmlhttp=new XMLHttpRequest();
+ 	    }
+ 	    else
+ 	    {// code for IE6, IE5
+ 	      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+ 	    }
+ 		xmlhttp.open("GET",url,false);
+ 		xmlhttp.send();
+ 		return xmlhttp.responseText;
+ 	}
+ 	 	
+ 	
  	function getTopics()
  	{
 
@@ -45,43 +62,18 @@
 			+	 "<li><a href=\"javascript:getProfile()\">Profile</a></li>"
 			+"</ul>";
 			
-		var content1 = "";
-		content1=content1 
-		 + "<div class=\"panel-heading\">Topic you own</div>"
-		 + "<div class=\"panel-body\">"
-		 +   "<div class=\"ride_wrapper\">"
-		 +   	"<div class = \"geo\">"
-		 +   		"From place:abcd<br>"
-		 +   		"To place: efgh"
-		 +   	"</div>"
-		 +   	"<div class = \"schedule\">"
-		 +   	"	Date: Mon, Thu<br>"
-		 +   	"	Time: 10:00-11:00 18:00-19:00"
-		 +   	"</div>"
-		 +   	"<div class = \"people\">"
-		 +			
-		 +   	"</div>"
-		 +   "</div>"
-		 + "</div>";
-	 	document.getElementById("panel-1").innerHTML = content1;
+		var content1 = loadContent("/TicketSchedule/servlet/UserCenter?content=topics&topicType=own");
+		document.getElementById("panel-1").innerHTML = content1;
 		
-	 	var content2="";
-	 	content2 = content2 +
-		  "<div class=\"panel-heading\">Topic you participate"
-		  +"</div>"
-		  +"<div class=\"panel-body\">"
-		  +"</div>";
+	 	var content2 = loadContent("/TicketSchedule/servlet/UserCenter?content=topics&topicType=participate");
 		document.getElementById("panel-2").innerHTML = content2;
 		
-		var content3="";
-		content3=content3 +
-		  "<div class=\"panel-heading\">Your free rides"
-		  +"</div>"
-		  +"<div class=\"panel-body\">"
-		  +"</div>";
+		var content3=loadContent("/TicketSchedule/servlet/UserCenter?content=topics&topicType=free");
 		document.getElementById("panel-3").innerHTML = content3;
 
  	}
+ 	
+ 	
  	function getMessages()
  	{
 
@@ -92,17 +84,12 @@
 	  		+	 "<li><a href=\"javascript:getHistory()\">History</a></li>"
 			+	 "<li><a href=\"javascript:getProfile()\">Profile</a></li>"
 			+"</ul>";
- 		var content = "";
- 		content = "<div class=\"panel-heading\">Your message</div>"
-			 + "<div class=\"panel-body\">";
-	    <%for( Iterator<Message> mesI = user.message.iterator();mesI.hasNext();){ %>
-	    content = content + "<%= mesI.next().getHTMLMessageforJS()%>";
-	    <%}%>
+ 		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=messages");		
 	    
-	    content = content+"</div></div>";
 		document.getElementById("panel-1").innerHTML = content;
 		document.getElementById("panel-2").innerHTML = "";
 		document.getElementById("panel-3").innerHTML = "";
+
 		
  	}
  	function getHistory()
