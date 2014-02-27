@@ -271,7 +271,7 @@
 						</span>
 					</h3>
 					<h4>
-						From: <%=topicInfo.ownerRide._rideInfo.origLoc._addr+", "+topicInfo.ownerRide._rideInfo.origLoc._city%>
+						From: <%=topicInfo.ownerRide._rideInfo.origLoc._addr+", "+topicInfo.ownerRide._rideInfo.origLoc._city%><br>
 						To: <%=topicInfo.ownerRide._rideInfo.origLoc._addr+ ", "+topicInfo.ownerRide._rideInfo.origLoc._city%>
 					</h4>
 					<h4>

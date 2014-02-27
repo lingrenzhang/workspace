@@ -119,7 +119,7 @@
     
     
 </head>
-<body>
+<body onload="getTopics()">
 	
 <div id="UserCenter">
 	<div id="header_wrap">
@@ -132,8 +132,8 @@
 			  <div class="navbar navbar-default">
 			    <ul class="nav navbar-nav">
 			      <li class="active"><a href="#">UserCenter</a></li>
-			      <li><a href="#">PostRide</a></li>
-			      <li><a href="#">RideCenter</a></li>
+			      <li><a href="/TicketSchedule/Postride.jsp">PostRide</a></li>
+			      <li><a href="/TicketSchedule/Search.jsp">RideCenter</a></li>
 			    </ul>
 			  </div>
 			</nav>
@@ -161,40 +161,10 @@
 		</div>
 		<div class="inter_content_wrapper">
 		    <div class="panel panel-default" id="panel-1">
-			  <div class="panel-heading">Topic you own</div>
-			  <div class="panel-body">
-			    <div class="ride_wrapper">
-			    	<div class = "geo">
-			    		From place:abcd<br>
-			    		To place: efgh
-			    	</div>
-			    	<div class = "schedule">
-			    		Date: Mon, Thu<br>
-			    		Time: 10:00-11:00 18:00-19:00
-			    	</div>
-			    	<div class = "people">
-						<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
-			    		<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
-			    		<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
-			    		<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
-			    	</div>
-			    </div>
-			  </div>
 			</div>
-			
 			<div class="panel panel-default" id="panel-2">
-			  <div class="panel-heading">Topic you participate
-			  </div>
-			  <div class="panel-body">
-
-			  </div>
 			</div>
-			
 			<div class="panel panel-default" id="panel-3">
-			  <div class="panel-heading">Your free rides
-			  </div>
-			  <div class="panel-body">
-			  </div>
 			</div>
 		</div>
 	</div>

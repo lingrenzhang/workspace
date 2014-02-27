@@ -52,6 +52,7 @@ public class AllRides {
 
 				OwnerRideInfo ownerRide = new OwnerRideInfo(ride);
 				_topicRides.put(ride.recordId,ownerRide);
+				ownerRide.get_user().rides.add(ownerRide);
                 _availRidesKey=ride.recordId+1;
 				i++;
 				//System.out.println("Ride "+ ride.recordId + " initialized");

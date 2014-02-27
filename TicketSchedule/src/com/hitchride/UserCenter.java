@@ -65,9 +65,11 @@ public class UserCenter extends HttpServlet {
 					OwnerRideInfo ownerRide = AllRides.getRides().getOwnerRide(rideI.next().recordId);
 					if (ownerRide!=null)
 					{
+						value.append("<a href=\"/TicketSchedule/servlet/RideCenter?topicId="+ownerRide.recordId+"\">");
 						value.append("<div class=\"ride_wrapper\">");	
 						value.append(ownerRide.getGeoHTML());
 						value.append(ownerRide.getScheduleHTML());
+						value.append("</div></a>");
 						Topic topic= AllTopics.getTopics().get_topic(ownerRide.recordId);
 						
 					}
@@ -84,9 +86,11 @@ public class UserCenter extends HttpServlet {
 					ParticipantRide parRide = DummyData.getDummyEnv().get_participantRide(rideI.next().recordId);
 					if (parRide!=null)
 					{
+						value.append("<a href=\"/TicketSchedule/servlet/RideCenter?topicId="+parRide.get_assoOwnerRideId()+"\">");
 						value.append("<div class=\"ride_wrapper\">");	
 						value.append(parRide.getGeoHTML());
 						value.append(parRide.getScheduleHTML());
+						value.append("</div></a>");
 						Topic topic= AllTopics.getTopics().get_topic(parRide.get_assoOwnerRideId());
 					}
 				}
@@ -104,9 +108,12 @@ public class UserCenter extends HttpServlet {
 					OwnerRideInfo ownerRide = AllRides.getRides().getOwnerRide(ride.recordId);
 					if (parRide==null && ownerRide==null)
 					{
+						request.getSession().setAttribute("actRide", ride);
+						value.append("<a href=\"/TicketSchedule/servlet/search.jsp\">");
 						value.append("<div class=\"ride_wrapper\">");	
 						value.append(ride.getGeoHTML());
 						value.append(ride.getScheduleHTML());
+						value.append("</div></a>");
 					}
 				}
 				response.getWriter().write(value.toString());

@@ -50,7 +50,14 @@ public class Topic {
 				ParticipantRide pRide = DummyData.getDummyEnv().get_participantRide(key);
 				if (pRide.get_assoOwnerRideId()==ownerRide._rideInfo.recordId)
 				{
-					parRides.add(pRide);
+					if (pRide.get_status()==1)
+					{
+						_requestPride.add(pRide);
+					}
+					else
+					{
+						parRides.add(pRide);
+					}
 				}
 			}
 			

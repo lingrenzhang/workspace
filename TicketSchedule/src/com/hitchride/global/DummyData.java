@@ -42,7 +42,7 @@ public class DummyData {
 		initializeGeo(10);
 		initializeUser(); 
 		initializeOwnerRide();
-		initializeParticipantRide(5);
+		initializeParticipantRide(3);
 		initializeMessage(6);
 	}
 	
@@ -78,23 +78,21 @@ public class DummyData {
 		_partRides.clear();
 		Random rnd = new Random();
 		//Use OwnerRide as fakeParticipantRide
+		/*
 		for (int i=0;i<numofRides;i++)
 		{
+			
 			int key = rnd.nextInt(2000);
 			OwnerRideInfo ownerRide = AllRides.getRides().getOwnerRide(key);
 			ParticipantRide pRide = new ParticipantRide(ownerRide._rideInfo);
 			pRide.set_assoOwnerRideId(838);
 			pRide.set_status(rnd.nextInt(4)+1);
+			pRide.get_user().rides.add(pRide);
 			_partRides.put(key,pRide);
+			AllRides.getRides()._topicRides.remove(key);
 			
-			i++;
-			key = rnd.nextInt(2000);
-			ownerRide = AllRides.getRides().getOwnerRide(key);
-			pRide = new ParticipantRide(ownerRide._rideInfo);
-			pRide.set_assoOwnerRideId(1838);
-			_partRides.put(key,pRide);
 		}
-	
+		*/
 	}
 
 	private void initializeOwnerRide() {
