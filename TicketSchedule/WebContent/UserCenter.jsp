@@ -8,6 +8,10 @@
 <%@ page import="java.util.Iterator"%>
 <%
     User user = (User) request.getSession().getAttribute("user");
+    if (user==null)
+    {
+    	user= new User();
+    }
 %>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -34,6 +38,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="./bootstrap/js/bootstrap.js"></script>
  <script>
+ 	var newmessage = <%=user.numofnewMessage%>;
  	function loadContent(url)
  	{
  		var xmlhttp;
@@ -57,7 +62,10 @@
  		document.getElementById("user_nav").innerHTML = 	
  			"<ul class=\"nav nav-pills nav-justified nav-stacked\" id=\"user_nav\">"
   		 	+	 "<li class=\"active\"><a href=\"javascript:getTopics()\">RideTopics</a></li>"
-	  		+	 "<li><a href=\"javascript:getMessages()\">Messages</a></li>"
+	  		+	 "<li><a href=\"javascript:getMessages()\">"
+	  		+    	"<span class=\"badge pull-right\">"+newmessage
+	  		+		"</span>"
+	  		+    "Message</a></li>"
 	  		+	 "<li><a href=\"javascript:getHistory()\">History</a></li>"
 			+	 "<li><a href=\"javascript:getProfile()\">Profile</a></li>"
 			+"</ul>";
@@ -80,7 +88,10 @@
  		document.getElementById("user_nav").innerHTML = 	
  			"<ul class=\"nav nav-pills nav-justified nav-stacked\" id=\"user_nav\">"
   		 	+	 "<li><a href=\"javascript:getTopics()\">RideTopics</a></li>"
-	  		+	 "<li class=\"active\"><a href=\"javascript:getMessages()\">Messages</a></li>"
+	  		+	 "<li class=\"active\"><a href=\"javascript:getMessages()\">"
+	  		+    	"<span class=\"badge pull-right active\">"+"0"
+	  		+		"</span>"
+	  		+    "Message</a></li>"
 	  		+	 "<li><a href=\"javascript:getHistory()\">History</a></li>"
 			+	 "<li><a href=\"javascript:getProfile()\">Profile</a></li>"
 			+"</ul>";
@@ -89,7 +100,7 @@
 		document.getElementById("panel-1").innerHTML = content;
 		document.getElementById("panel-2").innerHTML = "";
 		document.getElementById("panel-3").innerHTML = "";
-
+		newmessage = 0;
 		
  	}
  	function getHistory()
@@ -98,7 +109,10 @@
  		document.getElementById("user_nav").innerHTML = 	
  			"<ul class=\"nav nav-pills nav-justified nav-stacked\" id=\"user_nav\">"
   		 	+	 "<li><a href=\"javascript:getTopics()\">RideTopics</a></li>"
-	  		+	 "<li><a href=\"javascript:getMessages()\">Messages</a></li>"
+	  		+	 "<li><a href=\"javascript:getMessages()\">"
+	  		+    	"<span class=\"badge pull-right\">"+newmessage
+	  		+		"</span>"
+	  		+    "Message</a></li>"
 	  		+	 "<li class=\"active\"><a href=\"javascript:getHistory()\">History</a></li>"
 			+	 "<li><a href=\"javascript:getProfile()\">Profile</a></li>"
 			+"</ul>";
@@ -109,7 +123,10 @@
  		document.getElementById("user_nav").innerHTML = 	
  			"<ul class=\"nav nav-pills nav-justified nav-stacked\" id=\"user_nav\">"
   		 	+	 "<li><a href=\"javascript:getTopics()\">RideTopics</a></li>"
-	  		+	 "<li><a href=\"javascript:getMessages()\">Messages</a></li>"
+	  		+	 "<li><a href=\"javascript:getMessages()\">"
+	  		+    	"<span class=\"badge pull-right\">"+newmessage
+	  		+		"</span>"
+	  		+    "Message</a></li>"
 	  		+	 "<li><a href=\"javascript:getHistory()\">History</a></li>"
 			+	 "<li class=\"active\"><a href=\"javascript:getProfile()\">Profile</a></li>"
 			+"</ul>";
@@ -133,7 +150,7 @@
 			    <ul class="nav navbar-nav">
 			      <li class="active"><a href="#">UserCenter</a></li>
 			      <li><a href="/TicketSchedule/Postride.jsp">PostRide</a></li>
-			      <li><a href="/TicketSchedule/Search.jsp">RideCenter</a></li>
+			      <li><a href="/TicketSchedule/search.jsp">RideCenter</a></li>
 			    </ul>
 			  </div>
 			</nav>
@@ -152,7 +169,12 @@
 				<div class = "user_nav_wrapper">
 				  <ul class="nav nav-pills nav-justified nav-stacked" id="user_nav">
  			  		 <li class="active"><a href="javascript:getTopics()">RideTopics</a></li>
- 			  		 <li><a href="javascript:getMessages()">Messages</a></li>
+ 			  		 <li>
+ 			  		 	<a href="javascript:getMessages()">
+ 			  			 <span class="badge pull-right">42</span>
+ 			  			 Messages
+ 			  			 </a>
+ 			  		 </li>
  			  		 <li><a href="javascript:getHistory()">History</a></li>
  					 <li><a href="javascript:getProfile()">Profile</a></li>
 				 </ul>

@@ -60,43 +60,59 @@ public class Search extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String qs= request.getQueryString();
-		request.getAttribute("oLat");
+		RideInfo actRide = (RideInfo) request.getSession().getAttribute("actRide");
 		rideInfoParameters myArgs = new rideInfoParameters();
-		myArgs.commute = true;
-		myArgs.roundtrip = false;
-		myArgs.userType = false;
-		
-		if (qs==null)
+		if (actRide==null)
 		{
-		// Stanford coordinates
-		myArgs.origLat = 37.42573;
-		myArgs.origLon = -122.166094;
-		
-		// Ranch 99 Cupertino
-		myArgs.destLat = 37.338022;
-		myArgs.destLon = -122.015118;
+			myArgs.commute = true;
+			myArgs.roundtrip = false;
+			myArgs.userType = false;
+
+			// Stanford coordinates
+			myArgs.origLat = 37.42573;
+			myArgs.origLon = -122.166094;
+			
+			// Ranch 99 Cupertino
+			myArgs.destLat = 37.338022;
+			myArgs.destLon = -122.015118;
+			// Time
+			long time_ms = 1000*60*60*8; // 8 o'clock
+			long flex_ms = 1000*60*15; // 15 minutes
+			myArgs.forwardTime = new Time(time_ms);
+			myArgs.forwardFlexibility = new Time(flex_ms);
 		}
 		else
 		{
-			String[] args=qs.split("&");
+			myArgs.userType = actRide.userType;
 			
-			myArgs.origLat = Double.parseDouble(args[2].split("=")[1]); 
-			myArgs.origLon = Double.parseDouble(args[3].split("=")[1]); 
-			myArgs.destLat = Double.parseDouble(args[4].split("=")[1]); 
-			myArgs.destLon = Double.parseDouble(args[5].split("=")[1]); 
+			myArgs.origLat = actRide.origLoc.get_lat();
+			myArgs.origLon = actRide.origLoc.get_lon();
+			myArgs.destLat = actRide.destLoc.get_lat();
+			myArgs.destLon = actRide.destLoc.get_lon();
+			
+			myArgs.commute = actRide.schedule.isCommute();
+			//
+			myArgs.roundtrip = false;
+			//myArgs.roundtrip = actRide.schedule.isRoundTrip();
+			myArgs.forwardTime = actRide.schedule.forwardTime;
+			myArgs.forwardFlexibility = actRide.schedule.forwardFlexibility;
+			
+			if (myArgs.roundtrip)
+			{
+				myArgs.backTime = actRide.schedule.backTime;
+				myArgs.backFlexibility = actRide.schedule.backFlexibility;
+			}
+
 		}
-		// Time
-		long time_ms = 1000*60*60*8; // 8 o'clock
-		long flex_ms = 1000*60*15; // 15 minutes
-		myArgs.forwardTime = new Time(time_ms);
-		myArgs.forwardFlexibility = new Time(flex_ms);
-		
+			
 		List<rideInfoParameters> resultList = new ArrayList<rideInfoParameters>();
 		ScoreCalculator sc = new ScoreCalculator();
 		resultList=sc.filterByCoordinates(myArgs, 20);
 		
 		request.setAttribute("results", resultList);
+		request.setAttribute("orig", actRide.origLoc.get_formatedAddr());
+		request.setAttribute("dest", actRide.destLoc.get_formatedAddr());
+
 		RequestDispatcher rd = request.getRequestDispatcher("../search.jsp");
 		rd.forward(request, response);
 		

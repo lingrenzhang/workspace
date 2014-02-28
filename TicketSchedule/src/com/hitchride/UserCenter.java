@@ -50,6 +50,7 @@ public class UserCenter extends HttpServlet {
 			    value.append(mesI.next().getHTMLMessage());
 			}
 			value.append("</div></div>");
+			user.numofnewMessage = 0;
 			response.getWriter().write(value.toString());
 		}
 		if (content.equalsIgnoreCase("topics"))
@@ -109,7 +110,7 @@ public class UserCenter extends HttpServlet {
 					if (parRide==null && ownerRide==null)
 					{
 						request.getSession().setAttribute("actRide", ride);
-						value.append("<a href=\"/TicketSchedule/servlet/search.jsp\">");
+						value.append("<a href=\"/TicketSchedule/servlet/Search\">");
 						value.append("<div class=\"ride_wrapper\">");	
 						value.append(ride.getGeoHTML());
 						value.append(ride.getScheduleHTML());
@@ -119,9 +120,7 @@ public class UserCenter extends HttpServlet {
 				response.getWriter().write(value.toString());
 			}
 		}
-		
-		
-		
+	
 	}
 
 	/**

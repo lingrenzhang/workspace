@@ -183,28 +183,38 @@
 	<div id="content_wrapper">
 
 		<div class="user_wrapper">
-		    <%if (!isOwnerMode && !alreadyPart) 
+		    <%if (!isOwnerMode) 
 	    	{%>
-			<div class="user_info" id="from">
-				<div class="userpic">
-						<div class="username"><%=user.get_name() %></div>
-						<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
-						<span class="passenger"></span>
+				<div class="user_info" id="from">
+				  <a href = "/TicketSchedule/UserCenter.jsp">
+					<div class="userpic">
+							<div class="username"><%=user.get_name() %></div>
+							<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
+							<span class="passenger"></span>
+					</div>
+				</a>
+					<%if (!alreadyPart){%>
+					<div class="user_operation" id="user_operation">
+						<button type=button onclick="join()">Join</button>
+					</div>
+					<%}else{ 
+						ParticipantRide pRide = topicInfo.getpRideByuserId(user.get_uid());
+					%>
+					<%= pRide.get_status_user_control() %>
+					<%} %>
+					<div class="user_match">
+						<div class="match_Loc" style="width : <%=score.getLocationMatching() %>px "></div>
+						<div class="match_Sch" style="width : <%=score.getSchedulingMatching() %>px "></div>
+						<div class="match_Bar" style="width : <%=score.getBarginMatching() %>px "></div>
+					</div>
 				</div>
-				<div class="user_operation" id="user_operation">
-					<button type=button onclick="join()">Join</button>
-				</div>
-				<div class="user_match">
-					<div class="match_Loc" style="width : <%=score.getLocationMatching() %>px "></div>
-					<div class="match_Sch" style="width : <%=score.getSchedulingMatching() %>px "></div>
-					<div class="match_Bar" style="width : <%=score.getBarginMatching() %>px "></div>
-				</div>
-			</div>
+
 			<%}%>
 			<% List<ParticipantRide> parRides= topicInfo._requestPride; 
 			   for (Iterator<ParticipantRide> parRideI = parRides.iterator(); parRideI.hasNext();) 
 			   {
 				   ParticipantRide parRide = parRideI.next();
+				   if (parRide.get_userId()!=user.get_uid()){
 			 %> 
 				<div class="user_info" id="to">
 					<div class="userpic">
@@ -213,11 +223,7 @@
 						<span class="passenger"></span>
 					</div>
 					<div class="user_status">
-						<%if (!isOwnerMode){ %>
-							<%= (parRide.userId == user.get_uid())? parRide.get_status_user_control() : parRide.get_status_message()  %>
-					    <%}else {%>
-					        <%= parRide.get_status_owner_control()%>
-					    <%} %>
+						<%= (isOwnerMode)? parRide.get_status_owner_control() : parRide.get_status_message() %>
 					</div>
 					<div class="user_match">
 						<div class="match_Loc" style="width : <%=parRide.get_Match().getLocationMatching() %>px "></div>
@@ -225,13 +231,14 @@
 						<div class="match_Bar" style="width : <%=parRide.get_Match().getBarginMatching() %>px "></div>
 					</div>
 				</div>
-			<%
+			<%		}
 			   }
 			%>
 			<% parRides= topicInfo.parRides; 
 			   for (Iterator<ParticipantRide> parRideI = parRides.iterator(); parRideI.hasNext();) 
 			   {
 				   ParticipantRide parRide = parRideI.next();
+				   if (parRide.get_userId()!=user.get_uid()){
 			 %> 
 				<div class="user_info" id="to">
 					<div class="userpic">
@@ -240,11 +247,7 @@
 						<span class="passenger"></span>
 					</div>
 					<div class="user_status">
-						<%if (!isOwnerMode){ %>
-							<%= (parRide.userId == user.get_uid())? parRide.get_status_user_control() : parRide.get_status_message()  %>
-					    <%}else {%>
-					        <%= parRide.get_status_owner_control()%>
-					    <%} %>
+						<%= (isOwnerMode)? parRide.get_status_owner_control() : parRide.get_status_message() %>
 					</div>
 					<div class="user_match">
 						<div class="match_Loc" style="width : <%=parRide.get_Match().getLocationMatching() %>px "></div>
@@ -253,11 +256,13 @@
 					</div>
 				</div>
 			<%
+				   }
 			   }
 			%>
 		</div>
 
 		<div class="discussion_timeline_wrapper">
+		    <%= isOwnerMode? "<a href=\"/TicketSchedule/UserCenter.jsp\">" : " "  %>
 	        <div class="entry">
 				<div class="userpic">
 					<div class="username"><%=topicInfo.owner.get_name()%></div>
@@ -279,6 +284,7 @@
 					</h4>
 				</div>
 			</div>
+			<%= isOwnerMode? "</a>" : "" %>
 			<div class="discussion_wrapper">
 				<% for(Iterator<Message> mI=topicInfo.messages.iterator();mI.hasNext();)
 				  { Message message =mI.next();

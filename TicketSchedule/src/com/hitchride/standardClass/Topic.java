@@ -113,5 +113,26 @@ public class Topic {
 		this._topicId = _topicId;
 	}
 	
+	public ParticipantRide getpRideByuserId(int userId)
+	{
+		ParticipantRide result;
+		for (Iterator<ParticipantRide> pRideI = _requestPride.iterator(); pRideI.hasNext();)
+		{
+			result = pRideI.next();
+			if (result.get_userId() == userId)
+			{
+				return result;
+			}
+		}
+		for (Iterator<ParticipantRide> pRideI = parRides.iterator(); pRideI.hasNext();)
+		{
+			result = pRideI.next();
+			if (result.get_userId() == userId)
+			{
+				return result;
+			}
+		}
+		return null;
+	}
 	//TO DO: Update persistent storage if found status flag is 1 in finalizer.
 }

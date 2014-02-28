@@ -9,8 +9,8 @@
 	String IsLogin=null;
     IsLogin =(String) request.getSession().getAttribute("IsLogin");
     User user = new User();
-    user.set_name("default");
-    user.set_emailAddress("default");
+    user.set_name("guest");
+    user.set_emailAddress("guest");
     user.set_avatarID("default.jpg");
     user.set_userLevel(0);
 
