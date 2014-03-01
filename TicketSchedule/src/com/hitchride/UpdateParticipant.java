@@ -34,7 +34,7 @@ public class UpdateParticipant extends HttpServlet {
 		{
 			request.getSession().setAttribute("fromLocation", "/TicketSchedule/servlet/RideCenter");
 			request.getSession().setAttribute("queryString", request.getQueryString());
-			request.getSession().setMaxInactiveInterval(60*30);
+			request.getSession().setMaxInactiveInterval(60*120);
 			response.sendRedirect("/TicketSchedule/Login.jsp");
 		}
 		else

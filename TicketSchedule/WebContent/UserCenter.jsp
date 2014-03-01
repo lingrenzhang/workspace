@@ -70,15 +70,9 @@
 			+	 "<li><a href=\"javascript:getProfile()\">Profile</a></li>"
 			+"</ul>";
 			
-		var content1 = loadContent("/TicketSchedule/servlet/UserCenter?content=topics&topicType=own");
-		document.getElementById("panel-1").innerHTML = content1;
+		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=topics");
+		document.getElementById("innerContent").innerHTML = content;
 		
-	 	var content2 = loadContent("/TicketSchedule/servlet/UserCenter?content=topics&topicType=participate");
-		document.getElementById("panel-2").innerHTML = content2;
-		
-		var content3=loadContent("/TicketSchedule/servlet/UserCenter?content=topics&topicType=free");
-		document.getElementById("panel-3").innerHTML = content3;
-
  	}
  	
  	
@@ -97,9 +91,7 @@
 			+"</ul>";
  		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=messages");		
 	    
-		document.getElementById("panel-1").innerHTML = content;
-		document.getElementById("panel-2").innerHTML = "";
-		document.getElementById("panel-3").innerHTML = "";
+		document.getElementById("innerContent").innerHTML = content;
 		newmessage = 0;
 		
  	}
@@ -168,26 +160,11 @@
 			</div>
 				<div class = "user_nav_wrapper">
 				  <ul class="nav nav-pills nav-justified nav-stacked" id="user_nav">
- 			  		 <li class="active"><a href="javascript:getTopics()">RideTopics</a></li>
- 			  		 <li>
- 			  		 	<a href="javascript:getMessages()">
- 			  			 <span class="badge pull-right">42</span>
- 			  			 Messages
- 			  			 </a>
- 			  		 </li>
- 			  		 <li><a href="javascript:getHistory()">History</a></li>
- 					 <li><a href="javascript:getProfile()">Profile</a></li>
-				 </ul>
+ 				 </ul>
 				</div>
 			</div>
 		</div>
-		<div class="inter_content_wrapper">
-		    <div class="panel panel-default" id="panel-1">
-			</div>
-			<div class="panel panel-default" id="panel-2">
-			</div>
-			<div class="panel panel-default" id="panel-3">
-			</div>
+		<div class="inner_content_wrapper" id="innerContent">
 		</div>
 	</div>
 </div>
