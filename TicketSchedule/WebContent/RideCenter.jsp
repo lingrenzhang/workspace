@@ -44,7 +44,6 @@
 		}
 		fromId = document.getElementById("fromId").getAttribute("value");
 		toId = document.getElementById("toId").getAttribute("value");
-		rideId = document.getElementById("rideId").getAttribute("value");
     }
     
     
@@ -179,6 +178,17 @@
 			<div id="logo">
 			</div>
 		</div>
+	</div>
+	<div class="header_nav_wrapper">
+		<nav class="navbar navbar-default" role="navigation">
+		  <div class="navbar navbar-default">
+		    <ul class="nav navbar-nav">
+		      <li><a href="/TicketSchedule/UserCenter.jsp">UserCenter</a></li>
+		      <li class="active"><a href="/TicketSchedule/Postride.jsp">PostRide</a></li>
+		      <li><a href="/TicketSchedule/search.jsp">RideCenter</a></li>
+		    </ul>
+		  </div>
+		</nav>
 	</div>
 	<div id="content_wrapper">
 

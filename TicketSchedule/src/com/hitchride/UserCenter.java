@@ -85,7 +85,7 @@ public class UserCenter extends HttpServlet {
 					}
 					
 				}
-				value.append("</div></div>");
+				value.append("</div>");
 				
 				
 			    value.append("<div class=\"panel panel-default\">");
@@ -105,7 +105,7 @@ public class UserCenter extends HttpServlet {
 						Topic topic= AllTopics.getTopics().get_topic(parRide.get_assoOwnerRideId());
 					}
 				}
-				value.append("</div></div>");
+				value.append("</div>");
 				
 				
 			    value.append("<div class=\"panel panel-default\">");
@@ -126,7 +126,7 @@ public class UserCenter extends HttpServlet {
 						value.append("</div></a>");
 					}
 				}
-				value.append("</div></div>");
+				value.append("</div>");
 				response.getWriter().write(value.toString());
 			}
 		}

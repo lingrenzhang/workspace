@@ -1,0 +1,444 @@
+#search_index #content #head form.search .text_input input[type="text"], 
+#search_routes #content #head form.search .text_input input[type="text"] {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #999999;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3) inset;
+    color: #404040;
+    font-family: inherit;
+    font-size: 13px;
+    height: 29px;
+    line-height: 19px;
+    outline: medium none;
+    padding-left: 27px;
+    width: 322px;
+}
+
+#search_index #content #head form.search .text_input.datetime .slim.datepicker, 
+#search_routes #content #head form.search .text_input.datetime .slim.datepicker {
+    font-size: 13px !important;
+}
+
+#search_index #content #head form.search .text_input.datetime input[type="text"], 
+#search_routes #content #head form.search .text_input.datetime input[type="text"] {
+    width: 69px;
+}
+
+
+#search_index #content #head form.search .commute_input,
+#search_routes #content #head form.search .commute_input
+{
+	float: left;
+}
+
+#search_index #content #head form.search button.confirm, 
+#search_routes #content #head form.search button.confirm {
+	font-size: 17px;
+	padding:0;
+	margin:1px;
+	width: 108px;
+	float: right;
+	/*
+    font-size: 17px;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 108px;
+    */
+}
+
+#search_index #content #head form.search .commute_day,
+#search_routes #content #head form.search .commute_day{
+position:relative;
+float: left;
+margin-top: 5px;
+width: 19px;
+color: #404040;
+height: 22px;
+line-height: 22px;
+font-size: 12px;
+padding: 0 15px;
+border: 1px solid #808080;
+border-right: none;
+white-space: nowrap;
+background-color: #eeeeee;
+background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #e1e1e1));
+background-image: -webkit-linear-gradient(#ffffff,#e1e1e1);
+background-image: -moz-linear-gradient(#ffffff,#e1e1e1);
+background-image: -o-linear-gradient(#ffffff,#e1e1e1);
+background-image: -ms-linear-gradient(#ffffff,#e1e1e1);
+background-image: linear-gradient(#ffffff,#e1e1e1);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#e1e1e1);
+}
+
+#search_index #content #head form.search .commute_day.last
+{
+-webkit-border-radius: 0 4px 4px 0;
+-moz-border-radius: 0 4px 4px 0;
+-ms-border-radius: 0 4px 4px 0;
+-o-border-radius: 0 4px 4px 0;
+border-radius: 0 4px 4px 0;
+border-right: 1px solid #808080;
+}
+
+#search_index #content #head form.search .commute_day.first
+{
+-webkit-border-radius: 4px 0 0 4px;
+-moz-border-radius: 4px 0 0 4px;
+-ms-border-radius: 4px 0 0 4px;
+-o-border-radius: 4px 0 0 4px;
+border-radius: 4px 0 0 4px;
+}
+
+#search_index #content #head form.search .commute_day:hover
+{
+	cursor: hand;
+}
+
+
+#search_index #content #head form.search .text_input .pin, 
+#search_index #content #head form.search .text_input .datetime_icon, 
+#search_routes #content #head form.search .text_input .pin, 
+#search_routes #content #head form.search .text_input .datetime_icon {
+    background-position: center 7px;
+    background-repeat: no-repeat;
+    display: block;
+    height: 28px;
+    left: 7px;
+    position: absolute;
+    top: 1px;
+    width: 16px;
+}
+
+
+#search_index #content #head form.search .text_input .pin.start, 
+#search_routes #content #head form.search .text_input .pin.start {
+    background-image: url(/TicketSchedule/Picture/pin_start.png);
+}
+
+#search_index #content #head form.search .text_input .pin.end, 
+#search_routes #content #head form.search .text_input .pin.end {
+    background-image: url(/TicketSchedule/Picture/pin_end.png);
+}
+
+#search_index #content #head form.search .text_input .datetime_icon, 
+#search_routes #content #head form.search .text_input .datetime_icon {
+    background-image: url("/TicketSchedule/Picture/calendar_input_icon.png");
+    width: 15px;
+}
+
+
+
+
+
+
+/*---------------- result ---------*/
+#search_index #content #results, #search_routes #content #results {
+	width: 640px;
+	float: left;
+}
+
+#search_index #content #results .ride_list, 
+#search_routes #content #results .ride_list {
+	border: 1px solid #a7a7a7;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	-ms-border-radius: 6px;
+	-o-border-radius: 6px;
+	border-radius: 6px;
+	background-color: #fcfcfc;
+}
+
+
+
+#search_index #content #results h3.headline, 
+#search_routes #content #results h3.headline {
+height: 30px;
+color: #777;
+text-shadow: 0 1px 0 #eee;
+line-height: 30px;
+padding: 0 14px;
+font-weight: 500;
+border-bottom: 1px solid #aab0b3;
+background-color: #eee;
+background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eeeeee), color-stop(100%, #d7d7d7));
+background-image: -webkit-linear-gradient(#eeeeee,#d7d7d7);
+background-image: -moz-linear-gradient(#eeeeee,#d7d7d7);
+background-image: -o-linear-gradient(#eeeeee,#d7d7d7);
+background-image: -ms-linear-gradient(#eeeeee,#d7d7d7);
+background-image: linear-gradient(#eeeeee,#d7d7d7);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#eeeeee, endColorstr=#d7d7d7);
+}
+
+
+#search_index #content #results h3.headline em, 
+#search_routes #content #results h3.headline em {
+font-style: normal;
+text-transform: uppercase;
+}
+
+#search_index #content #results h3.headline span, 
+#search_routes #content #results h3.headline span {
+font-weight: 300;
+}
+
+/*-----------action----------*/
+
+#search_index #content #action, 
+#search_routes #content #action {
+border: none;
+margin: 0;
+-webkit-border-radius: 0 0 5px 5px;
+-moz-border-radius: 0 0 5px 5px;
+-ms-border-radius: 0 0 5px 5px;
+-o-border-radius: 0 0 5px 5px;
+border-radius: 0 0 5px 5px;
+}
+
+
+#search_index #content a.post, 
+#search_routes #content a.post {
+border-color: #a7a7a7;
+height: 30px;
+font-size: 16px;
+line-height: 30px;
+padding: 0 25px;
+}
+
+
+#search_index #content #results .page_list, 
+#search_routes #content #results .page_list {
+	font-size: 13px;
+	padding-top: 10px;
+	overflow: hidden;
+}
+
+
+/*--------------- info -----*/
+#search_index #content #info, 
+#search_routes #content #info {
+	width: 270px;
+	margin-left: 20px;
+	float: right;
+}
+
+#search_index #content #info .floatable, 
+#search_routes #content #info .floatable {
+	width: 270px;
+	position: absolute;
+}
+
+#search_index #content #info .floatable .floatwrap.fixed, 
+#search_routes #content #info .floatable .floatwrap.fixed {
+	width: 270px;
+	position: fixed;
+	top: 0;
+	margin-top: 20px;
+}
+
+
+#search_index #content #info .filters, 
+#search_routes #content #info .filters {
+border: 1px solid #a7a7a7;
+-webkit-border-radius: 6px;
+-moz-border-radius: 6px;
+-ms-border-radius: 6px;
+-o-border-radius: 6px;
+border-radius: 6px;
+background-color: #fafafa;
+margin-bottom: 20px;
+}
+
+#search_index #content #info .filters h3, 
+#search_routes #content #info .filters h3 {
+height: 30px;
+color: #777;
+text-shadow: 0 1px 0 #eee;
+line-height: 30px;
+padding: 0 14px;
+font-weight: 500;
+border-bottom: 1px solid #aab0b3;
+background-color: #eee;
+background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eeeeee), color-stop(100%, #d7d7d7));
+background-image: -webkit-linear-gradient(#eeeeee,#d7d7d7);
+background-image: -moz-linear-gradient(#eeeeee,#d7d7d7);
+background-image: -o-linear-gradient(#eeeeee,#d7d7d7);
+background-image: -ms-linear-gradient(#eeeeee,#d7d7d7);
+background-image: linear-gradient(#eeeeee,#d7d7d7);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#eeeeee, endColorstr=#d7d7d7);
+-webkit-border-radius: 6px 6px 0 0;
+-moz-border-radius: 6px 6px 0 0;
+-ms-border-radius: 6px 6px 0 0;
+-o-border-radius: 6px 6px 0 0;
+border-radius: 6px 6px 0 0;
+padding: 0 12px;
+position: relative;
+overflow: visible;
+}
+
+#search_index #content #info .filters h3 .point, 
+#search_routes #content #info .filters h3 .point {
+position: absolute;
+display: block;
+width: 11px;
+height: 17px;
+left: -11px;
+top: 7px;
+background: url(../2/images/panel_header_left_point.png) no-repeat left top;
+}
+
+#search_index #content #info .filters .inner, 
+#search_routes #content #info .filters .inner {
+padding: 7px 0 7px 12px;
+}
+
+#search_index #content #info .filters .label, 
+#search_routes #content #info .filters .label {
+display: block;
+color: #777;
+font-size: 12px;
+}
+
+#search_index #content #info .filters .filterset, 
+#search_routes #content #info .filters .filterset {
+display: inline-block;
+padding-bottom: 3px;
+}
+
+#search_index #content #info .filters .filterset.postsby a.filter, 
+#search_routes #content #info .filters .filterset.postsby a.filter {
+padding: 0 15px;
+}
+
+
+#search_index #content #info .filters .filterset a.filter.active, 
+#search_routes #content #info .filters .filterset a.filter.active {
+color: #29598E;
+-webkit-box-shadow: inset 0 1px 4px rgba(0,0,0,0.4);
+-moz-box-shadow: inset 0 1px 4px rgba(0,0,0,0.4);
+box-shadow: inset 0 1px 4px rgba(0,0,0,0.4);
+background-color: #e7f2f9;
+background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ecf8ff), color-stop(100%, #e0ecf3));
+background-image: -webkit-linear-gradient(#ecf8ff,#e0ecf3);
+background-image: -moz-linear-gradient(#ecf8ff,#e0ecf3);
+background-image: -o-linear-gradient(#ecf8ff,#e0ecf3);
+background-image: -ms-linear-gradient(#ecf8ff,#e0ecf3);
+background-image: linear-gradient(#ecf8ff,#e0ecf3);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ecf8ff, endColorstr=#e0ecf3);
+-webkit-box-shadow: inset 0px 1px 6px rgba(0,0,0,0.3);
+-moz-box-shadow: inset 0px 1px 6px rgba(0,0,0,0.3);
+box-shadow: inset 0px 1px 6px rgba(0,0,0,0.3);
+}
+
+#search_index #content #info .filters .filterset a.filter.first, 
+#search_routes #content #info .filters .filterset a.filter.first {
+-webkit-border-radius: 4px 0 0 4px;
+-moz-border-radius: 4px 0 0 4px;
+-ms-border-radius: 4px 0 0 4px;
+-o-border-radius: 4px 0 0 4px;
+border-radius: 4px 0 0 4px;
+}
+
+#search_index #content #info .filters .filterset a.filter, 
+#search_routes #content #info .filters .filterset a.filter {
+float: left;
+color: #404040;
+height: 22px;
+line-height: 22px;
+font-size: 12px;
+padding: 0 15px;
+border: 1px solid #808080;
+border-right: none;
+white-space: nowrap;
+background-color: #eeeeee;
+background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #e1e1e1));
+background-image: -webkit-linear-gradient(#ffffff,#e1e1e1);
+background-image: -moz-linear-gradient(#ffffff,#e1e1e1);
+background-image: -o-linear-gradient(#ffffff,#e1e1e1);
+background-image: -ms-linear-gradient(#ffffff,#e1e1e1);
+background-image: linear-gradient(#ffffff,#e1e1e1);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#e1e1e1);
+}
+
+
+
+
+#search_index #content #info .filters .filterset.postsby a.filter.drivers span, 
+#search_routes #content #info .filters .filterset.postsby a.filter.drivers span {
+background-position: left 0px;
+}
+
+#search_index #content #info .filters .filterset a.filter span, 
+#search_routes #content #info .filters .filterset a.filter span {
+display: block;
+padding-left: 19px;
+line-height: 14px;
+margin-top: 4px;
+background: url(../2/images/search_filter_icons.png) no-repeat left 0px;
+}
+
+#search_index #content #info .filters .filterset a.filter.last, 
+#search_routes #content #info .filters .filterset a.filter.last {
+-webkit-border-radius: 0 4px 4px 0;
+-moz-border-radius: 0 4px 4px 0;
+-ms-border-radius: 0 4px 4px 0;
+-o-border-radius: 0 4px 4px 0;
+border-radius: 0 4px 4px 0;
+border-right: 1px solid #808080;
+}
+
+#search_index #content #info .filters .filterset.vehicletype a.filter.car, 
+#search_index #content #info .filters .filterset.vehicletype a.filter.bus, 
+#search_routes #content #info .filters .filterset.vehicletype a.filter.car, 
+#search_routes #content #info .filters .filterset.vehicletype a.filter.bus {
+padding: 0 30px;
+}
+
+#search_index #content #info .filters .filterset.vehicletype a.filter.car span, 
+#search_routes #content #info .filters .filterset.vehicletype a.filter.car span {
+background-position: left -264px;
+}
+
+#search_index #content #info .filters .filterset a.filter span, 
+#search_routes #content #info .filters .filterset a.filter span {
+display: block;
+padding-left: 19px;
+line-height: 14px;
+margin-top: 4px;
+background: url(../2/images/search_filter_icons.png) no-repeat left 0px;
+}
+
+
+#search_index #content, 
+#search_routes #content {
+    margin-bottom: 70px;
+    overflow: hidden;
+    width: 940px;
+}
+
+/*---------head-------*/
+#search_index #content #head, 
+#search_routes #content #head {
+    margin-bottom: 30px;
+    overflow: hidden;
+	}
+}
+
+#search_index #content #head form.search, 
+#search_routes #content #head form.search {
+position: relative;
+}
+
+#search_index #content #head form.search .text_input, 
+#search_routes #content #head form.search .text_input {
+position: relative;
+float: left;
+margin-right: 10px;
+}
+
+#search_index #content #head form.search .text_input input.clickaway, 
+#search_routes #content #head form.search .text_input input.clickaway {
+    color: #999999;
+}
+

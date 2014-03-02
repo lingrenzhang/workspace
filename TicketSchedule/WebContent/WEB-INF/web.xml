@@ -159,4 +159,14 @@
     <servlet-name>UserCenter</servlet-name>
     <url-pattern>/servlet/UserCenter</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TimeControlService</display-name>
+    <servlet-name>TimeControlService</servlet-name>
+    <servlet-class>com.hitchride.TimeControlService</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TimeControlService</servlet-name>
+    <url-pattern>/servlet/TimeControlService</url-pattern>
+  </servlet-mapping>
 </web-app>

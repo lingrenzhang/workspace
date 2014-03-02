@@ -1,0 +1,290 @@
+
+.panel-default
+{
+	border-color: #ddd;
+}
+.panel
+{
+	margin-bottom: 20px;
+	background-color: #fff;
+	border: 1px solid;
+	border-color: #ABBDB9;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+	box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+
+.panel-heading
+{
+	padding: 4px 15px;
+	border-bottom: 1px solid transparent;
+	border-top-right-radius: 3px;
+	border-top-left-radius: 3px;
+}
+
+.panel>.panel-heading {
+	color: #646464;
+	background-color: #C5DAFF;
+	border-color: #ABBDB9;
+}
+
+.panel-body {
+	padding: 10px 15px 10px 15px;
+}
+
+.record_wrapper
+{
+	width: 620px;
+}
+.name{
+	width: 100px;
+	display: inline;
+	
+}
+
+.value{
+	width: 500px;
+	display: inline;
+}
+
+
+form.standard dl {
+display: block;
+margin-bottom: 0px;
+}
+
+form.standard dt {
+display: inline-block;
+clear: both;
+font-size: 12px;
+font-weight: bold;
+line-height: 20px;
+margin-right: 16px;
+padding: 8px 0 2px 0;
+text-align: right;
+width: 140px;
+}
+
+form.standard dd {
+display: inline-block;
+font-size: 11px;
+width: 400px;
+}
+
+
+form.standard dd.selection {
+padding-top: 6px;
+}
+
+
+form.standard dd input.checkbox, 
+form.standard dd input.radio {
+background-image: none;
+border: 0;
+height: auto;
+margin-top: 4px;
+padding: 0;
+width: auto;
+float:left;
+}
+
+form.standard dd label {
+display: block;
+float: left;
+font-size: 12px;
+line-height: normal;
+padding: 6px 20px 0 8px;
+}
+
+form.standard dd select {
+margin-top: 9px;
+width: 175px;
+}
+
+form#add_ride .th_time {
+position: relative;
+top: 5px;
+}
+
+form.standard dd p {
+clear: both;
+float: left;
+font-size: 11px;
+line-height: 15px;
+margin-top: 5px;
+}
+
+
+#column_left, #wide_column_left {
+float: left;
+}
+#wide_column_left {
+width: 635px;
+}
+
+input[type="text"].ad_input
+{
+	padding-left: 15px;
+	margin-bottom:5px;
+	margin-top:5px;
+	width: 400px;
+}
+
+
+
+#commuteselect {
+background-image: url('/TicketSchedule/Picture/icon-commute.jpg');
+margin-right: 15px;
+background-repeat: no-repeat;
+background-position: 50% 9px;
+}
+
+#travelselect {
+background-image: url('/TicketSchedule/Picture/icon-travel.jpg');
+background-repeat: no-repeat;
+background-position: 50% 9px;
+}
+.bigradio{
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+overflow: hidden;
+width: 150px;
+height: 90px;
+padding-left: 40px;
+border: 1px solid #ddd;
+float: left;
+}
+
+
+#commute-table {
+border: 1px solid #ccc;
+border-top: 0;
+overflow: auto;
+width: 570px;
+}
+
+#commute-table ul {
+overflow: auto;
+float: left;
+width: 120px;
+margin: 0px 0px 0px 0px;
+}
+
+
+#col1 {
+width: 160px !important;
+vertical-align: top;
+}
+
+#col4 {
+width: 170px !important;
+overflow: hidden !important;
+vertical-align: top;
+}
+
+#commute-table li.first {
+height: 45px;
+padding: 15px;
+background-color: #f9f9f9;
+}
+
+#commute-table li.first p {
+font-size: 13px;
+line-height: 1.3em;
+margin: 5px 0px 0px 0px;
+}
+
+#commute-table li {
+height: 25px;
+padding: 5px 15px;
+border-top: 1px solid #ccc;
+}
+
+#commute-table label {
+line-height: 0.9em;
+padding-left: 1em;
+font-weight: normal;
+font-size: 13px !important;
+}
+
+#commute-table h3 {
+font-size: 14px;
+line-height: 1em;
+margin-bottom: 0px;
+margin-top:0px;
+}
+
+#commute-table select {
+width: 90px;
+margin-top: 4px;
+margin-bottom: 2px;
+padding: 0px;
+border-radius: 0px;
+height:20px;
+font-size: 14px;
+}
+
+
+
+#flex {
+width: 150px !important;
+font-weight: 400;
+}
+
+#flexheader span {
+float: left;
+font-size: 11px;
+}
+
+#flexheader span.last {
+float: right;
+margin-top 5px;
+padding-right: 8px;
+}
+
+#flex .pillbuttons {
+overflow: hidden;
+display: inline-block;
+}
+
+#flex.pillbuttons div.chosen {
+color: #222;
+background: #e5e5e5 url('/TicketSchedule/Picture/bg_button_grey_depressed.gif') top repeat-x scroll;
+background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.0)));
+}
+
+
+#flex .pillbuttons div.first {
+border-left: 1px solid #999 !important;
+-moz-border-radius-topleft: 2px;
+-moz-border-radius-bottomleft: 2px;
+-webkit-border-top-left-radius: 2px;
+-webkit-border-bottom-left-radius: 2px;
+}
+
+
+#flex .pillbuttons div {
+display: inline-block;
+font-size: 10px;
+padding: 0 5px;
+margin: 0;
+font-weight: 400;
+color: #555;
+}
+
+button, #flex .pillbuttons div {
+-webkit-box-shadow: #EEEEEE 0 1px 0;
+background: #e5e5e5 url('/TicketSchedule/Picture/bg_button_grey.gif') top repeat-x scroll;
+border: 1px solid #999999;
+border-bottom-color: #888888;
+height: auto;
+line-height: 17px;
+width: auto;
+}
+
+#flex .pillbuttons div.chosen {
+color: #222;
+background: #e5e5e5 url('/TicketSchedule/Picture/bg_button_grey_depressed.gif') top repeat-x scroll;
+background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.0)));
+}

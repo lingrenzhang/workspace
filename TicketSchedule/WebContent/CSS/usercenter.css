@@ -5,12 +5,13 @@
 	left: 550px;
 	width: 500px;
 }
+
+
 .header_user_wrapper
 {
 	top: 55px;
 	left: 850px;
 }
-
 
 .user_wrapper
 {
@@ -23,11 +24,7 @@
 	width: 210px;
 	height:300px;
 }
-.user_nav_wrapper
-{
-	float: right;
-	width: 119px;
-}
+
 
 
 .inner_content_wrapper

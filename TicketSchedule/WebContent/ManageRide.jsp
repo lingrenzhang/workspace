@@ -21,12 +21,13 @@
 %>
     
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="/TicketSchedule/CSS/style.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
+<link href="/TicketSchedule/CSS/manageride.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" href="/TicketSchedule/bootstrap/css/bootstrap.css">
 
 
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
-
+<script src="/TicketSchedule/bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
 </script>
@@ -591,54 +592,43 @@ $(document).ready(function(){
 	<div id="content_container" class="clearfix">
 		<div id="wide_column_left" class="newAddRideStyle">
 			<form action="/TicketSchedule/servlet/Search" method="Post" id="add_ride" class="standard requires_login_results" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
-				<fieldset id="step_1">
+				<div class="panel" id="GeoInfo">
+					<div class="panel-heading">Geoinfo</div>
+					<div class="panel-body">
+						<dl>
+							<dt>Starting From</dt>
+							<dd>
+	                        	<input type="text" class="ad_input" placeholder="e.g. University Road, Santa Barbara, CA" name="s" id="s" maxlength="400"  autocomplete="off">
+	                        </dd>
+	                        <dt>Going To</dt>
+	                        <dd>
+								<input type="text" class="ad_input" placeholder="e.g. San Diego, CA" name="e" id="e" maxlength="400" autocomplete="off">
+							</dd>
+						</dl>
+					</div>
+				</div>
+				
+				<div class="panel" id="Schedule" >
+					<div class="panel-heading">Schedule</div>
+					<div class="panel-body">
 					<dl>
-						<dt>
-							<label>I Am</label>
-						</dt>
-						<dd class="selection" id="who">
-							<div class="bigradio" id="driverselect">
-                           		<input type="radio" name="who" id="offerid" value="offer" class="radio"><label for="offerid">willing to drive</label>
-                        	</div>
-							<div class="bigradio" id="passengerselect">
-                	           	<input type="radio" name="who" id="needid" value="need" class="radio">
-                 		       	<label for="needid">passenger only</label>
-                 		  	</div>
-                        </dd>
-                        
-                        <dt><label for="s">Starting From</label></dt>
-                        <dd>
-                        	<input type="text" class="clickaway ac_input" placeholder="e.g. University Road, Santa Barbara, CA" name="s" id="s" maxlength="400"  autocomplete="off">
-                        </dd>
-                        
-                        <dt><label for="e">Going To</label></dt>
-                        <dd>
-                       		<input class="clickaway ac_input" type="text" placeholder="e.g. San Diego, CA" name="e" id="e" maxlength="400" autocomplete="off">
-                        	<p>Only the closest crossstreets are shown in your listing (e.g. 1st &amp; Main)</p>
-                	    </dd>
-                	    
-						<dt>
-							<label>Commute Type</label>
-						</dt>
-						<dd class="selection" id="commuteType">
-							<div class="bigradio" id="commuteselect">
+						<dt>Commute Type</dt>
+						<dd>
+						<div class="selection" id="commuteType">
+						<div class="bigradio" id="commuteselect">
                            		<input type="radio" name="commuteType" id="commuteid" value="commute" class="radio">
                            		<label for="commuteid">Commute</label>
-                        	</div>
-							<div class="bigradio" id="travelselect">
+                        </div>
+						<div class="bigradio" id="travelselect">
                 	           	<input type="radio" name="commuteType" id="travelid" value="travel" class="radio">
                  		       	<label for="travelid">Travel</label>
-                 		  	</div>
-                        </dd>
-					
-					</dl>
-				</fieldset>
-				
-				<fieldset id="step_2" >
-                <dl>
-
+                 		</div>
+                 		</div>
+                 		</dd>
+                 	</dl>
+                    <dl>                
                     <dd class="triptabs" style="display: block;">
-                    <input id="onetime-only" type="hidden" name="type" value="one-time">
+                   		 <input id="onetime-only" type="hidden" name="type" value="one-time">
                    	<div id="multipostwrapper" style="display: none">
 	                        <div id="singletripwrapper" class="singletripwrapper">
 	                        	<span class="trip_num">Trip 1</span>
@@ -830,22 +820,35 @@ $(document).ready(function(){
                                  </ul>
                             </div>
                     </div>
-                   </dd>
-               </dl>
-            </fieldset>
+					</dd>
+				</dl>
+			</div>
             
-            <fieldset id="step_3" class="" style="">
-                <dl>
-                    <dt class="cost-visibility" style="display: none"><label for="cost">How much do you want each passenger to contribute?</label></dt>
-                    <dd class="cost-visibility" style="display: none">
-                        <span id="dollarsign">$</span> <input type="text" name="cost" id="cost" class="slim align_right" maxlength="6" value="0">
-                        <div class="input-arrows">
-                            <a href="javascript:void(0)" class="increment"><img src="/TicketSchedule/Picture/increment.png"></a>
-                            <a href="javascript:void(0)" class="decrement"><img src="/TicketSchedule/Picture/decrement.png"></a>
-                        </div>
-                        <span id="price-per">each way</span>
+            <div class="panel" id="UserType">
+            		<div class="panel-heading">UserType</div>
+					<div class="panel-body">
+          		<span>I am</span>
+				<div class="selection" id="who">
+					<div class="bigradio" id="driverselect">
+                         <input type="radio" name="who" id="offerid" value="offer" class="radio"><label for="offerid">willing to drive</label>
+                    </div>
+					<div class="bigradio" id="passengerselect">
+                	     <input type="radio" name="who" id="needid" value="need" class="radio">
+                 		 <label for="needid">passenger only</label>
+                 	</div>
+				</div>		
+                <div class="cost-visibility" style="display: none">
+                <label for="cost">How much do you want each passenger to contribute?</label>
+                </div>
+                <div class="cost-visibility" style="display: none">
+                     <span id="dollarsign">$</span> <input type="text" name="cost" id="cost" class="slim align_right" maxlength="6" value="0">
+                     <div class="input-arrows">
+                         <a href="javascript:void(0)" class="increment"><img src="/TicketSchedule/Picture/increment.png"></a>
+                         <a href="javascript:void(0)" class="decrement"><img src="/TicketSchedule/Picture/decrement.png"></a>
+                     </div>
+                     <span id="price-per">each way</span>
                         <p>suggested price of $<span id="suggested_price">75.00</span> <span id="suggested_price_text">based on the average distance for this trip</span></p>
-                    </dd>
+                </div>
                     <dt class="seats-visibility" style="display: none"><label for="seats">Number of available seats</label></dt>
                     <dd class="seats-visibility" style="display: none">
                         <input type="text" name="seats" id="seats" class="slim align_right" maxlength="1" value="2">
@@ -860,7 +863,8 @@ $(document).ready(function(){
                     	<span id="form_submit"><button type="submit" id="form-addride-button" class="clickaway_confirm confirm  requires_login">Post Ride</button></span><br>
                    </dd>
                 </dl>
-            </fieldset>
+            </div>
+			</div>	           
             <input type="text" class="hidden" id="origLat" name="origLat" value=""></input>
             <input type="text" class="hidden" id="origLng" name="origLng" value=""></input>
             <input type="text" class="hidden" id="destLat" name="destLat" value=""></input>
@@ -868,7 +872,7 @@ $(document).ready(function(){
             <input type="text" class="hidden" id="distance" name="distance" value=""></input>
             <input type="text" class="hidden" id="dtime" name="dtime" value=""></input>
             <input type="text" class="hidden" id="isPost" name="isPost" value="true"></input>
-            
+
 			</form>
 		</div>
 		<div id="post-map-canvas">

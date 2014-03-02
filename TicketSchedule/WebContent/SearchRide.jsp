@@ -50,10 +50,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
-<link href="/TicketSchedule/CSS/search.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" href="./bootstrap/css/bootstrap.css">
 <link href="/TicketSchedule/CSS/style.css" type="text/css" rel="stylesheet">
+<link href="/TicketSchedule/CSS/searchride.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/custom_jqueryui.css" type="text/css" rel="stylesheet">
-
 
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
 <script src="/TicketSchedule/bootstrap/js/bootstrap.js"></script>
@@ -297,6 +297,17 @@ window.onscroll = function(){
 		<div id="logo">
 		</div>
 	</div>
+	<div class="header_nav_wrapper">
+		<nav class="navbar navbar-default" role="navigation">
+		<div class="navbar navbar-default">
+			<ul class="nav navbar-nav">
+			  <li><a href="/TicketSchedule/UserCenter.jsp">UserCenter</a></li>
+			  <li><a href="/TicketSchedule/Postride.jsp">PostRide</a></li>
+		      <li class="active"><a href="#">SearchRide</a></li>
+		    </ul>
+		 </div>
+		</nav>
+	</div>
 	<div id="user_info_wrap">
 		<%=user.getUserWrapper() %>
 	</div>
@@ -332,7 +343,7 @@ window.onscroll = function(){
 					</div>
 					<%}%>
 					
-					<button class="button confirm clickaway_confirm" type="submit">Search</button>
+					<button class="btn btn-primary" type="submit">Search</button>
 					<%if (commute == false) { %>
 					<div class="commute_input">
 						<a class="commute_day first" >
@@ -442,38 +453,6 @@ window.onscroll = function(){
 					
 				</div>
 			</div>
-			<div id="info">
-				<div class="floatable">
-					<div class="floatwrap" id="floatwrap">
-						<div class="filters">
-							<h3>Filters<span class="pint"></span></h3>
-							<div class="inner">
-								<span class="label">Show posts by</span>
-								<div class="filterset postsby" data-name="filter_type">
-									<a class="filter first active" data-filter="both" href>All</a>
-									<a class="filter" data-filter="offer" href>
-										<span>Drivers</span>
-									</a>
-									<a class="filter last passengers" data-filter="need" href>
-										<span>Passengers</span>
-									</a>
-								</div>
-								<span class="label">Vehicle type</span>
-								<div class="filterset vehicletype" data-name="filter_vehicle">
-									<a class="filter first active" data-filter="both" href>All</a>
-									<a class="filter car" data-filter="car" href>
-										<span>Car</span>
-									</a>
-									<a class="filter last bus" data=filter="bus" href>
-										<span>Bus</span>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
 		</div>
 	</div>
 </div>

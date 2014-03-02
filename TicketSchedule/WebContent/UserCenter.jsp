@@ -142,7 +142,7 @@
 			    <ul class="nav navbar-nav">
 			      <li class="active"><a href="#">UserCenter</a></li>
 			      <li><a href="/TicketSchedule/Postride.jsp">PostRide</a></li>
-			      <li><a href="/TicketSchedule/search.jsp">RideCenter</a></li>
+			      <li><a href="/TicketSchedule/SearchRide.jsp">SearchRide</a></li>
 			    </ul>
 			  </div>
 			</nav>
