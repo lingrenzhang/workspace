@@ -18,7 +18,7 @@ import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Topic;
 import com.hitchride.standardClass.User;
 import com.hitchride.util.QueryStringParser;
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
+
 
 /**
  * Servlet implementation class UserCenter
