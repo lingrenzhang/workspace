@@ -49,8 +49,8 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" href="./bootstrap/css/bootstrap.css">
+<link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/style.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/searchride.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/custom_jqueryui.css" type="text/css" rel="stylesheet">

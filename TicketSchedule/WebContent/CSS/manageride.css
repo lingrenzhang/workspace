@@ -96,14 +96,14 @@ line-height: normal;
 padding: 6px 20px 0 8px;
 }
 
-form.standard dd select {
-margin-top: 9px;
-width: 175px;
-}
 
 form#add_ride .th_time {
 position: relative;
 top: 5px;
+}
+
+#there_one_time {
+margin: 0 0 30px 13px;
 }
 
 form.standard dd p {
@@ -287,4 +287,101 @@ width: auto;
 color: #222;
 background: #e5e5e5 url('/TicketSchedule/Picture/bg_button_grey_depressed.gif') top repeat-x scroll;
 background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.0)));
+}
+
+#post-map-canvas {
+float: right;
+width: 320px;
+height: 300px;
+margin-left: 30px;
+}
+
+#multipostwrapper {
+border: 1px solid #ccc;
+background-color: #f9f9f9;
+padding: 10px 20px 20px 20px;
+}
+
+#singletripwrapper {
+background-color: #f0f0f0;
+overflow: auto;
+margin: 20px 0px 20px 0px;
+border: 1px solid #ccc;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+-webkit-box-shadow: inset 0px 3px 6px rgba(0,0,0,0.2);
+-moz-box-shadow: inset 0px 3px 6px rgba(0,0,0,0.2);
+}
+
+.trip_num {
+margin: 10px 0px 0px 10px;
+font-size: 14px;
+font-style: italic;
+line-height: 32px;
+visibility: hidden;
+}
+
+.trip_close {
+margin: 10px 10px 0px 0px;
+text-align: center;
+width: 15px;
+height: 15px;
+line-height: 11px;
+font-weight: bold;
+visibility: hidden;
+font-size: 14px;
+}
+
+
+.triptabs {
+width: 570px !important;
+margin: 0 !important;
+margin-top: 10px;
+padding: 0 20px 0 20px;
+}
+
+.triptabs label {
+font-weight: 700;
+font-size: 14px;
+margin-bottom: 0px;
+}
+
+#singletripwrapper label {
+background-color: #f0f0f0;
+}
+
+.ui-datepicker-trigger {
+height: 16px;
+width: 16px;
+margin-left: -23px;
+margin-top: -10px;
+z-index: 100;
+cursor: pointer;
+}
+form.standard dd input.slim {
+width: 110px;
+}
+
+#singletripwrapper select {
+position: relative;
+top: -2px;
+}
+
+
+.tripbox {
+padding: 30px 0px 40px 95px;
+width: 425px;
+}
+
+.float_right {
+float: right;
+}
+
+
+.there_time, .back_time {
+width: 100px;
+margin-left: 40px;
+height: 24px;
+font-size :14px;
+padding : 2px;
 }

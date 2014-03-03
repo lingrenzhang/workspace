@@ -21,9 +21,10 @@
 %>
     
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="/TicketSchedule/bootstrap/css/bootstrap.css">
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/manageride.css" type="text/css" rel="stylesheet">
-<link rel="stylesheet" href="/TicketSchedule/bootstrap/css/bootstrap.css">
+
 
 
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
@@ -627,7 +628,7 @@ $(document).ready(function(){
                  		</dd>
                  	</dl>
                     <dl>                
-                    <dd class="triptabs" style="display: block;">
+                       <dd class="triptabs" style="display: block;">
                    		 <input id="onetime-only" type="hidden" name="type" value="one-time">
                    	<div id="multipostwrapper" style="display: none">
 	                        <div id="singletripwrapper" class="singletripwrapper">
@@ -819,14 +820,28 @@ $(document).ready(function(){
                                  	<li><a class="edit" href="javascript:void(0)" id="edit_times_7" style="visibility: hidden;">edit</a></li>
                                  </ul>
                             </div>
-                    </div>
-					</dd>
-				</dl>
+                   	</div>
+						</dd>
+					</dl>
+				</div>
 			</div>
             
             <div class="panel" id="UserType">
-            		<div class="panel-heading">UserType</div>
-					<div class="panel-body">
+                <div class="panel-heading">UserType</div>
+				<div class="panel-body">
+            	<div class="tabbable tabs-left">
+  					<ul class="nav nav-tabs">
+ 						<span>driver</span>
+  					</ul>
+  					<div class="tab-content">
+					</div>
+					<ul class="nav nav-tabs">
+ 						<span>passenger</span>
+  					</ul>
+  					<div class="tab-content">
+					</div>
+				</div>
+
           		<span>I am</span>
 				<div class="selection" id="who">
 					<div class="bigradio" id="driverselect">
@@ -860,7 +875,7 @@ $(document).ready(function(){
                     <dt><label for="notes">Notes</label></dt>
                     <dd><textarea id="notes" cols="30" rows="3" name="notes" class="clickaway badWord" placeholder="Any other details..." style="color: rgb(153, 153, 153);">Any other details...</textarea></dd>
                     <dd class="changestep"><span class="errormsg" style="opacity: 0;"></span> 
-                    	<span id="form_submit"><button type="submit" id="form-addride-button" class="clickaway_confirm confirm  requires_login">Post Ride</button></span><br>
+                    	<span id="form_submit"><button type="submit" class="btn btn-primary">Post Ride</button></span><br>
                    </dd>
                 </dl>
             </div>
