@@ -38,6 +38,7 @@ function asPassenger()
 {
 	document.getElementById("asPassenger").setAttribute("class", "active");
 	document.getElementById("asDriver").setAttribute("class", "");
+	document.getElementById("userType").setAttribute("value", "passenger");
 	$(".cost-visibility").children("label").text("How much are you willing to contribute?");
 	$(".cost-visibility").fadeIn(1000);
 	$(".seats-visibility").fadeOut(1000);
@@ -47,6 +48,7 @@ function asDriver()
 {
 	document.getElementById("asPassenger").setAttribute("class", "");
 	document.getElementById("asDriver").setAttribute("class", "active");
+	document.getElementById("userType").setAttribute("value", "driver");
 	$(".cost-visibility").children("label").text("How much do you want each passenger to contribute?");
 	$(".cost-visibility").fadeIn(1000);
 	$(".seats-visibility").fadeIn(1000);
@@ -587,7 +589,7 @@ $(document).ready(function(){
 			    <ul class="nav navbar-nav">
 			      <li><a href="/TicketSchedule/UserCenter.jsp">UserCenter</a></li>
 			      <li class="active"><a href="/TicketSchedule/ManageRide.jsp">ManageRide</a></li>
-			      <li><a href="/TicketSchedule/SearchRide.jsp">RideCenter</a></li>
+			      <li><a href="/TicketSchedule/SearchRide.jsp">SearchRide</a></li>
 			    </ul>
 			  </div>
 			</div>
@@ -842,7 +844,7 @@ $(document).ready(function(){
 		  						<li id="asPassenger"><a href="javascript: asPassenger()">As Passenger</a></li>
 							</ul>
 						</div>
-	               		<input class="usertype hidden" type="text" name="userType" id="userType" value="Driver">
+	               		<input class="usertype hidden" type="text" name="userType" id="userType" value="driver">
 	                	<div class="bargin-info">
 		                    <div class="cost-visibility" style="display:"><label for="cost">How much do you want each passenger to contribute?</label></div>
 			                <div class="cost-visibility" style="display:">

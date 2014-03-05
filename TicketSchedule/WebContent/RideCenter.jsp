@@ -179,17 +179,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="header_nav_wrapper">
-		<nav class="navbar navbar-default" role="navigation">
-		  <div class="navbar navbar-default">
-		    <ul class="nav navbar-nav">
-		      <li><a href="/TicketSchedule/UserCenter.jsp">UserCenter</a></li>
-		      <li class="active"><a href="/TicketSchedule/Postride.jsp">PostRide</a></li>
-		      <li><a href="/TicketSchedule/search.jsp">RideCenter</a></li>
-		    </ul>
-		  </div>
-		</nav>
-	</div>
+	
 	<div id="content_wrapper">
 
 		<div class="user_wrapper">
