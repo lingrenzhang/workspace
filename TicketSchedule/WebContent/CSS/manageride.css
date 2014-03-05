@@ -385,3 +385,81 @@ height: 24px;
 font-size :14px;
 padding : 2px;
 }
+
+
+.cost-visibility label, .seats-visibility label
+{
+	font-size: 22px;
+	font-weight: 600;
+}
+.cost-visibility, .seats-visibility{
+float: none;
+text-align: left;
+font-size: 20px;
+width: 400px;
+height: 50px;
+margin-left: 60px;
+}
+
+.note_wrapper label{
+	font-size: 20px;
+	height:20px;
+	padding: 10px 0px 0px 0px;
+	margin-left: 60px;
+}
+
+#cost, #seats {
+background: #FFFFFF url('/TicketSchedule/Picture/bg_input_text.gif') top repeat-x;
+border: 1px solid #C1D5E8;
+float: left;
+line-height: 14px;
+padding: 4px 3px 3px 3px;
+font-size: 26px;
+height: 38px;
+width: 60px !important;
+margin-bottom: 0px;
+}
+
+
+#dollarsign {
+float: left;
+font-size: 26px;
+line-height: 1.7em;
+padding-right: 10px;
+}
+
+
+.input-arrows {
+width: 22px;
+float: left;
+border: 1px solid #bbb;
+height: 47px;
+margin-left: 5px;
+background: #fff;
+overflow: hidden;
+display: inline-block;
+}
+
+.increment, .decrement {
+display: block;
+height: 23px;
+background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0, 0, 0, 0.001)), to(rgba(0, 0, 0, 0.1)));
+}
+
+#notes
+{
+margin-left: 60px;
+padding: 10px;
+width: 470px;
+height: 100px;
+}
+
+.suggest
+{
+	margin-left:60px;
+	font-size: 14px;
+	height: 30px;
+}
+.btn{
+	float: right;
+}

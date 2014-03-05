@@ -33,6 +33,26 @@
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
 </script>
 <script>
+
+function asPassenger()
+{
+	document.getElementById("asPassenger").setAttribute("class", "active");
+	document.getElementById("asDriver").setAttribute("class", "");
+	$(".cost-visibility").children("label").text("How much are you willing to contribute?");
+	$(".cost-visibility").fadeIn(1000);
+	$(".seats-visibility").fadeOut(1000);
+}
+
+function asDriver()
+{
+	document.getElementById("asPassenger").setAttribute("class", "");
+	document.getElementById("asDriver").setAttribute("class", "active");
+	$(".cost-visibility").children("label").text("How much do you want each passenger to contribute?");
+	$(".cost-visibility").fadeIn(1000);
+	$(".seats-visibility").fadeIn(1000);
+}
+
+
 $(document).ready(function(){
 
 	//------------------------register listener-------------------------
@@ -64,20 +84,6 @@ $(document).ready(function(){
 		}
 	});
 	
-	$("#needid").click(function(){
-		$(".cost-visibility").children("label").text("How much are you willing to contribute?");
-		$(".cost-visibility").fadeIn(1000);
-		$(".seats-visibility").fadeOut(1000);
-
-	});
-
-	$("#offerid").click(function(){
-		$(".cost-visibility").children("label").text("How much do you want each passenger to contribute?");
-		$(".cost-visibility").fadeIn(1000);
-		$(".seats-visibility").fadeIn(1000);
-	});
-	
-	
 	$("#commuteid").click(function(){
 		if (document.getElementById("IsLogin").value == "true")
 		{
@@ -96,6 +102,7 @@ $(document).ready(function(){
 		$("#multipostwrapper").fadeIn(1000);
 		});
 	});
+
 	
 	$(".trip_close").click(function(){
 		$(this.parentNode).fadeOut("slow").remove();
@@ -442,7 +449,7 @@ $(document).ready(function(){
 	
 	searchBoxO.onclick = function(){
 	   alert("onchange triggered");
-	}
+	};
 	google.maps.event.addListener(searchBoxO, 'places_changed', function() {
 	  	  var places = searchBoxO.getPlaces();
 
@@ -490,7 +497,7 @@ $(document).ready(function(){
 	google.maps.event.addListener(searchBoxD, 'places_changed', function() {
 	   	  var places = searchBoxD.getPlaces();
 	   	  for (var i = 0, marker; marker = dmarkers[i]; i++) {
-	        dmarker.setMap(null);
+	        marker.setMap(null);
 	      }
 
 	      dmarkers = [];
@@ -566,7 +573,7 @@ $(document).ready(function(){
 });
 
 </script>
-<title>Post Ride</title>
+<title>Manage Ride</title>
 </head>
 <body>
 <div id="header_wrap">
@@ -575,15 +582,15 @@ $(document).ready(function(){
 		</div>
 	</div>
 	<div class="header_nav_wrapper">
-			<nav class="navbar navbar-default" role="navigation">
+			<div class="navbar navbar-default" role="navigation">
 			  <div class="navbar navbar-default">
 			    <ul class="nav navbar-nav">
 			      <li><a href="/TicketSchedule/UserCenter.jsp">UserCenter</a></li>
-			      <li class="active"><a href="/TicketSchedule/Postride.jsp">PostRide</a></li>
-			      <li><a href="/TicketSchedule/search.jsp">RideCenter</a></li>
+			      <li class="active"><a href="/TicketSchedule/ManageRide.jsp">ManageRide</a></li>
+			      <li><a href="/TicketSchedule/SearchRide.jsp">RideCenter</a></li>
 			    </ul>
 			  </div>
-			</nav>
+			</div>
 		</div>
 	<div id="user_info_wrap">
 			<%=user.getUserWrapper() %>
@@ -826,60 +833,46 @@ $(document).ready(function(){
 				</div>
 			</div>
             
-            <div class="panel" id="UserType">
-                <div class="panel-heading">UserType</div>
-				<div class="panel-body">
-            	<div class="tabbable tabs-left">
-  					<ul class="nav nav-tabs">
- 						<span>driver</span>
-  					</ul>
-  					<div class="tab-content">
-					</div>
-					<ul class="nav nav-tabs">
- 						<span>passenger</span>
-  					</ul>
-  					<div class="tab-content">
-					</div>
-				</div>
-
-          		<span>I am</span>
-				<div class="selection" id="who">
-					<div class="bigradio" id="driverselect">
-                         <input type="radio" name="who" id="offerid" value="offer" class="radio"><label for="offerid">willing to drive</label>
-                    </div>
-					<div class="bigradio" id="passengerselect">
-                	     <input type="radio" name="who" id="needid" value="need" class="radio">
-                 		 <label for="needid">passenger only</label>
-                 	</div>
-				</div>		
-                <div class="cost-visibility" style="display: none">
-                <label for="cost">How much do you want each passenger to contribute?</label>
-                </div>
-                <div class="cost-visibility" style="display: none">
-                     <span id="dollarsign">$</span> <input type="text" name="cost" id="cost" class="slim align_right" maxlength="6" value="0">
-                     <div class="input-arrows">
-                         <a href="javascript:void(0)" class="increment"><img src="/TicketSchedule/Picture/increment.png"></a>
-                         <a href="javascript:void(0)" class="decrement"><img src="/TicketSchedule/Picture/decrement.png"></a>
-                     </div>
-                     <span id="price-per">each way</span>
-                        <p>suggested price of $<span id="suggested_price">75.00</span> <span id="suggested_price_text">based on the average distance for this trip</span></p>
-                </div>
-                    <dt class="seats-visibility" style="display: none"><label for="seats">Number of available seats</label></dt>
-                    <dd class="seats-visibility" style="display: none">
-                        <input type="text" name="seats" id="seats" class="slim align_right" maxlength="1" value="2">
-                        <div class="input-arrows">
-                            <a href="javascript:void(0)" class="increment"><img src="/TicketSchedule/Picture/increment.png"></a>
-                            <a href="javascript:void(0)" class="decrement"><img src="/TicketSchedule/Picture/decrement.png"></a>
-                        </div>
-                    </dd>
-                    <dt><label for="notes">Notes</label></dt>
-                    <dd><textarea id="notes" cols="30" rows="3" name="notes" class="clickaway badWord" placeholder="Any other details..." style="color: rgb(153, 153, 153);">Any other details...</textarea></dd>
-                    <dd class="changestep"><span class="errormsg" style="opacity: 0;"></span> 
-                    	<span id="form_submit"><button type="submit" class="btn btn-primary">Post Ride</button></span><br>
-                   </dd>
-                </dl>
-            </div>
-			</div>	           
+	            <div class="panel" id="UserType">
+	                <div class="panel-heading">UserType</div>
+					<div class="panel-body">
+		            	<div class="tabbable tabs-top">
+		  					<ul class="nav nav-tabs">
+		  						<li class="active" id="asDriver"><a href="javascript: asDriver()">As Driver</a></li>
+		  						<li id="asPassenger"><a href="javascript: asPassenger()">As Passenger</a></li>
+							</ul>
+						</div>
+	               		<input class="usertype hidden" type="text" name="userType" id="userType" value="Driver">
+	                	<div class="bargin-info">
+		                    <div class="cost-visibility" style="display:"><label for="cost">How much do you want each passenger to contribute?</label></div>
+			                <div class="cost-visibility" style="display:">
+			                     <span id="dollarsign">$</span> <input type="text" name="cost" id="cost" class="slim align_right" maxlength="6" value="0">
+			                     <div class="input-arrows">
+			                         <a href="javascript:void(0)" class="increment"><img src="/TicketSchedule/Picture/increment.png"></a>
+			                         <a href="javascript:void(0)" class="decrement"><img src="/TicketSchedule/Picture/decrement.png"></a>
+			                     </div>
+			                     <span id="price-per">each way</span>
+			                </div>
+				            <div class="suggest">
+				                <p>suggested price of $<span id="suggested_price">75.00</span> <span id="suggested_price_text">based on the average distance for this trip</span></p>
+			                </div>
+			                 
+			                 <div class="seats-visibility" style="display: "><label for="seats">Number of available seats</label></div>
+			                 <div class="seats-visibility" style="display: ">
+				                 <input type="text" name="seats" id="seats" class="slim align_right" maxlength="1" value="2">
+				                 <div class="input-arrows">
+				                       <a href="javascript:void(0)" class="increment"><img src="/TicketSchedule/Picture/increment.png"></a>
+				                       <a href="javascript:void(0)" class="decrement"><img src="/TicketSchedule/Picture/decrement.png"></a>
+				                 </div>
+			            	</div>
+				            <div class="note_wrapper">
+				            	<label for="notes">Notes</label>
+	     	                	<textarea id="notes" cols="30" rows="3" name="notes" class="clickaway badWord" placeholder="Any other details..." style="color: rgb(153, 153, 153);">Any other details...</textarea>
+	     	                </div>
+			              </div>
+					</div>	
+				</div> 
+			<span id="form_submit"><button type="submit" class="btn btn-primary">Post Ride</button></span>          
             <input type="text" class="hidden" id="origLat" name="origLat" value=""></input>
             <input type="text" class="hidden" id="origLng" name="origLng" value=""></input>
             <input type="text" class="hidden" id="destLat" name="destLat" value=""></input>
@@ -894,6 +887,6 @@ $(document).ready(function(){
 		</div>
 	</div>
 </div>
-<input type="text" class="hidden" id="IsLogin" value='<%=(IsLogin == null) ? "false" : IsLogin%>';></input>
+<input type="text" class="hidden" id="IsLogin" value='<%=(IsLogin == null) ? "false" : IsLogin%>'></input>
 </body>
 </html>
