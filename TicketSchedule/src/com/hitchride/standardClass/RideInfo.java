@@ -3,13 +3,6 @@ package com.hitchride.standardClass;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import com.hitchride.access.UserTbAccess;
-import com.hitchride.calc.rideInfoParameters;
 import com.hitchride.global.Environment;
 
 //RideInfo saves the ride information.

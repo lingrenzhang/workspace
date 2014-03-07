@@ -104,3 +104,9 @@
 color: #428bca;
 background-color: #fff;
 }
+
+#user_nav
+{
+	width: 119px;
+	float: right;
+}

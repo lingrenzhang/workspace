@@ -6,18 +6,20 @@
 <head>
 <%@page import="com.hitchride.standardClass.User" %>
 <% 
-	String IsLogin=null;
-    IsLogin =(String) request.getSession().getAttribute("IsLogin");
-    User user = new User();
-    user.set_name("guest");
-    user.set_emailAddress("guest");
-    user.set_avatarID("default.jpg");
-    user.set_userLevel(0);
-
-    if (IsLogin!= null)
-    {
-    	user = (User) request.getSession().getAttribute("user");
-    }
+	String IsLogin =(String) request.getSession().getAttribute("IsLogin");
+	User user;
+	if (IsLogin!= null)
+	{
+		user = (User) request.getSession().getAttribute("user");
+	}
+	else
+	{
+		 user = new User();
+		 user.set_name("guest");
+		 user.set_emailAddress("guest");
+		 user.set_avatarID("default.jpg");
+		 user.set_userLevel(0);
+	}
 %>
     
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -26,7 +28,7 @@
 
 
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
-
+<script src="/TicketSchedule/JS/site.js"></script>
 <script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
 </script>

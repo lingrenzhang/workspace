@@ -96,7 +96,7 @@ public class Login extends HttpServlet {
 					}
 					else
 					{
-						response.sendRedirect("/TicketSchedule/Postride.jsp");
+						response.sendRedirect("/TicketSchedule/UserCenter.jsp");
 					}
 				}
 				else

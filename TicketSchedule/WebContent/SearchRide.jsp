@@ -49,7 +49,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<link rel="stylesheet" href="./bootstrap/css/bootstrap.css">
+<link rel="stylesheet" href="/TicketSchedule/bootstrap/css/bootstrap.css">
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/style.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/searchride.css" type="text/css" rel="stylesheet">
@@ -277,9 +277,18 @@ window.onscroll = function(){
 						</a>
 						<a href="id2" class="next_page"><span> Next</span></a>
 					</div>
-					
 				</div>
 			</div>
+			
+			<div id="info">
+				<div class="floatable">
+					<div class="floatwrap" id="floatwrap">
+				 		<div id="post-map-canvas">sdfasdf
+						</div>
+					</div>
+				</div>
+			</div>
+			
 		</div>
 	</div>
 </div>
@@ -332,7 +341,7 @@ window.onscroll = function(){
  			</tbody>
  		</thead>
  	</table>
- 
+
  </div>
 
 

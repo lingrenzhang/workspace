@@ -1,7 +1,6 @@
 package com.hitchride;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
@@ -10,12 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hitchride.access.MessageTbAccess;
-import com.hitchride.global.AllRides;
 import com.hitchride.global.AllTopics;
-import com.hitchride.global.Environment;
 import com.hitchride.standardClass.Message;
-import com.hitchride.standardClass.Participant;
 import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Topic;

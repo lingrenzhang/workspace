@@ -6,7 +6,6 @@
 <%@ page import="com.hitchride.standardClass.ParticipantRide"%>
 <%@ page import="com.hitchride.standardClass.Message"%>
 <%@ page import="com.hitchride.standardClass.User"%>
-<%@ page import="com.hitchride.standardClass.Participant"%>
 <%@ page import="com.hitchride.standardClass.MatchScore"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Iterator"%>

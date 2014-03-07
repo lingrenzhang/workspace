@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -12,27 +11,14 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-
-
-
-
-
-
-
-
-
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.hitchride.access.CarpoolTbAccess;
 import com.hitchride.calc.*;
 import com.hitchride.global.AllRides;
 import com.hitchride.global.DummyData;
@@ -113,7 +99,7 @@ public class Search extends HttpServlet {
 		request.setAttribute("orig", actRide.origLoc.get_formatedAddr());
 		request.setAttribute("dest", actRide.destLoc.get_formatedAddr());
 
-		RequestDispatcher rd = request.getRequestDispatcher("../search.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("../SearchRide.jsp");
 		rd.forward(request, response);
 		
 	}
@@ -362,7 +348,7 @@ public class Search extends HttpServlet {
 		request.setAttribute("orig", myArgs.origAddr);
 		request.setAttribute("dest", myArgs.destAddr);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("../search.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("../SearchRide.jsp");
 		rd.forward(request, response);
 	}
 	
