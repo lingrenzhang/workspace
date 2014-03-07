@@ -131,7 +131,7 @@ window.onscroll = function(){
 	<div id="content_container">
 		<div id="content">
 			<div id="head">
-				<form class="search" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
+				<form class="search" action="/TicketSchedule/servlet/Search" method="get" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
 					<div class="text_input">
 						<label class="pin start" for="search_s"></label>
 						<input id="search_s" class="clickaway input_text" type="text" 

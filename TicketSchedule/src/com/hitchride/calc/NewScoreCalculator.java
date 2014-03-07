@@ -62,7 +62,7 @@ public class NewScoreCalculator {
 		}
 		else
 		{
-			_scoreResults.remove(_resultCount);
+			_scoreResults.remove(_resultCount-1);
 		}
 	}
 	
