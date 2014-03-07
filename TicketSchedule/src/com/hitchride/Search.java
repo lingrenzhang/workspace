@@ -221,7 +221,15 @@ public class Search extends HttpServlet {
 		{
 			User user = (User) request.getSession().getAttribute("user");
 			boolean roundtrip = true;
-			boolean userType = request.getParameter("who").equals("offer");
+			boolean userType = false;
+			if (request.getParameter("userType")!=null)
+			{
+			  userType = request.getParameter("userType").equals("driver");
+			}
+			if (request.getParameter("who")!=null)
+			{
+				userType = request.getParameter("who").equals("offer");
+			}
 			boolean isCommute = request.getParameter("commuteType").equals("commute");
 			int dayOfWeek = 1234;
 			String detourFactor = "0.2";
