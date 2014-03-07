@@ -49,53 +49,18 @@ public class Search extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RideInfo actRide = (RideInfo) request.getSession().getAttribute("actRide");
-		rideInfoParameters myArgs = new rideInfoParameters();
 		if (actRide==null)
 		{
-			myArgs.commute = true;
-			myArgs.roundtrip = false;
-			myArgs.userType = false;
 
-			// Stanford coordinates
-			myArgs.origLat = 37.42573;
-			myArgs.origLon = -122.166094;
-			
-			// Ranch 99 Cupertino
-			myArgs.destLat = 37.338022;
-			myArgs.destLon = -122.015118;
-			// Time
-			long time_ms = 1000*60*60*8; // 8 o'clock
-			long flex_ms = 1000*60*15; // 15 minutes
-			myArgs.forwardTime = new Time(time_ms);
-			myArgs.forwardFlexibility = new Time(flex_ms);
 		}
 		else
 		{
-			myArgs.userType = actRide.userType;
-			
-			myArgs.origLat = actRide.origLoc.get_lat();
-			myArgs.origLon = actRide.origLoc.get_lon();
-			myArgs.destLat = actRide.destLoc.get_lat();
-			myArgs.destLon = actRide.destLoc.get_lon();
-			
-			myArgs.commute = actRide.schedule.isCommute();
-			//
-			myArgs.roundtrip = false;
-			//myArgs.roundtrip = actRide.schedule.isRoundTrip();
-			myArgs.forwardTime = actRide.schedule.forwardTime;
-			myArgs.forwardFlexibility = actRide.schedule.forwardFlexibility;
-			
-			if (myArgs.roundtrip)
-			{
-				myArgs.backTime = actRide.schedule.backTime;
-				myArgs.backFlexibility = actRide.schedule.backFlexibility;
-			}
-
+		
 		}
 			
-		List<rideInfoParameters> resultList = new ArrayList<rideInfoParameters>();
-		ScoreCalculator sc = new ScoreCalculator();
-		resultList=sc.filterByCoordinates(myArgs, 20);
+		List<Topic> resultList = new ArrayList<Topic>();
+		NewScoreCalculator sc = new NewScoreCalculator();
+		resultList=sc.filterByCoordinates(actRide, 20);
 		
 		request.setAttribute("results", resultList);
 		request.setAttribute("orig", actRide.origLoc.get_formatedAddr());

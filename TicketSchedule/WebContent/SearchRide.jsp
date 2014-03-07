@@ -12,39 +12,26 @@
 	List<Topic> results = (List<Topic>) request.getAttribute("results");
 	if (results==null)
 	{
-		List<Topic> riders= new ArrayList<Topic>();
-		/*
-		rideInfoParameters rideInfo1=new rideInfoParameters();
-		rideInfo1.username="Xiyao J";
-		rideInfo1.destCity="San Jose";
-		rideInfo1.origCity="San Francisco";
-		rideInfo1.userType=false;
-		riders.add(rideInfo1);
-		rideInfoParameters rideInfo2=new rideInfoParameters();
-		rideInfo2.username="Lingren Zhang";
-		rideInfo2.destCity="San Jose";
-		rideInfo2.origCity="San Francisco";
-		rideInfo2.userType=true;
-		rideInfo2.seatsAvailable=3;
-		rideInfo2.price=(double) 30;
-		riders.add(rideInfo2);
-		results=riders;
-		*/
+		
+		List<Topic> nulltopic= new ArrayList<Topic>();
+		results= nulltopic;
 	}
 	boolean commute = true;
 %>
 <% 
-	String IsLogin=null;
-	IsLogin =(String) request.getSession().getAttribute("IsLogin");
-	User user = new User();
-	user.set_name("default");
-	user.set_emailAddress("default");
-	user.set_avatarID("default.jpg");
-	user.set_userLevel(0);
-	
+	String IsLogin =(String) request.getSession().getAttribute("IsLogin");
+	User user;
 	if (IsLogin!= null)
 	{
 		user = (User) request.getSession().getAttribute("user");
+	}
+	else
+	{
+		 user = new User();
+		 user.set_name("guest");
+		 user.set_emailAddress("guest");
+		 user.set_avatarID("default.jpg");
+		 user.set_userLevel(0);
 	}
 %>
 
@@ -126,7 +113,7 @@ window.onscroll = function(){
 		</div>
 	</div>
 	<div class="header_nav_wrapper">
-		<nav class="navbar navbar-default" role="navigation">
+		<div class="navbar navbar-default" role="navigation">
 		<div class="navbar navbar-default">
 			<ul class="nav navbar-nav">
 			  <li><a href="/TicketSchedule/UserCenter.jsp">UserCenter</a></li>
@@ -134,7 +121,7 @@ window.onscroll = function(){
 		      <li class="active"><a href="#">SearchRide</a></li>
 		    </ul>
 		 </div>
-		</nav>
+		</div>
 	</div>
 	<div id="user_info_wrap">
 		<%=user.getUserWrapper() %>
