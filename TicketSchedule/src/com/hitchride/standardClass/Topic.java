@@ -35,47 +35,46 @@ public class Topic {
  
 	public Topic(int rid) {
 		try {
-			ownerRide = AllRides.getRides()._topicRides.get(rid);
-			this._topicId=rid;
-			UserInfo ownerInfo = Environment.getEnv().getUser(ownerRide._rideInfo.username);
-			owner =(User) ownerInfo;
-					
-			parRides = new ArrayList<ParticipantRide>();
-			//parRides = ownerRide.get_prides();
-			//TO DO: User dummy participant ride now
-			Enumeration<Integer> e =DummyData.getDummyEnv().getAllPartRide();
-			while (e.hasMoreElements())
-			{
-				Integer key = e.nextElement();
-				ParticipantRide pRide = DummyData.getDummyEnv().get_participantRide(key);
-				if (pRide.get_assoOwnerRideId()==ownerRide._rideInfo.recordId)
+				ownerRide = AllRides.getRides()._topicRides.get(rid);
+				this._topicId=rid;
+				UserInfo ownerInfo = Environment.getEnv().getUser(ownerRide._rideInfo.username);
+				owner =(User) ownerInfo;
+						
+				parRides = new ArrayList<ParticipantRide>();
+				//parRides = ownerRide.get_prides();
+				//TO DO: User dummy participant ride now
+				Enumeration<Integer> e =DummyData.getDummyEnv().getAllPartRide();
+				while (e.hasMoreElements())
 				{
-					if (pRide.get_status()==1)
+					Integer key = e.nextElement();
+					ParticipantRide pRide = DummyData.getDummyEnv().get_participantRide(key);
+					if (pRide.get_assoOwnerRideId()==ownerRide._rideInfo.recordId)
 					{
-						_requestPride.add(pRide);
-					}
-					else
-					{
-						parRides.add(pRide);
+						if (pRide.get_status()==1)
+						{
+							_requestPride.add(pRide);
+						}
+						else
+						{
+							parRides.add(pRide);
+						}
 					}
 				}
-			}
-			
-			messages = new ArrayList<Message>();
-			e =DummyData.getDummyEnv()._dummyMessage.keys();
-			while (e.hasMoreElements())
-			{
-				Integer key = e.nextElement();
-				Message message = DummyData.getDummyEnv()._dummyMessage.get(key);
-				if (message.getOwnerRide()._rideInfo.recordId ==ownerRide._rideInfo.recordId)
+				
+				messages = new ArrayList<Message>();
+				e =DummyData.getDummyEnv()._dummyMessage.keys();
+				while (e.hasMoreElements())
 				{
-					messages.add(message);
+					Integer key = e.nextElement();
+					Message message = DummyData.getDummyEnv()._dummyMessage.get(key);
+					if (message.getOwnerRide()._rideInfo.recordId ==ownerRide._rideInfo.recordId)
+					{
+						messages.add(message);
+					}
 				}
-			}
-			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Illegal rid: " + rid);
+			System.out.println("Please verify database integrity or topic load routine.");
 		}
 
 	}
@@ -135,4 +134,34 @@ public class Topic {
 		return null;
 	}
 	//TO DO: Update persistent storage if found status flag is 1 in finalizer.
+	
+	public String getHTML()
+	{
+		StringBuilder result = new StringBuilder();
+		result.append("<a href=\"./RideCenter?topicId="+this._topicId +"&type=commute\">");
+		result.append("<div class=\"entry\">");
+		if (this.ownerRide.userType)
+		{
+			result.append("<div class=\"passenger_box\"><p>");
+			result.append("<span class=\"icon\"></span>");
+			result.append(this.owner.get_name()+" is a <strong>passenger</strong></p></div>");
+		}
+		else{
+			result.append("<div class=\"price_box\"><div class=\"seats\">");
+			result.append("<span class=\"count\">"+this.ownerRide.seatsAvailable+"</span></div>");
+			result.append("<p><b>"+this.ownerRide.price + "</b> / seat</p></div>");
+		}
+		result.append("<div class=\"userpic\">");
+		result.append("<div class=\"username\">"+this.owner.get_name()+"</div>");
+		result.append("<img src= \"/TicketSchedule/UserProfile/"+this.owner.get_avatarID()+"\" alt=\"Profile Picture\"></img>");
+		result.append("<span class=\"passenger\"></span></div>");
+		result.append("<div class=\"inner_content\"><h3>");
+		result.append("<span class=\"inner\">"+this.ownerRide.origLoc._addr);
+		result.append("<span class=\"trip_type round_trip\"></span>");
+		result.append(this.ownerRide.destLoc._addr+"</span></h3><h4>");
+        result.append("From: "+this.ownerRide.origLoc.get_formatedAddr());
+        result.append("To: "+this.ownerRide.destLoc.get_formatedAddr());
+        result.append("</h4></div></div></a>");
+		return result.toString();
+	}
 }

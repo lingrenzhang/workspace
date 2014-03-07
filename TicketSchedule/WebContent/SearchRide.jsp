@@ -4,16 +4,16 @@
 <html>
 <head>
 
-
-<%@ page import="com.hitchride.calc.*" %>
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
 <%@ page import="com.hitchride.standardClass.User" %>
+<%@ page import="com.hitchride.standardClass.Topic" %>
 <%
-	List<rideInfoParameters> results = (List<rideInfoParameters>) request.getAttribute("results");
+	List<Topic> results = (List<Topic>) request.getAttribute("results");
 	if (results==null)
 	{
-		List<rideInfoParameters> riders= new ArrayList<rideInfoParameters>();
+		List<Topic> riders= new ArrayList<Topic>();
+		/*
 		rideInfoParameters rideInfo1=new rideInfoParameters();
 		rideInfo1.username="Xiyao J";
 		rideInfo1.destCity="San Jose";
@@ -29,6 +29,7 @@
 		rideInfo2.price=(double) 30;
 		riders.add(rideInfo2);
 		results=riders;
+		*/
 	}
 	boolean commute = true;
 %>
@@ -203,49 +204,10 @@ window.onscroll = function(){
 					<h3 class="headline first">Departing<em>Today</em>
 						<span> - Friday, July 5th</span>
 					</h3>
-					<% Iterator<rideInfoParameters> itr = results.iterator(); %>
+					<% Iterator<Topic> itr = results.iterator(); %>
 					<% while (itr.hasNext()){ %>
-					<% 	rideInfoParameters rideInfo = itr.next(); %>
-    				<a href="./RideCenter?topicId=<%=rideInfo.recordId %>&type=commute">
-						<div class="entry">
-						<% if (!rideInfo.userType){ %>
-							<div class="passenger_box">
-								<p>
-									<span class="icon"></span><%=rideInfo.username %> is a 
-									<strong>passenger</strong>
-								</p>
-							</div>
-						<% }else{ %>
-							<div class="price_box">
-								<div class="seats">
-									<span class="count"><%=rideInfo.seatsAvailable %></span>
-									<span class="left">seat left</span>
-								</div>
-								<p>
-									<b>$<%=rideInfo.price %></b>
-									 / seat
-								</p>
-							</div>
-						<% } %>
-							<div class="userpic">
-								<div class="username"><%=rideInfo.username %></div>
-								<img src=<%="/TicketSchedule/UserProfile/"+"default"+".jpg" %> alt="Profile Picture"></img>
-								<span class="passenger"></span>
-							</div>
-							<div class="inner_content">
-								<h3>
-									<span class="inner"><%=rideInfo.origCity %>
-										<span class="trip_type round_trip"></span>
-										<%=rideInfo.destCity %>
-									</span>
-								</h3>
-								<h4>
-								From: <%=rideInfo.origAddr+", "+rideInfo.origCity+", "+rideInfo.origState  %>
-								To: <%=rideInfo.destAddr+ ", "+rideInfo.destCity+", "+rideInfo.destState  %>
-								</h4>
-							</div>
-						</div>
-					</a>
+					<% 	Topic topicInfo = itr.next(); %>
+    						<%=topicInfo.getHTML()%>
 					<% } %>
 					
 

@@ -13,9 +13,8 @@ public class MatchScore implements Matching {
 	private int _ScheduleingMatching;
 	private int _BargingMatching;
 	
-	private OwnerRideInfo _ownerRide; // where are these guys needed?
-	private ParticipantRide _partRide;
-	
+	private RideInfo _ownerRide;
+	private RideInfo _partRide;
 	public MatchScore()
 	{
 		Random rnd = new Random();
@@ -24,16 +23,7 @@ public class MatchScore implements Matching {
 		this._BargingMatching = rnd.nextInt(100);
 	}
 	
-	public MatchScore(OwnerRideInfo ownerRide, ParticipantRide partRide)
-	{
-		this._ownerRide = ownerRide;
-		this._partRide = partRide;
-		this.ComputeMatching(ownerRide, partRide);
-		this._LocationMatching = 50;
-		this._ScheduleingMatching = 50;
-		this._BargingMatching = 50;
-	}
-	
+		
 	@Override
 	public void ComputeMatching(OwnerRideInfo ownerRide,
 			ParticipantRide partRide) {
@@ -124,6 +114,13 @@ public class MatchScore implements Matching {
 	@Override
 	public int getBarginMatching() {
 		return this._BargingMatching;
+	}
+
+
+	@Override
+	public void QuickGeoCompute(RideInfo orig, RideInfo partRide) {
+
+		
 	}
 
 }

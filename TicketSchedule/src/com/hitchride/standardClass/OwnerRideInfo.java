@@ -77,9 +77,6 @@ public class OwnerRideInfo extends RideInfo implements RideStatusChange{
 	public void set_prides(Vector<ParticipantRide> _prides) {
 		this._prides = _prides;
 	}
-
-
-
     
     
 }
