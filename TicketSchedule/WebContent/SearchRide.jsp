@@ -8,6 +8,7 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="com.hitchride.standardClass.User" %>
 <%@ page import="com.hitchride.standardClass.Topic" %>
+<%@ page import="com.hitchride.standardClass.RideInfo" %>
 <%
 	List<Topic> results = (List<Topic>) request.getAttribute("results");
 	if (results==null)
@@ -19,6 +20,7 @@
 	boolean commute = true;
 %>
 <% 
+    
 	String IsLogin =(String) request.getSession().getAttribute("IsLogin");
 	User user;
 	if (IsLogin!= null)
@@ -33,13 +35,13 @@
 		 user.set_avatarID("default.jpg");
 		 user.set_userLevel(0);
 	}
+	RideInfo actRide = (RideInfo) request.getSession().getAttribute("actRide");
 %>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <link rel="stylesheet" href="/TicketSchedule/bootstrap/css/bootstrap.css">
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
-
 <link href="/TicketSchedule/CSS/searchride.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/custom_jqueryui.css" type="text/css" rel="stylesheet">
 
@@ -54,28 +56,11 @@ $(document).ready(function(){
 	initCalandar();
 	document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
 
-	//Search box realted
-	var searchBoxO;
-	var searchBoxD;
-	var orig;
-	var dest;
-	var torigLat;
-	var torigLng;
-	var tdestLat;
-	var tdestLng;
-	var tomarker;
-	var tdmarker;
-	
-	var image = {
-		    url: '/TicketSchedule/Picture/pin_start.png',
-		    // This marker is 20 pixels wide by 32 pixels tall.
-		    size: new google.maps.Size(20, 32),
-		    // The origin for this image is 0,0.
-		    origin: new google.maps.Point(0,0),
-		    // The anchor for this image is the base of the flagpole at 0,32.
-		    anchor: new google.maps.Point(0, 32)
-		  };
-	var image = {
+	//Display Related
+	var torigLat, torigLng, tdestLat, tdestLng;
+	var tomarker,tdmarker;
+
+	var imaget = {
 	          url: '/TicketSchedule/Picture/pin_end.png',
 	          size: new google.maps.Size(71, 71),
 	          origin: new google.maps.Point(0, 0),
@@ -86,30 +71,42 @@ $(document).ready(function(){
 	$(".entry").hover(function(){
 		torigLat = $(this)[0].getAttribute("origLat");
 		torigLng = $(this)[0].getAttribute("origLng");
-		tdestLag = $(this)[0].getAttribute("destLat");
+		tdestLat = $(this)[0].getAttribute("destLat");
 		tdestLng = $(this)[0].getAttribute("destLng");
-		var tLatlng = new google.maps.LatLng(torigLat,torigLng);
-		var dLatlng = new google.maps.LatLng(tdestLag,tdestLng);
+		var toLatlng = new google.maps.LatLng(torigLat,torigLng);
+		var tdLatlng = new google.maps.LatLng(tdestLat,tdestLng);
 
 		tomarker = new google.maps.Marker({
 		            map: map,
-		            icon: image,
-		            position: tLatlng
+		            icon: imaget,
+		            position: toLatlng
 		 });
-		domarker = new google.maps.Marker({
+		tdmarker = new google.maps.Marker({
             map: map,
-            icon: image,
-            position: dLatlng
+            icon: imaget,
+            position: tdLatlng
  		});
-		 bounds.extend(tomarker);
-		 bounds.extend(domarker);
-		 map.fitBounds(bounds);
+	 	var bounds = new google.maps.LatLngBounds();
+	    bounds.extend(toLatlng);
+		bounds.extend(tdLatlng);
+		bounds.union(basicbounds);
+		map.fitBounds(bounds);
 	},
 	function(){
-		
-	}
-	);
+		tomarker.setMap(null);
+		tdmarker.setMap(null);
+		map.fitBounds(basicbounds);
+	});
 	
+	
+	
+	//Search box realted
+	var searchBoxO;
+	var searchBoxD;
+	var orig;
+	var dest;
+	var omarkers = [];
+	var dmarkers = [];
 	var mapOptions = {
 		  center: new google.maps.LatLng(37.397, -122.144),
 		  zoom: 8,
@@ -122,19 +119,127 @@ $(document).ready(function(){
     dest = document.getElementById('search_e');
 	searchBoxD = new google.maps.places.SearchBox(dest);
 
-    google.maps.event.addListener(searchBoxO, 'places_changed', function() {
-	var places = searchBoxO.getPlaces();
-	place = places[0];
-	document.getElementById("origLat").value=place.geometry.location.lat();
-	document.getElementById("origLng").value=place.geometry.location.lng();
+	google.maps.event.addListener(searchBoxO, 'places_changed', function() {
+	  	  var places = searchBoxO.getPlaces();
+
+	  	  for (var i = 0, marker; marker = omarkers[i]; i++) {
+	        marker.setMap(null);
+	      }
+
+	      omarkers = [];
+	      
+	      for (var i = 0, place; place = places[i]; i++) {
+	        var image = {
+	          url: place.icon,
+	          size: new google.maps.Size(71, 71),
+	          origin: new google.maps.Point(0, 0),
+	          anchor: new google.maps.Point(17, 34),
+	          scaledSize: new google.maps.Size(25, 25)
+	        };
+
+	        var marker = new google.maps.Marker({
+	            map: map,
+	            icon: image,
+	            title: place.name,
+	            position: place.geometry.location
+	          });
+	        omarkers.push(marker);
+
+	        bounds.extend(place.geometry.location);
+	      }
+	      map.fitBounds(bounds);
+
+		      
+	  	  place = places[0];
+		  document.getElementById("origLat").value=place.geometry.location.lat();
+		  document.getElementById("origLng").value=place.geometry.location.lng();
+		  oLat=place.geometry.location.lat();
+		  oLng=place.geometry.location.lng();
+		  dLat=document.getElementById("destLat").value;
+		  dLng=document.getElementById("destLng").value;
+		  if (dLat !="" && dLng!="")
+		  {
+			  calculateDistances();
+		  }
 	});
 
-    google.maps.event.addListener(searchBoxD, 'places_changed', function() {
-    	var places = searchBoxD.getPlaces();
-    	place = places[0];
-    	document.getElementById("destLat").value=place.geometry.location.lat();
-    	document.getElementById("destLng").value=place.geometry.location.lng();
-    	});
+	google.maps.event.addListener(searchBoxD, 'places_changed', function() {
+	   	  var places = searchBoxD.getPlaces();
+	   	  for (var i = 0, marker; marker = dmarkers[i]; i++) {
+	        marker.setMap(null);
+	      }
+
+	      dmarkers = [];
+	      for (var i = 0, place; place = places[i]; i++) {
+	        var image = {
+	          url: place.icon,
+	          size: new google.maps.Size(71, 71),
+	          origin: new google.maps.Point(0, 0),
+	          anchor: new google.maps.Point(17, 34),
+	          scaledSize: new google.maps.Size(25, 25)
+	        };
+
+	        var marker = new google.maps.Marker({
+	            map: map,
+	            icon: image,
+	            title: place.name,
+	            position: place.geometry.location
+	          });
+	        dmarkers.push(marker);
+
+	        bounds.extend(place.geometry.location);
+	      }
+	      map.fitBounds(bounds);
+	      place = places[0];
+		  document.getElementById("destLat").value=place.geometry.location.lat();
+		  document.getElementById("destLng").value=place.geometry.location.lng();
+		  dLat=place.geometry.location.lat();
+		  dLng=place.geometry.location.lng();
+		  oLat=document.getElementById("origLat").value;
+		  oLng=document.getElementById("origLng").value;
+		  
+		  if (oLat !="" && oLng!="")
+		  {
+			  calculateDistances();
+		  }
+	});
+
+    
+    var origLat="<%=actRide==null?"":actRide.origLoc.get_lat()%>";
+	var origLng="<%=actRide==null?"":actRide.origLoc.get_lon()%>";
+	var destLat="<%=actRide==null?"":actRide.destLoc.get_lat()%>";
+	var destLng="<%=actRide==null?"":actRide.origLoc.get_lon()%>";
+	var basicbounds = new google.maps.LatLngBounds();
+	
+	if (origLat!="" && origLng!="" && origLat!="" &&origLng!="")
+	{
+		var omarker,dmarker;
+		var oLatlng = new google.maps.LatLng(origLat,origLng);
+		var dLatlng = new google.maps.LatLng(destLat,destLng);
+		
+		var imageu = {
+			    url: '/TicketSchedule/Picture/pin_start.png',
+		        size: new google.maps.Size(71, 71),
+		        origin: new google.maps.Point(0, 0),
+		        anchor: new google.maps.Point(17, 34),
+		        scaledSize: new google.maps.Size(25, 25)
+			  };
+		
+		omarker = new google.maps.Marker({
+		    map: map,
+		    icon: imageu,
+		    position: oLatlng
+		});
+		dmarker = new google.maps.Marker({
+			map: map,
+			icon: imageu,
+			position: dLatlng
+		});
+		basicbounds.extend(oLatlng);
+		basicbounds.extend(dLatlng);
+		map.fitBounds(basicbounds);
+	}
+	
 });
 
 		
@@ -184,14 +289,14 @@ window.onscroll = function(){
 				<form class="search" action="/TicketSchedule/servlet/Search" method="get" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
 					<div class="text_input">
 						<label class="pin start" for="search_s"></label>
-						<input id="search_s" class="clickaway input_text" type="text" 
+						<input id="search_s" class="input_text" type="text" 
 							placeholder="Starting from..." name="s" alt="search_start" 
 							autocomplete="off" value=<%=(request.getAttribute("orig") ==null) ? "" : request.getAttribute("orig")%>>
 						</input>
 					</div>
 					<div class="text_input">
 						<label class="pin end" for="search_e"></label>
-						<input id="search_e" class="clickaway input_text" type="text" 
+						<input id="search_e" class="input_text" type="text" 
 						placeholder="Going to..." name="e" alt="search_end" 
 						autocomplete="off" value=<%= (request.getAttribute("dest")==null) ? "" : request.getAttribute("dest") %>>
 					</div>
