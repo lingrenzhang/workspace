@@ -60,7 +60,15 @@ $(document).ready(function(){
 	var torigLat, torigLng, tdestLat, tdestLng;
 	var tomarker,tdmarker;
 
-	var imaget = {
+	
+	var images = {
+		    url: '/TicketSchedule/Picture/pin_start.png',
+	        size: new google.maps.Size(71, 71),
+	        origin: new google.maps.Point(0, 0),
+	        anchor: new google.maps.Point(17, 34),
+	        scaledSize: new google.maps.Size(25, 25)
+		  };
+	var imagee = {
 	          url: '/TicketSchedule/Picture/pin_end.png',
 	          size: new google.maps.Size(71, 71),
 	          origin: new google.maps.Point(0, 0),
@@ -77,13 +85,13 @@ $(document).ready(function(){
 		var tdLatlng = new google.maps.LatLng(tdestLat,tdestLng);
 
 		tomarker = new google.maps.Marker({
-		            map: map,
-		            icon: imaget,
-		            position: toLatlng
+		      map: map,
+		      icon: images,
+		      position: toLatlng
 		 });
 		tdmarker = new google.maps.Marker({
             map: map,
-            icon: imaget,
+            icon: imagee,
             position: tdLatlng
  		});
 	 	var bounds = new google.maps.LatLngBounds();
@@ -98,21 +106,55 @@ $(document).ready(function(){
 		map.fitBounds(basicbounds);
 	});
 	
-	
-	
 	//Search box realted
 	var searchBoxO;
 	var searchBoxD;
 	var orig;
 	var dest;
-	var omarkers = [];
-	var dmarkers = [];
+	var omarker;
+	var dmarker;
+	
 	var mapOptions = {
-		  center: new google.maps.LatLng(37.397, -122.144),
-		  zoom: 8,
-		  mapTypeId: google.maps.MapTypeId.ROADMAP
-	};
+			  center: new google.maps.LatLng(37.397, -122.144),
+			  zoom: 8,
+			  mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
 	var map = new google.maps.Map(document.getElementById("post-map-canvas"),mapOptions);
+
+	
+	var origLat="<%=actRide==null?"":actRide.origLoc.get_lat()%>";
+	var origLng="<%=actRide==null?"":actRide.origLoc.get_lon()%>";
+	var destLat="<%=actRide==null?"":actRide.destLoc.get_lat()%>";
+	var destLng="<%=actRide==null?"":actRide.origLoc.get_lon()%>";
+	var basicbounds = new google.maps.LatLngBounds();
+	
+	if (origLat!="" && origLng!="" && origLat!="" &&origLng!="")
+	{
+		var oLatlng = new google.maps.LatLng(origLat,origLng);
+		var dLatlng = new google.maps.LatLng(destLat,destLng);
+		
+		omarker = new google.maps.Marker({
+		    map: map,
+		    icon: images,
+		    position: oLatlng
+		});
+		dmarker = new google.maps.Marker({
+			map: map,
+			icon: imagee,
+			position: dLatlng
+		});
+		
+		document.getElementById("origLat").value=origLat;
+		document.getElementById("origLng").value=origLng;
+		document.getElementById("destLat").value=destLat;
+		document.getElementById("destLng").value=destLng;
+		
+		basicbounds.extend(oLatlng);
+		basicbounds.extend(dLatlng);
+		map.fitBounds(basicbounds);
+	}
+	
+	
 
     orig = document.getElementById('search_s');
 	searchBoxO = new google.maps.places.SearchBox(orig);
@@ -121,124 +163,95 @@ $(document).ready(function(){
 
 	google.maps.event.addListener(searchBoxO, 'places_changed', function() {
 	  	  var places = searchBoxO.getPlaces();
-
-	  	  for (var i = 0, marker; marker = omarkers[i]; i++) {
-	        marker.setMap(null);
-	      }
-
-	      omarkers = [];
-	      
-	      for (var i = 0, place; place = places[i]; i++) {
-	        var image = {
-	          url: place.icon,
-	          size: new google.maps.Size(71, 71),
-	          origin: new google.maps.Point(0, 0),
-	          anchor: new google.maps.Point(17, 34),
-	          scaledSize: new google.maps.Size(25, 25)
-	        };
-
-	        var marker = new google.maps.Marker({
+	  	  if (omarker!=null)
+	  	  {
+	      	omarker.setMap(null);
+	  	  }
+	  	  
+	  	  place = places[0];
+	      omarker = new google.maps.Marker({
 	            map: map,
-	            icon: image,
+	            icon: images,
 	            title: place.name,
 	            position: place.geometry.location
 	          });
-	        omarkers.push(marker);
-
-	        bounds.extend(place.geometry.location);
-	      }
-	      map.fitBounds(bounds);
-
-		      
-	  	  place = places[0];
+	  	  
 		  document.getElementById("origLat").value=place.geometry.location.lat();
 		  document.getElementById("origLng").value=place.geometry.location.lng();
-		  oLat=place.geometry.location.lat();
-		  oLng=place.geometry.location.lng();
-		  dLat=document.getElementById("destLat").value;
-		  dLng=document.getElementById("destLng").value;
-		  if (dLat !="" && dLng!="")
+		  origLat=place.geometry.location.lat();
+		  origLng=place.geometry.location.lng();
+		  destLat=document.getElementById("destLat").value;
+		  destLng=document.getElementById("destLng").value;
+		  if (destLat !="" && destLng!="")
 		  {
+			  refit();
 			  calculateDistances();
 		  }
 	});
 
 	google.maps.event.addListener(searchBoxD, 'places_changed', function() {
 	   	  var places = searchBoxD.getPlaces();
-	   	  for (var i = 0, marker; marker = dmarkers[i]; i++) {
-	        marker.setMap(null);
-	      }
-
-	      dmarkers = [];
-	      for (var i = 0, place; place = places[i]; i++) {
-	        var image = {
-	          url: place.icon,
-	          size: new google.maps.Size(71, 71),
-	          origin: new google.maps.Point(0, 0),
-	          anchor: new google.maps.Point(17, 34),
-	          scaledSize: new google.maps.Size(25, 25)
-	        };
-
-	        var marker = new google.maps.Marker({
+	   	  if (dmarker!=null)
+	  	  {
+	      	 dmarker.setMap(null);
+	  	  }
+			
+	      place = places[0];
+          dmarker = new google.maps.Marker({
 	            map: map,
-	            icon: image,
+	            icon: imagee,
 	            title: place.name,
 	            position: place.geometry.location
 	          });
-	        dmarkers.push(marker);
-
-	        bounds.extend(place.geometry.location);
-	      }
-	      map.fitBounds(bounds);
-	      place = places[0];
+	     
 		  document.getElementById("destLat").value=place.geometry.location.lat();
 		  document.getElementById("destLng").value=place.geometry.location.lng();
-		  dLat=place.geometry.location.lat();
-		  dLng=place.geometry.location.lng();
-		  oLat=document.getElementById("origLat").value;
-		  oLng=document.getElementById("origLng").value;
+		  destLat=place.geometry.location.lat();
+		  destLng=place.geometry.location.lng();
+		  origLat=document.getElementById("origLat").value;
+		  origLng=document.getElementById("origLng").value;
 		  
-		  if (oLat !="" && oLng!="")
+		  if (origLat !="" && origLng!="")
 		  {
+			  refit();
 			  calculateDistances();
+		  }
+		  
+		  function refit()
+		  {
+			  var oLatlng = new google.maps.LatLng(origLat,origLng);
+			  var dLatlng = new google.maps.LatLng(destLat,destLng);
+			  basicbounds= new google.maps.LatLngBounds();
+			  basicbounds.extend(oLatlng);
+			  basicbounds.extend(dLatlng);
+			  map.fitBounds(basicbounds);
 		  }
 	});
 
-    
-    var origLat="<%=actRide==null?"":actRide.origLoc.get_lat()%>";
-	var origLng="<%=actRide==null?"":actRide.origLoc.get_lon()%>";
-	var destLat="<%=actRide==null?"":actRide.destLoc.get_lat()%>";
-	var destLng="<%=actRide==null?"":actRide.origLoc.get_lon()%>";
-	var basicbounds = new google.maps.LatLngBounds();
-	
-	if (origLat!="" && origLng!="" && origLat!="" &&origLng!="")
-	{
-		var omarker,dmarker;
-		var oLatlng = new google.maps.LatLng(origLat,origLng);
-		var dLatlng = new google.maps.LatLng(destLat,destLng);
-		
-		var imageu = {
-			    url: '/TicketSchedule/Picture/pin_start.png',
-		        size: new google.maps.Size(71, 71),
-		        origin: new google.maps.Point(0, 0),
-		        anchor: new google.maps.Point(17, 34),
-		        scaledSize: new google.maps.Size(25, 25)
-			  };
-		
-		omarker = new google.maps.Marker({
-		    map: map,
-		    icon: imageu,
-		    position: oLatlng
-		});
-		dmarker = new google.maps.Marker({
-			map: map,
-			icon: imageu,
-			position: dLatlng
-		});
-		basicbounds.extend(oLatlng);
-		basicbounds.extend(dLatlng);
-		map.fitBounds(basicbounds);
+	function calculateDistances() {
+		var service = new google.maps.DistanceMatrixService();
+		var orig = new google.maps.LatLng(origLat,origLng);
+		var dest = new google.maps.LatLng(destLat,destLng);
+		service.getDistanceMatrix(
+		{
+		  origins: [orig],
+		  destinations: [dest],
+		  travelMode: google.maps.TravelMode.DRIVING,
+		  unitSystem: google.maps.UnitSystem.METRIC,
+		  avoidHighways: false,
+		  avoidTolls: false
+		 }, callback);
 	}
+		
+	function callback(response, status) {
+	  if (status != google.maps.DistanceMatrixStatus.OK) {
+	    alert('Error was: ' + status);
+	   } else {
+		    document.getElementById("distance").value =response.rows[0].elements[0].distance.value;
+		    document.getElementById("dtime").value =response.rows[0].elements[0].duration.value;
+	   }
+	}
+  
 	
 });
 
@@ -272,7 +285,7 @@ window.onscroll = function(){
 		<div class="navbar navbar-default">
 			<ul class="nav navbar-nav">
 			  <li><a href="/TicketSchedule/UserCenter.jsp">UserCenter</a></li>
-			  <li><a href="/TicketSchedule/ManageRide.jsp">PostRide</a></li>
+			  <li><a href="/TicketSchedule/ManageRide.jsp">ManageRide</a></li>
 		      <li class="active"><a href="#">SearchRide</a></li>
 		    </ul>
 		 </div>
@@ -301,10 +314,12 @@ window.onscroll = function(){
 						autocomplete="off" value=<%= (request.getAttribute("dest")==null) ? "" : request.getAttribute("dest") %>>
 					</div>
 					<div class="geo_internal" style="display:none">
-						<input id="origLat" name="oLat" value=""></input>
-						<input id="origLng" name="oLng" value=""></input>
-						<input id="destLat" name="dLat" value=""></input>
-						<input id="destLng" name="dLnt" value=""></input>
+						<input id="origLat" name="origLat" value=""></input>
+						<input id="origLng" name="origLng" value=""></input>
+						<input id="destLat" name="destLat" value=""></input>
+						<input id="destLng" name="destLng" value=""></input>
+						<input id="distance" name="distance" value=""></input>
+						<input id="duration" name="dtime" value=""></input>
 					</div>
 					<%if (commute == true) { %>
 					<div class="text_input datetime">
