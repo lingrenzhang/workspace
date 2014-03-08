@@ -39,7 +39,7 @@
 
 <link rel="stylesheet" href="/TicketSchedule/bootstrap/css/bootstrap.css">
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
-<link href="/TicketSchedule/CSS/style.css" type="text/css" rel="stylesheet">
+
 <link href="/TicketSchedule/CSS/searchride.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/custom_jqueryui.css" type="text/css" rel="stylesheet">
 
@@ -59,12 +59,63 @@ $(document).ready(function(){
 	var searchBoxD;
 	var orig;
 	var dest;
+	var torigLat;
+	var torigLng;
+	var tdestLat;
+	var tdestLng;
+	var tomarker;
+	var tdmarker;
+	
+	var image = {
+		    url: '/TicketSchedule/Picture/pin_start.png',
+		    // This marker is 20 pixels wide by 32 pixels tall.
+		    size: new google.maps.Size(20, 32),
+		    // The origin for this image is 0,0.
+		    origin: new google.maps.Point(0,0),
+		    // The anchor for this image is the base of the flagpole at 0,32.
+		    anchor: new google.maps.Point(0, 32)
+		  };
+	var image = {
+	          url: '/TicketSchedule/Picture/pin_end.png',
+	          size: new google.maps.Size(71, 71),
+	          origin: new google.maps.Point(0, 0),
+	          anchor: new google.maps.Point(17, 34),
+	          scaledSize: new google.maps.Size(25, 25)
+	};
+	
+	$(".entry").hover(function(){
+		torigLat = $(this)[0].getAttribute("origLat");
+		torigLng = $(this)[0].getAttribute("origLng");
+		tdestLag = $(this)[0].getAttribute("destLat");
+		tdestLng = $(this)[0].getAttribute("destLng");
+		var tLatlng = new google.maps.LatLng(torigLat,torigLng);
+		var dLatlng = new google.maps.LatLng(tdestLag,tdestLng);
+
+		tomarker = new google.maps.Marker({
+		            map: map,
+		            icon: image,
+		            position: tLatlng
+		 });
+		domarker = new google.maps.Marker({
+            map: map,
+            icon: image,
+            position: dLatlng
+ 		});
+		 bounds.extend(tomarker);
+		 bounds.extend(domarker);
+		 map.fitBounds(bounds);
+	},
+	function(){
+		
+	}
+	);
+	
 	var mapOptions = {
-		  center: new google.maps.LatLng(-34.397, 150.644),
+		  center: new google.maps.LatLng(37.397, -122.144),
 		  zoom: 8,
 		  mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
-	var map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
+	var map = new google.maps.Map(document.getElementById("post-map-canvas"),mapOptions);
 
     orig = document.getElementById('search_s');
 	searchBoxO = new google.maps.places.SearchBox(orig);
@@ -97,8 +148,7 @@ window.onscroll = function(){
     	var div = document.getElementById("floatwrap");
     	div.className="floatwrap";
     }
-}
-
+};
 
 </script>
 
@@ -232,7 +282,7 @@ window.onscroll = function(){
 			<div id="info">
 				<div class="floatable">
 					<div class="floatwrap" id="floatwrap">
-				 		<div id="post-map-canvas">sdfasdf
+				 		<div id="post-map-canvas">
 						</div>
 					</div>
 				</div>

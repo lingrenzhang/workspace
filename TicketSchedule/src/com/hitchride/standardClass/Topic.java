@@ -139,7 +139,10 @@ public class Topic {
 	{
 		StringBuilder result = new StringBuilder();
 		result.append("<a href=\"./RideCenter?topicId="+this._topicId +"&type=commute\">");
-		result.append("<div class=\"entry\">");
+		result.append("<div class=\"entry\" origLat="+this.ownerRide.origLoc.get_lat()+" ");
+		result.append("origLng=" +  this.ownerRide.origLoc.get_lon()+" ");
+		result.append("destLat=" +  this.ownerRide.destLoc.get_lat()+" ");
+		result.append("destLng=" +  this.ownerRide.destLoc.get_lon()+">");
 		if (this.ownerRide.userType)
 		{
 			result.append("<div class=\"passenger_box\"><p>");

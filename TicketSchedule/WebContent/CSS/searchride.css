@@ -96,6 +96,35 @@ background-color: rgba(186, 227, 255, 0.4);
 }
 
 
+#post-map-canvas {
+float: right;
+width: 320px;
+height: 300px;
+margin-left: 30px;
+position: relative; 
+background-color: rgb(229, 227, 223); 
+overflow: hidden;
+ -webkit-transform: translateZ(0px);
+}
 
+
+#content #info {
+width: 270px;
+margin-left: 20px;
+float: right;
+}
+
+#info .floatable {
+width: 270px;
+position: absolute;
+}
+
+
+.floatwrap.fixed {
+width: 270px;
+position: fixed;
+top: 0;
+margin-top: 20px;
+}
 
 

@@ -27,6 +27,7 @@ public class GeoInfo implements Cloneable{
 		this._lat = lat;
 		this._lon = lon;
 		this._formatedAddr=formatedAddr;
+		this._addr = formatedAddr;
 		_status = 3;
 	}
 	
