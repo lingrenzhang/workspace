@@ -125,7 +125,7 @@ $(document).ready(function(){
 	var origLat="<%=actRide==null?"":actRide.origLoc.get_lat()%>";
 	var origLng="<%=actRide==null?"":actRide.origLoc.get_lon()%>";
 	var destLat="<%=actRide==null?"":actRide.destLoc.get_lat()%>";
-	var destLng="<%=actRide==null?"":actRide.origLoc.get_lon()%>";
+	var destLng="<%=actRide==null?"":actRide.destLoc.get_lon()%>";
 	var basicbounds = new google.maps.LatLngBounds();
 	
 	if (origLat!="" && origLng!="" && origLat!="" &&origLng!="")
@@ -216,17 +216,17 @@ $(document).ready(function(){
 			  refit();
 			  calculateDistances();
 		  }
-		  
-		  function refit()
-		  {
-			  var oLatlng = new google.maps.LatLng(origLat,origLng);
-			  var dLatlng = new google.maps.LatLng(destLat,destLng);
-			  basicbounds= new google.maps.LatLngBounds();
-			  basicbounds.extend(oLatlng);
-			  basicbounds.extend(dLatlng);
-			  map.fitBounds(basicbounds);
-		  }
 	});
+	
+	function refit()
+	  {
+		  var oLatlng = new google.maps.LatLng(origLat,origLng);
+		  var dLatlng = new google.maps.LatLng(destLat,destLng);
+		  basicbounds= new google.maps.LatLngBounds();
+		  basicbounds.extend(oLatlng);
+		  basicbounds.extend(dLatlng);
+		  map.fitBounds(basicbounds);
+	  }
 
 	function calculateDistances() {
 		var service = new google.maps.DistanceMatrixService();
@@ -319,7 +319,7 @@ window.onscroll = function(){
 						<input id="destLat" name="destLat" value=""></input>
 						<input id="destLng" name="destLng" value=""></input>
 						<input id="distance" name="distance" value=""></input>
-						<input id="duration" name="dtime" value=""></input>
+						<input id="dtime" name="dtime" value=""></input>
 					</div>
 					<%if (commute == true) { %>
 					<div class="text_input datetime">
