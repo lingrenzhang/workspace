@@ -104,6 +104,7 @@ function displayCalender(year,month)
 
 window.onclick = function(e){
 	var datepicker=$("#ui-datepicker-div");
+	var mapcanvas=$("#map-canvas");
 	var left = parseFloat(datepicker.css("left"));
 	var right = left + parseFloat(datepicker.css("width"));
 	var top = parseFloat(datepicker.css("top"))-30;
@@ -113,6 +114,7 @@ window.onclick = function(e){
 		||(e.pageY<top)||(e.pageY>down))
 	{
   	   datepicker.css({"display":"none"});
+  	   mapcanvas.css({"display":""});
 	}
 }
 
@@ -135,6 +137,9 @@ function initCalandar(url)
 	
 	$(".datetime_icon").click(function(){
 	    //Data picker related
+		var mapcanvas=$("#map-canvas");
+		mapcanvas.fadeToggle();
+		
 	    var search= $("#search_date").offset();
 	    var datepicker=$("#ui-datepicker-div");
 	    datepicker.css({"left" : search.left,"top" : search.top+35});

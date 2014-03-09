@@ -119,7 +119,7 @@ $(document).ready(function(){
 			  zoom: 8,
 			  mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
-	var map = new google.maps.Map(document.getElementById("post-map-canvas"),mapOptions);
+	var map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
 
 	
 	var origLat="<%=actRide==null?"":actRide.origLoc.get_lat()%>";
@@ -402,7 +402,7 @@ window.onscroll = function(){
 			<div id="info">
 				<div class="floatable">
 					<div class="floatwrap" id="floatwrap">
-				 		<div id="post-map-canvas">
+				 		<div id="map-canvas">
 						</div>
 					</div>
 				</div>
@@ -413,8 +413,7 @@ window.onscroll = function(){
 </div>
 <div id="footer">
 </div>
-<div id="map-canvas">
-</div>
+
 
 <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"
  style="position: absolute; z-index:1;display:none;">
