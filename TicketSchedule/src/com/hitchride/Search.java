@@ -138,7 +138,7 @@ public class Search extends HttpServlet {
 			int dura=0;
 			try{
 				dist = Integer.parseInt(request.getParameter("distance"));
-				dura = Integer.parseInt(request.getParameter("dtime"));
+				dura = Integer.parseInt(request.getParameter("duration"));
 			}
 			catch(Exception e)
 			{
@@ -352,7 +352,7 @@ public class Search extends HttpServlet {
 			int dura=0;
 			try{
 				dist = Integer.parseInt(request.getParameter("distance"));
-				dura = Integer.parseInt(request.getParameter("dtime"));
+				dura = Integer.parseInt(request.getParameter("duration"));
 			}
 			catch(Exception e)
 			{

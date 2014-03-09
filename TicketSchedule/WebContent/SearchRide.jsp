@@ -248,7 +248,7 @@ $(document).ready(function(){
 	    alert('Error was: ' + status);
 	   } else {
 		    document.getElementById("distance").value =response.rows[0].elements[0].distance.value;
-		    document.getElementById("dtime").value =response.rows[0].elements[0].duration.value;
+		    document.getElementById("duration").value =response.rows[0].elements[0].duration.value;
 	   }
 	}
   
@@ -304,22 +304,22 @@ window.onscroll = function(){
 						<label class="pin start" for="search_s"></label>
 						<input id="search_s" class="input_text" type="text" 
 							placeholder="Starting from..." name="s" alt="search_start" 
-							autocomplete="off" value=<%=(request.getAttribute("orig") ==null) ? "" : request.getAttribute("orig")%>>
+							autocomplete="off" value=<%=(actRide ==null) ? "" : actRide.origLoc._addr%>>
 						</input>
 					</div>
 					<div class="text_input">
 						<label class="pin end" for="search_e"></label>
 						<input id="search_e" class="input_text" type="text" 
 						placeholder="Going to..." name="e" alt="search_end" 
-						autocomplete="off" value=<%= (request.getAttribute("dest")==null) ? "" : request.getAttribute("dest") %>>
+						autocomplete="off" value=<%=(actRide ==null) ? "" : actRide.destLoc._addr%>>
 					</div>
 					<div class="geo_internal" style="display:none">
 						<input id="origLat" name="origLat" value=""></input>
 						<input id="origLng" name="origLng" value=""></input>
 						<input id="destLat" name="destLat" value=""></input>
 						<input id="destLng" name="destLng" value=""></input>
-						<input id="distance" name="distance" value=""></input>
-						<input id="dtime" name="dtime" value=""></input>
+						<input id="distance" name="distance" value="<%=actRide==null?"":actRide.dist%>"></input>
+						<input id="duration" name="duration" value="<%=actRide==null?"":actRide.dura%>"></input>
 					</div>
 					<%if (commute == true) { %>
 					<div class="text_input datetime">
