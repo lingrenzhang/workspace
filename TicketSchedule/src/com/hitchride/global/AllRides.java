@@ -5,10 +5,9 @@ import java.sql.SQLException;
 import java.util.Hashtable;
 
 import com.hitchride.access.CarpoolTbAccess;
-import com.hitchride.standardClass.Message;
 import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.RideInfo;
-import com.hitchride.standardClass.Topic;
+
 
 public class AllRides {
 	private static AllRides allRides;

@@ -9,18 +9,14 @@ import java.util.Enumeration;
 import com.hitchride.standardClass.GeoInfo;
 import com.hitchride.standardClass.MatchScore;
 import com.hitchride.standardClass.Message;
-import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.ParticipantRide;
-import com.hitchride.standardClass.RideInfo;
-import com.hitchride.standardClass.User;
-import com.hitchride.standardClass.UserInfo;
+
 
 public class DummyData {
 	private static DummyData dummy;
 	
 	private List<GeoInfo> _geoinfo;
-	private List<User> _users;
-	private List<OwnerRideInfo> _ownerRide;
+
 	
 	
 	public Hashtable<Integer,ParticipantRide> _freeRides;  //All rides. Represent by RID.
@@ -33,8 +29,6 @@ public class DummyData {
 	private DummyData(){
 		
 		_geoinfo = new ArrayList<GeoInfo>();
-		_users = new ArrayList<User>();
-		_ownerRide = new ArrayList<OwnerRideInfo>();
         _partRides = new Hashtable<Integer,ParticipantRide>();
         _dummyMessage = new Hashtable<Integer,Message>();
         

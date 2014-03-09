@@ -2,18 +2,14 @@ package com.hitchride;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hitchride.global.AllRides;
 import com.hitchride.global.AllTopics;
-import com.hitchride.global.DummyData;
 import com.hitchride.global.Environment;
 import com.hitchride.standardClass.Message;
-import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.Topic;
 import com.hitchride.standardClass.User;
 

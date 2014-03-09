@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,15 +22,12 @@ import org.json.JSONObject;
 
 import com.hitchride.calc.*;
 import com.hitchride.global.AllRides;
-import com.hitchride.global.DummyData;
-import com.hitchride.global.Environment;
 import com.hitchride.standardClass.GeoInfo;
-import com.hitchride.standardClass.OwnerRideInfo;
-import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Schedule;
 import com.hitchride.standardClass.Topic;
 import com.hitchride.standardClass.User;
+import com.hitchride.util.TimeFormatHelper;
 /**
  * Servlet implementation class Search
  */
@@ -163,6 +161,16 @@ public class Search extends HttpServlet {
 			}
 			actRide.dura=dura;
 			actRide.dist=dist;
+			
+			Schedule schedule = new Schedule();
+			actRide.schedule = schedule;
+			schedule.set_isRoundTrip(false);
+			schedule.set_isCommute(false);
+			String date = request.getParameter("date");
+			Date d = TimeFormatHelper.setDate(date);
+			schedule.tripDate = d;
+			schedule.forwardTime =  java.sql.Time.valueOf("12:00:00"); 
+			schedule.forwardFlexibility =  java.sql.Time.valueOf("12:00:00");
 			request.getSession().setAttribute("actRide", actRide);
 		}
 

@@ -12,12 +12,10 @@ import com.hitchride.global.AllRides;
 import com.hitchride.global.DummyData;
 import com.hitchride.global.Environment;
 import com.hitchride.standardClass.Message;
-import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Topic;
 import com.hitchride.standardClass.User;
-import com.hitchride.standardClass.UserInfo;
 import com.hitchride.util.QueryStringParser;
 
 /**
@@ -47,15 +45,22 @@ public class StatusService extends HttpServlet {
 		RideInfo ride = (RideInfo) request.getSession().getAttribute("actRide");
 		Topic topic = (Topic) request.getSession().getAttribute("topic");
 
-		UserInfo fromU = Environment.getEnv().getUser(fromUser);
-		UserInfo toU = Environment.getEnv().getUser(toUser);
+		User fromU = (User) Environment.getEnv().getUser(fromUser);
+		User toU = (User) Environment.getEnv().getUser(toUser);
 		
 		int status = 10*fromSta + toSta;
 		ParticipantRide pride=null;
 		switch (status)
 		{
 			case 1:
+				if (ride.get_user()==null)  //When ride coming from search
+				{
+					AllRides.getRides().inser_availride(ride);
+					fromU.rides.add(ride);
+					ride.set_user(fromU);
+				}
 				pride = new ParticipantRide(ride);
+
 				pride.set_user((User) fromU);
 				pride.set_assoOwnerRideId(topic.get_topicId());
 				pride.set_status(1);

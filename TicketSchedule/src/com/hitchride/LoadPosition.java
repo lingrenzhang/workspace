@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hitchride.access.*;
 import com.mysql.jdbc.ResultSet;
 import com.hitchride.access.CarpoolTbAccess;
 

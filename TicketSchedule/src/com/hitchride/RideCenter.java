@@ -35,52 +35,62 @@ public class RideCenter extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			QueryStringParser qsPar = new QueryStringParser(request.getQueryString());
-			int topicId = qsPar.getInt("topicId");
-		    Topic topic = AllTopics.getTopics().get_topic(topicId);
-		    request.getSession().setAttribute("topic",topic);
-		    User user = (User) request.getSession().getAttribute("user");
-		    Boolean isOwnerMode = (user.get_uid() == topic.ownerRide._rideInfo.get_user().get_uid());
-		    request.setAttribute("isOwnerMode", isOwnerMode);
-		    
-		    if (!isOwnerMode)
-		    {
-			    Boolean alreadyPart = false;
-			    for(Iterator<ParticipantRide> prI = topic.parRides.iterator(); prI.hasNext();)
+			boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
+			if (!islogin)
+			{
+				request.getSession().setAttribute("fromLocation", "/TicketSchedule/servlet/RideCenter");
+				request.getSession().setAttribute("queryString", request.getQueryString());
+				request.getSession().setMaxInactiveInterval(60*120);
+				response.sendRedirect("/TicketSchedule/Login.jsp");
+			}
+			else{
+				QueryStringParser qsPar = new QueryStringParser(request.getQueryString());
+				int topicId = qsPar.getInt("topicId");
+			    Topic topic = AllTopics.getTopics().get_topic(topicId);
+			    request.getSession().setAttribute("topic",topic);
+			    User user = (User) request.getSession().getAttribute("user");
+			    Boolean isOwnerMode = (user.get_uid() == topic.ownerRide._rideInfo.get_user().get_uid());
+			    request.setAttribute("isOwnerMode", isOwnerMode);
+			    
+			    if (!isOwnerMode)
 			    {
-			    	    ParticipantRide pride=prI.next();
-			    		if (pride._rideinfo.get_user().get_uid()==user.get_uid())
-			    		{
-			    			alreadyPart = true;
-			    		}
-
+				    Boolean alreadyPart = false;
+				    for(Iterator<ParticipantRide> prI = topic.parRides.iterator(); prI.hasNext();)
+				    {
+				    	    ParticipantRide pride=prI.next();
+				    		if (pride._rideinfo.get_user().get_uid()==user.get_uid())
+				    		{
+				    			alreadyPart = true;
+				    		}
+	
+				    }
+				    for(Iterator<ParticipantRide> prI = topic._requestPride.iterator(); prI.hasNext();)
+				    {
+				    	    ParticipantRide pride=prI.next();
+				    		if (pride._rideinfo.get_user().get_uid()==user.get_uid())
+				    		{
+				    			alreadyPart = true;
+				    		}
+	
+				    }
+				    if (!alreadyPart)
+				    {
+				    	RideInfo ride = (RideInfo) request.getSession().getAttribute("actRide");
+				    	ParticipantRide pride = new ParticipantRide(ride);
+				    	pride.set_status(0);
+					    request.setAttribute("participantRide", pride);
+	
+				    }
+				    request.setAttribute("alreadyPart", alreadyPart);
 			    }
-			    for(Iterator<ParticipantRide> prI = topic._requestPride.iterator(); prI.hasNext();)
+			    else
 			    {
-			    	    ParticipantRide pride=prI.next();
-			    		if (pride._rideinfo.get_user().get_uid()==user.get_uid())
-			    		{
-			    			alreadyPart = true;
-			    		}
-
+			    	
 			    }
-			    if (!alreadyPart)
-			    {
-			    	RideInfo ride = (RideInfo) request.getSession().getAttribute("actRide");
-			    	ParticipantRide pride = new ParticipantRide(ride);
-			    	pride.set_status(0);
-				    request.setAttribute("participantRide", pride);
-
-			    }
-			    request.setAttribute("alreadyPart", alreadyPart);
-		    }
-		    else
-		    {
-		    	
-		    }
-		    
-			RequestDispatcher rd = request.getRequestDispatcher("/RideCenter.jsp");
-			rd.forward(request, response);
+			    
+				RequestDispatcher rd = request.getRequestDispatcher("/RideCenter.jsp");
+				rd.forward(request, response);
+			}
 
 	}
 
