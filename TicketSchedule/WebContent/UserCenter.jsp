@@ -137,7 +137,7 @@
 			</div>
 		</div>
 		<div class="header_nav_wrapper">
-			<nav class="navbar navbar-default" role="navigation">
+			<div class="navbar navbar-default" role="navigation">
 			  <div class="navbar navbar-default">
 			    <ul class="nav navbar-nav">
 			      <li class="active"><a href="#">UserCenter</a></li>
@@ -145,7 +145,7 @@
 			      <li><a href="/TicketSchedule/SearchRide.jsp">SearchRide</a></li>
 			    </ul>
 			  </div>
-			</nav>
+			</div>
 		</div>
 		<div class="header_user_wrapper">
 			

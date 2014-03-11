@@ -1,9 +1,5 @@
 package com.hitchride.standardClass;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 //Maintain with google API reference.
 public class GeoInfo implements Cloneable{
 	public int geoId; //Track as dummy

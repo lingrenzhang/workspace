@@ -1,18 +1,10 @@
 package com.hitchride.dbBatchLoad;
 import com.hitchride.access.CarpoolTbAccess;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.sql.*;
 
-import org.htmlparser.Node;
-import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
 import org.htmlparser.filters.NodeClassFilter;
-import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.nodes.TextNode;
 import org.htmlparser.tags.LinkTag;
 import org.htmlparser.tags.TableColumn;

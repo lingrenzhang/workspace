@@ -2,7 +2,6 @@ package com.hitchride.standardClass;
 
 import java.util.Date;
 
-import com.hitchride.global.AllRides;
 import com.hitchride.global.AllTopics;
 import com.hitchride.global.DummyData;
 import com.hitchride.global.Environment;

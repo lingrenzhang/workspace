@@ -1,6 +1,5 @@
 package com.hitchride.dbBatchLoad;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import com.hitchride.access.MessageTbAccess;

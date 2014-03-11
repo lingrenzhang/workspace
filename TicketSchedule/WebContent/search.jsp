@@ -348,9 +348,9 @@ window.onscroll = function(){
  					<span title="Saturday">Sa</span>
  				</th>
  			</tr>
- 			<tbody>
- 			</tbody>
  		</thead>
+ 		<tbody>
+ 		</tbody>
  	</table>
  
  </div>

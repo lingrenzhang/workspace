@@ -1,19 +1,15 @@
 
 package com.hitchride.standardClass;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
-import com.hitchride.access.CarpoolTbAccess;
+
 import com.hitchride.global.AllRides;
 import com.hitchride.global.DummyData;
 import com.hitchride.global.Environment;
-import com.mysql.jdbc.ResultSet;
 //This class is to represent the standard format of dataStructure for Message Box.
 //Shield the front end from direct access to DB. Using runtime object for performance increase
 //and de-couple physical persistent record with runtime server.  

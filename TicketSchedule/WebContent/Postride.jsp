@@ -440,9 +440,6 @@ $(document).ready(function(){
 	var dmarkers = [];
 	var bounds = new google.maps.LatLngBounds();
 	
-	searchBoxO.onclick = function(){
-	   alert("onchange triggered");
-	}
 	google.maps.event.addListener(searchBoxO, 'places_changed', function() {
 	  	  var places = searchBoxO.getPlaces();
 
@@ -877,6 +874,6 @@ $(document).ready(function(){
 		</div>
 	</div>
 </div>
-<input type="text" class="hidden" id="IsLogin" value='<%=(IsLogin == null) ? "false" : IsLogin%>';></input>
+<input type="text" class="hidden" id="IsLogin" value='<%=(IsLogin == null) ? "false" : IsLogin%>'></input>
 </body>
 </html>

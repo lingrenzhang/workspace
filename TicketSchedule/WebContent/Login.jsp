@@ -77,7 +77,6 @@ $(document).ready(function(){
 				<input type="submit" id="login" class="input-submit login-btn" stats="loginPage_login_button" value="Login" tabindex="5">
 				<input type="button" id="register" class="input-submit regist-btn" stats="loginPage_regist_button" value="Register" tabindex="6"
 				 onclick="window.location = '/TicketSchedule/register.jsp'">
-				
 			</dl>
 		</form>
 			

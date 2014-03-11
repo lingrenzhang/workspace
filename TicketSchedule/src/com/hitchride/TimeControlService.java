@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hitchride.standardClass.RideInfo;
-import com.hitchride.standardClass.Topic;
 import com.hitchride.util.QueryStringParser;
 
 /**

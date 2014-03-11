@@ -5,13 +5,8 @@ import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import com.hitchride.access.CarpoolTbAccess;
 import com.hitchride.access.UserTbAccess;
 import com.hitchride.standardClass.Message;
-import com.hitchride.standardClass.ParticipantRide;
-import com.hitchride.standardClass.RideInfo;
-import com.hitchride.standardClass.Topic;
-import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.User;
 import com.hitchride.standardClass.UserInfo;
 

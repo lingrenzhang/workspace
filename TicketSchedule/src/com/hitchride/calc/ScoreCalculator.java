@@ -1,5 +1,4 @@
 package com.hitchride.calc;
-import com.hitchride.access.*;
 import com.hitchride.dbBatchLoad.GeoUtil;
 import com.hitchride.access.CarpoolTbAccess;
 import com.hitchride.calc.rideInfoParameters;
