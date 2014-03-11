@@ -18,7 +18,7 @@ import com.hitchride.global.Environment;
 //Has relation to both carpoolTb and messageTb in terms of persistent storage. Easier the table relation in mySQL.
 //Not sure the detailed mySQL multi-table relationship supporting level.
 //Think about more complicate use like trigger, cascade, etc later when necessary. 
-public class Topic {
+public class Topic implements PersistentStorage{
 	private int _topicId; 	//Same as owner ID
 	public User owner;
 	//public List<Participant> participants;
@@ -28,6 +28,9 @@ public class Topic {
 
 	public List<Message> messages;      
 
+	//Persistent Storage related
+	boolean _isChanged;
+	boolean _isSaved;
  
 	public Topic(int rid) {
 		try {
@@ -37,7 +40,6 @@ public class Topic {
 				owner =(User) ownerInfo;
 						
 				parRides = new ArrayList<ParticipantRide>();
-				//parRides = ownerRide.get_prides();
 				//TO DO: User dummy participant ride now
 				Enumeration<Integer> e =DummyData.getDummyEnv().getAllPartRide();
 				while (e.hasMoreElements())
@@ -162,5 +164,33 @@ public class Topic {
         result.append("To: "+this.ownerRide.destLoc.get_formatedAddr());
         result.append("</h4></div></div></a>");
 		return result.toString();
+	}
+
+
+	@Override
+	public void insertToDB() {
+		
+		
+	}
+
+
+	@Override
+	public boolean isChanged() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean isSaved() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean lastCheckpoint() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

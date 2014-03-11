@@ -1,8 +1,13 @@
 package com.hitchride.access;
 
+import java.util.Hashtable;
+
 //This class defines the table format inside schedule DB. Use DBGeneration to generate tables.
+@Deprecated
 public class TicketScheduleDBFormat {
+
 	
+	@Deprecated
 	public static final String[] CarpoolTbcolumns={
 		"userName",
 		// trip info
@@ -34,6 +39,7 @@ public class TicketScheduleDBFormat {
 		"participants"
 	};
 	
+	@Deprecated
 	public static final String[] CarpoolTbcolumnTypes = {
 		"VARCHAR(30)", //"userName"
 		// trip info

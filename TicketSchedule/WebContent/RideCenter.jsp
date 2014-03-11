@@ -16,6 +16,12 @@
     User user = (User) request.getSession().getAttribute("user");
     Boolean isCommute = topicInfo.ownerRide._rideInfo.schedule.isCommute();
     MatchScore score = new MatchScore();
+    if (!isOwnerMode) //Refresh matchScore
+    {
+
+    	MatchScore score1 = new MatchScore();
+       
+    }
 %>
 
 <script>
