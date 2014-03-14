@@ -35,6 +35,17 @@ public class GeoInfo implements Cloneable{
 		this._formatedAddr=addr+","+city;
 		_status = 3;
 	}
+	
+	public GeoInfo(String faddr, String addr,String city, String state, double lat,double lon)
+	{
+		this._formatedAddr = faddr;
+		this._addr = addr;
+		this._city = city;
+		this._state = state;
+		this._lat = lat;
+		this._lon = lon;
+		_status = 3;
+	}
 	public double get_lat() {
 		switch (_status)
 		{

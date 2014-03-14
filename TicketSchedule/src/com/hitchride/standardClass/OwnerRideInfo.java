@@ -13,11 +13,8 @@ public class OwnerRideInfo extends RideInfo implements RideStatusChange{
 	private Vector<RideListener> _rideListeners = new Vector<RideListener>();
 	private int _ownerId;
 	public RideInfo _rideInfo;
-	private Vector<GeoInfo> middlepoint = new Vector<GeoInfo>();
-	private Vector<ParticipantRide> _prides = new Vector<ParticipantRide>();
-	//
-
-	
+	private Vector<GeoInfo> middlepoint = new Vector<GeoInfo>(); //Persistent storage in ownerRide table
+	//private Vector<ParticipantRide> _prides = new Vector<ParticipantRide>(); //Treated at topic
 
 	@Override
 	public void attach(RideListener rideListener) {
@@ -69,14 +66,4 @@ public class OwnerRideInfo extends RideInfo implements RideStatusChange{
 	public void set_ownerId(int _ownerId) {
 		this._ownerId = _ownerId;
 	}
-
-	public Vector<ParticipantRide> get_prides() {
-		return _prides;
-	}
-
-	public void set_prides(Vector<ParticipantRide> _prides) {
-		this._prides = _prides;
-	}
-    
-    
 }

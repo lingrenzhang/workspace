@@ -3,29 +3,9 @@ import java.sql.*;
 
 import com.hitchride.access.TicketScheduleDBFormat;
 
-public class DbGeneration {
 
-	public static final String[] TravelTbcolumnTypes = {
-		// trip info
-		"INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE", //"recordId"
-		"BOOL", //"roundtrip"
-		"BOOL", //"userType"
-		//"INT(7)", 
-		"DATE", //"tripDate"
-		"VARCHAR(20)",//"origState"
-		"VARCHAR(20)",//"origCity"
-		"VARCHAR(20)",//"origNbhd"
-		"VARCHAR(50)",//"origAddr"
-		"VARCHAR(20)",//"destState"
-		"VARCHAR(20)",//"destCity"
-		"VARCHAR(20)",//"destNbhd"
-		"VARCHAR(50)",//"destAddr"
-		"DECIMAL(3,2)",//"detourFactor"
-		"TIME",//"forwardTime"
-		"TIME",//"forwardFlexibility"
-		"TIME",//"backTime"
-		"TIME" //"backFlexibility"
-	};
+@Deprecated
+public class DbGeneration {
 		
 	public static Connection getConnection() throws SQLException,	
 	java.lang.ClassNotFoundException

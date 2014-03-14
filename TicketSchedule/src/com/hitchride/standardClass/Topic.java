@@ -2,11 +2,15 @@
 package com.hitchride.standardClass;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
 
+
+
+import com.hitchride.access.TopicTbAccess;
 import com.hitchride.global.AllRides;
 import com.hitchride.global.DummyData;
 import com.hitchride.global.Environment;
@@ -23,15 +27,14 @@ public class Topic implements PersistentStorage{
 	public User owner;
 	//public List<Participant> participants;
 	public OwnerRideInfo ownerRide;
-	public List<ParticipantRide> parRides;
+	public List<ParticipantRide> parRides = new ArrayList<ParticipantRide>();
 	public List<ParticipantRide> _requestPride = new ArrayList<ParticipantRide>();
+	public List<Message> messages = new ArrayList<Message>();;      
 
-	public List<Message> messages;      
-
-	//Persistent Storage related
-	boolean _isChanged;
-	boolean _isSaved;
- 
+    public Topic(){
+    	//Used when load from DB.
+    	
+    }
 	public Topic(int rid) {
 		try {
 				ownerRide = AllRides.getRides()._topicRides.get(rid);
@@ -39,7 +42,7 @@ public class Topic implements PersistentStorage{
 				UserInfo ownerInfo = Environment.getEnv().getUser(ownerRide._rideInfo.username);
 				owner =(User) ownerInfo;
 						
-				parRides = new ArrayList<ParticipantRide>();
+
 				//TO DO: User dummy participant ride now
 				Enumeration<Integer> e =DummyData.getDummyEnv().getAllPartRide();
 				while (e.hasMoreElements())
@@ -59,7 +62,6 @@ public class Topic implements PersistentStorage{
 					}
 				}
 				
-				messages = new ArrayList<Message>();
 				e =DummyData.getDummyEnv()._dummyMessage.keys();
 				while (e.hasMoreElements())
 				{
@@ -149,7 +151,7 @@ public class Topic implements PersistentStorage{
 		}
 		else{
 			result.append("<div class=\"price_box\"><div class=\"seats\">");
-			result.append("<span class=\"count\">"+this.ownerRide.seatsAvailable+"</span></div>");
+			result.append("<span class=\"count\">"+this.ownerRide.totalSeats+"</span></div>");
 			result.append("<p><b>"+this.ownerRide.price + "</b> / seat</p></div>");
 		}
 		result.append("<div class=\"userpic\">");
@@ -167,12 +169,20 @@ public class Topic implements PersistentStorage{
 	}
 
 
+	
+	//Persistent Storage Related
+	boolean _isSaved = false;
+	Date _lastCp;
+	
+	public void updateDB()
+	{
+		TopicTbAccess.updateTopic(this);
+	}
+	
 	@Override
 	public void insertToDB() {
-		
-		
+		TopicTbAccess.insertTopic(this);
 	}
-
 
 	@Override
 	public boolean isChanged() {
@@ -189,8 +199,15 @@ public class Topic implements PersistentStorage{
 
 
 	@Override
-	public boolean lastCheckpoint() {
+	public Date lastCheckpoint() {
 		// TODO Auto-generated method stub
+		return this._lastCp;
+	}
+
+
+	@Override
+	public boolean storageMode() {
+		// Instant storage mode now.
 		return false;
 	}
 }

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Hashtable;
 
 import com.hitchride.access.CarpoolTbAccess;
+import com.hitchride.access.RideInfoAccess;
 import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.RideInfo;
 
@@ -14,7 +15,8 @@ public class AllRides {
 	private AllRides(){
 			_availRides = new Hashtable<Integer,RideInfo>();
 			_topicRides = new Hashtable<Integer,OwnerRideInfo>();
-			initialAvaRideLoad();
+			//initialFromOld();
+			initialFromNew();
 	}
 	
 	public static AllRides getRides(){
@@ -35,9 +37,11 @@ public class AllRides {
 	
 	private int _availRidesKey = 0;
 
-
+    private void initialFromNew(){
+    	_availRides = RideInfoAccess.LoadAllRide();
+    }
 	
-	private void initialAvaRideLoad() {
+	private void initialFromOld() {
 		// TODO Auto-generated method stub
 		// Load available Ride from DB.
 		System.out.println("_availRides initializing: Loaded from DB.");
@@ -48,6 +52,7 @@ public class AllRides {
 			{
 				RideInfo ride = new RideInfo(rides,true);
 				_availRides.put(ride.recordId,ride);
+				//RideInfoAccess.insertRideInfo(ride);
 
 				OwnerRideInfo ownerRide = new OwnerRideInfo(ride);
 				_topicRides.put(ride.recordId,ownerRide);

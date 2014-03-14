@@ -180,12 +180,10 @@ public class StatusService extends HttpServlet {
 				System.out.println("Not leagal status change.");
 				break;
 		}
-		
-		
-		
+			
 		Message msg = new Message(fromSta, toSta, fromU, toU, topic);
 		msg.sendMessage();
-
+		topic.updateDB();
 	}
 
 	/**

@@ -23,7 +23,12 @@ public class MatchScore implements Matching {
 		this._BargingMatching = rnd.nextInt(100);
 	}
 	
-		
+	public MatchScore(int GeoMatching,int ScheduleMatching, int BarginMatching)
+	{
+		this._LocationMatching = GeoMatching;
+		this._ScheduleingMatching = ScheduleMatching;
+		this._BargingMatching = BarginMatching;
+	}	
 	@Override
 	public void ComputeMatching(OwnerRideInfo ownerRide,
 			ParticipantRide partRide) {

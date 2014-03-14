@@ -2,17 +2,21 @@ package com.hitchride.standardClass;
 
 //This class is to represent participantRide information
 //Having close relation to UI. Think about decouple it.
-public class ParticipantRide extends RideInfo{
+public class ParticipantRide extends RideInfo{   
+	//Extends RideInfo appears not proper setting and creates mess. Will change finally.
     public RideInfo _rideinfo;
     public int _pid;
 	private int _assoOwnerRideId; //Topic the ParticipantRide associating with.
-	
-    private MatchScore _Match;
+    public MatchScore _Match;
     private int _status; //0 for not associating with OwnerRide -> 1 (drive by participant)
     					 //1 for link to owner, waiting response ->0,2,3 (drive by owner)
                          //2 for owner add additional requirement ->0,1 (drive by participant)
     					 //3 for owner commit -> 0,1,4 (drive by participant, log)
                          //4 for participant Confirm -> (Deal done.)
+    public ParticipantRide(){
+    	//Used when load from DB. Given participantRide no longer inherit from RideInfo. 
+    	//Will move out the relationship finally.
+    }
 	public ParticipantRide(RideInfo rideinfo) {
 		super(rideinfo);
 		this._rideinfo = rideinfo; //Double copy, finally more one.

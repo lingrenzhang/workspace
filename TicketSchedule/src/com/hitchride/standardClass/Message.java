@@ -1,26 +1,39 @@
 package com.hitchride.standardClass;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
+import com.hitchride.access.MessageTbAccess;
 import com.hitchride.global.AllTopics;
 import com.hitchride.global.DummyData;
 import com.hitchride.global.Environment;
+import com.hitchride.global.GlobalCount;
 
 public class Message implements MessageInfo,PersistentStorage{
 
-	private UserInfo _from;
-	private UserInfo _to;
-	private Topic _topic;
-	private String _messageContent;
-	private Date _generateDate;
-	private OwnerRideInfo _ownerRide;
-	private boolean _isSystemMessage;
+	public int _messageId;
+	public UserInfo _from;
+	public UserInfo _to;
+	public int _topicID;
+	public String _messageContent;
+	public Date _generateDate;
+	public Timestamp _TimeStamp;
+	public OwnerRideInfo _ownerRide;
+	public boolean _isSystemMessage;
 	
+	
+	public Message()
+	{
+		//Used when load from DB
+	}
 	public Message(String content, UserInfo from, UserInfo to,Topic topic)
 	{
+		this._messageId = GlobalCount.getGCount().messageCount+1;
+		GlobalCount.getGCount().messageCount = this._messageId;
+		
 		this._from = from;
 		this._to = to;
-		this._topic = topic;
+		this._topicID = topic.get_topicId();
 		this._messageContent = content;
 		Date date = new Date();
 		this._generateDate = date;
@@ -29,11 +42,14 @@ public class Message implements MessageInfo,PersistentStorage{
 	
 	public Message(String content, int fromID, int toID,int topicID)
 	{
+		this._messageId = GlobalCount.getGCount().messageCount+1;
+		GlobalCount.getGCount().messageCount = this._messageId;
+		
 		User from = (User) Environment.getEnv().getUser(fromID);
 		this._from = from;
 		User to = (User) Environment.getEnv().getUser(toID);
 		this._to = to;
-		_topic = AllTopics.getTopics().get_topic(topicID);
+		this._topicID = topicID;
 		this._messageContent = content;
 		Date date = new Date();
 		this._generateDate = date;
@@ -44,9 +60,11 @@ public class Message implements MessageInfo,PersistentStorage{
 	//System generated message
 	public Message(int fstatus,int astatus, UserInfo from, UserInfo to,Topic topic)
 	{
+		this._messageId = GlobalCount.getGCount().messageCount+1;
+		GlobalCount.getGCount().messageCount = this._messageId;
 		this._from = from;
 		this._to = to;
-		this._topic = topic;
+		this._topicID = topic.get_topicId();
 		String content="";
 		 //0 for not associating with Pride -> 1 (drive by participant)
 		 //1 for waiting owner response ->0,2,3 (drive by owner)
@@ -177,6 +195,11 @@ public class Message implements MessageInfo,PersistentStorage{
 	public Date getMessageGenerateDate() {
 		return this._generateDate;
 	}
+	
+	public Timestamp getTimeStamp(){
+		this._TimeStamp = new Timestamp(this._generateDate.getTime());
+		return this._TimeStamp;
+	}
 
 	@Override
 	public UserInfo getFrom() {
@@ -193,30 +216,6 @@ public class Message implements MessageInfo,PersistentStorage{
 		return this._ownerRide;
 	}
 
-	@Override
-	public void insertToDB() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean isChanged() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isSaved() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean lastCheckpoint() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
     public boolean isSystemMessage()
     {
     	return this._isSystemMessage;
@@ -225,9 +224,48 @@ public class Message implements MessageInfo,PersistentStorage{
     public void sendMessage()
     {
 		DummyData.getDummyEnv().insert_message(this); //Should be message unique ID.
-		_topic.messages.add(this);
+		Topic topic = AllTopics.getTopics().get_topic(this._topicID);
+		topic.messages.add(this);
 		User to =  (User) _to;
 		to.message.add(this);
 		to.numofnewMessage++;
+		this._lastCp = new Date();
+		if (storageMode())
+		{//Instant store on sent
+			insertToDB();
+		}
     }
+	
+	//Persistent Storage Related
+	boolean _isSaved = false;
+	Date _lastCp;
+	
+	
+	@Override
+	public void insertToDB() {
+		MessageTbAccess.insertMessage(this);
+		this._isSaved =true;
+		this._lastCp = new Date();
+	}
+	
+	@Override
+	public boolean isChanged() {
+		return false;  //Message is not allowed to be update
+	}
+
+	@Override
+	public boolean isSaved() {
+		return this._isSaved;
+	}
+
+	@Override
+	public Date lastCheckpoint() {
+		return this._lastCp;
+	}
+
+	@Override
+	public boolean storageMode() {
+		// Instant storage mode now.
+		return true;
+	}
 }

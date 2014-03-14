@@ -8,13 +8,18 @@ public class Schedule implements Cloneable{
 	private boolean _isRoundTrip; 
 	private boolean _isCommute;
 	
-	public Time forwardTime, forwardFlexibility;
+	public Time forwardTime,forwardFlexibility;
 	public Time backTime, backFlexibility;	// for round trip only
-	private boolean[] _dayOfWeek;
 	
 	// for travel only
 	public Date tripDate;
-
+	public Time tripTime;
+	
+	// for commute
+	private boolean[] _dayOfWeek = new boolean[]{false,false,false,false,false,false,false};
+    public Time[] cftime = new Time[7];
+    public Time[] cbtime = new Time[7];
+    
 	public boolean isRoundTrip() {
 		return _isRoundTrip;
 	}
@@ -31,7 +36,6 @@ public class Schedule implements Cloneable{
 	
 	public void set_dayOfWeek(int dayofWeek)
 	{
-		_dayOfWeek=new boolean[7];
 		while (dayofWeek>0)
 		{
 			int last = dayofWeek % 10;
@@ -46,6 +50,18 @@ public class Schedule implements Cloneable{
 	public boolean[] get_dayofWeek()
 	{
 		return this._dayOfWeek;
+	}
+	
+	public int get_days(){
+		int result=0;
+		for (int i=0;i<7;i++)
+		{
+			if (this._dayOfWeek[i])
+			{
+				result = 10*result+i+1;
+			}
+		}
+		return result;
 	}
 	
 	@Override

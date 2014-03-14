@@ -2,12 +2,12 @@ package com.hitchride.global;
 
 import java.util.Hashtable;
 
+import com.hitchride.access.TopicTbAccess;
 import com.hitchride.standardClass.Topic;
 
 public class AllTopics {
 	private static AllTopics allTopics;
 	private AllTopics(){
-			_topics= new Hashtable<Integer,Topic>(1000);
 			initialTopics();
 	}
 	
@@ -24,15 +24,8 @@ public class AllTopics {
 	private int _topicKey=0;
 	
 	private void initialTopics() {
-		for (int i=1;i<2200;i++)
-		{
-			Topic topic = new Topic(i);
-			_topics.put(i,topic);
-			System.out.println("Topic "+topic + "initialized." );
-		}
-	
+		_topics = TopicTbAccess.LoadAllTopic();
 	}
-	
 	
 	public Topic get_topic(int key) {
 		return _topics.get(key);
