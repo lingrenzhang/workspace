@@ -105,20 +105,20 @@ public static Connection objConn; //This reference is used for batch job.
 					+ ride.schedule.tripDate+"\",\""
 					+ ride.schedule.tripTime+"\",\""
 					+ ride.schedule.get_days()+"\",\""
-					+ ride.schedule.cftime[0]+"\",\""
 					+ ride.schedule.cftime[1]+"\",\""
 					+ ride.schedule.cftime[2]+"\",\""
 					+ ride.schedule.cftime[3]+"\",\""
 					+ ride.schedule.cftime[4]+"\",\""
 					+ ride.schedule.cftime[5]+"\",\""
 					+ ride.schedule.cftime[6]+"\",\""
-					+ ride.schedule.cbtime[0]+"\",\""
+					+ ride.schedule.cftime[0]+"\",\""
 					+ ride.schedule.cbtime[1]+"\",\""
 					+ ride.schedule.cbtime[2]+"\",\""
 					+ ride.schedule.cbtime[3]+"\",\""
 					+ ride.schedule.cbtime[4]+"\",\""
 					+ ride.schedule.cbtime[5]+"\",\""
-					+ ride.schedule.cbtime[6]+"\","
+					+ ride.schedule.cbtime[6]+"\",\""
+					+ ride.schedule.cbtime[0]+"\","
 		        //Bargin Info
 		        /* 
 				new DataColumnSchema("UserType","BOOL"),
@@ -309,20 +309,20 @@ public static Connection objConn; //This reference is used for batch job.
 						schedule.backFlexibility	= riders.getTime("backFlex");	// for round trip only
 						int dayOfWeek = riders.getInt("dayofweek");
 						schedule.set_dayOfWeek(dayOfWeek);
-						schedule.cftime[0] = riders.getTime("f1");
-						schedule.cftime[1] = riders.getTime("f2");
-						schedule.cftime[2] = riders.getTime("f3");
-						schedule.cftime[3] = riders.getTime("f4");
-						schedule.cftime[4] = riders.getTime("f5");
-						schedule.cftime[5] = riders.getTime("f6");
-						schedule.cftime[6] = riders.getTime("f7");
-						schedule.cbtime[0] = riders.getTime("b1");
-						schedule.cbtime[1] = riders.getTime("b2");
-						schedule.cbtime[2] = riders.getTime("b3");
-						schedule.cbtime[3] = riders.getTime("b4");
-						schedule.cbtime[4] = riders.getTime("b5");
-						schedule.cbtime[5] = riders.getTime("b6");
-						schedule.cbtime[6] = riders.getTime("b7");
+						schedule.cftime[0] = riders.getTime("f7");
+						schedule.cftime[1] = riders.getTime("f1");
+						schedule.cftime[2] = riders.getTime("f2");
+						schedule.cftime[3] = riders.getTime("f3");
+						schedule.cftime[4] = riders.getTime("f4");
+						schedule.cftime[5] = riders.getTime("f5");
+						schedule.cftime[6] = riders.getTime("f6");
+						schedule.cbtime[0] = riders.getTime("b7");
+						schedule.cbtime[1] = riders.getTime("b1");
+						schedule.cbtime[2] = riders.getTime("b2");
+						schedule.cbtime[3] = riders.getTime("b3");
+						schedule.cbtime[4] = riders.getTime("b4");
+						schedule.cbtime[5] = riders.getTime("b5");
+						schedule.cbtime[6] = riders.getTime("b6");
 						
 
 						//Load result anyway for development purpose.

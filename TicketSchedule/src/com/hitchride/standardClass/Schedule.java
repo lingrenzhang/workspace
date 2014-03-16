@@ -3,6 +3,8 @@ package com.hitchride.standardClass;
 import java.sql.Date;
 import java.sql.Time;
 
+import com.hitchride.util.TimeFormatHelper;
+
 //Save schedule information of a ride
 public class Schedule implements Cloneable{
 	private boolean _isRoundTrip; 
@@ -41,7 +43,14 @@ public class Schedule implements Cloneable{
 			int last = dayofWeek % 10;
 			if ((last>0) &&(last<8))
 			{
-				_dayOfWeek[last-1]=true;
+				if (last!=7)
+				{
+					_dayOfWeek[last]=true;
+				}
+				else
+				{
+					_dayOfWeek[0]=true;
+				}
 			}
 			dayofWeek = (int) (dayofWeek-last)/10;
 		}
@@ -79,10 +88,10 @@ public class Schedule implements Cloneable{
 	
 	public String getSchedule(boolean isHtml)
 	{
+		String br = isHtml?"<br>":"\r\n";
 		StringBuilder result = new StringBuilder(100);
 		if (_isCommute)
 		{
-			result.append("Commute on:");
 			for (int i=0;i<6;i++)
 			{
 				if (_dayOfWeek[i])
@@ -91,24 +100,45 @@ public class Schedule implements Cloneable{
 					{
 						case 0:
 							result.append(" Sun");
+							result.append(" "+TimeFormatHelper.getQuarterTime(cftime[0]));
+							result.append(" "+TimeFormatHelper.getQuarterTime(cbtime[0]));
+							result.append(br);
 						break;
 						case 1:
 							result.append(" Mon");
+							result.append(" "+TimeFormatHelper.getQuarterTime(cftime[1]));
+							result.append(" "+TimeFormatHelper.getQuarterTime(cbtime[1]));
+							result.append(br);
 							break;
 						case 2:
 							result.append(" Thu");
+							result.append(" "+TimeFormatHelper.getQuarterTime(cftime[2]));
+							result.append(" "+TimeFormatHelper.getQuarterTime(cbtime[2]));
+							result.append(br);
 							break;
 						case 3:
 							result.append(" Wed");
+							result.append(" "+TimeFormatHelper.getQuarterTime(cftime[3]));
+							result.append(" "+TimeFormatHelper.getQuarterTime(cbtime[3]));
+							result.append(br);
 							break;
 						case 4:
 							result.append(" Tue");
+							result.append(" "+TimeFormatHelper.getQuarterTime(cftime[4]));
+							result.append(" "+TimeFormatHelper.getQuarterTime(cbtime[4]));
+							result.append(br);
 							break;
 						case 5:
 							result.append(" Fri");
+							result.append(" "+TimeFormatHelper.getQuarterTime(cftime[5]));
+							result.append(" "+TimeFormatHelper.getQuarterTime(cbtime[5]));
+							result.append(br);
 							break;
 						case 6:
 							result.append(" Sat");
+							result.append(" "+TimeFormatHelper.getQuarterTime(cftime[6]));
+							result.append(" "+TimeFormatHelper.getQuarterTime(cbtime[6]));
+							result.append(br);
 							break;
 					}
 				}
@@ -116,26 +146,19 @@ public class Schedule implements Cloneable{
 		}
 		else{
 			result.append("Trip Date: ");
-			result.append(tripDate);
-		}
-		if (isHtml){
-		result.append("<br>");
-		}
-		else{
-			result.append("\r\n");
+			result.append(this.tripDate);
+			result.append(br);
+			
+			result.append("Trip Time: ");
+			result.append(TimeFormatHelper.getQuarterTime(this.tripTime));
+			result.append(br);
+			
+			result.append("Flex: ");
+			result.append(this.forwardFlexibility);
+			result.append(br);
 		}
 
-		
-		result.append("Forward Time: ");
-		if (forwardTime!=null)
-		{
-			result.append(forwardTime.toString());
-		}
-		else
-		{
-			result.append("ForwardTime not specified. Edit the ride please");
-		}
-		
+		/*
 		if (isRoundTrip())
 		{
 			if (isHtml){
@@ -154,7 +177,9 @@ public class Schedule implements Cloneable{
 				result.append("Round Trip not supported for travel now. Arrange another ride for your return please.");
 			}
 		}
-		
+		*/
 		return result.toString();
 	}
+	
+
 }

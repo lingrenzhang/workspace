@@ -31,6 +31,7 @@ import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Schedule;
 import com.hitchride.standardClass.Topic;
 import com.hitchride.standardClass.User;
+import com.hitchride.util.QueryStringParser;
 import com.hitchride.util.TimeFormatHelper;
 /**
  * Servlet implementation class Search
@@ -52,6 +53,14 @@ public class Search extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Environment.getEnv();
 		RideInfo actRide = null;
+		if (request.getQueryString()!=null)
+		{
+			QueryStringParser qsp = new QueryStringParser(request.getQueryString());
+			int rid = qsp.getInt("rid");
+			actRide = AllRides.getRides().getRide(rid);
+			request.getSession().setAttribute("actRide", actRide);
+		}
+		
 		if (request.getParameter("s") == null || request.getParameter("e") == null)
 		{
 			actRide = (RideInfo) request.getSession().getAttribute("actRide");
@@ -318,40 +327,40 @@ public class Search extends HttpServlet {
 			String forwardFlexibility = request.getParameter("flex_global");
 			int fflx = Integer.parseInt(forwardFlexibility);
 			schedule.forwardFlexibility = new Time(fflx*60000);
-			
+		
 			String backFlexibility = request.getParameter("flex_global");
 			int bflx = Integer.parseInt(backFlexibility);
 			schedule.backFlexibility = new Time(bflx*60000);
 			
 			String cf = request.getParameter("there_time_1");
-			schedule.cftime[0] = getTime(cf);
-			cf = request.getParameter("there_time_2");
 			schedule.cftime[1] = getTime(cf);
-			cf = request.getParameter("there_time_3");
+			cf = request.getParameter("there_time_2");
 			schedule.cftime[2] = getTime(cf);
-			cf = request.getParameter("there_time_4");
+			cf = request.getParameter("there_time_3");
 			schedule.cftime[3] = getTime(cf);
-			cf = request.getParameter("there_time_5");
+			cf = request.getParameter("there_time_4");
 			schedule.cftime[4] = getTime(cf);
-			cf = request.getParameter("there_time_6");
+			cf = request.getParameter("there_time_5");
 			schedule.cftime[5] = getTime(cf);
-			cf = request.getParameter("there_time_7");
+			cf = request.getParameter("there_time_6");
 			schedule.cftime[6] = getTime(cf);
+			cf = request.getParameter("there_time_7");
+			schedule.cftime[0] = getTime(cf);
 			
 			String bt = request.getParameter("back_time_1");
-			schedule.cbtime[0] = getTime(bt);
-			bt = request.getParameter("back_time_2");
 			schedule.cbtime[1] = getTime(bt);
-			bt = request.getParameter("back_time_3");
+			bt = request.getParameter("back_time_2");
 			schedule.cbtime[2] = getTime(bt);
-			bt = request.getParameter("back_time_4");
+			bt = request.getParameter("back_time_3");
 			schedule.cbtime[3] = getTime(bt);
-			bt = request.getParameter("back_time_5");
+			bt = request.getParameter("back_time_4");
 			schedule.cbtime[4] = getTime(bt);
-			bt = request.getParameter("back_time_6");
+			bt = request.getParameter("back_time_5");
 			schedule.cbtime[5] = getTime(bt);
-			bt = request.getParameter("back_time_7");
+			bt = request.getParameter("back_time_6");
 			schedule.cbtime[6] = getTime(bt);
+			bt = request.getParameter("back_time_7");
+			schedule.cbtime[0] = getTime(bt);
 			
 			String date =request.getParameter("date");
 			schedule.tripDate = TimeFormatHelper.setDate(date);
