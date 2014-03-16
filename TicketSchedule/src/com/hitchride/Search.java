@@ -22,7 +22,9 @@ import org.json.JSONObject;
 
 import com.hitchride.access.RideInfoAccess;
 import com.hitchride.calc.*;
+import com.hitchride.global.AllPartRides;
 import com.hitchride.global.AllRides;
+import com.hitchride.global.Environment;
 import com.hitchride.standardClass.GeoInfo;
 import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.RideInfo;
@@ -48,6 +50,7 @@ public class Search extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Environment.getEnv();
 		RideInfo actRide = null;
 		if (request.getParameter("s") == null || request.getParameter("e") == null)
 		{
@@ -407,13 +410,17 @@ public class Search extends HttpServlet {
 			//ParticipantRide pride = new ParticipantRide(ride);
 			//pride.set_status(0);
 			AllRides.getRides().inser_availride(myRide);
+			RideInfoAccess.insertRideInfo(myRide);
+			
 			ParticipantRide pride = new ParticipantRide(myRide);
 			pride.set_status(0);
 			pride.set_assoOwnerRideId(-1);
 			user.pRides.add(pride);
+			AllPartRides.getPartRides().insert_pride(pride);
+			pride.insertToDB();
 			request.getSession().setAttribute("actRide", myRide);
 			
-			RideInfoAccess.insertRideInfo(myRide);
+			
 		}
 		
 		//TO DO: Sanity check

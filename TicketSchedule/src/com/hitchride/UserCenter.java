@@ -13,6 +13,7 @@ import com.hitchride.global.AllRides;
 import com.hitchride.global.AllTopicRides;
 import com.hitchride.global.AllTopics;
 import com.hitchride.global.DummyData;
+import com.hitchride.global.Environment;
 import com.hitchride.standardClass.Message;
 import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.ParticipantRide;
@@ -40,6 +41,7 @@ public class UserCenter extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Environment.getEnv();
 		boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
 		if (!islogin)
 		{

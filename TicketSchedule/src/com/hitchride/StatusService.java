@@ -61,16 +61,18 @@ public class StatusService extends HttpServlet {
 				{
 					AllRides.getRides().inser_availride(ride);
 					ride.set_user(fromU);
+					pride = new ParticipantRide(ride);
+					pride._rideInfo.set_user((User) fromU);
 				}
-				pride = new ParticipantRide(ride);
-
-				pride._rideInfo.set_user((User) fromU);
+				else
+				{
+					pride = AllPartRides.getPartRides().get_participantRide(ride.recordId);
+				}
+				
 				pride.set_assoOwnerRideId(topic.get_topicId());
 				pride.set_status(1);
 				topic._requestPride.add(pride);
-				//Global status change
-				AllPartRides.getPartRides().insert_pride(pride);
-				pride.insertToDB();
+				pride.updateDB();
 		    	break;
 			case 10:
 				for (Iterator<ParticipantRide> prideI=topic._requestPride.iterator(); prideI.hasNext();)

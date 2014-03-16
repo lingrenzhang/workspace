@@ -7,6 +7,7 @@ public class Environment {
 		//Confirm the proper initialize routine.
             AllUsers.getUsers();
 			AllRides.getRides();
+			AllPartRides.getPartRides();
 			DummyData.getDummyEnv();
 			AllTopicRides.getTopicRides();
 			AllTopics.getTopics();
