@@ -1,6 +1,7 @@
 package com.hitchride.calc;
 import com.hitchride.dbBatchLoad.GeoUtil;
 import com.hitchride.global.AllRides;
+import com.hitchride.global.AllTopicRides;
 import com.hitchride.global.AllTopics;
 import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.RideInfo;
@@ -129,11 +130,11 @@ public class NewScoreCalculator {
 		double destLon1 = myRide.destLoc.get_lon();
 		boolean userType1 = myRide.userType;
 
-		double origLat2 = ownerRide.origLoc.get_lat();
-		double origLon2 = ownerRide.origLoc.get_lon();
-		double destLat2 = ownerRide.destLoc.get_lat();
-		double destLon2 = ownerRide.destLoc.get_lon();
-		boolean userType2 = ownerRide.userType;
+		double origLat2 = ownerRide._rideInfo.origLoc.get_lat();
+		double origLon2 = ownerRide._rideInfo.origLoc.get_lon();
+		double destLat2 = ownerRide._rideInfo.destLoc.get_lat();
+		double destLon2 = ownerRide._rideInfo.destLoc.get_lon();
+		boolean userType2 = ownerRide._rideInfo.userType;
 
 		// dist1 = driving distance for user 1 by himself
 		// pickUpDist1 = total driving distance for user 1 if user 1 has to pick up user 2
@@ -155,11 +156,11 @@ public class NewScoreCalculator {
 	
 	public List<Topic> filterByCoordinates(RideInfo myRide, int numRecords){
 		// find the top few matching records (and return recordID's) based on coordinates.
-		Enumeration<Integer> topicE = AllRides.getRides()._topicRides.keys();
+		Enumeration<Integer> topicE = AllTopicRides.getTopicRides()._topicRides.keys();
 		while(topicE.hasMoreElements()){
-			OwnerRideInfo topicRide = AllRides.getRides()._topicRides.get(topicE.nextElement());
+			OwnerRideInfo topicRide = AllTopicRides.getTopicRides().getRide(topicE.nextElement());
 			double score = destScoreByCoordinates(myRide, topicRide, false);
-			insertResult(score,topicRide.recordId);
+			insertResult(score,topicRide._recordId);
 		}
 		
 		//return results.subList(0, numRecords-1);
@@ -173,7 +174,7 @@ public class NewScoreCalculator {
 		List<Topic> sortResults = new ArrayList<Topic>();
 		for(int index = 0; index < sortNum; index++){
 			ScoreResult scoreResult = _scoreResults.get(index);
-			OwnerRideInfo ownerRide = AllRides.getRides().getOwnerRide(scoreResult._topicId);
+			OwnerRideInfo ownerRide = AllTopicRides.getTopicRides().getRide(scoreResult._topicId);
 			scoreResult._score = destScoreByCoordinates(myRid, ownerRide, true);
 		}
 		Collections.sort(_scoreResults);

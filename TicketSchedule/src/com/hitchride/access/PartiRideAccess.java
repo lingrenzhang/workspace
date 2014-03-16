@@ -16,7 +16,7 @@ import com.hitchride.standardClass.RideInfo;
 
 
 public class PartiRideAccess {
-public static Connection objConn; //This reference is used for batch job.
+	public static Connection objConn; //This reference is used for batch job.
 	
 	public static Connection getConnection() throws SQLException,	
 	java.lang.ClassNotFoundException
@@ -44,7 +44,7 @@ public static Connection objConn; //This reference is used for batch job.
 			new DataColumnSchema("ScheduleMatch","INT(3) DEFAULT 0"),
 			new DataColumnSchema("BarginMatch","INT(3) DEFAULT 0"),
 			*/
-			sql.execute("insert into PartiRide (RideInfoID,TopicId,Status,GeoMatch,ScheduleMatch,BarginMatch) values(\"" 
+			sql.execute("insert into partiride (RideInfoID,TopicId,Status,GeoMatch,ScheduleMatch,BarginMatch) values(\"" 
 					+ pride._pid + "\",\""
 					+ pride.get_assoOwnerRideId() +"\",\""
 					+ pride.get_status() +"\",\""
@@ -73,7 +73,7 @@ public static Connection objConn; //This reference is used for batch job.
 			} 
 			sql=objConn.createStatement();
 				
-			sql.execute("update Topic set "
+			sql.execute("update partiride set "
 					+ "TopicId=\""+ pride.get_assoOwnerRideId() +"\","
 					+ "Status=\""+pride.get_status() +"\","
 					+ "GeoMatch=\""+pride._Match.getLocationMatching() +"\","
@@ -104,7 +104,6 @@ public static Connection objConn; //This reference is used for batch job.
 			{
 				int _pid = priders.getInt("RideInfoID");
 				RideInfo ride = AllRides.getRides()._availRides.get(_pid);
-				//TODO: Rethink about it
 				ParticipantRide pride = new ParticipantRide(ride);
 				try {
 					pride._pid = _pid;
@@ -128,6 +127,31 @@ public static Connection objConn; //This reference is used for batch job.
 			e.printStackTrace();
 		}
 		return allPRides;
+	}
+	
+	public static void deletePride(ParticipantRide pride)
+	{
+		deletePride(pride._pid);
+	}
+	
+	
+	public static void deletePride(int rideid)
+	{
+		try {
+			Statement sql;
+			if (objConn==null)
+			{
+				objConn = getConnection();
+			} 
+			sql=objConn.createStatement();
+			sql.execute("delete from PartiRide where rideinfoid="+rideid);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void CloseConn() throws SQLException

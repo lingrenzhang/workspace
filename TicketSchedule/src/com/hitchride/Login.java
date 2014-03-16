@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.hitchride.access.UserTbAccess;
+import com.hitchride.global.AllUsers;
 import com.hitchride.global.Environment;
 import com.hitchride.standardClass.User;
 
@@ -41,8 +42,8 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-        String method = request.getParameter("method");
+		Environment.getEnv();
+		String method = request.getParameter("method");
         if (method.equals("register")){
         	int i=1;
         }
@@ -70,9 +71,9 @@ public class Login extends HttpServlet {
 					*/
 
 					int UID=rs.getInt("userID");
-					User user = (User) Environment.getEnv().getUser(UID);
+					User user = (User) AllUsers.getUsers().getUser(UID);
 					session.setAttribute("user", user);
-					Environment.getEnv().addActiveUser(UID);
+					AllUsers.getUsers().addActiveUser(UID);
 					
 					request.getSession().setMaxInactiveInterval(60*120);
 					String from = (String) session.getAttribute("fromLocation");

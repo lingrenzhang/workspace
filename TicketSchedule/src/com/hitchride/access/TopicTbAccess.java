@@ -8,7 +8,10 @@ import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Iterator;
 
+import com.hitchride.global.AllPartRides;
 import com.hitchride.global.AllRides;
+import com.hitchride.global.AllTopicRides;
+import com.hitchride.global.AllUsers;
 import com.hitchride.global.DummyData;
 import com.hitchride.global.Environment;
 import com.hitchride.global.SQLServerConf;
@@ -212,16 +215,29 @@ public class TopicTbAccess {
 				Topic topic = new Topic();
 				try {
 					topic.set_topicId(topicrs.getInt("TopicId"));
-					topic.owner = (User) Environment.getEnv().getUser(topicrs.getInt("OwnerId"));
-					topic.ownerRide =  AllRides.getRides()._topicRides.get(topic.get_topicId());
+					topic.owner = (User) AllUsers.getUsers().getUser(topicrs.getInt("OwnerId"));
+					topic.ownerRide =  AllTopicRides.getTopicRides().getRide(topic.get_topicId());
 		
 					int[] pRides = parseIds(topicrs.getString("ParRideIds"));
 					if (pRides!=null)
 					{
 						for(int i=0; i<pRides.length;i++)
 						{
-							ParticipantRide pRide = DummyData.getDummyEnv().get_participantRide(pRides[i]);
-							topic.parRides.add(pRide);
+							ParticipantRide pRide = AllPartRides.getPartRides().get_participantRide(pRides[i]);
+							switch (pRide.get_status())
+							{
+							    
+								case 1:
+									topic._requestPride.add(pRide);
+									break;
+								case 2:
+								case 3:
+								case 4:
+									topic.parRides.add(pRide);
+									break;
+								default:
+									System.out.println("Invalid status code for pride: "+ pRide._pid);
+							}
 						}
 					}
 					
@@ -230,7 +246,7 @@ public class TopicTbAccess {
 					{
 						for(int i=0; i<reqRides.length;i++)
 						{
-							ParticipantRide reqRide = DummyData.getDummyEnv().get_participantRide(pRides[i]);
+							ParticipantRide reqRide = AllPartRides.getPartRides().get_participantRide(reqRides[i]);
 							topic._requestPride.add(reqRide);
 						}
 					}

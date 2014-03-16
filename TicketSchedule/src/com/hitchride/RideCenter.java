@@ -58,7 +58,7 @@ public class RideCenter extends HttpServlet {
 				    for(Iterator<ParticipantRide> prI = topic.parRides.iterator(); prI.hasNext();)
 				    {
 				    	    ParticipantRide pride=prI.next();
-				    		if (pride._rideinfo.get_user().get_uid()==user.get_uid())
+				    		if (pride._rideInfo.get_user().get_uid()==user.get_uid())
 				    		{
 				    			alreadyPart = true;
 				    		}
@@ -67,7 +67,7 @@ public class RideCenter extends HttpServlet {
 				    for(Iterator<ParticipantRide> prI = topic._requestPride.iterator(); prI.hasNext();)
 				    {
 				    	    ParticipantRide pride=prI.next();
-				    		if (pride._rideinfo.get_user().get_uid()==user.get_uid())
+				    		if (pride._rideInfo.get_user().get_uid()==user.get_uid())
 				    		{
 				    			alreadyPart = true;
 				    		}

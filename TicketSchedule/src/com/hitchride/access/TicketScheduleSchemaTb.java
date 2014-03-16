@@ -17,7 +17,6 @@ public class TicketScheduleSchemaTb {
 	};
 	
 	
-	
 	public static final DataColumnSchema[] RideInfo={
         //Key Info
 		new DataColumnSchema("userId","INT(10)"), //Foreign Key constrain? 
@@ -86,17 +85,25 @@ public class TicketScheduleSchemaTb {
         //Key Info
 		new DataColumnSchema("userId","INT(10)"), //Foreign Key constrain? 
 		                                          //Fixed value not visible to client.
-		new DataColumnSchema("recordId","INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE"),
-		//Geo Info
-		new DataColumnSchema("origFAddr","VARCHAR(100)"),
-		new DataColumnSchema("origAddr","VARCHAR(50)"),
-		new DataColumnSchema("origState","VARCHAR(20)"),
-		new DataColumnSchema("origCity","VARCHAR(20)"),
-		new DataColumnSchema("origLat","DECIMAL(10,6)"),
-		new DataColumnSchema("origLon","DECIMAL(10,6)"),
+		new DataColumnSchema("RideInfoId","INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE"),
+		//Ready to extend to middle point info
+		new DataColumnSchema("MiddlePointCount","INT(2) DEFAULT 0"),
+		new DataColumnSchema("M1Addr","VARCHAR(50)"),
+		new DataColumnSchema("M1Lat","DECIMAL(10,6)"),
+		new DataColumnSchema("M1Lon","DECIMAL(10,6)"),
+		new DataColumnSchema("M2Addr","VARCHAR(50)"),
+		new DataColumnSchema("M2Lat","DECIMAL(10,6)"),
+		new DataColumnSchema("M2Lon","DECIMAL(10,6)"),
+		new DataColumnSchema("M3Addr","VARCHAR(50)"),
+		new DataColumnSchema("M3Lat","DECIMAL(10,6)"),
+		new DataColumnSchema("M3Lon","DECIMAL(10,6)"),
+		new DataColumnSchema("M4Addr","VARCHAR(50)"),
+		new DataColumnSchema("M4Lat","DECIMAL(10,6)"),
+		new DataColumnSchema("M4Lon","DECIMAL(10,6)"),
+		new DataColumnSchema("M5Addr","VARCHAR(50)"),
+		new DataColumnSchema("M5Lat","DECIMAL(10,6)"),
+		new DataColumnSchema("M5Lon","DECIMAL(10,6)"),
 	};
-	
-
 
 	public static final DataColumnSchema[] Message={
 		new DataColumnSchema("MessageId","INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE"),

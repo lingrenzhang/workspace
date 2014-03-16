@@ -1,10 +1,15 @@
 package com.hitchride.standardClass;
 
+import java.util.Date;
+
+import com.hitchride.access.PartiRideAccess;
+import com.hitchride.access.TopicTbAccess;
+
 //This class is to represent participantRide information
 //Having close relation to UI. Think about decouple it.
-public class ParticipantRide extends RideInfo{   
+public class ParticipantRide implements PersistentStorage{   
 	//Extends RideInfo appears not proper setting and creates mess. Will change finally.
-    public RideInfo _rideinfo;
+    public RideInfo _rideInfo;
     public int _pid;
 	private int _assoOwnerRideId; //Topic the ParticipantRide associating with.
     public MatchScore _Match;
@@ -13,13 +18,8 @@ public class ParticipantRide extends RideInfo{
                          //2 for owner add additional requirement ->0,1 (drive by participant)
     					 //3 for owner commit -> 0,1,4 (drive by participant, log)
                          //4 for participant Confirm -> (Deal done.)
-    public ParticipantRide(){
-    	//Used when load from DB. Given participantRide no longer inherit from RideInfo. 
-    	//Will move out the relationship finally.
-    }
 	public ParticipantRide(RideInfo rideinfo) {
-		super(rideinfo);
-		this._rideinfo = rideinfo; //Double copy, finally more one.
+		this._rideInfo = rideinfo; //Double copy, finally more one.
 		this._pid = rideinfo.recordId;
 		this.set_Match(new MatchScore());
 		set_status(0);
@@ -104,7 +104,55 @@ public class ParticipantRide extends RideInfo{
 	
 	public int get_userId()
 	{
-		return this._rideinfo.get_user().get_uid();
+		return this._rideInfo.get_user().get_uid();
+	}
+	
+	public String get_username()
+	{
+		return this._rideInfo.get_username();
+	}
+
+	
+	//Persistent Storage Related
+	boolean _isSaved = false;
+	Date _lastCp;
+	
+	
+	public void updateDB()
+	{
+		PartiRideAccess.updatePride(this);
+	}
+	
+	@Override
+	public void insertToDB() {
+		PartiRideAccess.insertPRide(this);
+	}
+
+	@Override
+	public boolean isChanged() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean isSaved() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public Date lastCheckpoint() {
+		// TODO Auto-generated method stub
+		return this._lastCp;
+	}
+
+
+	@Override
+	public boolean storageMode() {
+		// Instant storage mode now.
+		return false;
 	}
 
 }

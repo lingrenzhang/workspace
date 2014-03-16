@@ -1,26 +1,17 @@
 package com.hitchride.access;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Time;
 import java.util.Hashtable;
-import java.util.Iterator;
 
-import com.hitchride.global.AllRides;
-import com.hitchride.global.DummyData;
-import com.hitchride.global.Environment;
 import com.hitchride.global.SQLServerConf;
 import com.hitchride.standardClass.GeoInfo;
-import com.hitchride.standardClass.Message;
-import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Schedule;
-import com.hitchride.standardClass.Topic;
-import com.hitchride.standardClass.User;
+
 
 public class RideInfoAccess {
 
@@ -341,6 +332,7 @@ public static Connection objConn; //This reference is used for batch job.
 						schedule.tripDate = riders.getDate("tripDate");
 						schedule.tripTime = riders.getTime("tripTime");
 					}
+					ride.schedule = schedule;
 				} catch (SQLException e) {
 					System.out.println("Not able to load Ride: " + ride.recordId);
 					e.printStackTrace();
@@ -358,6 +350,36 @@ public static Connection objConn; //This reference is used for batch job.
 		}
 		return allRides;
 	}
+	
+	
+	public static int getMaxRideId()
+	{
+		int maxRideId=0;
+		try
+		{
+			Statement sql;
+			if (objConn==null)
+			{
+				objConn = getConnection();
+			}
+			sql=objConn.createStatement();
+			ResultSet rs=sql.executeQuery("Select Max(recordId) from RideInfo;");
+			if (rs.next())
+			{
+				maxRideId = rs.getInt(1);
+				System.out.println("Current Max Message ID: " + maxRideId);
+			}
+		}
+		catch (java.lang.ClassNotFoundException e){
+			System.err.println("ClassNotFoundException:"+e.getMessage());
+		}
+		catch (SQLException e)
+		{
+			System.err.println("SQLException:"+e.getMessage());
+		}
+		return maxRideId;
+	}
+	
 	
 	public static void CloseConn() throws SQLException
 	{

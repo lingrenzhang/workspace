@@ -75,16 +75,16 @@ public class MatchScore implements Matching {
 	{
 		// same for single trip and round trips, but have to consider who is driver and who is passenger
 		double score = 0; // avoid negative scores
-		double origLat1 = ownerRide.origLoc.get_lat();
-		double origLon1 = ownerRide.origLoc.get_lon();
-		double destLat1 = ownerRide.destLoc.get_lat();
-		double destLon1 = ownerRide.destLoc.get_lon();
+		double origLat1 = ownerRide._rideInfo.origLoc.get_lat();
+		double origLon1 = ownerRide._rideInfo.origLoc.get_lon();
+		double destLat1 = ownerRide._rideInfo.destLoc.get_lat();
+		double destLon1 = ownerRide._rideInfo.destLoc.get_lon();
 		//boolean userType1 = myArgs.userType;
 
-		double origLat2 = partRide.origLoc.get_lat();
-		double origLon2 = partRide.origLoc.get_lon();
-		double destLat2 = partRide.destLoc.get_lat();
-		double destLon2 = partRide.destLoc.get_lon();
+		double origLat2 = partRide._rideInfo.origLoc.get_lat();
+		double origLon2 = partRide._rideInfo.origLoc.get_lon();
+		double destLat2 = partRide._rideInfo.destLoc.get_lat();
+		double destLon2 = partRide._rideInfo.destLoc.get_lon();
 		//boolean userType2 = rsParamObj.userType;
 
 		// dist1 = driving distance for user 1 by himself

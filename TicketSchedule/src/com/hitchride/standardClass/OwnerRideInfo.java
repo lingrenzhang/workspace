@@ -1,19 +1,23 @@
 package com.hitchride.standardClass;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import com.hitchride.global.Environment;
+import com.hitchride.access.TopicRideAccess;
+import com.hitchride.global.AllUsers;
+
 
 //Each OwnerRideInfo represents a travel topic
 //It will push its status change to desired users through observant design pattern
-public class OwnerRideInfo extends RideInfo implements RideStatusChange{
+public class OwnerRideInfo implements PersistentStorage,RideStatusChange{
 	private Vector<RideListener> _rideListeners = new Vector<RideListener>();
 	private int _ownerId;
+	public int _recordId;
 	public RideInfo _rideInfo;
-	private Vector<GeoInfo> middlepoint = new Vector<GeoInfo>(); //Persistent storage in ownerRide table
+	public int middlePointCount = 0;
+	public Vector<GeoInfo> middlepoint = new Vector<GeoInfo>(); //Persistent storage in ownerRide table
 	//private Vector<ParticipantRide> _prides = new Vector<ParticipantRide>(); //Treated at topic
 
 	@Override
@@ -37,25 +41,29 @@ public class OwnerRideInfo extends RideInfo implements RideStatusChange{
 
 	public void attachUser(int UID)
 	{
-		User user = (User) Environment.getEnv().getUser(UID);
+		User user = (User) AllUsers.getUsers().getUser(UID);
 		attach(user);
 	}
 	
 	public void detachUser(int UID)
 	{
-		User user = (User) Environment.getEnv().getUser(UID);
+		User user = (User) AllUsers.getUsers().getUser(UID);
 		detach(user);
 	}
 	
 	
     public OwnerRideInfo(RideInfo rideInfo) throws SQLException
     {
-    	super(rideInfo);
     	this._rideInfo = rideInfo;
+    	this._recordId = rideInfo.recordId;
     	this._ownerId = rideInfo.get_user().get_uid();
     }
     
-    public int get_ownerId() {
+    public OwnerRideInfo() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public int get_ownerId() {
     	if (_ownerId==0)
     	{
     		this._ownerId = this._rideInfo.get_user().get_uid();
@@ -65,5 +73,53 @@ public class OwnerRideInfo extends RideInfo implements RideStatusChange{
 
 	public void set_ownerId(int _ownerId) {
 		this._ownerId = _ownerId;
+	}
+
+	public String getGeoHTML() {
+		return _rideInfo.getGeoHTML();
+	}
+
+	public String getScheduleHTML() {
+		// TODO Auto-generated method stub
+		return _rideInfo.getScheduleHTML();
+	}
+	
+	//Persistent Storage Related
+	boolean _isSaved = false;
+	Date _lastCp;
+		
+		
+	public void updateDB()
+	{
+		TopicRideAccess.updateTopicRide(this);
+	}
+	
+	@Override
+	public void insertToDB() {
+		TopicRideAccess.insertTopicRide(this);
+	}
+
+	@Override
+	public boolean isChanged() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isSaved() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Date lastCheckpoint() {
+		// TODO Auto-generated method stub
+		return this._lastCp;
+	}
+
+	@Override
+	public boolean storageMode() {
+		// Instant storage mode now.
+		return false;
 	}
 }

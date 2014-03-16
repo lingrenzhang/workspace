@@ -127,7 +127,14 @@ public class Schedule implements Cloneable{
 
 		
 		result.append("Forward Time: ");
-		result.append(forwardTime.toString());
+		if (forwardTime!=null)
+		{
+			result.append(forwardTime.toString());
+		}
+		else
+		{
+			result.append("ForwardTime not specified. Edit the ride please");
+		}
 		
 		if (isRoundTrip())
 		{
@@ -138,7 +145,14 @@ public class Schedule implements Cloneable{
 					result.append("\r\n");
 				}
 			result.append("Return Time: ");
-			result.append(backTime.toString());
+			if (backTime!=null)
+			{
+				result.append(backTime.toString());
+			}
+			else
+			{
+				result.append("Round Trip not supported for travel now. Arrange another ride for your return please.");
+			}
 		}
 		
 		return result.toString();

@@ -10,8 +10,14 @@ import java.util.List;
 
 
 
+
+
+
 import com.hitchride.access.TopicTbAccess;
+import com.hitchride.global.AllPartRides;
 import com.hitchride.global.AllRides;
+import com.hitchride.global.AllTopicRides;
+import com.hitchride.global.AllUsers;
 import com.hitchride.global.DummyData;
 import com.hitchride.global.Environment;
 //This class is to represent the standard format of dataStructure for Message Box.
@@ -27,28 +33,32 @@ public class Topic implements PersistentStorage{
 	public User owner;
 	//public List<Participant> participants;
 	public OwnerRideInfo ownerRide;
-	public List<ParticipantRide> parRides = new ArrayList<ParticipantRide>();
-	public List<ParticipantRide> _requestPride = new ArrayList<ParticipantRide>();
+	public List<ParticipantRide> parRides;
+	public List<ParticipantRide> _requestPride;
 	public List<Message> messages = new ArrayList<Message>();;      
 
     public Topic(){
     	//Used when load from DB.
+    	parRides = new ArrayList<ParticipantRide>();
+    	_requestPride = new ArrayList<ParticipantRide>();
     	
     }
 	public Topic(int rid) {
 		try {
-				ownerRide = AllRides.getRides()._topicRides.get(rid);
+				parRides = new ArrayList<ParticipantRide>();
+		    	_requestPride = new ArrayList<ParticipantRide>();
+				ownerRide = AllTopicRides.getTopicRides()._topicRides.get(rid);
 				this._topicId=rid;
-				UserInfo ownerInfo = Environment.getEnv().getUser(ownerRide._rideInfo.username);
+				UserInfo ownerInfo = AllUsers.getUsers().getUser(ownerRide._rideInfo.username);
 				owner =(User) ownerInfo;
 						
 
 				//TO DO: User dummy participant ride now
-				Enumeration<Integer> e =DummyData.getDummyEnv().getAllPartRide();
+				Enumeration<Integer> e = AllPartRides.getPartRides().getAllPartRide();
 				while (e.hasMoreElements())
 				{
 					Integer key = e.nextElement();
-					ParticipantRide pRide = DummyData.getDummyEnv().get_participantRide(key);
+					ParticipantRide pRide = AllPartRides.getPartRides().get_participantRide(key);
 					if (pRide.get_assoOwnerRideId()==ownerRide._rideInfo.recordId)
 					{
 						if (pRide.get_status()==1)
@@ -139,11 +149,11 @@ public class Topic implements PersistentStorage{
 	{
 		StringBuilder result = new StringBuilder();
 		result.append("<a href=\"./RideCenter?topicId="+this._topicId +"&type=commute\">");
-		result.append("<div class=\"entry\" origLat="+this.ownerRide.origLoc.get_lat()+" ");
-		result.append("origLng=" +  this.ownerRide.origLoc.get_lon()+" ");
-		result.append("destLat=" +  this.ownerRide.destLoc.get_lat()+" ");
-		result.append("destLng=" +  this.ownerRide.destLoc.get_lon()+">");
-		if (this.ownerRide.userType)
+		result.append("<div class=\"entry\" origLat="+this.ownerRide._rideInfo.origLoc.get_lat()+" ");
+		result.append("origLng=" +  this.ownerRide._rideInfo.origLoc.get_lon()+" ");
+		result.append("destLat=" +  this.ownerRide._rideInfo.destLoc.get_lat()+" ");
+		result.append("destLng=" +  this.ownerRide._rideInfo.destLoc.get_lon()+">");
+		if (this.ownerRide._rideInfo.userType)
 		{
 			result.append("<div class=\"passenger_box\"><p>");
 			result.append("<span class=\"icon\"></span>");
@@ -151,19 +161,19 @@ public class Topic implements PersistentStorage{
 		}
 		else{
 			result.append("<div class=\"price_box\"><div class=\"seats\">");
-			result.append("<span class=\"count\">"+this.ownerRide.totalSeats+"</span></div>");
-			result.append("<p><b>"+this.ownerRide.price + "</b> / seat</p></div>");
+			result.append("<span class=\"count\">"+this.ownerRide._rideInfo.totalSeats+"</span></div>");
+			result.append("<p><b>"+this.ownerRide._rideInfo.price + "</b> / seat</p></div>");
 		}
 		result.append("<div class=\"userpic\">");
 		result.append("<div class=\"username\">"+this.owner.get_name()+"</div>");
 		result.append("<img src= \"/TicketSchedule/UserProfile/"+this.owner.get_avatarID()+"\" alt=\"Profile Picture\"></img>");
 		result.append("<span class=\"passenger\"></span></div>");
 		result.append("<div class=\"inner_content\"><h3>");
-		result.append("<span class=\"inner\">"+this.ownerRide.origLoc._addr);
+		result.append("<span class=\"inner\">"+this.ownerRide._rideInfo.origLoc._addr);
 		result.append("<span class=\"trip_type round_trip\"></span>");
-		result.append(this.ownerRide.destLoc._addr+"</span></h3><h4>");
-        result.append("From: "+this.ownerRide.origLoc.get_formatedAddr());
-        result.append("To: "+this.ownerRide.destLoc.get_formatedAddr());
+		result.append(this.ownerRide._rideInfo.destLoc._addr+"</span></h3><h4>");
+        result.append("From: "+this.ownerRide._rideInfo.origLoc.get_formatedAddr());
+        result.append("To: "+this.ownerRide._rideInfo.destLoc.get_formatedAddr());
         result.append("</h4></div></div></a>");
 		return result.toString();
 	}

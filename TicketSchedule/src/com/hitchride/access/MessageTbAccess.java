@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Hashtable;
 
+import com.hitchride.global.AllUsers;
 import com.hitchride.global.Environment;
 import com.hitchride.global.SQLServerConf;
 import com.hitchride.standardClass.Message;
@@ -126,8 +127,8 @@ public class MessageTbAccess {
 				Message message = new Message();
 				try {
 					message._messageId = messagers.getInt("MessageId");
-					message._from = (User) Environment.getEnv().getUser(messagers.getInt("fromUser"));
-					message._to = (User) Environment.getEnv().getUser(messagers.getInt("fromUser"));
+					message._from = (User) AllUsers.getUsers().getUser(messagers.getInt("fromUser"));
+					message._to = (User) AllUsers.getUsers().getUser(messagers.getInt("fromUser"));
 					message._topicID = messagers.getInt("topicID");
 					message._messageContent = messagers.getString("messageContent");
 					message._TimeStamp = messagers.getTimestamp("timestamp");

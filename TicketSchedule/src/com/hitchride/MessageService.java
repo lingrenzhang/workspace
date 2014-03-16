@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hitchride.global.AllTopics;
+import com.hitchride.global.AllUsers;
 import com.hitchride.global.Environment;
 import com.hitchride.standardClass.Message;
 import com.hitchride.standardClass.Topic;
@@ -51,8 +52,8 @@ public class MessageService extends HttpServlet {
 			int fromId = Integer.parseInt(request.getParameter("fromId"));
 			int toId = Integer.parseInt(request.getParameter("toId"));
 			String messageContent = request.getParameter("comment");
-			User from = (User) Environment.getEnv().getUser(fromId);
-			User to = (User) Environment.getEnv().getUser(toId);
+			User from = (User) AllUsers.getUsers().getUser(fromId);
+			User to = (User) AllUsers.getUsers().getUser(toId);
 			Message message = new Message(messageContent,from,to,topic);
 			message.sendMessage();
 

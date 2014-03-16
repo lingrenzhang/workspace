@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+import com.hitchride.global.AllUsers;
 import com.hitchride.global.Environment;
 
 //RideInfo saves the ride information.
@@ -162,18 +163,25 @@ public class RideInfo{
     	
     	if (this.userId>0)
     	{
-    		return (User) Environment.getEnv().getUser(userId);
+    		return (User) AllUsers.getUsers().getUser(userId);
     	}
     	
     	if (this.username!=null)
     	{
-    		//UserTbAccess utb = new UserTbAccess();
-    		//this.userId = utb.getIDbyName(username);
-    		User user = (User) Environment.getEnv().getUser(username);
+    		User user = (User) AllUsers.getUsers().getUser(username);
             this._user=user;
     		return user;
     	}
     	return null;
+    }
+    
+    public String get_username()
+    {
+    	if (this.username==null)
+    	{
+    		this.username = this.get_user().get_name();
+    	}
+    	return this.username;
     }
 
     

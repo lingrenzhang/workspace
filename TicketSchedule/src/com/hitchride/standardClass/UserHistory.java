@@ -1,5 +1,6 @@
 package com.hitchride.standardClass;
 
+import com.hitchride.global.AllUsers;
 import com.hitchride.global.Environment;
 
 public class UserHistory {
@@ -18,7 +19,7 @@ public class UserHistory {
     }
     public UserHistory(int uid)
     {
-    	User user = (User) Environment.getEnv().getUser(uid);
+    	User user = (User) AllUsers.getUsers().getUser(uid);
     	this._user = user;
     }
 	

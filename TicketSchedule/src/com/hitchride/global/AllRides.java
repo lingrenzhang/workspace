@@ -6,7 +6,6 @@ import java.util.Hashtable;
 
 import com.hitchride.access.CarpoolTbAccess;
 import com.hitchride.access.RideInfoAccess;
-import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.RideInfo;
 
 
@@ -14,7 +13,6 @@ public class AllRides {
 	private static AllRides allRides;
 	private AllRides(){
 			_availRides = new Hashtable<Integer,RideInfo>();
-			_topicRides = new Hashtable<Integer,OwnerRideInfo>();
 			//initialFromOld();
 			initialFromNew();
 	}
@@ -26,19 +24,16 @@ public class AllRides {
 			}
 		}
 		return allRides;
-		
 	}
 
 	//All OwnerRideInfo reference can be directly accessed through RID
 	//public Hashtable<Integer,OwnerRideInfo> _availRides;  //All available rides. Represent by RID.
 	public Hashtable<Integer,RideInfo> _availRides;
-	public Hashtable<Integer,OwnerRideInfo> _topicRides;
-
-	
 	private int _availRidesKey = 0;
 
     private void initialFromNew(){
     	_availRides = RideInfoAccess.LoadAllRide();
+    	_availRidesKey = RideInfoAccess.getMaxRideId()+1;
     }
 	
 	private void initialFromOld() {
@@ -54,12 +49,6 @@ public class AllRides {
 				_availRides.put(ride.recordId,ride);
 				//RideInfoAccess.insertRideInfo(ride);
 
-				OwnerRideInfo ownerRide = new OwnerRideInfo(ride);
-				_topicRides.put(ride.recordId,ownerRide);
-				ownerRide.get_user().rides.add(ownerRide);
-                _availRidesKey=ride.recordId+1;
-				i++;
-				//System.out.println("Ride "+ ride.recordId + " initialized");
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -71,11 +60,9 @@ public class AllRides {
 		System.out.println("#"+i+" rides loaded.");
 	}
 	
-	
-	public OwnerRideInfo getOwnerRide(int RID)
+	public RideInfo getRide(int key)
 	{
-		OwnerRideInfo ownerRide = _topicRides.get(RID);
-		return ownerRide;
+		return this._availRides.get(key);
 	}
 	
 	public void inser_availride(RideInfo part)

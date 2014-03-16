@@ -20,9 +20,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.hitchride.access.RideInfoAccess;
 import com.hitchride.calc.*;
 import com.hitchride.global.AllRides;
 import com.hitchride.standardClass.GeoInfo;
+import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Schedule;
 import com.hitchride.standardClass.Topic;
@@ -270,8 +272,6 @@ public class Search extends HttpServlet {
 		}
 		myRide.destLoc = dest;
 		
-		
-		
 		if (request.getSession().getAttribute("IsLogin")!=null)
 		{
 			User user = (User) request.getSession().getAttribute("user");
@@ -312,49 +312,55 @@ public class Search extends HttpServlet {
 	
 			schedule.set_dayOfWeek(1234);
 			
-			String forwardTime = request.getParameter("there_time_0");
-			String[] ftime = forwardTime.split(":");
-			int fhour;
-			int fminute;
-			if (ftime[1].contains("pm"))
-			{
-				fhour = Integer.parseInt(ftime[0])+12;
-				fminute = Integer.parseInt(ftime[1].substring(0, 2));
-			}
-			else
-			{
-				fhour = Integer.parseInt(ftime[0]);
-				fminute = Integer.parseInt(ftime[1].substring(0, 2));
-			}
-			forwardTime = fhour + ":" + fminute+ ":00";
-			schedule.forwardTime = new Time(fhour*3600000+fminute*60000);
-			
 			String forwardFlexibility = request.getParameter("flex_global");
 			int fflx = Integer.parseInt(forwardFlexibility);
 			schedule.forwardFlexibility = new Time(fflx*60000);
-			
-			
-			String backTime = request.getParameter("back_time_0");
-			String[] btime = backTime.split(":");
-			int bhour;
-			int bminute;
-			if (btime[1].contains("pm"))
-			{
-				bhour = Integer.parseInt(btime[0])+12;
-				bminute = Integer.parseInt(btime[1].substring(0, 2));
-			}
-			else
-			{
-				bhour = Integer.parseInt(btime[0]);
-				bminute = Integer.parseInt(btime[1].substring(0, 2));
-			}
-			backTime = bhour + ":" + bminute+ ":00";
-			schedule.backTime = new Time(bhour*3600000+bminute*60000);
 			
 			String backFlexibility = request.getParameter("flex_global");
 			int bflx = Integer.parseInt(backFlexibility);
 			schedule.backFlexibility = new Time(bflx*60000);
 			
+			String cf = request.getParameter("there_time_1");
+			schedule.cftime[0] = getTime(cf);
+			cf = request.getParameter("there_time_2");
+			schedule.cftime[1] = getTime(cf);
+			cf = request.getParameter("there_time_3");
+			schedule.cftime[2] = getTime(cf);
+			cf = request.getParameter("there_time_4");
+			schedule.cftime[3] = getTime(cf);
+			cf = request.getParameter("there_time_5");
+			schedule.cftime[4] = getTime(cf);
+			cf = request.getParameter("there_time_6");
+			schedule.cftime[5] = getTime(cf);
+			cf = request.getParameter("there_time_7");
+			schedule.cftime[6] = getTime(cf);
+			
+			String bt = request.getParameter("back_time_1");
+			schedule.cbtime[0] = getTime(bt);
+			bt = request.getParameter("back_time_2");
+			schedule.cbtime[1] = getTime(bt);
+			bt = request.getParameter("back_time_3");
+			schedule.cbtime[2] = getTime(bt);
+			bt = request.getParameter("back_time_4");
+			schedule.cbtime[3] = getTime(bt);
+			bt = request.getParameter("back_time_5");
+			schedule.cbtime[4] = getTime(bt);
+			bt = request.getParameter("back_time_6");
+			schedule.cbtime[5] = getTime(bt);
+			bt = request.getParameter("back_time_7");
+			schedule.cbtime[6] = getTime(bt);
+			
+			String date =request.getParameter("date");
+			schedule.tripDate = TimeFormatHelper.setDate(date);
+			if (schedule.isCommute())
+			{
+				schedule.tripTime = getTime("12:00pm");
+			}
+			else
+			{
+				String triptime= request.getParameter("there_time");
+				schedule.tripTime = getTripTime(triptime,schedule.forwardFlexibility);
+			}
 			//Distance duration
 			int dist=0;
 			int dura=0;
@@ -379,7 +385,6 @@ public class Search extends HttpServlet {
 				    dura = elements.getJSONObject(0).getJSONObject("duration").getInt("value");
 				    dist = elements.getJSONObject(0).getJSONObject("distance").getInt("value");
 				} catch (JSONException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -402,9 +407,13 @@ public class Search extends HttpServlet {
 			//ParticipantRide pride = new ParticipantRide(ride);
 			//pride.set_status(0);
 			AllRides.getRides().inser_availride(myRide);
-			user.rides.add(myRide);
-
+			ParticipantRide pride = new ParticipantRide(myRide);
+			pride.set_status(0);
+			pride.set_assoOwnerRideId(-1);
+			user.pRides.add(pride);
 			request.getSession().setAttribute("actRide", myRide);
+			
+			RideInfoAccess.insertRideInfo(myRide);
 		}
 		
 		//TO DO: Sanity check
@@ -439,4 +448,77 @@ public class Search extends HttpServlet {
 	    conn.disconnect();
 	    return lines.toString();
 	}
+	
+	public Time getTime(String timeexp)
+	{
+		if (timeexp==null || ("NO TRIP").equalsIgnoreCase(timeexp))
+		{
+			return new Time(36*3600000);
+		}
+		String[] time = timeexp.split(":");
+		int hour;
+		int minute;
+		if (time[1].contains("pm"))
+		{
+			hour = Integer.parseInt(time[0])+12;
+			minute = Integer.parseInt(time[1].substring(0, 2));
+		}
+		else
+		{
+			hour = Integer.parseInt(time[0]);
+			minute = Integer.parseInt(time[1].substring(0, 2));
+		}
+		Time formattime = new Time(hour*3600000+minute*60000);
+		return formattime;
+	}
+	
+	public Time getTripTime(String timeexp,Time forwardFlex)
+	{
+		/*
+		<option value="anytime" selected="selected">anytime</option>
+        <option value="early">early (12a-8a)</option>
+        <option value="morning">morning (8a-12p)</option>
+        <option value="afternoon">afternoon (12p-5p)</option>
+        <option value="evening">evening (5p-9p)</option>
+        <option value="night">night (9p-12a)</option>
+        */
+		if (timeexp.equals("anytime"))
+		{
+			Time tripTime = new Time(12*3600000);
+			forwardFlex = new Time(12*3600000);
+			return tripTime;
+		}
+		if (timeexp.equals("early"))
+		{
+			Time tripTime = new Time(4*3600000);
+			forwardFlex = new Time(4*3600000);
+			return tripTime;
+		}
+		if (timeexp.equals("morning"))
+		{
+			Time tripTime = new Time(10*3600000);
+			forwardFlex = new Time(2*3600000);
+			return tripTime;
+		}
+		if (timeexp.equals("afternoon"))
+		{
+			Time tripTime = new Time(29*1800000);
+			forwardFlex = new Time(5*1800000);
+			return tripTime;
+		}
+		if (timeexp.equals("evening"))
+		{
+			Time tripTime = new Time(19*3600000);
+			forwardFlex = new Time(2*3600000);
+			return tripTime;
+		}
+		if (timeexp.equals("night"))
+		{
+			Time tripTime = new Time(21*1800000);
+			forwardFlex = new Time(3*1800000);
+			return tripTime;
+		}
+		return getTime(timeexp);
+	}
+	
 }

@@ -46,6 +46,7 @@ public class TBGen {
 		//Run this job to regenerate all the table definition.
 		//TBGen.generateTable("Message", TicketScheduleSchemaTb.Message);
 		//TBGen.generateTable("Topic", TicketScheduleSchemaTb.Topic);
-		TBGen.generateTable("RideInfo", TicketScheduleSchemaTb.RideInfo);
+		///TBGen.generateTable("RideInfo", TicketScheduleSchemaTb.RideInfo);
+		TBGen.generateTable("TopicRide", TicketScheduleSchemaTb.TopicRide);
 	}
 }

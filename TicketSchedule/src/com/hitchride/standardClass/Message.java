@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.hitchride.access.MessageTbAccess;
 import com.hitchride.global.AllTopics;
+import com.hitchride.global.AllUsers;
 import com.hitchride.global.DummyData;
 import com.hitchride.global.Environment;
 import com.hitchride.global.GlobalCount;
@@ -45,9 +46,9 @@ public class Message implements MessageInfo,PersistentStorage{
 		this._messageId = GlobalCount.getGCount().messageCount+1;
 		GlobalCount.getGCount().messageCount = this._messageId;
 		
-		User from = (User) Environment.getEnv().getUser(fromID);
+		User from = (User) AllUsers.getUsers().getUser(fromID);
 		this._from = from;
-		User to = (User) Environment.getEnv().getUser(toID);
+		User to = (User) AllUsers.getUsers().getUser(toID);
 		this._to = to;
 		this._topicID = topicID;
 		this._messageContent = content;

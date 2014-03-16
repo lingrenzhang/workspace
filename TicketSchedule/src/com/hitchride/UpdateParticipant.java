@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.hitchride.global.AllPartRides;
 import com.hitchride.global.DummyData;
 
 /**
@@ -43,7 +44,7 @@ public class UpdateParticipant extends HttpServlet {
 			
 			int pstatus = Integer.parseInt(pars[1].split("=")[1]);
 
-			DummyData.getDummyEnv().updatePartRideStat(prid,pstatus);
+			AllPartRides.getPartRides().updatePartRideStat(prid,pstatus);
 			response.getWriter().write("Done");
 		}
 	}

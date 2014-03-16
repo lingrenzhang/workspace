@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.hitchride.global.AllPartRides;
 import com.hitchride.global.AllRides;
+import com.hitchride.global.AllTopicRides;
 import com.hitchride.global.AllTopics;
 import com.hitchride.global.DummyData;
 import com.hitchride.standardClass.Message;
@@ -70,17 +72,17 @@ public class UserCenter extends HttpServlet {
 			    value.append("<div class=\"panel panel-default\">");
 				value.append("<div class=\"panel-heading\">Topic you own</div>");
 				value.append("<div class=\"panel-body\">");
-				for(Iterator<RideInfo> rideI = user.rides.iterator();rideI.hasNext(); )
+				for(Iterator<OwnerRideInfo> rideI = user.tRides.iterator();rideI.hasNext(); )
 				{
-					OwnerRideInfo ownerRide = AllRides.getRides().getOwnerRide(rideI.next().recordId);
+					OwnerRideInfo ownerRide = AllTopicRides.getTopicRides().getRide(rideI.next()._recordId);
 					if (ownerRide!=null)
 					{
-						value.append("<a href=\"/TicketSchedule/servlet/RideCenter?topicId="+ownerRide.recordId+"\">");
+						value.append("<a href=\"/TicketSchedule/servlet/RideCenter?topicId="+ownerRide._recordId+"\">");
 						value.append("<div class=\"ride_wrapper\">");	
 						value.append(ownerRide.getGeoHTML());
 						value.append(ownerRide.getScheduleHTML());
 						value.append("</div></a>");
-						Topic topic= AllTopics.getTopics().get_topic(ownerRide.recordId);
+						Topic topic= AllTopics.getTopics().get_topic(ownerRide._recordId);
 						
 					}
 					
@@ -91,16 +93,16 @@ public class UserCenter extends HttpServlet {
 			    value.append("<div class=\"panel panel-default\">");
 				value.append("<div class=\"panel-heading\">Topic you participate</div>");
 				value.append("<div class=\"panel-body\">");
-				for(Iterator<RideInfo> rideI = user.rides.iterator();rideI.hasNext(); )
+				for(Iterator<ParticipantRide> prideI = user.pRides.iterator();prideI.hasNext(); )
 				{
-					ParticipantRide parRide = DummyData.getDummyEnv().get_participantRide(rideI.next().recordId);
-					if (parRide!=null)
+					ParticipantRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next()._pid);
+					if (parRide.get_status()!=0)
 					{
 						
 						value.append("<a href=\"/TicketSchedule/servlet/RideCenter?topicId="+parRide.get_assoOwnerRideId()+"\">");
 						value.append("<div class=\"ride_wrapper\">");	
-						value.append(parRide.getGeoHTML());
-						value.append(parRide.getScheduleHTML());
+						value.append(parRide._rideInfo.getGeoHTML());
+						value.append(parRide._rideInfo.getScheduleHTML());
 						value.append("</div></a>");
 						Topic topic= AllTopics.getTopics().get_topic(parRide.get_assoOwnerRideId());
 					}
@@ -111,18 +113,15 @@ public class UserCenter extends HttpServlet {
 			    value.append("<div class=\"panel panel-default\">");
 				value.append("<div class=\"panel-heading\">Free ride</div>");
 				value.append("<div class=\"panel-body\">");
-				for(Iterator<RideInfo> rideI = user.rides.iterator();rideI.hasNext(); )
+				for(Iterator<ParticipantRide> prideI = user.pRides.iterator();prideI.hasNext(); )
 				{
-					RideInfo ride = rideI.next();
-					ParticipantRide parRide = DummyData.getDummyEnv().get_participantRide(ride.recordId);
-					OwnerRideInfo ownerRide = AllRides.getRides().getOwnerRide(ride.recordId);
-					if (parRide==null && ownerRide==null)
+					ParticipantRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next()._pid);
+					if (parRide.get_status()==0)
 					{
-						request.getSession().setAttribute("actRide", ride);
 						value.append("<a href=\"/TicketSchedule/servlet/Search\">");
 						value.append("<div class=\"ride_wrapper\">");	
-						value.append(ride.getGeoHTML());
-						value.append(ride.getScheduleHTML());
+						value.append(parRide._rideInfo.getGeoHTML());
+						value.append(parRide._rideInfo.getScheduleHTML());
 						value.append("</div></a>");
 					}
 				}

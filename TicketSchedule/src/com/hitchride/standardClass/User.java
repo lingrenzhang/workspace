@@ -12,7 +12,8 @@ public class User implements RideListener,UserInfo{
 	private int _userLevel;
 	private String _emailAddress;
 	
-	public Vector<RideInfo> rides= new Vector<RideInfo>();
+	public Vector<ParticipantRide> pRides= new Vector<ParticipantRide>();
+	public Vector<OwnerRideInfo> tRides= new Vector<OwnerRideInfo>();
 	public Vector<Message> message = new Vector<Message>(); //Load the message in memory. 
 	//Switch to message unique ID when persistent storage involved.
 	public int numofrides;

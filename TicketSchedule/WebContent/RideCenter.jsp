@@ -223,7 +223,7 @@
 			 %> 
 				<div class="user_info" id="to">
 					<div class="userpic">
-						<div class="username"><%=parRide._rideinfo.username %></div>
+						<div class="username"><%=parRide.get_username() %></div>
 						<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
 						<span class="passenger"></span>
 					</div>
@@ -247,7 +247,7 @@
 			 %> 
 				<div class="user_info" id="to">
 					<div class="userpic">
-						<div class="username"><%=parRide._rideinfo.username %></div>
+						<div class="username"><%=parRide.get_username() %></div>
 						<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
 						<span class="passenger"></span>
 					</div>
