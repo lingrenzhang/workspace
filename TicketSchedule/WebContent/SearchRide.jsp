@@ -462,7 +462,5 @@ window.onscroll = function(){
 
  </div>
 
-
-
 </body>
 </html>

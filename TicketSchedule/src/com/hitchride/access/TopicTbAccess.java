@@ -9,11 +9,9 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 import com.hitchride.global.AllPartRides;
-import com.hitchride.global.AllRides;
 import com.hitchride.global.AllTopicRides;
 import com.hitchride.global.AllUsers;
 import com.hitchride.global.DummyData;
-import com.hitchride.global.Environment;
 import com.hitchride.global.SQLServerConf;
 import com.hitchride.standardClass.Message;
 import com.hitchride.standardClass.Topic;

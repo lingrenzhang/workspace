@@ -1,6 +1,5 @@
 package com.hitchride.calc;
 import com.hitchride.dbBatchLoad.GeoUtil;
-import com.hitchride.global.AllRides;
 import com.hitchride.global.AllTopicRides;
 import com.hitchride.global.AllTopics;
 import com.hitchride.standardClass.OwnerRideInfo;

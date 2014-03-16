@@ -1,7 +1,5 @@
 package com.hitchride.access;
 
-import java.util.Hashtable;
-
 //This class defines the table format inside schedule DB. Use DBGeneration to generate tables.
 @Deprecated
 public class TicketScheduleDBFormat {

@@ -8,13 +8,9 @@ import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Iterator;
 
-import com.hitchride.global.AllRides;
 import com.hitchride.global.SQLServerConf;
 import com.hitchride.standardClass.GeoInfo;
-import com.hitchride.standardClass.MatchScore;
 import com.hitchride.standardClass.OwnerRideInfo;
-import com.hitchride.standardClass.ParticipantRide;
-import com.hitchride.standardClass.RideInfo;
 
 public class TopicRideAccess {
 public static Connection objConn; //This reference is used for batch job.

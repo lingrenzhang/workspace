@@ -4,10 +4,8 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.sql.Timestamp;
-
 import com.hitchride.global.AllUsers;
-import com.hitchride.global.Environment;
+
 
 //RideInfo saves the ride information.
 //Template design mode for ownerRide and participantRide

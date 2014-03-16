@@ -7,7 +7,6 @@ import com.hitchride.access.MessageTbAccess;
 import com.hitchride.global.AllTopics;
 import com.hitchride.global.AllUsers;
 import com.hitchride.global.DummyData;
-import com.hitchride.global.Environment;
 import com.hitchride.global.GlobalCount;
 
 public class Message implements MessageInfo,PersistentStorage{

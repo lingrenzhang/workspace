@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hitchride.global.AllTopics;
 import com.hitchride.global.AllUsers;
-import com.hitchride.global.Environment;
 import com.hitchride.standardClass.Message;
 import com.hitchride.standardClass.Topic;
 import com.hitchride.standardClass.User;

@@ -9,15 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hitchride.global.AllPartRides;
-import com.hitchride.global.AllRides;
 import com.hitchride.global.AllTopicRides;
 import com.hitchride.global.AllTopics;
-import com.hitchride.global.DummyData;
 import com.hitchride.global.Environment;
 import com.hitchride.standardClass.Message;
 import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.ParticipantRide;
-import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Topic;
 import com.hitchride.standardClass.User;
 import com.hitchride.util.QueryStringParser;

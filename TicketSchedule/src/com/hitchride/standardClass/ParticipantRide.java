@@ -3,7 +3,6 @@ package com.hitchride.standardClass;
 import java.util.Date;
 
 import com.hitchride.access.PartiRideAccess;
-import com.hitchride.access.TopicTbAccess;
 
 //This class is to represent participantRide information
 //Having close relation to UI. Think about decouple it.

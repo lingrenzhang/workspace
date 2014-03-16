@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.Hashtable;
 
 import com.hitchride.global.AllUsers;
-import com.hitchride.global.Environment;
 import com.hitchride.global.SQLServerConf;
 import com.hitchride.standardClass.Message;
 import com.hitchride.standardClass.User;

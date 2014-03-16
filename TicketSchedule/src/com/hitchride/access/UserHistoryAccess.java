@@ -48,7 +48,7 @@ public class UserHistoryAccess {
 			        +userHistory.get_totalMiles()+","
 			        +userHistory._dealCount+","
 			        +userHistory._judgeCount+")";
-			sql.execute("query");
+			sql.execute(query);
 		}
 		catch (SQLException e)
 		{

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hitchride.global.AllPartRides;
-import com.hitchride.global.DummyData;
 
 /**
  * Servlet implementation class UpdateParticipant

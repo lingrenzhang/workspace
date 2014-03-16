@@ -1,7 +1,6 @@
 package com.hitchride.standardClass;
 
 import com.hitchride.global.AllUsers;
-import com.hitchride.global.Environment;
 
 public class UserHistory {
 	
@@ -51,8 +50,8 @@ public class UserHistory {
 	
 	public int get_level()
 	{
-		int level=0;
+		this._userLevel=0;
 		//TO DO: level compute rules
-		return level;
+		return this._userLevel;
 	}
 }

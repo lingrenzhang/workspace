@@ -4,7 +4,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 import com.hitchride.access.PartiRideAccess;
-import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.ParticipantRide;
 
 public class AllPartRides {

@@ -1,14 +1,10 @@
 package com.hitchride.global;
 
 import java.util.Hashtable;
-import java.util.Random;
-import java.util.Enumeration;
 
 import com.hitchride.access.MessageTbAccess;
-import com.hitchride.access.PartiRideAccess;
 import com.hitchride.standardClass.MatchScore;
 import com.hitchride.standardClass.Message;
-import com.hitchride.standardClass.ParticipantRide;
 
 
 public class DummyData {

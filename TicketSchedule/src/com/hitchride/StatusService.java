@@ -8,12 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hitchride.access.PartiRideAccess;
 import com.hitchride.global.AllPartRides;
 import com.hitchride.global.AllRides;
 import com.hitchride.global.AllUsers;
-import com.hitchride.global.DummyData;
-import com.hitchride.global.Environment;
 import com.hitchride.standardClass.Message;
 import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.RideInfo;
