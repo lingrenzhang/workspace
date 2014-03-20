@@ -119,12 +119,31 @@ public class ParticipantRide implements PersistentStorage{
 	
 	public void updateDB()
 	{
-		PartiRideAccess.updatePride(this);
+		
+		int rows = PartiRideAccess.updatePride(this);
+		if (rows==0)
+		{
+			System.out.println("Update failed for partiride: "+ this._pid + " attempting insert.");
+			rows = PartiRideAccess.insertPRide(this);
+			if (rows==0)
+			{
+				System.out.println("Insert also failed for partiride: "+ this._pid + " Please check DB integrity.");
+			}
+		}
 	}
 	
 	@Override
 	public void insertToDB() {
-		PartiRideAccess.insertPRide(this);
+		int rows = PartiRideAccess.insertPRide(this);
+		if (rows==0)
+		{
+			System.out.println("Insert failed for partiride: "+ this._pid + " attempting update.");
+			rows = PartiRideAccess.updatePride(this);
+			if (rows==0)
+			{
+				System.out.println("Update also failed for partiride: "+ this._pid + " Please check DB integrity.");
+			}
+		}
 	}
 
 	@Override

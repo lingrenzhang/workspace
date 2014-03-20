@@ -23,8 +23,9 @@ public static Connection objConn; //This reference is used for batch job.
 		return objConn;
 	}
 	
-	public static void insertTopicRide(OwnerRideInfo topicride)
+	public static int insertTopicRide(OwnerRideInfo topicride)
 	{
+		int rows = 0;
 		try
 		{
 			Statement sql;
@@ -39,7 +40,7 @@ public static Connection objConn; //This reference is used for batch job.
 			new DataColumnSchema("RideInfoId","INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE"),
 			//Ready to extend to middle point info
 			*/
-			sql.execute("insert into TopicRide (userId,RideInfoId) values(\"" 
+			rows = sql.executeUpdate("insert into TopicRide (userId,RideInfoId) values(\"" 
 					+ topicride._rideInfo.get_user().get_uid() + "\",\""
 					+ topicride._recordId + "\")");
 		}
@@ -50,11 +51,13 @@ public static Connection objConn; //This reference is used for batch job.
 		{
 			System.err.println("SQLException:"+e.getMessage());
 		}
+		return rows;
 	}
 	
 	
-	public static void updateTopicRide(OwnerRideInfo topicride)
+	public static int updateTopicRide(OwnerRideInfo topicride)
 	{
+		int rows = 0;
 		try
 		{
 			Statement sql;
@@ -100,7 +103,7 @@ public static Connection objConn; //This reference is used for batch job.
 				System.out.println("Incorrect number of middle point");
 			}
 			updatequery.append(" where RideInfoID=\""+ topicride._rideInfo.recordId+"\"" );
-			sql.execute(updatequery.toString());
+			rows = sql.executeUpdate(updatequery.toString());
 		}
 		catch (java.lang.ClassNotFoundException e){
 			System.err.println("ClassNotFoundException:"+e.getMessage());
@@ -109,6 +112,7 @@ public static Connection objConn; //This reference is used for batch job.
 		{
 			System.err.println("SQLException:"+e.getMessage());
 		}
+		return rows;
 	}
 	
 	public static Hashtable<Integer,OwnerRideInfo> LoadAllOwnerRide(){

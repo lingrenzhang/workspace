@@ -25,8 +25,9 @@ public static Connection objConn; //This reference is used for batch job.
 		return objConn;
 	}
 	
-	public static void insertRideInfo(RideInfo ride)
+	public static int insertRideInfo(RideInfo ride)
 	{
+		int rows= 0;
 		try
 		{
 			Statement sql;
@@ -36,7 +37,7 @@ public static Connection objConn; //This reference is used for batch job.
 			} 
 			sql=objConn.createStatement();
 
-		sql.execute("insert into RideInfo values(\"" + 
+		 rows = sql.executeUpdate("insert into RideInfo values(\"" + 
 		     //Key Info
 		 	//	new DataColumnSchema("userId","INT(10)"),
 			//  new DataColumnSchema("recordId","INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE"),
@@ -130,6 +131,7 @@ public static Connection objConn; //This reference is used for batch job.
 					+ ride.totalSeats+"\",\""
 					+ ride.availSeats+"\",\""
 			        + ride.price+"\")");
+
 		}
 		catch (java.lang.ClassNotFoundException e){
 			System.err.println("ClassNotFoundException:"+e.getMessage());
@@ -138,11 +140,13 @@ public static Connection objConn; //This reference is used for batch job.
 		{
 			System.err.println("SQLException:"+e.getMessage());
 		}
+	 	return rows;
 	}
 	
 	
-	public static void updateRideInfo(RideInfo ride)
+	public static int updateRideInfo(RideInfo ride)
 	{
+		int rows=0;
 		try
 		{
 			Statement sql;
@@ -152,7 +156,7 @@ public static Connection objConn; //This reference is used for batch job.
 			} 
 			sql=objConn.createStatement();
 			
-			sql.execute("update RideInfo set " 
+			rows = sql.executeUpdate("update RideInfo set " 
 				     //Key Info
 				 	//	new DataColumnSchema("userId","INT(10)"),
 					//  new DataColumnSchema("recordId","INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE"),
@@ -254,6 +258,7 @@ public static Connection objConn; //This reference is used for batch job.
 		{
 			System.err.println("SQLException:"+e.getMessage());
 		}
+		return rows;
 	}
 	
 	public static Hashtable<Integer,RideInfo> LoadAllRide(){

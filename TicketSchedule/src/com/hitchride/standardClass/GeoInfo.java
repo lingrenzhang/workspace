@@ -23,7 +23,14 @@ public class GeoInfo implements Cloneable{
 		this._lat = lat;
 		this._lon = lon;
 		this._formatedAddr=formatedAddr;
+		if (this._formatedAddr.length()>50)
+		{
+			this._addr = formatedAddr.substring(0, 49);
+		}
+		else
+		{
 		this._addr = formatedAddr;
+		}
 		_status = 3;
 	}
 	

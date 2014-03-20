@@ -22,6 +22,31 @@ public class Schedule implements Cloneable{
     public Time[] cftime = new Time[7];
     public Time[] cbtime = new Time[7];
     
+    public Schedule(){
+    	
+    }
+    
+    public Schedule(boolean isDummy)
+    {
+    	if (isDummy)
+    	{
+    		this._isRoundTrip = true;
+    		this._isCommute = true;
+    		this.set_dayOfWeek(12345);
+    		this.tripDate = new Date(114,4,1);
+    		this.tripTime = new Time(0);
+    		this.forwardFlexibility = new Time(20*60000);
+    		this.backFlexibility = new Time(20*60000);
+    		Time forwardTime = new Time(8*3600000);
+    		Time backTime = new Time(18*3600000);
+    		for (int i=0;i<7;i++)
+    		{
+    			cftime[i]=forwardTime;
+    			cbtime[i]=backTime;
+    		}
+    	}
+    }
+    
 	public boolean isRoundTrip() {
 		return _isRoundTrip;
 	}

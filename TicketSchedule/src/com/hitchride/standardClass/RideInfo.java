@@ -4,12 +4,15 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+
+import com.hitchride.access.RideInfoAccess;
+import com.hitchride.access.TopicTbAccess;
 import com.hitchride.global.AllUsers;
 
 
 //RideInfo saves the ride information.
 //Template design mode for ownerRide and participantRide
-public class RideInfo{
+public class RideInfo implements PersistentStorage{
 	// assign all not-applicable fields to null
 	
 	public int recordId;
@@ -33,8 +36,6 @@ public class RideInfo{
 	
 	public Schedule schedule;
 	// for commute only
-
-
 	//Normally used when initialize from client input.
 	public RideInfo() {
 		
@@ -199,6 +200,68 @@ public class RideInfo{
     	result.append("</div>");
     	return result.toString();
     }
+
+    
+    //Persistent Storage related
+  //Persistent Storage Related
+  	boolean _isSaved = false;
+  	Date _lastCp;
+  	
+  	public void updateDB()
+  	{
+  		
+  		int rows = RideInfoAccess.updateRideInfo(this);
+  		if (rows==0)
+  		{
+ 			System.out.println("Update failed for rideinfo: "+ this.recordId + " attempting insert.");
+  			rows = RideInfoAccess.insertRideInfo(this);
+  			if (rows==0)
+  			{
+  	  			System.out.println("Insert also failed for rideinfo: "+ this.recordId + " Check DB integrity.");
+  			}
+  		}
+  	}
+  	
+  	@Override
+  	public void insertToDB() {
+  		int rows  = RideInfoAccess.insertRideInfo(this);
+  		if (rows==0)
+  		{
+  			System.out.println("Insert failed for rideinfo: "+ this.recordId + " attempting update.");
+  			rows = RideInfoAccess.updateRideInfo(this);
+  			if (rows==0)
+  			{
+  				System.out.println("Update also failed for rideinfo: "+ this.recordId + " Check DB integrity.");
+  			}
+  		}
+  	}
+
+  	@Override
+  	public boolean isChanged() {
+  		// TODO Auto-generated method stub
+  		return false;
+  	}
+
+
+  	@Override
+  	public boolean isSaved() {
+  		// TODO Auto-generated method stub
+  		return false;
+  	}
+
+
+  	@Override
+  	public Date lastCheckpoint() {
+  		// TODO Auto-generated method stub
+  		return this._lastCp;
+  	}
+
+
+  	@Override
+  	public boolean storageMode() {
+  		// Instant storage mode now.
+  		return false;
+  	}
 }
 
 

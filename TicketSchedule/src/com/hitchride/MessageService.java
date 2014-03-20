@@ -38,27 +38,29 @@ public class MessageService extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String method = request.getParameter("method");
-		int topicId = Integer.parseInt(request.getParameter("topicId"));
-		//OwnerRideInfo ownRide = (OwnerRideInfo) AllRides.getRides().getOwnerRide(rideId);
-		Topic topic = AllTopics.getTopics().get_topic(topicId);
-		if (method.equalsIgnoreCase("delete"))
+		synchronized(this)
 		{
-			//Should be message unique ID finally.
+			String method = request.getParameter("method");
+			int topicId = Integer.parseInt(request.getParameter("topicId"));
+			//OwnerRideInfo ownRide = (OwnerRideInfo) AllRides.getRides().getOwnerRide(rideId);
+			Topic topic = AllTopics.getTopics().get_topic(topicId);
+			if (method.equalsIgnoreCase("delete"))
+			{
+				//Should be message unique ID finally.
+			}
+			if (method.equalsIgnoreCase("create"))
+			{
+				int fromId = Integer.parseInt(request.getParameter("fromId"));
+				int toId = Integer.parseInt(request.getParameter("toId"));
+				String messageContent = request.getParameter("comment");
+				User from = (User) AllUsers.getUsers().getUser(fromId);
+				User to = (User) AllUsers.getUsers().getUser(toId);
+				Message message = new Message(messageContent,from,to,topic);
+				message.sendMessage();
+	
+			}
+			response.sendRedirect("/TicketSchedule/servlet/RideCenter?topicId="+topic.get_topicId()+"&type=commute");
 		}
-		if (method.equalsIgnoreCase("create"))
-		{
-			int fromId = Integer.parseInt(request.getParameter("fromId"));
-			int toId = Integer.parseInt(request.getParameter("toId"));
-			String messageContent = request.getParameter("comment");
-			User from = (User) AllUsers.getUsers().getUser(fromId);
-			User to = (User) AllUsers.getUsers().getUser(toId);
-			Message message = new Message(messageContent,from,to,topic);
-			message.sendMessage();
-
-		}
-		response.sendRedirect("/TicketSchedule/servlet/RideCenter?topicId="+topic.get_topicId()+"&type=commute");
-
 	}
 
 }

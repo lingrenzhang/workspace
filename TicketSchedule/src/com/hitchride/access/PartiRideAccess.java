@@ -26,8 +26,9 @@ public class PartiRideAccess {
 		return objConn;
 	}
 	
-	public static void insertPRide(ParticipantRide pride)
+	public static int insertPRide(ParticipantRide pride)
 	{
+		int rows=0;
 		try
 		{
 			Statement sql;
@@ -44,7 +45,7 @@ public class PartiRideAccess {
 			new DataColumnSchema("ScheduleMatch","INT(3) DEFAULT 0"),
 			new DataColumnSchema("BarginMatch","INT(3) DEFAULT 0"),
 			*/
-			sql.execute("insert into partiride (RideInfoID,TopicId,Status,GeoMatch,ScheduleMatch,BarginMatch) values(\"" 
+			rows = sql.executeUpdate("insert into partiride (RideInfoID,TopicId,Status,GeoMatch,ScheduleMatch,BarginMatch) values(\"" 
 					+ pride._pid + "\",\""
 					+ pride.get_assoOwnerRideId() +"\",\""
 					+ pride.get_status() +"\",\""
@@ -59,11 +60,13 @@ public class PartiRideAccess {
 		{
 			System.err.println("SQLException:"+e.getMessage());
 		}
+		return rows;
 	}
 	
 	
-	public static void updatePride(ParticipantRide pride)
+	public static int updatePride(ParticipantRide pride)
 	{
+		int rows = 0;
 		try
 		{
 			Statement sql;
@@ -72,8 +75,8 @@ public class PartiRideAccess {
 				objConn = getConnection();
 			} 
 			sql=objConn.createStatement();
-				
-			sql.execute("update partiride set "
+	
+			rows = sql.executeUpdate("update partiride set "
 					+ "TopicId=\""+ pride.get_assoOwnerRideId() +"\","
 					+ "Status=\""+pride.get_status() +"\","
 					+ "GeoMatch=\""+pride._Match.getLocationMatching() +"\","
@@ -88,6 +91,7 @@ public class PartiRideAccess {
 		{
 			System.err.println("SQLException:"+e.getMessage());
 		}
+		return rows;
 	}
 	
 	public static Hashtable<Integer,ParticipantRide> LoadAllpRide(){

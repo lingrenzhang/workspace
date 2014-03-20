@@ -52,7 +52,7 @@ public class OwnerRideInfo implements PersistentStorage,RideStatusChange{
 	}
 	
 	
-    public OwnerRideInfo(RideInfo rideInfo) throws SQLException
+    public OwnerRideInfo(RideInfo rideInfo)
     {
     	this._rideInfo = rideInfo;
     	this._recordId = rideInfo.recordId;
@@ -91,12 +91,30 @@ public class OwnerRideInfo implements PersistentStorage,RideStatusChange{
 		
 	public void updateDB()
 	{
-		TopicRideAccess.updateTopicRide(this);
+		int rows = TopicRideAccess.updateTopicRide(this);
+		if (rows == 0)
+		{
+			System.out.println("Update failed for topicride: "+this._recordId + " attempting insert.");
+			rows = TopicRideAccess.insertTopicRide(this);
+			if (rows== 0)
+			{
+				System.out.println("Insert also failed for topicride: "+this._recordId + " Please check DB integrity.");
+			}
+		}
 	}
 	
 	@Override
 	public void insertToDB() {
-		TopicRideAccess.insertTopicRide(this);
+		int rows = TopicRideAccess.insertTopicRide(this);
+		if (rows == 0)
+		{
+			System.out.println("Insert failed for topicride: "+ this._recordId + " attempting update.");
+			rows = TopicRideAccess.insertTopicRide(this);
+			if (rows== 0)
+			{
+				System.out.println("Update also failed for topicride: "+this._recordId + " Please check DB integrity.");
+			}
+		}
 	}
 
 	@Override

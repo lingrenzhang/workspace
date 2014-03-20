@@ -15,8 +15,9 @@ public class QueryStringParser {
 		{
 			for(int i=0;i<units.length;i++)
 			{
-				String key = units[i].split("=")[0];
-				String value = units[i].split("=")[1];
+				String[] keyvalue = units[i].split("=");
+				String key = keyvalue[0];
+				String value = keyvalue.length==1? "": keyvalue[1];
 				content.put(key, value);
 			}
 		}

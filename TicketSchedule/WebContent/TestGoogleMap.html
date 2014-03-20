@@ -5,84 +5,51 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <link href="./CSS/map.css" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=geometry"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=geometry"></script>
     <script>
-	var poly;
-	var geodesicPoly;
-	var marker1;
-	var marker2;
-	
-	function initialize() {
-	  var mapOptions = {
-	    zoom: 4,
-	    center: new google.maps.LatLng(34, -40.605),
-	    mapTypeId: google.maps.MapTypeId.ROADMAP
-	  };
-	
-	  var map = new google.maps.Map(document.getElementById('map-canvas'),
-	      mapOptions);
-	
-	  map.controls[google.maps.ControlPosition.TOP_CENTER].push(
-	      document.getElementById('info'));
-	
-	
-	  marker1 = new google.maps.Marker({
-	    map: map,
-	    draggable: true,
-	    position: new google.maps.LatLng(40.71435280, -74.0059731)
-	  });
-	
-	  marker2 = new google.maps.Marker({
-	    map: map,
-	    draggable: true,
-	    position: new google.maps.LatLng(48.8566140, 2.35222190)
-	  });
-	
-	  var bounds = new google.maps.LatLngBounds(marker1.getPosition(),
-	      marker2.getPosition());
-	  map.fitBounds(bounds);
-	
-	  google.maps.event.addListener(marker1, 'position_changed', update);
-	  google.maps.event.addListener(marker2, 'position_changed', update);
-	
-	  var polyOptions = {
-	    strokeColor: '#FF0000',
-	    strokeOpacity: 1.0,
-	    strokeWeight: 3,
-	    map: map,
-	  };
-	  poly = new google.maps.Polyline(polyOptions);
-	
-	  var geodesicOptions = {
-	    strokeColor: '#CC0099',
-	    strokeOpacity: 1.0,
-	    strokeWeight: 3,
-	    geodesic: true,
-	    map: map
-	  };
-	  geodesicPoly = new google.maps.Polyline(geodesicOptions);
-	
-	  update();
-	}
-	
-	function update() {
-	  var path = [marker1.getPosition(), marker2.getPosition()];
-	  poly.setPath(path);
-	  geodesicPoly.setPath(path);
-	  var heading = google.maps.geometry.spherical.computeHeading(path[0],
-	      path[1]);
-	  document.getElementById('heading').value = heading;
-	  document.getElementById('origin').value = path[0].toString();
-	  document.getElementById('destination').value = path[1].toString();
-	}
-	
-	google.maps.event.addDomListener(window, 'load', initialize);
+    var geocoder;
+    var map;
+    var infowindow = new google.maps.InfoWindow();
+    var marker;
+    function initialize() {
+      geocoder = new google.maps.Geocoder();
+      var latlng = new google.maps.LatLng(40.730885,-73.997383);
+      var mapOptions = {
+        zoom: 8,
+        center: latlng
+      }
+      map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+    }
+
+    function codeLatLng() {
+      var input = document.getElementById("latlng").value;
+      var latlngStr = input.split(",",2);
+      var lat = parseFloat(latlngStr[0]);
+      var lng = parseFloat(latlngStr[1]);
+      var latlng = new google.maps.LatLng(lat, lng);
+      geocoder.geocode({'latLng': latlng}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (results[1]) {
+            map.setZoom(11);
+            marker = new google.maps.Marker({
+                position: latlng,
+                map: map
+            });
+            infowindow.setContent(results[1].formatted_address);
+            infowindow.open(map, marker);
+          }
+        } else {
+          alert("Geocoder failed due to: " + status);
+        }
+      });
+    }
 
     </script>
   </head>
-  <body>
+  <body onload="initialize()">
     <div id="map-canvas"></div>
     <div id="panel" style="margin-left:-320px">
+      LatLng: <input id=latlng onchange="codeLatLng()">
       Origin: <input type="text" readonly id="origin">
       Destination: <input type="text" readonly id="destination">
       Heading: <input type="text" readonly id="heading"> degrees

@@ -39,93 +39,96 @@ public class UserCenter extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Environment.getEnv();
-		boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
-		if (!islogin)
+		synchronized(this)
 		{
-			request.getSession().setAttribute("fromLocation", "/TicketSchedule/UserCenter.jsp");
-			request.getSession().setAttribute("queryString", request.getQueryString());
-			request.getSession().setMaxInactiveInterval(60*120);
-			response.sendRedirect("/TicketSchedule/Login.jsp");
-		}
-		else
-		{
-			User user = (User) request.getSession().getAttribute("user");
-			QueryStringParser qs = new QueryStringParser(request.getQueryString());
-			String content = qs.getString("content");
-			if (content.equalsIgnoreCase("messages"))
+			boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
+			if (!islogin)
 			{
-				StringBuilder value = new StringBuilder();
-			    value.append("<div class=\"panel panel-default\">");
-				value.append("<div class=\"panel-heading\">Your message</div>");
-				value.append("<div class=\"panel-body\">");
-				for( Iterator<Message> mesI = user.message.iterator();mesI.hasNext();){ 
-				    value.append(mesI.next().getHTMLMessage());
-				}
-				value.append("</div></div></div>");
-				user.numofnewMessage = 0;
-				response.getWriter().write(value.toString());
+				request.getSession().setAttribute("fromLocation", "/TicketSchedule/UserCenter.jsp");
+				request.getSession().setAttribute("queryString", request.getQueryString());
+				request.getSession().setMaxInactiveInterval(60*120);
+				response.sendRedirect("/TicketSchedule/Login.jsp");
 			}
-			if (content.equalsIgnoreCase("topics"))
+			else
 			{
-				StringBuilder value = new StringBuilder(1000);
-			    value.append("<div class=\"panel panel-default\">");
-				value.append("<div class=\"panel-heading\">Topic you own</div>");
-				value.append("<div class=\"panel-body\">");
-				for(Iterator<OwnerRideInfo> rideI = user.tRides.iterator();rideI.hasNext(); )
+				User user = (User) request.getSession().getAttribute("user");
+				QueryStringParser qs = new QueryStringParser(request.getQueryString());
+				String content = qs.getString("content");
+				if (content.equalsIgnoreCase("messages"))
 				{
-					OwnerRideInfo ownerRide = AllTopicRides.getTopicRides().getRide(rideI.next()._recordId);
-					if (ownerRide!=null)
+					StringBuilder value = new StringBuilder();
+				    value.append("<div class=\"panel panel-default\">");
+					value.append("<div class=\"panel-heading\">Your message</div>");
+					value.append("<div class=\"panel-body\">");
+					for( Iterator<Message> mesI = user.message.iterator();mesI.hasNext();){ 
+					    value.append(mesI.next().getHTMLMessage());
+					}
+					value.append("</div></div></div>");
+					user.numofnewMessage = 0;
+					response.getWriter().write(value.toString());
+				}
+				if (content.equalsIgnoreCase("topics"))
+				{
+					StringBuilder value = new StringBuilder(1000);
+				    value.append("<div class=\"panel panel-default\">");
+					value.append("<div class=\"panel-heading\">Topic you own</div>");
+					value.append("<div class=\"panel-body\">");
+					for(Iterator<OwnerRideInfo> rideI = user.tRides.iterator();rideI.hasNext(); )
 					{
-						value.append("<a href=\"/TicketSchedule/servlet/RideCenter?topicId="+ownerRide._recordId+"\">");
-						value.append("<div class=\"ride_wrapper\">");	
-						value.append(ownerRide.getGeoHTML());
-						value.append(ownerRide.getScheduleHTML());
-						value.append("</div></a>");
-						Topic topic= AllTopics.getTopics().get_topic(ownerRide._recordId);
+						OwnerRideInfo ownerRide = AllTopicRides.getTopicRides().getRide(rideI.next()._recordId);
+						if (ownerRide!=null)
+						{
+							value.append("<a href=\"/TicketSchedule/servlet/RideCenter?topicId="+ownerRide._recordId+"\">");
+							value.append("<div class=\"ride_wrapper\">");	
+							value.append(ownerRide.getGeoHTML());
+							value.append(ownerRide.getScheduleHTML());
+							value.append("</div></a>");
+							Topic topic= AllTopics.getTopics().get_topic(ownerRide._recordId);
+							
+						}
 						
 					}
+					value.append("</div>");
 					
-				}
-				value.append("</div>");
-				
-				
-			    value.append("<div class=\"panel panel-default\">");
-				value.append("<div class=\"panel-heading\">Topic you participate</div>");
-				value.append("<div class=\"panel-body\">");
-				for(Iterator<ParticipantRide> prideI = user.pRides.iterator();prideI.hasNext(); )
-				{
-					ParticipantRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next()._pid);
-					if (parRide.get_status()!=0)
+					
+				    value.append("<div class=\"panel panel-default\">");
+					value.append("<div class=\"panel-heading\">Topic you participate</div>");
+					value.append("<div class=\"panel-body\">");
+					for(Iterator<ParticipantRide> prideI = user.pRides.iterator();prideI.hasNext(); )
 					{
-						
-						value.append("<a href=\"/TicketSchedule/servlet/RideCenter?topicId="+parRide.get_assoOwnerRideId()+"\">");
-						value.append("<div class=\"ride_wrapper\">");	
-						value.append(parRide._rideInfo.getGeoHTML());
-						value.append(parRide._rideInfo.getScheduleHTML());
-						value.append("</div></a>");
-						Topic topic= AllTopics.getTopics().get_topic(parRide.get_assoOwnerRideId());
+						ParticipantRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next()._pid);
+						if (parRide.get_status()!=0)
+						{
+							
+							value.append("<a href=\"/TicketSchedule/servlet/RideCenter?topicId="+parRide.get_assoOwnerRideId()+"\">");
+							value.append("<div class=\"ride_wrapper\">");	
+							value.append(parRide._rideInfo.getGeoHTML());
+							value.append(parRide._rideInfo.getScheduleHTML());
+							value.append("</div></a>");
+							Topic topic= AllTopics.getTopics().get_topic(parRide.get_assoOwnerRideId());
+						}
 					}
-				}
-				value.append("</div>");
-				
-				
-			    value.append("<div class=\"panel panel-default\">");
-				value.append("<div class=\"panel-heading\">Free ride</div>");
-				value.append("<div class=\"panel-body\">");
-				for(Iterator<ParticipantRide> prideI = user.pRides.iterator();prideI.hasNext(); )
-				{
-					ParticipantRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next()._pid);
-					if (parRide.get_status()==0)
+					value.append("</div>");
+					
+					
+				    value.append("<div class=\"panel panel-default\">");
+					value.append("<div class=\"panel-heading\">Free ride</div>");
+					value.append("<div class=\"panel-body\">");
+					for(Iterator<ParticipantRide> prideI = user.pRides.iterator();prideI.hasNext(); )
 					{
-						value.append("<a href=\"/TicketSchedule/servlet/Search?rid="+parRide._pid+"\">");
-						value.append("<div class=\"ride_wrapper\">");	
-						value.append(parRide._rideInfo.getGeoHTML());
-						value.append(parRide._rideInfo.getScheduleHTML());
-						value.append("</div></a>");
+						ParticipantRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next()._pid);
+						if (parRide.get_status()==0)
+						{
+							value.append("<a href=\"/TicketSchedule/servlet/Search?rid="+parRide._pid+"\">");
+							value.append("<div class=\"ride_wrapper\">");	
+							value.append(parRide._rideInfo.getGeoHTML());
+							value.append(parRide._rideInfo.getScheduleHTML());
+							value.append("</div></a>");
+						}
 					}
+					value.append("</div>");
+					response.getWriter().write(value.toString());
 				}
-				value.append("</div>");
-				response.getWriter().write(value.toString());
 			}
 		}
 	

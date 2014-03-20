@@ -35,7 +35,9 @@ public class RideCenter extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
+		synchronized(this)	
+		{
+		boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
 			if (!islogin)
 			{
 				request.getSession().setAttribute("fromLocation", "/TicketSchedule/servlet/RideCenter");
@@ -71,7 +73,6 @@ public class RideCenter extends HttpServlet {
 				    		{
 				    			alreadyPart = true;
 				    		}
-	
 				    }
 				    if (!alreadyPart)
 				    {
@@ -79,7 +80,6 @@ public class RideCenter extends HttpServlet {
 				    	ParticipantRide pride = new ParticipantRide(ride);
 				    	pride.set_status(0);
 					    request.setAttribute("participantRide", pride);
-	
 				    }
 				    request.setAttribute("alreadyPart", alreadyPart);
 			    }
@@ -91,6 +91,7 @@ public class RideCenter extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher("/RideCenter.jsp");
 				rd.forward(request, response);
 			}
+		}
 
 	}
 
