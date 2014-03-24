@@ -115,7 +115,7 @@ public class Topic implements PersistentStorage{
 	
 	public String getHTML()
 	{
-		StringBuilder result = new StringBuilder();
+		StringBuilder result = new StringBuilder(2000);
 		result.append("<a href=\"./RideCenter?topicId="+this._topicId +"&type=commute\">");
 		result.append("<div class=\"entry\" origLat="+this.ownerRide._rideInfo.origLoc.get_lat()+" ");
 		result.append("origLng=" +  this.ownerRide._rideInfo.origLoc.get_lon()+" ");
@@ -147,6 +147,15 @@ public class Topic implements PersistentStorage{
 	}
 
 
+	public String displayOnWebRideCenter()
+	{
+		StringBuilder result = new StringBuilder(2000);
+		result.append("<div class=\"inner_content\"><h4>");
+		result.append("From: "+ this.ownerRide._rideInfo.origLoc.get_formatedAddr()+"<br>");
+		result.append("To: " + this.ownerRide._rideInfo.destLoc.get_formatedAddr()+"</h4>");
+        result.append("<h4>"+this.ownerRide._rideInfo.getBarMessage()+"</h4></div>");
+        return result.toString();
+	}
 	
 	//Persistent Storage Related
 	boolean _isSaved = false;

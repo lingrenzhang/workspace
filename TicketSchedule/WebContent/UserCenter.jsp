@@ -122,7 +122,8 @@
 	  		+	 "<li><a href=\"javascript:getHistory()\">History</a></li>"
 			+	 "<li class=\"active\"><a href=\"javascript:getProfile()\">Profile</a></li>"
 			+"</ul>";
- 		alert(4);
+ 		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=profile");		
+		document.getElementById("innerContent").innerHTML = content;
  	}
  </script>   
     

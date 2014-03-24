@@ -1,13 +1,17 @@
 package com.hitchride.standardClass;
 
+import java.util.Date;
 import java.util.Vector;
 
+import com.hitchride.access.PartiRideAccess;
+import com.hitchride.access.UserTbAccess;
 
 //User passively updates i
 public class User implements RideListener,UserInfo{
 	//UserInfo
 	private int _uid;
-	private String _name;
+	public String _surename;
+	private String _givenname;
 	private String _avatarID;
 	private int _userLevel;
 	private String _emailAddress;
@@ -48,12 +52,21 @@ public class User implements RideListener,UserInfo{
 
 	@Override
 	public String get_name() {
-		return _name;
+		return _givenname;
 	}
 
-	public void set_name(String _name) {
-		this._name = _name;
+	public void set_name(String name) {
+		this._givenname = name;
 	}
+	
+	public String get_surename() {
+		return _givenname;
+	}
+
+	public void set_surename(String surename) {
+		this._givenname = surename;
+	}
+
 
 	@Override
 	public String get_avatarID() {
@@ -107,8 +120,9 @@ public class User implements RideListener,UserInfo{
         result.append("Level: "+ this.get_userLevel());
         result.append("</div>");
 
-
 		return result.toString();
-	
 	}
+
+	
+	
 }

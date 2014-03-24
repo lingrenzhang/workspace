@@ -43,14 +43,14 @@
 .user_status
 {
 	display: block;
-	positon: relative;
+	position: relative;
 	float: right;
 	width: 118px;
 }
 .user_match
 {
 	display: block;
-	positon: relative;
+	position: relative;
 	float: right;
 	width: 118px;
 	
@@ -78,7 +78,6 @@
 	line-height: 1.3em;
 	padding: 4px 3px 3px 3px;
 	width: 450px;
-
 }
 
 
@@ -97,14 +96,14 @@
 .entry
 {
 	display: block;
-	postion: relative;
+	position: relative;
 	height: 120px;
 }
 
 .topic_wrapper
 {
 	display: block;
-	postion: relative;
+	position: relative;
 	float: right;
 	width: 200px;
 	padding: 15px 10px 4px 10px;
@@ -113,16 +112,14 @@
 .schedule_wrapper
 {
 	display: block;
-	postion: relative;
+	position: relative;
 	height: 120px;
-
-	
 }
 
 .bargain_wrapper
 {
 	display: block;
-	postion: relative;
+	position: relative;
 
 }
 
@@ -151,7 +148,7 @@
 .match_Bar
 {
 	display: block;
-	positon: relative;
+	position: relative;
 	height: 13px;
 	width: 100px;
 	padding: 2px 0px 2px 10px ;

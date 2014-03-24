@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.hitchride.access.UserTbAccess;
 import com.hitchride.global.AllPartRides;
 import com.hitchride.global.AllTopicRides;
 import com.hitchride.global.AllTopics;
@@ -17,6 +18,7 @@ import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.Topic;
 import com.hitchride.standardClass.User;
+import com.hitchride.standardClass.UserProfile;
 import com.hitchride.util.QueryStringParser;
 
 
@@ -84,9 +86,7 @@ public class UserCenter extends HttpServlet {
 							value.append(ownerRide.getScheduleHTML());
 							value.append("</div></a>");
 							Topic topic= AllTopics.getTopics().get_topic(ownerRide._recordId);
-							
 						}
-						
 					}
 					value.append("</div>");
 					
@@ -127,6 +127,23 @@ public class UserCenter extends HttpServlet {
 						}
 					}
 					value.append("</div>");
+					response.getWriter().write(value.toString());
+				}
+				
+				
+				if (content.equalsIgnoreCase("profile"))
+				{
+					UserProfile userP = UserTbAccess.loadUserProfile(user.get_uid());
+					StringBuilder value = new StringBuilder();
+				    value.append("<div class=\"panel panel-default\">");
+					value.append("<div class=\"panel-heading\">Your Profile</div>");
+					value.append("<div class=\"panel-body\">");
+					value.append("<form action=\"/TicketSchedule/servlet/updateProfile\" method=post>");
+					value.append("<span>UserName</span>"+"<input name=username value="+userP._givenname+">");
+					value.append("<buttom type=submit>");
+					value.append("</form>");
+					value.append("</div></div></div>");
+					user.numofnewMessage = 0;
 					response.getWriter().write(value.toString());
 				}
 			}

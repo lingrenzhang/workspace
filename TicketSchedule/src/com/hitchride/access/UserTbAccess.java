@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.lang.Error;
 
 import com.hitchride.global.SQLServerConf;
+import com.hitchride.standardClass.UserProfile;
+import com.hitchride.standardClass.UserInfo;
 
 public class UserTbAccess {
 	    //id char(20)
@@ -69,6 +71,7 @@ public class UserTbAccess {
 				{
 					getConnection();
 				}
+				
 				sql=objConn.createStatement();
 				String query = "select * from userTb";
 				result = sql.executeQuery(query);
@@ -142,7 +145,6 @@ public class UserTbAccess {
 		
         public int getIDbyName(String name) 
         {
-
         	Statement sql;
         	ResultSet rs;
         	int result=0;
@@ -159,23 +161,144 @@ public class UserTbAccess {
 	        	rs.next();
 	        	result = rs.getInt(1);
 	        }catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	        return result;
 	    }
-        			
+        
+        
+        public int deleteUser(UserInfo user)
+        {
+        	int rows=0;
+        	Statement sql;
+        	try
+        	{
+				if (objConn==null)
+				{
+					getConnection();
+				}
+				sql=objConn.createStatement();
+	        	String query = "delete from usertb where userid= '"+user.get_uid()+"'";
+	        	rows = sql.executeUpdate(query);
+	        }catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+        	return rows;
+        }
+        
+        
+        public static UserProfile loadUserProfile(int userid)
+        {
+        	UserProfile user = new UserProfile();
+        	Statement sql;
+        	ResultSet rs;
+        	try
+        	{
+				if (objConn==null)
+				{
+					getConnection();
+				}
+				sql=objConn.createStatement();
+	        	String query = "select * from userTb where userid= '"+ userid +"'";
+	        	rs = sql.executeQuery(query);
+	        	if (rs.next()==true)
+	        	{
+	        		user.set_uid(userid);
+	        		user._address=rs.getString("address");
+	        		user._avatarID=rs.getString("avatarID");
+	        		user._emailAddress=rs.getString("emailAddress");
+	        		user._givenname=rs.getString("givenname");
+	        		user._surename =rs.getString("surname");
+	        		user.set_userLevel(rs.getInt("userLevel"));
+	        		user._password = rs.getString("password");
+	        	}
+	        	else
+	        	{
+	        		System.out.println("Incorrect userid: "+ userid);
+	        	}
+	        		
+	        }catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+        	return user;
+        }
+        
+		public static int insertUser(UserProfile user) {
+			int rows=0;
+			try
+			{
+				Statement sql;
+				if (objConn==null)
+				{
+					getConnection();
+				}
+				sql=objConn.createStatement();
+				sql.execute("insert into userTb (emailAddress,password,givenname,surname,address,userLevel,avatarID) values(\"" 
+						+ user._emailAddress + "\",\""
+						+ user._password + "\",\""
+						+ user._givenname + "\",\""
+						+ user._surename + "\",\""
+						+ user._address + "\","
+						+ user.get_userLevel() + ",\""
+						+ user._avatarID +"\")");
+			}
+			catch (java.lang.ClassNotFoundException e){
+				System.err.println("ClassNotFoundException:"+e.getMessage());
+			}
+			catch (SQLException e)
+			{
+                Error err=new Error("SQLException:"+e.getMessage());
+                throw err;
+				//System.err.println("SQLException:"+e.getMessage());
+			}
+			return rows;
+		}
+		
+        public static int updateUserProfile(UserProfile user)
+        {
+        	int rows=0;
+        	try
+			{
+				Statement sql;
+				if (objConn==null)
+				{
+					getConnection();
+				}
+				sql=objConn.createStatement();
+				rows=sql.executeUpdate("update userTb set "
+						+ "givenname=\""+ user._givenname
+						+ "\",surname=\""+ user._surename
+						+ "\",address=\""+user._address
+						+ "\" where emailAddress=\""+ user._emailAddress+"\"");
+			}
+			catch (java.lang.ClassNotFoundException e){
+				System.err.println("ClassNotFoundException:"+e.getMessage());
+			}
+			catch (SQLException e)
+			{
+                Error err=new Error("SQLException:"+e.getMessage());
+                throw err;
+			}
+        	return rows;
+        }
+        
+        
         protected void finalize(){
         	if (objConn!=null){
     			try {
     				objConn.close();
+    				objConn=null;
     			} catch (SQLException e) {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
     			}
     		}
         }
+
 }

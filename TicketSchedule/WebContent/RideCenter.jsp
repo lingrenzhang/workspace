@@ -274,20 +274,7 @@
 					<img src=<%="/TicketSchedule/UserProfile/"+topicInfo.owner.get_avatarID() %> alt="Profile Picture"></img>
 					<span class="passenger"></span>
 				</div>
-				<div class="inner_content">
-					<h3>
-						<span class="inner"><%=topicInfo.ownerRide._rideInfo.origLoc._city %>
-						<span class="trip_type round_trip"><%=topicInfo.ownerRide._rideInfo.destLoc._city %></span>
-						</span>
-					</h3>
-					<h4>
-						From: <%=topicInfo.ownerRide._rideInfo.origLoc._addr+", "+topicInfo.ownerRide._rideInfo.origLoc._city%><br>
-						To: <%=topicInfo.ownerRide._rideInfo.origLoc._addr+ ", "+topicInfo.ownerRide._rideInfo.origLoc._city%>
-					</h4>
-					<h4>
-						<%= topicInfo.ownerRide._rideInfo.getBarMessage() %>
-					</h4>
-				</div>
+				<%=topicInfo.displayOnWebRideCenter() %>
 			</div>
 			<%= isOwnerMode? "</a>" : "" %>
 			<div class="discussion_wrapper">
