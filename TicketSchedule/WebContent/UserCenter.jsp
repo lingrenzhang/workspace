@@ -18,14 +18,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>User Center</title>
-	<link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
-	<link href="/TicketSchedule/CSS/usercenter.css" type="text/css" rel="stylesheet">
+
+
 	
 	<!-- Bootstrap -->
 	<!--  
 	<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
     -->
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.css">
+    <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
+    <link href="/TicketSchedule/CSS/usercenter.css" type="text/css" rel="stylesheet">
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

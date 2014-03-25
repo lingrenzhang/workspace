@@ -169,4 +169,14 @@
     <servlet-name>TimeControlService</servlet-name>
     <url-pattern>/servlet/TimeControlService</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UserProfile</display-name>
+    <servlet-name>UserProfile</servlet-name>
+    <servlet-class>com.hitchride.UserProfile</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserProfile</servlet-name>
+    <url-pattern>/servlet/UserProfile</url-pattern>
+  </servlet-mapping>
 </web-app>

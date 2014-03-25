@@ -138,9 +138,12 @@ public class UserCenter extends HttpServlet {
 				    value.append("<div class=\"panel panel-default\">");
 					value.append("<div class=\"panel-heading\">Your Profile</div>");
 					value.append("<div class=\"panel-body\">");
-					value.append("<form action=\"/TicketSchedule/servlet/updateProfile\" method=post>");
-					value.append("<span>UserName</span>"+"<input name=username value="+userP._givenname+">");
-					value.append("<buttom type=submit>");
+					value.append("<form action=\"/TicketSchedule/servlet/UserProfile\" method=post>");
+					value.append("<div class=propwrapper><span>GivenName</span>"+"<input class=\"userproperty\" name=givenname value='"+userP._givenname+"'></div>");
+					value.append("<div class=propwrapper><span>SureName </span>"+"<input class=\"userproperty\" name=surename value='"+userP._surename+"'></div>");
+					value.append("<div class=propwrapper><span>Address  </span>"+"<input class=\"userproperty\" name=address value='"+userP._address+"'></div>");
+					value.append("<input class=\"hidden\" name=uid value='"+userP.get_uid()+"'>");
+					value.append("<button type=submit class=\"btn btn-primary\">Update Profile</button>");
 					value.append("</form>");
 					value.append("</div></div></div>");
 					user.numofnewMessage = 0;

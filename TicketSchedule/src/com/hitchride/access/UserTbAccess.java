@@ -288,6 +288,34 @@ public class UserTbAccess {
         	return rows;
         }
         
+        public static int updateUserProfile(String givenname, String surename, String address, int uid)
+        {
+        	int rows=0;
+        	try
+			{
+				Statement sql;
+				if (objConn==null)
+				{
+					getConnection();
+				}
+				sql=objConn.createStatement();
+				rows=sql.executeUpdate("update userTb set "
+						+ "givenname=\""+ givenname
+						+ "\",surname=\""+ surename
+						+ "\",address=\""+ address
+						+ "\" where userid=\""+ uid+"\"");
+			}
+			catch (java.lang.ClassNotFoundException e){
+				System.err.println("ClassNotFoundException:"+e.getMessage());
+			}
+			catch (SQLException e)
+			{
+                Error err=new Error("SQLException:"+e.getMessage());
+                throw err;
+			}
+        	return rows;
+        }
+        
         
         protected void finalize(){
         	if (objConn!=null){

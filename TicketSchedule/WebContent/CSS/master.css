@@ -423,19 +423,7 @@ font-weight: 400;
 }
 
 
-.btn-primary:hover{
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled]{
 	color: #ffffff;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 	background-color: #00cc6d;
-	background-image: -moz-linear-gradient(top, #00cc88, #00cc44);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#00cc88), to(#00cc44));
-	background-image: -webkit-linear-gradient(top, #00cc88, #00cc44);
-	background-image: -o-linear-gradient(top, #00cc88, #00cc44);
-	background-image: linear-gradient(to bottom, #00cc88, #00cc44);
-	background-repeat: repeat-x;
-	border-color: #00cc44 #00cc44 #00802a;
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff00cc88', endColorstr='#ff00cc44', GradientType=0);
-	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
-

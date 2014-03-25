@@ -876,7 +876,7 @@ $(document).ready(function(){
 			              </div>
 					</div>	
 				</div> 
-			<span id="form_submit"><button type="submit" class="btn btn-primary">Post Ride</button></span>          
+			<span id="form_submit"><button type="submit" class="btn btn-primary">Create or Update Ride</button></span>          
             <input type="text" class="hidden" id="origLat" name="origLat" value=""></input>
             <input type="text" class="hidden" id="origLng" name="origLng" value=""></input>
             <input type="text" class="hidden" id="destLat" name="destLat" value=""></input>
