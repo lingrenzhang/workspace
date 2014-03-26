@@ -119,11 +119,13 @@ public class UserCenter extends HttpServlet {
 						ParticipantRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next()._pid);
 						if (parRide.get_status()==0)
 						{
-							value.append("<a href=\"/TicketSchedule/servlet/Search?rid="+parRide._pid+"\">");
+							
 							value.append("<div class=\"ride_wrapper\">");	
+							value.append("<a href=\"/TicketSchedule/servlet/Search?rid="+parRide._pid+"\">");
 							value.append(parRide._rideInfo.getGeoHTML());
 							value.append(parRide._rideInfo.getScheduleHTML());
-							value.append("</div></a>");
+							value.append("</a><a href='/TicketSchedule/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>ManageRide</button></div></a>");
+							value.append("</div>");
 						}
 					}
 					value.append("</div>");

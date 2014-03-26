@@ -6,6 +6,12 @@
 <head>
 <%@page import="com.hitchride.standardClass.User" %>
 <% 
+	String queryString = request.getQueryString();
+	int rid = 0;
+	if (queryString!=null)
+	{
+	 rid = Integer.parseInt(queryString.split("=")[1]);
+	}
 	String IsLogin =(String) request.getSession().getAttribute("IsLogin");
 	User user;
 	if (IsLogin!= null)
@@ -30,6 +36,7 @@
 
 
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
+<script src="/TicketSchedule/JS/site.js"></script>
 <script src="/TicketSchedule/bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
@@ -426,156 +433,173 @@ $(document).ready(function(){
 			}
 		}
 	});
-
 	//------------------------register listener end-----------------------------
-
-	//------------------------initialize map------------------------------------
 	
-	var dLat="";
-	var dLng="";
-	var oLat="";
-	var oLng="";
-	
-	var mapOptions = {
-		      center: new google.maps.LatLng(37.4, -122.0),
-		      zoom: 9,
-		      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-	var map = new google.maps.Map(document.getElementById("post-map-canvas"),mapOptions);
-
-	var orig = document.getElementById('s');
-	var searchBoxO = new google.maps.places.SearchBox(orig);
-	var omarkers= [];
-	var dest = document.getElementById('e');
-	var searchBoxD = new google.maps.places.SearchBox(dest);
-	var dmarkers = [];
-	var bounds = new google.maps.LatLngBounds();
-	
-	searchBoxO.onclick = function(){
-	   alert("onchange triggered");
-	};
-	google.maps.event.addListener(searchBoxO, 'places_changed', function() {
-	  	  var places = searchBoxO.getPlaces();
-
-	  	  for (var i = 0, marker; marker = omarkers[i]; i++) {
-	        marker.setMap(null);
-	      }
-
-	      omarkers = [];
-	      
-	      for (var i = 0, place; place = places[i]; i++) {
-	        var image = {
-	          url: place.icon,
-	          size: new google.maps.Size(71, 71),
-	          origin: new google.maps.Point(0, 0),
-	          anchor: new google.maps.Point(17, 34),
-	          scaledSize: new google.maps.Size(25, 25)
-	        };
-
-	        var marker = new google.maps.Marker({
-	            map: map,
-	            icon: image,
-	            title: place.name,
-	            position: place.geometry.location
-	          });
-	        omarkers.push(marker);
-
-	        bounds.extend(place.geometry.location);
-	      }
-	      map.fitBounds(bounds);
-
-		      
-	  	  place = places[0];
-		  document.getElementById("origLat").value=place.geometry.location.lat();
-		  document.getElementById("origLng").value=place.geometry.location.lng();
-		  oLat=place.geometry.location.lat();
-		  oLng=place.geometry.location.lng();
-		  dLat=document.getElementById("destLat").value;
-		  dLng=document.getElementById("destLng").value;
-		  if (dLat !="" && dLng!="")
-		  {
-			  calculateDistances();
-		  }
-	});
-
-	google.maps.event.addListener(searchBoxD, 'places_changed', function() {
-	   	  var places = searchBoxD.getPlaces();
-	   	  for (var i = 0, marker; marker = dmarkers[i]; i++) {
-	        marker.setMap(null);
-	      }
-
-	      dmarkers = [];
-	      for (var i = 0, place; place = places[i]; i++) {
-	        var image = {
-	          url: place.icon,
-	          size: new google.maps.Size(71, 71),
-	          origin: new google.maps.Point(0, 0),
-	          anchor: new google.maps.Point(17, 34),
-	          scaledSize: new google.maps.Size(25, 25)
-	        };
-
-	        var marker = new google.maps.Marker({
-	            map: map,
-	            icon: image,
-	            title: place.name,
-	            position: place.geometry.location
-	          });
-	        dmarkers.push(marker);
-
-	        bounds.extend(place.geometry.location);
-	      }
-	      map.fitBounds(bounds);
-	      place = places[0];
-		  document.getElementById("destLat").value=place.geometry.location.lat();
-		  document.getElementById("destLng").value=place.geometry.location.lng();
-		  dLat=place.geometry.location.lat();
-		  dLng=place.geometry.location.lng();
-		  oLat=document.getElementById("origLat").value;
-		  oLng=document.getElementById("origLng").value;
-		  
-		  if (oLat !="" && oLng!="")
-		  {
-			  calculateDistances();
-		  }
-	});
-		   	
-	google.maps.event.addListener(map, 'bounds_changed', function() {
-	   	  var bounds = map.getBounds();
-	      searchBoxO.setBounds(bounds);
-	});
-
-	google.maps.event.addListener(map, 'bounds_changed', function() {
-	    var bounds = map.getBounds();
-	    searchBoxD.setBounds(bounds);
-	  });
-	  
-	
-	function calculateDistances() {
-	   var service = new google.maps.DistanceMatrixService();
-	   var orig = new google.maps.LatLng(oLat,oLng);
-	   var dest = new google.maps.LatLng(dLat,dLng);
-	   service.getDistanceMatrix(
-		    {
-		      origins: [orig],
-		      destinations: [dest],
-		      travelMode: google.maps.TravelMode.DRIVING,
-		      unitSystem: google.maps.UnitSystem.METRIC,
-		      avoidHighways: false,
-		      avoidTolls: false
-		    }, callback);
-		}
-	
-	function callback(response, status) {
-		  if (status != google.maps.DistanceMatrixStatus.OK) {
-		    alert('Error was: ' + status);
-		  } else {
-		   
-		    document.getElementById("distance").value =response.rows[0].elements[0].distance.value;
-		    document.getElementById("dtime").value =response.rows[0].elements[0].duration.value;
-		   }
-		}
+	initizlieMap();
+	//-----------------------Initialize value
+	var rid = <%=rid%>;
+	if (rid!=0)
+	{
+		loadValue(rid);
+	}
 });
+</script>
 
+<script>
+	function initizlieMap()
+	{
+		var dLat="";
+		var dLng="";
+		var oLat="";
+		var oLng="";
+		
+		var mapOptions = {
+			      center: new google.maps.LatLng(37.4, -122.0),
+			      zoom: 9,
+			      mapTypeId: google.maps.MapTypeId.ROADMAP
+	    };
+		var map = new google.maps.Map(document.getElementById("post-map-canvas"),mapOptions);
+
+		var orig = document.getElementById('s');
+		var searchBoxO = new google.maps.places.SearchBox(orig);
+		var omarkers= [];
+		var dest = document.getElementById('e');
+		var searchBoxD = new google.maps.places.SearchBox(dest);
+		var dmarkers = [];
+		var bounds = new google.maps.LatLngBounds();
+		
+		searchBoxO.onclick = function(){
+		   alert("onchange triggered");
+		};
+		google.maps.event.addListener(searchBoxO, 'places_changed', function() {
+		  	  var places = searchBoxO.getPlaces();
+
+		  	  for (var i = 0, marker; marker = omarkers[i]; i++) {
+		        marker.setMap(null);
+		      }
+
+		      omarkers = [];
+		      
+		      for (var i = 0, place; place = places[i]; i++) {
+		        var image = {
+		          url: place.icon,
+		          size: new google.maps.Size(71, 71),
+		          origin: new google.maps.Point(0, 0),
+		          anchor: new google.maps.Point(17, 34),
+		          scaledSize: new google.maps.Size(25, 25)
+		        };
+
+		        var marker = new google.maps.Marker({
+		            map: map,
+		            icon: image,
+		            title: place.name,
+		            position: place.geometry.location
+		          });
+		        omarkers.push(marker);
+
+		        bounds.extend(place.geometry.location);
+		      }
+		      map.fitBounds(bounds);
+
+			      
+		  	  place = places[0];
+			  document.getElementById("origLat").value=place.geometry.location.lat();
+			  document.getElementById("origLng").value=place.geometry.location.lng();
+			  oLat=place.geometry.location.lat();
+			  oLng=place.geometry.location.lng();
+			  dLat=document.getElementById("destLat").value;
+			  dLng=document.getElementById("destLng").value;
+			  if (dLat !="" && dLng!="")
+			  {
+				  calculateDistances();
+			  }
+		});
+
+		google.maps.event.addListener(searchBoxD, 'places_changed', function() {
+		   	  var places = searchBoxD.getPlaces();
+		   	  for (var i = 0, marker; marker = dmarkers[i]; i++) {
+		        marker.setMap(null);
+		      }
+
+		      dmarkers = [];
+		      for (var i = 0, place; place = places[i]; i++) {
+		        var image = {
+		          url: place.icon,
+		          size: new google.maps.Size(71, 71),
+		          origin: new google.maps.Point(0, 0),
+		          anchor: new google.maps.Point(17, 34),
+		          scaledSize: new google.maps.Size(25, 25)
+		        };
+
+		        var marker = new google.maps.Marker({
+		            map: map,
+		            icon: image,
+		            title: place.name,
+		            position: place.geometry.location
+		          });
+		        dmarkers.push(marker);
+
+		        bounds.extend(place.geometry.location);
+		      }
+		      map.fitBounds(bounds);
+		      place = places[0];
+			  document.getElementById("destLat").value=place.geometry.location.lat();
+			  document.getElementById("destLng").value=place.geometry.location.lng();
+			  dLat=place.geometry.location.lat();
+			  dLng=place.geometry.location.lng();
+			  oLat=document.getElementById("origLat").value;
+			  oLng=document.getElementById("origLng").value;
+			  
+			  if (oLat !="" && oLng!="")
+			  {
+				  calculateDistances();
+			  }
+		});
+			   	
+		google.maps.event.addListener(map, 'bounds_changed', function() {
+		   	  var bounds = map.getBounds();
+		      searchBoxO.setBounds(bounds);
+		});
+
+		google.maps.event.addListener(map, 'bounds_changed', function() {
+		    var bounds = map.getBounds();
+		    searchBoxD.setBounds(bounds);
+		  });
+		  
+		
+		function calculateDistances() {
+		   var service = new google.maps.DistanceMatrixService();
+		   var orig = new google.maps.LatLng(oLat,oLng);
+		   var dest = new google.maps.LatLng(dLat,dLng);
+		   service.getDistanceMatrix(
+			    {
+			      origins: [orig],
+			      destinations: [dest],
+			      travelMode: google.maps.TravelMode.DRIVING,
+			      unitSystem: google.maps.UnitSystem.METRIC,
+			      avoidHighways: false,
+			      avoidTolls: false
+			    }, callback);
+			}
+		
+		function callback(response, status) {
+			  if (status != google.maps.DistanceMatrixStatus.OK) {
+			    alert('Error was: ' + status);
+			  } else {
+			   
+			    document.getElementById("distance").value =response.rows[0].elements[0].distance.value;
+			    document.getElementById("dtime").value =response.rows[0].elements[0].duration.value;
+			   }
+			}
+	}
+</script>
+<script>
+	function loadValue(rid)
+	{
+		var json = JSON.parse(getJson("/TicketSchedule/servlet/ManageRide?rid="+rid));
+		document.getElementById("s").setAttribute("value", json.origLoc._formatedAddr);
+		document.getElementById("e").setAttribute("value", json.destLoc._formatedAddr);
+	}
 </script>
 <title>Manage Ride</title>
 </head>
@@ -610,7 +634,7 @@ $(document).ready(function(){
 						<dl>
 							<dt>Starting From</dt>
 							<dd>
-	                        	<input type="text" class="ad_input" placeholder="e.g. University Road, Santa Barbara, CA" name="s" id="s" maxlength="400"  autocomplete="off">
+	                        	<input type="text" class="ad_input" placeholder="e.g. University Road, Santa Barbara, CA" name="s" id="s" maxlength="400"  autocomplete="off" >
 	                        </dd>
 	                        <dt>Going To</dt>
 	                        <dd>
