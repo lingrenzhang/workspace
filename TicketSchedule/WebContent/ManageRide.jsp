@@ -596,9 +596,46 @@ $(document).ready(function(){
 <script>
 	function loadValue(rid)
 	{
-		var json = JSON.parse(getJson("/TicketSchedule/servlet/ManageRide?rid="+rid));
-		document.getElementById("s").setAttribute("value", json.origLoc._formatedAddr);
-		document.getElementById("e").setAttribute("value", json.destLoc._formatedAddr);
+		var rideinfo = JSON.parse(getJson("/TicketSchedule/servlet/ManageRide?rid="+rid));
+		document.getElementById("s").setAttribute("value", rideinfo.origLoc._formatedAddr);
+		document.getElementById("e").setAttribute("value", rideinfo.destLoc._formatedAddr);
+		document.getElementById("origLat").value=rideinfo.origLoc._lat;
+		document.getElementById("origLng").value=rideinfo.origLoc._lon;
+		document.getElementById("destLat").value=rideinfo.destLoc._lat;
+		document.getElementById("destLng").value=rideinfo.destLoc._lon;
+		document.getElementById("distance").value=rideinfo.dist;
+		document.getElementById("dtime").value=rideinfo.dura;
+		if (rideinfo.schedule._isCommute==true)
+		{
+			$("#commuteid").click();
+			for (var i=0;i<7;i++)
+			{
+				if (_dayOfWeek[i])
+				{
+					document.getElementById("there_"+(i+1)).checked = true;
+					document.getElementById("there_time_"+(i+1)).value=rideinfo.schedule.cftime[i];
+					document.getElementById("back_time_"+(i+1)).value=rideinfo.schedule.cbtime[i];
+				}
+				else
+				{
+					document.getElementById("there_"+(i+1)).checked = false;
+				}
+			}
+		}
+		else
+		{
+			$("#travelid").click();
+			document.getElementById("depart-date").value = rideinfo.schedule.tripDate;
+			//document.getElementById("there_time").value = rideinfo.schedule.tripDate;
+		}
+		if (rideinfo.userType==true)
+		{
+			asPassenger();
+		}
+		else
+		{
+			asDriver();
+		}
 	}
 </script>
 <title>Manage Ride</title>
