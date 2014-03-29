@@ -122,7 +122,6 @@ public class NewScoreCalculator {
 			boolean drivingDist // if false, calculate great circle distance only; if true, use google API to get driving distance
 	) {
 		// same for single trip and round trips, but have to consider who is driver and who is passenger
-		double score = 0; // avoid negative scores
 		double origLat1 = myRide.origLoc.get_lat();
 		double origLon1 = myRide.origLoc.get_lon();
 		double destLat1 = myRide.destLoc.get_lat();
@@ -136,20 +135,18 @@ public class NewScoreCalculator {
 		boolean userType2 = ownerRide._rideInfo.userType;
 
 		// dist1 = driving distance for user 1 by himself
-		// pickUpDist1 = total driving distance for user 1 if user 1 has to pick up user 2
+		// detourDist1 = total detour distance if user 1 is picking up user 2
+		// detourDist1 == detourDist2 if drivingDist==false
 		double dist1 = getDistance(origLat1, origLon1, destLat1, destLon1, drivingDist);
 		double dist2 = getDistance(origLat2, origLon2, destLat2, destLon2, drivingDist);
-		double pickUpDist1 = getDistance(origLat1, origLon1, origLat2, origLon2, drivingDist)
-				   + dist2 + getDistance(destLat2, destLon2, destLat1, destLon1, drivingDist);
-		double pickUpDist2 = getDistance(origLat2, origLon2, origLat1, origLon1, drivingDist)
-				   + dist1 + getDistance(destLat1, destLon1, destLat2, destLon2, drivingDist);
+		double detourDist1 = getDistance(origLat1, origLon1, origLat2, origLon2, drivingDist)
+				   + getDistance(destLat2, destLon2, destLat1, destLon1, drivingDist);
+		double detourDist2 = getDistance(origLat2, origLon2, origLat1, origLon1, drivingDist)
+				   + getDistance(destLat1, destLon1, destLat2, destLon2, drivingDist);
 				
 		// define score to be 1-detour distance/smaller of the driver distance and passenger distance		
-		double minDist = Math.max(Math.min(dist1, dist2), 1);
-		
-		if(userType1) score = Math.max(score, 1-(pickUpDist1-dist1)/minDist);
-		if(userType2) score = Math.max(score, 1-(pickUpDist2-dist2)/minDist);
-		
+		double minDist = Math.max(Math.min(dist1, dist2), 1); // avoid divide-by-zeros 
+		double score = Math.max(0, 1-Math.min(detourDist1, detourDist2)/minDist);
 		return score;
 	}
 	
