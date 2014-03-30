@@ -2,11 +2,9 @@ package com.hitchride;
 
 import java.io.IOException;
 
-import com.google.gson.Gson;
-
-
 import com.hitchride.global.AllRides;
 import com.hitchride.standardClass.RideInfo;
+import com.hitchride.util.JsonHelper;
 import com.hitchride.util.QueryStringParser;
 
 import javax.servlet.ServletException;
@@ -35,8 +33,8 @@ public class ManageRide extends HttpServlet {
 		QueryStringParser qs = new QueryStringParser(request.getQueryString());
 		int rid = qs.getInt("rid");
 		RideInfo ride = AllRides.getRides().getRide(rid);
-		Gson gson = new Gson();
-		String rideJson = gson.toJson(ride);
+		JsonHelper jh = new JsonHelper();
+		String rideJson = jh.toJson(ride);
 		System.out.println(rideJson);
 		response.getWriter().write(rideJson);
 	}

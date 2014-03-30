@@ -65,11 +65,20 @@ public class AllRides {
 		return this._availRides.get(key);
 	}
 	
-	public void inser_availride(RideInfo part)
+	public void inser_availride(RideInfo ride)
 	{
 		this._availRidesKey++;
-		part.recordId = _availRidesKey;
-		this._availRides.put(this._availRidesKey, part);
+		ride.recordId = _availRidesKey;
+		this._availRides.put(this._availRidesKey, ride);
 
+	}
+	
+	public void udpate_availride(RideInfo ride)
+	{
+		if (this._availRides.get(ride.recordId)==null)
+		{
+			System.out.println("Warning: This is a new ride. Insert now and please check DB integrity.");
+		}
+		this._availRides.put(ride.recordId, ride);
 	}
 }

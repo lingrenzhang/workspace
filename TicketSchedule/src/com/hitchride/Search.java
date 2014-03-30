@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -409,34 +410,29 @@ public class Search extends HttpServlet {
 				}
 				myRide.dura=dura;
 				myRide.dist=dist;
-			
-			
-				/*Not insert the new ride, or put the ride to normal ride queue. Only valid after decide to join a new ride.
-				try {
-					CarpoolTbAccess.postRide(user.get_name(), roundtrip, userType, dayOfWeek, "", "", "", myArgs.origAddr, "",
-							"", "", myArgs.destAddr, detourFactor, forwardTime, forwardFlexibility, backTime, backFlexibility, 
-							myArgs.origLat, myArgs.origLon, myArgs.destLat, myArgs.destLon, dist, dura, false);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				myRide.recordId = Integer.parseInt(request.getParameter("rid"));
+				
+				if (myRide.recordId==0)
+				{
+					AllRides.getRides().inser_availride(myRide);
+					myRide.insertToDB();
 				}
-				*/
-				//Temporary saved in memory before deciding whether to put it as participant or ownerride
+				else
+				{
+					AllRides.getRides().udpate_availride(myRide);
+					myRide.updateDB();
+				}
 				
-				//ParticipantRide pride = new ParticipantRide(ride);
-				//pride.set_status(0);
-				AllRides.getRides().inser_availride(myRide);
-				RideInfoAccess.insertRideInfo(myRide);
-				
-				ParticipantRide pride = new ParticipantRide(myRide);
-				pride.set_status(0);
-				pride.set_assoOwnerRideId(-1);
-				user.pRides.add(pride);
-				AllPartRides.getPartRides().insert_pride(pride);
-				pride.insertToDB();
+				if (AllPartRides.getPartRides().get_participantRide(myRide.recordId)==null)
+				{
+					ParticipantRide pride = new ParticipantRide(myRide);
+					pride.set_status(0);
+					pride.set_assoOwnerRideId(-1);
+					user.pRides.add(pride);
+					AllPartRides.getPartRides().insert_pride(pride);
+					pride.insertToDB();
+				}
 				request.getSession().setAttribute("actRide", myRide);
-				
-				
 			}
 			
 			//TO DO: Sanity check

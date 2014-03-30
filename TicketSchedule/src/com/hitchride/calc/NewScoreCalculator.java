@@ -168,10 +168,18 @@ public class NewScoreCalculator {
 	// filter by coordinates first, then sort the filtered results by driving distance
 	public List<Topic> sortByDrivingDistance(RideInfo myRid, int sortNum){
 		List<Topic> sortResults = new ArrayList<Topic>();
+		sortNum = Math.min(sortNum,_scoreResults.size());
 		for(int index = 0; index < sortNum; index++){
 			ScoreResult scoreResult = _scoreResults.get(index);
 			OwnerRideInfo ownerRide = AllTopicRides.getTopicRides().getRide(scoreResult._topicId);
-			scoreResult._score = destScoreByCoordinates(myRid, ownerRide, true);
+			if (ownerRide!=null)
+			{	
+				scoreResult._score = destScoreByCoordinates(myRid, ownerRide, true);
+			}
+			else
+			{
+				scoreResult._score= -1.0;
+			}
 		}
 		Collections.sort(_scoreResults);
 		

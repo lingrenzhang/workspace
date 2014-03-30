@@ -1,6 +1,9 @@
 package com.hitchride.util;
 import java.lang.reflect.Type;
+import java.sql.Date;
 import java.sql.Time;
+import java.text.DateFormat;
+import java.util.Locale;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,6 +20,7 @@ public class JsonHelper {
 	public JsonHelper(){
 		gson = new GsonBuilder();
 		gson.registerTypeAdapter(java.sql.Time.class, new sqlTimeSerializer());
+		gson.registerTypeAdapter(java.sql.Date.class, new sqlDateSerializer());
 		gson.disableHtmlEscaping();
 		gjson = gson.create();
 	}
@@ -25,7 +29,21 @@ public class JsonHelper {
 		@Override
 		public JsonElement serialize(Time src, Type typeOfSrc,
 				JsonSerializationContext context) {
-			return new JsonPrimitive(src.toString());
+			DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT, Locale.ENGLISH);
+			return new JsonPrimitive(df.format(src));
+		}
+	}
+	
+	private class sqlDateSerializer implements JsonSerializer<java.sql.Date> {
+		@Override
+		public JsonElement serialize(Date src, Type typeOfSrc,
+				JsonSerializationContext context) {
+			//format on UI 
+				StringBuilder result = new StringBuilder();
+				result.append((src.getMonth()+1)+"/");
+				result.append((src.getDate())+"/");
+				result.append((src.getYear()+1900));
+			return new JsonPrimitive(result.toString());
 		}
 		
 	}

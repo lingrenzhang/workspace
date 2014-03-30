@@ -73,7 +73,7 @@ public class TicketScheduleSchemaTb {
 	};
 	
 	public static final DataColumnSchema[] PartiRide={
-		new DataColumnSchema("RideInfoID","INT(10)"), //Foreign Key constrain? 
+		new DataColumnSchema("RideInfoID","INT"), //Foreign Key constrain? 
         new DataColumnSchema("TopicId","INT(10)"),
         new DataColumnSchema("Status","INT(2)"),
 		new DataColumnSchema("GeoMatch","INT(3) DEFAULT 0"),
