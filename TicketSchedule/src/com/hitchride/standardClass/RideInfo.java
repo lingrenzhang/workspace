@@ -8,6 +8,7 @@ import java.sql.Time;
 import com.hitchride.access.RideInfoAccess;
 import com.hitchride.access.TopicTbAccess;
 import com.hitchride.global.AllUsers;
+import com.hitchride.util.TimeFormatHelper;
 
 
 //RideInfo saves the ride information.
@@ -110,8 +111,8 @@ public class RideInfo implements PersistentStorage{
 			// for commute only
 			//	Time forwardTime = rs.getTime("forwardTime");
 			//  Time backTime	= rs.getTime("backTime");
-			Time forwardTime = new Time(8*3600000);
-			Time backTime = new Time(18*3600000);
+			Time forwardTime = new Time(8*3600000-TimeFormatHelper.systemOffset);
+			Time backTime = new Time(18*3600000-TimeFormatHelper.systemOffset);
 			schedule.forwardFlexibility = rs.getTime("forwardFlexibility");
 			schedule.backFlexibility	= rs.getTime("backFlexibility");	// for round trip only
 			int dayOfWeek = rs.getInt("dayofweek");

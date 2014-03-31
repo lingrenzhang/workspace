@@ -34,11 +34,11 @@ public class Schedule implements Cloneable{
     		this._isCommute = true;
     		this.set_dayOfWeek(12345);
     		this.tripDate = new Date(114,4,1);
-    		this.tripTime = new Time(0);
-    		this.forwardFlexibility = new Time(20*60000);
-    		this.backFlexibility = new Time(20*60000);
-    		Time forwardTime = new Time(8*3600000);
-    		Time backTime = new Time(18*3600000);
+    		this.tripTime = new Time(0-TimeFormatHelper.systemOffset);
+    		this.forwardFlexibility = new Time(20*60000-TimeFormatHelper.systemOffset);
+    		this.backFlexibility = new Time(20*60000-TimeFormatHelper.systemOffset);
+    		Time forwardTime = new Time(8*3600000-TimeFormatHelper.systemOffset);
+    		Time backTime = new Time(18*3600000-TimeFormatHelper.systemOffset);
     		for (int i=0;i<7;i++)
     		{
     			cftime[i]=forwardTime;
@@ -88,11 +88,12 @@ public class Schedule implements Cloneable{
 	
 	public int get_days(){
 		int result=0;
-		for (int i=0;i<7;i++)
+		for (int i=1;i<8;i++)
 		{
-			if (this._dayOfWeek[i])
+			int k = (i==7)?0:i;
+			if (this._dayOfWeek[k])
 			{
-				result = 10*result+i+1;
+				result = 10*result+i;
 			}
 		}
 		return result;
@@ -117,7 +118,7 @@ public class Schedule implements Cloneable{
 		StringBuilder result = new StringBuilder(100);
 		if (_isCommute)
 		{
-			for (int i=0;i<6;i++)
+			for (int i=0;i<7;i++)
 			{
 				if (_dayOfWeek[i])
 				{

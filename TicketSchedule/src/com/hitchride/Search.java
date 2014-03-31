@@ -7,14 +7,20 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.Time;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+
+
 
 
 import org.json.JSONArray;
@@ -330,15 +336,15 @@ public class Search extends HttpServlet {
 					schedule.set_isCommute(true);
 				}
 		
-				schedule.set_dayOfWeek(1234);
+				int dayofweek = Integer.parseInt(request.getParameter("dayofweek"));
+				schedule.set_dayOfWeek(dayofweek);
 				
 				String forwardFlexibility = request.getParameter("flex_global");
 				int fflx = Integer.parseInt(forwardFlexibility);
-				schedule.forwardFlexibility = new Time(fflx*60000);
-			
+				schedule.forwardFlexibility = new Time(fflx*60000-TimeFormatHelper.systemOffset);
 				String backFlexibility = request.getParameter("flex_global");
 				int bflx = Integer.parseInt(backFlexibility);
-				schedule.backFlexibility = new Time(bflx*60000);
+				schedule.backFlexibility = new Time(bflx*60000-TimeFormatHelper.systemOffset);
 				
 				String cf = request.getParameter("there_time_1");
 				schedule.cftime[1] = getTime(cf);
@@ -473,12 +479,12 @@ public class Search extends HttpServlet {
 	{
 		if (timeexp==null || ("NO TRIP").equalsIgnoreCase(timeexp))
 		{
-			return new Time(36*3600000);
+			return new Time(36*3600000-TimeFormatHelper.systemOffset);
 		}
 		String[] time = timeexp.split(":");
 		int hour;
 		int minute;
-		if (time[1].contains("pm"))
+		if (time[1].contains("PM"))
 		{
 			hour = Integer.parseInt(time[0])+12;
 			minute = Integer.parseInt(time[1].substring(0, 2));
@@ -488,7 +494,7 @@ public class Search extends HttpServlet {
 			hour = Integer.parseInt(time[0]);
 			minute = Integer.parseInt(time[1].substring(0, 2));
 		}
-		Time formattime = new Time(hour*3600000+minute*60000);
+		Time formattime = new Time(hour*3600000+minute*60000-TimeFormatHelper.systemOffset);
 		return formattime;
 	}
 	
@@ -504,38 +510,38 @@ public class Search extends HttpServlet {
         */
 		if (timeexp.equals("anytime"))
 		{
-			Time tripTime = new Time(12*3600000);
-			forwardFlex = new Time(12*3600000);
+			Time tripTime = new Time(12*3600000-TimeFormatHelper.systemOffset);
+			forwardFlex = new Time(12*3600000-TimeFormatHelper.systemOffset);
 			return tripTime;
 		}
 		if (timeexp.equals("early"))
 		{
-			Time tripTime = new Time(4*3600000);
-			forwardFlex = new Time(4*3600000);
+			Time tripTime = new Time(4*3600000-TimeFormatHelper.systemOffset);
+			forwardFlex = new Time(4*3600000-TimeFormatHelper.systemOffset);
 			return tripTime;
 		}
 		if (timeexp.equals("morning"))
 		{
-			Time tripTime = new Time(10*3600000);
-			forwardFlex = new Time(2*3600000);
+			Time tripTime = new Time(10*3600000-TimeFormatHelper.systemOffset);
+			forwardFlex = new Time(2*3600000-TimeFormatHelper.systemOffset);
 			return tripTime;
 		}
 		if (timeexp.equals("afternoon"))
 		{
-			Time tripTime = new Time(29*1800000);
-			forwardFlex = new Time(5*1800000);
+			Time tripTime = new Time(29*1800000-TimeFormatHelper.systemOffset);
+			forwardFlex = new Time(5*1800000-TimeFormatHelper.systemOffset);
 			return tripTime;
 		}
 		if (timeexp.equals("evening"))
 		{
-			Time tripTime = new Time(19*3600000);
-			forwardFlex = new Time(2*3600000);
+			Time tripTime = new Time(19*3600000-TimeFormatHelper.systemOffset);
+			forwardFlex = new Time(2*3600000-TimeFormatHelper.systemOffset);
 			return tripTime;
 		}
 		if (timeexp.equals("night"))
 		{
-			Time tripTime = new Time(21*1800000);
-			forwardFlex = new Time(3*1800000);
+			Time tripTime = new Time(21*1800000-TimeFormatHelper.systemOffset);
+			forwardFlex = new Time(3*1800000-TimeFormatHelper.systemOffset);
 			return tripTime;
 		}
 		return getTime(timeexp);

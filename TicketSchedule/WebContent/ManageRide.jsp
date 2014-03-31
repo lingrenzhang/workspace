@@ -332,6 +332,16 @@ $(document).ready(function(){
 	});
 	
 	$(".checkbox").change(function(){
+		var dayofweek=0;
+		for(var i=1;i<8;i++)
+		{
+			var cflag = document.getElementById("there_"+i).checked;
+			if (cflag==true)
+			{
+				dayofweek = dayofweek*10+i;
+			}
+		}
+		document.getElementById("dayofweek").value=dayofweek;
 		if ($(this).prop('checked')==true)
 		{
 			Id=$(this).attr("id");
@@ -606,7 +616,7 @@ $(document).ready(function(){
 			    document.getElementById("dtime").value =response.rows[0].elements[0].duration.value;
 			   }
 			}
-	}
+	};
 </script>
 <script>
 	function loadValue(rid)
@@ -627,20 +637,22 @@ $(document).ready(function(){
 			for (var i=0;i<7;i++)
 			{
 				var k=(i==0)?7:i;
-				if (rideinfo.schedule._dayOfWeek[k])
+				if (rideinfo.schedule._dayOfWeek[i])
 				{
 					document.getElementById("there_"+k).checked = true;
-					document.getElementById("there_time_"+k).value=rideinfo.schedule.cftime[k];
-					document.getElementById("there_time_"+k).nextElementSibling.innerHTML=rideinfo.schedule.cftime[k];
-					document.getElementById("back_time_"+k).value=rideinfo.schedule.cbtime[k];
-					document.getElementById("back_time_"+k).nextElementSibling.innerHTML=rideinfo.schedule.cbtime[k];
-					int dayofweek = document.getElementById("dayofWeek").value;
+					$("#there_"+k).change();
+					document.getElementById("there_time_"+k).value=rideinfo.schedule.cftime[i];
+					document.getElementById("there_time_"+k).nextElementSibling.innerHTML=rideinfo.schedule.cftime[i];
+					document.getElementById("back_time_"+k).value=rideinfo.schedule.cbtime[i];
+					document.getElementById("back_time_"+k).nextElementSibling.innerHTML=rideinfo.schedule.cbtime[i];
+					var dayofweek = document.getElementById("dayofweek").value;
 					dayofweek=10*dayofweek+k;
-					document.getElementById("dayofWeek").value=dayofweek;
+					document.getElementById("dayofweek").value=dayofweek;
 				}
 				else
 				{
 					document.getElementById("there_"+k).checked = false;
+					$("#there_"+k).change();
 				}
 			}
 		}
@@ -815,11 +827,11 @@ $(document).ready(function(){
                             <div id="commute-table">
 								<ul id="col1">
                                     <li class="first"><p>Choose your times and flexibility:</p></li>
-                                    <li><input type="checkbox" name="there_1" id="there_1" class="checkbox" checked="checked" alt="Enable trip for Monday"><label for="there_1">Monday</label></li>
-                                    <li><input type="checkbox" name="there_2" id="there_2" class="checkbox" checked="checked" alt="Enable trip for Tuesday"><label for="there_2">Tuesday</label></li>                                                     
-                          			<li><input type="checkbox" name="there_3" id="there_3" class="checkbox" checked="checked" alt="Enable trip for Wednesday"><label for="there_3">Wednesday</label></li>                                                 
-  									<li><input type="checkbox" name="there_4" id="there_4" class="checkbox" checked="checked" alt="Enable trip for Thursday"><label for="there_4">Thursday</label></li>                                                   
- 									<li><input type="checkbox" name="there_5" id="there_5" class="checkbox" checked="checked" alt="Enable trip for Friday"><label for="there_5">Friday</label></li>                                                       
+                                    <li><input type="checkbox" name="there_1" id="there_1" class="checkbox" checked alt="Enable trip for Monday"><label for="there_1">Monday</label></li>
+                                    <li><input type="checkbox" name="there_2" id="there_2" class="checkbox" checked alt="Enable trip for Tuesday"><label for="there_2">Tuesday</label></li>                                                     
+                          			<li><input type="checkbox" name="there_3" id="there_3" class="checkbox" checked alt="Enable trip for Wednesday"><label for="there_3">Wednesday</label></li>                                                 
+  									<li><input type="checkbox" name="there_4" id="there_4" class="checkbox" checked alt="Enable trip for Thursday"><label for="there_4">Thursday</label></li>                                                   
+ 									<li><input type="checkbox" name="there_5" id="there_5" class="checkbox" checked alt="Enable trip for Friday"><label for="there_5">Friday</label></li>                                                       
                                     <li><input type="checkbox" name="there_6" id="there_6" class="checkbox" alt="Enable trip for Saturday"><label for="there_6">Saturday</label></li>                                                                     
                                     <li><input type="checkbox" name="there_7" id="there_7" class="checkbox" alt="Enable trip for Sunday"><label for="there_7">Sunday</label></li>                                                                         
                                 </ul>

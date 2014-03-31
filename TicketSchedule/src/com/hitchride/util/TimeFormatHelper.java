@@ -2,6 +2,7 @@ package com.hitchride.util;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.TimeZone;
 
 public class TimeFormatHelper {
 	static public Date setDate(String date)
@@ -17,6 +18,7 @@ public class TimeFormatHelper {
 	}
 	
 	public static final Time zerotime = new Time(0);
+	public static final int systemOffset = TimeZone.getDefault().getOffset(0);
 	
 	public static String getQuarterTime(Time time)
 	{
