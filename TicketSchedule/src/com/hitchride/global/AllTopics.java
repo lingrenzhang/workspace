@@ -21,7 +21,6 @@ public class AllTopics {
 	}
 	
 	public Hashtable<Integer,Topic> _topics;
-	private int _topicKey=0;
 	
 	private void initialTopics() {
 		_topics = TopicTbAccess.LoadAllTopic();
@@ -32,9 +31,7 @@ public class AllTopics {
 	}
 	
 	public void insert_topic(Topic topic) {
-		topic.set_topicId(this._topicKey);
-		_topics.put(this._topicKey,topic);
-		this._topicKey++;
+		_topics.put(topic.get_topicId(),topic);
 	}
 	
 	public void delete_topic(int key)

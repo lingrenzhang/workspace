@@ -41,7 +41,6 @@ public class UserCenter extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Environment.getEnv();
-		synchronized(this)
 		{
 			boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
 			if (!islogin)

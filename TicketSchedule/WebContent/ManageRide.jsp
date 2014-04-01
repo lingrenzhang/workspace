@@ -33,8 +33,6 @@
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/manageride.css" type="text/css" rel="stylesheet">
 
-
-
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
 <script src="/TicketSchedule/JS/site.js"></script>
 <script src="/TicketSchedule/bootstrap/js/bootstrap.js"></script>
@@ -63,9 +61,7 @@ function asDriver()
 	$(".seats-visibility").fadeIn(1000);
 }
 
-
 $(document).ready(function(){
-
 	//------------------------register listener-------------------------
 	$(".datetime_icon").click(function(){
     var search= $("#search_date").offset();

@@ -9,8 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.hitchride.global.AllPartRides;
+import com.hitchride.global.AllTopicRides;
 import com.hitchride.global.AllTopics;
+import com.hitchride.global.AllUsers;
 import com.hitchride.standardClass.Message;
+import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Topic;
@@ -35,7 +39,6 @@ public class RideCenter extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		synchronized(this)	
 		{
 		boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
 			if (!islogin)
@@ -99,7 +102,7 @@ public class RideCenter extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		/*
 		int from = Integer.parseInt(request.getParameter("from"));
 		int to = Integer.parseInt(request.getParameter("to"));
 		String messageContent = request.getParameter("notes");
@@ -111,6 +114,32 @@ public class RideCenter extends HttpServlet {
 		message.insertToDB();
 
 		response.sendRedirect("/TicketSchedule/servlet/Search");
+		*/
+		RideInfo ride = (RideInfo) request.getSession().getAttribute("actRide");
+		if (ride==null)
+		{
+			response.sendRedirect("/TicketSchedule/ManageRide.jsp");
+		}
+		else
+		{
+			OwnerRideInfo ownRide = new OwnerRideInfo(ride);
+			ride.get_user().tRides.add(ownRide);
+			ParticipantRide pRide = AllPartRides.getPartRides().get_participantRide(ride.recordId);
+			ride.get_user().pRides.remove(pRide);
+			pRide.delete();
+			
+			AllPartRides.getPartRides().remove(ride.recordId);
+			
+			AllTopicRides.getTopicRides().insert_TopicRide(ownRide);
+			ownRide.insertToDB();
+			Topic topic= new Topic();
+			topic.ownerRide=ownRide;
+			topic.set_topicId(ride.recordId);
+			topic.owner=ride.get_user();
+			AllTopics.getTopics().insert_topic(topic);
+			topic.insertToDB();
+			response.sendRedirect("/TicketSchedule/servlet/RideCenter?topicId="+ride.recordId);
+		}
 	}
 
 }

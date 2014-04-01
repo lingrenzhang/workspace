@@ -5,6 +5,7 @@ import java.util.Hashtable;
 
 import com.hitchride.access.TopicRideAccess;
 import com.hitchride.standardClass.OwnerRideInfo;
+import com.hitchride.standardClass.Topic;
 
 public class AllTopicRides {
 	private static AllTopicRides allTopicRides;
@@ -37,9 +38,13 @@ public class AllTopicRides {
     		ownerRide._rideInfo.get_user().tRides.add(ownerRide);
     		System.out.println("OwnerRide: "+ rid +" relation registered");
     	}
-    	
     }
 
+    
+	public void insert_TopicRide(OwnerRideInfo tRide) {
+		this._topicRides.put(tRide._recordId,tRide);
+	}
+	
 	public OwnerRideInfo getRide(int key)
 	{
 		return this._topicRides.get(key);

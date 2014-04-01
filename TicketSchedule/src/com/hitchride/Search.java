@@ -6,12 +6,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Date;
-import java.sql.Time;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,25 +15,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
-
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.hitchride.access.RideInfoAccess;
 import com.hitchride.calc.*;
-import com.hitchride.global.AllPartRides;
 import com.hitchride.global.AllRides;
 import com.hitchride.global.Environment;
 import com.hitchride.standardClass.GeoInfo;
-import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Schedule;
 import com.hitchride.standardClass.Topic;
-import com.hitchride.standardClass.User;
 import com.hitchride.util.QueryStringParser;
 import com.hitchride.util.TimeFormatHelper;
 /**
@@ -59,9 +47,7 @@ public class Search extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Environment.getEnv();
-		synchronized(this)
 		{
-			
 			RideInfo actRide = null;
 			if (request.getQueryString()!=null)
 			{
@@ -220,8 +206,6 @@ public class Search extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//rideInfoParameters myArgs = new rideInfoParameters();
-		synchronized(this)
-		{
 			RideInfo myRide = (RideInfo) request.getSession().getAttribute("actRide");
 			List<Topic> resultList = new ArrayList<Topic>();
 			NewScoreCalculator sc = new NewScoreCalculator();
@@ -233,7 +217,6 @@ public class Search extends HttpServlet {
 			
 			RequestDispatcher rd = request.getRequestDispatcher("../SearchRide.jsp");
 			rd.forward(request, response);
-		}
 	}
 	
 	public String jsonquery(String getURL) throws IOException
@@ -255,7 +238,5 @@ public class Search extends HttpServlet {
 	    conn.disconnect();
 	    return lines.toString();
 	}
-	
-
-	
+		
 }

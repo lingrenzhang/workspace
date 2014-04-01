@@ -102,7 +102,7 @@ public static Connection objConn; //This reference is used for batch job.
 			{
 				System.out.println("Incorrect number of middle point");
 			}
-			updatequery.append(" where RideInfoID=\""+ topicride._rideInfo.recordId+"\"" );
+			updatequery.append(" where RideInfoId=\""+ topicride._rideInfo.recordId+"\"" );
 			rows = sql.executeUpdate(updatequery.toString());
 		}
 		catch (java.lang.ClassNotFoundException e){

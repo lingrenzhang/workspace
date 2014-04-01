@@ -29,8 +29,9 @@ public class TopicTbAccess {
 		return objConn;
 	}
 	
-	public static void insertTopic(Topic topic)
+	public static int insertTopic(Topic topic)
 	{
+		int rows=0;
 		try
 		{
 			Statement sql;
@@ -96,12 +97,13 @@ public class TopicTbAccess {
 				reqparRideIds.append(messi.next()._messageId);
 			}
 			
-			sql.execute("insert into Topic (TopicId,OwnerId,ParRideIds,ReqRideIds,MessageIds) values(\"" + 
+			rows=sql.executeUpdate("insert into Topic (TopicId,OwnerId,ParRideIds,ReqRideIds,MessageIds) values(\"" + 
 					topic.get_topicId() + "\",\""
 					+ topic.owner.get_uid() +"\",\""
 					+ parRideIds.toString() +"\",\""
 					+ reqparRideIds.toString() +"\",\""
 					+ messages.toString() +"\")");
+
 		}
 		catch (java.lang.ClassNotFoundException e){
 			System.err.println("ClassNotFoundException:"+e.getMessage());
@@ -110,11 +112,13 @@ public class TopicTbAccess {
 		{
 			System.err.println("SQLException:"+e.getMessage());
 		}
+		return rows;
 	}
 	
 	
-	public static void updateTopic(Topic topic)
+	public static int updateTopic(Topic topic)
 	{
+		int rows=0;
 		try
 		{
 			Statement sql;
@@ -180,7 +184,7 @@ public class TopicTbAccess {
 				messages.append(messi.next()._messageId);
 			}
 			
-			sql.execute("update Topic set "
+			rows= sql.executeUpdate("update Topic set "
 					+ "OwnerId=\""+ topic.owner.get_uid() +"\","
 					+ "ParRIdeIds=\""+parRideIds.toString() +"\","
 					+ "ReqRideIds=\""+reqparRideIds.toString() +"\","
@@ -194,6 +198,7 @@ public class TopicTbAccess {
 		{
 			System.err.println("SQLException:"+e.getMessage());
 		}
+		return rows;
 	}
 	
 	public static Hashtable<Integer,Topic> LoadAllTopic(){

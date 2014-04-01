@@ -7,6 +7,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
+import com.hitchride.access.TopicRideAccess;
 import com.hitchride.access.TopicTbAccess;
 import com.hitchride.global.AllPartRides;
 import com.hitchride.global.AllTopicRides;
@@ -163,12 +164,30 @@ public class Topic implements PersistentStorage{
 	
 	public void updateDB()
 	{
-		TopicTbAccess.updateTopic(this);
+		int rows = TopicTbAccess.updateTopic(this);
+		if (rows == 0)
+		{
+			System.out.println("Update failed for topic: "+ this._topicId + " attempting insert.");
+			rows = TopicTbAccess.insertTopic(this);
+			if (rows== 0)
+			{
+				System.out.println("Insert also failed for topic: "+this._topicId + " Please check DB integrity.");
+			}
+		}
 	}
 	
 	@Override
 	public void insertToDB() {
-		TopicTbAccess.insertTopic(this);
+		int rows = TopicTbAccess.insertTopic(this);
+		if (rows == 0)
+		{
+			System.out.println("Insert failed for topic: "+ this._topicId + " attempting update.");
+			rows = TopicTbAccess.updateTopic(this);
+			if (rows== 0)
+			{
+				System.out.println("Update also failed for topic: "+this._topicId + " Please check DB integrity.");
+			}
+		}
 	}
 
 	@Override

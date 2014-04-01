@@ -145,6 +145,10 @@ public class ParticipantRide implements PersistentStorage{
 			}
 		}
 	}
+	
+	public void delete(){
+		PartiRideAccess.deletePride(this);
+	}
 
 	@Override
 	public boolean isChanged() {

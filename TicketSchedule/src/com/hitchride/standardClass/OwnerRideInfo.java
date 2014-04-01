@@ -109,7 +109,7 @@ public class OwnerRideInfo implements PersistentStorage,RideStatusChange{
 		if (rows == 0)
 		{
 			System.out.println("Insert failed for topicride: "+ this._recordId + " attempting update.");
-			rows = TopicRideAccess.insertTopicRide(this);
+			rows = TopicRideAccess.updateTopicRide(this);
 			if (rows== 0)
 			{
 				System.out.println("Update also failed for topicride: "+this._recordId + " Please check DB integrity.");

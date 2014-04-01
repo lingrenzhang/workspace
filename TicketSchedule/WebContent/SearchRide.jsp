@@ -376,8 +376,11 @@ window.onscroll = function(){
 							</h2>
 							<p>Post a ride as a driver or passenger and get notified when new matches are found!							
 							</p>
-							<a class="button post" href="../Postride.jsp">Post a ride</a>
+							<form method="post" action="/TicketSchedule/servlet/RideCenter">	
+								<button id="createTopic" type="submit" class="button post">Create a Topic</button>
+							</form>
 						</div>
+						
 					</div>
 				</div>
 				<div class="page_list">
