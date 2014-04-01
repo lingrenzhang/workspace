@@ -712,7 +712,7 @@ $(document).ready(function(){
 <div id="content_wrapper">
 	<div id="content_container" class="clearfix">
 		<div id="wide_column_left" class="newAddRideStyle">
-			<form action="/TicketSchedule/servlet/Search" method="Post" id="add_ride" class="standard requires_login_results" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
+			<form action="/TicketSchedule/servlet/ManageRide" method="Post" id="add_ride" class="standard requires_login_results" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
 				<div class="panel" id="GeoInfo">
 					<div class="panel-heading">Geoinfo</div>
 					<div class="panel-body">

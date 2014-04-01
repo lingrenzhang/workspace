@@ -66,6 +66,79 @@ public class TimeFormatHelper {
 		
 	}
 	
+	public static Time getTripTime(String timeexp,Time forwardFlex)
+	{
+		/*
+		<option value="anytime" selected="selected">anytime</option>
+        <option value="early">early (12a-8a)</option>
+        <option value="morning">morning (8a-12p)</option>
+        <option value="afternoon">afternoon (12p-5p)</option>
+        <option value="evening">evening (5p-9p)</option>
+        <option value="night">night (9p-12a)</option>
+        */
+		if (timeexp.equals("anytime"))
+		{
+			Time tripTime = new Time(12*3600000-TimeFormatHelper.systemOffset);
+			forwardFlex = new Time(12*3600000-TimeFormatHelper.systemOffset);
+			return tripTime;
+		}
+		if (timeexp.equals("early"))
+		{
+			Time tripTime = new Time(4*3600000-TimeFormatHelper.systemOffset);
+			forwardFlex = new Time(4*3600000-TimeFormatHelper.systemOffset);
+			return tripTime;
+		}
+		if (timeexp.equals("morning"))
+		{
+			Time tripTime = new Time(10*3600000-TimeFormatHelper.systemOffset);
+			forwardFlex = new Time(2*3600000-TimeFormatHelper.systemOffset);
+			return tripTime;
+		}
+		if (timeexp.equals("afternoon"))
+		{
+			Time tripTime = new Time(29*1800000-TimeFormatHelper.systemOffset);
+			forwardFlex = new Time(5*1800000-TimeFormatHelper.systemOffset);
+			return tripTime;
+		}
+		if (timeexp.equals("evening"))
+		{
+			Time tripTime = new Time(19*3600000-TimeFormatHelper.systemOffset);
+			forwardFlex = new Time(2*3600000-TimeFormatHelper.systemOffset);
+			return tripTime;
+		}
+		if (timeexp.equals("night"))
+		{
+			Time tripTime = new Time(21*1800000-TimeFormatHelper.systemOffset);
+			forwardFlex = new Time(3*1800000-TimeFormatHelper.systemOffset);
+			return tripTime;
+		}
+		return getTime(timeexp);
+	}
+
+	public static Time getTime(String timeexp)
+	{
+		if (timeexp==null || ("NO TRIP").equalsIgnoreCase(timeexp))
+		{
+			return new Time(36*3600000-TimeFormatHelper.systemOffset);
+		}
+		String[] time = timeexp.split(":");
+		int hour;
+		int minute;
+		if (time[1].contains("PM"))
+		{
+			hour = Integer.parseInt(time[0])+12;
+			minute = Integer.parseInt(time[1].substring(0, 2));
+		}
+		else
+		{
+			hour = Integer.parseInt(time[0]);
+			minute = Integer.parseInt(time[1].substring(0, 2));
+		}
+		Time formattime = new Time(hour*3600000+minute*60000-TimeFormatHelper.systemOffset);
+		return formattime;
+	}
+	
+	
 	public static void main(String[] args)
 	{
 		Time time = new Time(36*900000);
