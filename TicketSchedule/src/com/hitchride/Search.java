@@ -61,6 +61,7 @@ public class Search extends HttpServlet {
 		Environment.getEnv();
 		synchronized(this)
 		{
+			
 			RideInfo actRide = null;
 			if (request.getQueryString()!=null)
 			{
@@ -221,7 +222,12 @@ public class Search extends HttpServlet {
 		//rideInfoParameters myArgs = new rideInfoParameters();
 		synchronized(this)
 		{
-			RideInfo myRide = new RideInfo();
+			int recordId = Integer.parseInt(request.getParameter("rid"));
+			RideInfo myRide = AllRides.getRides().getRide(recordId);
+			if (myRide==null)
+			{
+				myRide = new RideInfo();
+			}
 			
 			//*********************************Geo Related***********************
 			GeoInfo orig=null;

@@ -288,44 +288,58 @@ $(document).ready(function(){
 				case "1":
 					$("ul#col2").children("li:eq(1)").children("p")[0].className="time-alias1";
 					$("ul#col2").children("li:eq(1)").children("select")[0].className="slim hidden";
+					document.getElementById("there_time_1").value=$("ul#col2").children("li:eq(1)").children("p")[0].innerHTML;
 					$("ul#col3").children("li:eq(1)").children("p")[0].className="time-alias2";
 					$("ul#col3").children("li:eq(1)").children("select")[0].className="slim hidden";
+					document.getElementById("back_time_1").value=$("ul#col3").children("li:eq(1)").children("p")[0].innerHTML;
 					break;
 				case "2":
 					$("ul#col2").children("li:eq(2)").children("p")[0].className="time-alias1";
 					$("ul#col2").children("li:eq(2)").children("select")[0].className="slim hidden";
+					document.getElementById("there_time_2").value=$("ul#col2").children("li:eq(2)").children("p")[0].innerHTML;
 					$("ul#col3").children("li:eq(2)").children("p")[0].className="time-alias2";
 					$("ul#col3").children("li:eq(2)").children("select")[0].className="slim hidden";
+					document.getElementById("back_time_2").value=$("ul#col3").children("li:eq(2)").children("p")[0].innerHTML;
 					break;
 				case "3":
 					$("ul#col2").children("li:eq(3)").children("p")[0].className="time-alias1";
 					$("ul#col2").children("li:eq(3)").children("select")[0].className="slim hidden";
+					document.getElementById("there_time_3").value=$("ul#col2").children("li:eq(3)").children("p")[0].innerHTML;
 					$("ul#col3").children("li:eq(3)").children("p")[0].className="time-alias2";
 					$("ul#col3").children("li:eq(3)").children("select")[0].className="slim hidden";
+					document.getElementById("back_time_3").value=$("ul#col3").children("li:eq(3)").children("p")[0].innerHTML;
 					break;
 				case "4":
 					$("ul#col2").children("li:eq(4)").children("p")[0].className="time-alias1";
 					$("ul#col2").children("li:eq(4)").children("select")[0].className="slim hidden";
+					document.getElementById("there_time_4").value=$("ul#col2").children("li:eq(4)").children("p")[0].innerHTML;
 					$("ul#col3").children("li:eq(4)").children("p")[0].className="time-alias2";
 					$("ul#col3").children("li:eq(4)").children("select")[0].className="slim hidden";
+					document.getElementById("back_time_4").value=$("ul#col3").children("li:eq(4)").children("p")[0].innerHTML;
 					break;
 				case "5":
 					$("ul#col2").children("li:eq(5)").children("p")[0].className="time-alias1";
 					$("ul#col2").children("li:eq(5)").children("select")[0].className="slim hidden";
+					document.getElementById("there_time_5").value=$("ul#col2").children("li:eq(5)").children("p")[0].innerHTML;
 					$("ul#col3").children("li:eq(5)").children("p")[0].className="time-alias2";
 					$("ul#col3").children("li:eq(5)").children("select")[0].className="slim hidden";
+					document.getElementById("back_time_5").value=$("ul#col3").children("li:eq(5)").children("p")[0].innerHTML;
 					break;
 				case "6":
 					$("ul#col2").children("li:eq(6)").children("p")[0].className="time-alias1";
 					$("ul#col2").children("li:eq(6)").children("select")[0].className="slim hidden";
+					document.getElementById("there_time_6").value=$("ul#col2").children("li:eq(6)").children("p")[0].innerHTML;
 					$("ul#col3").children("li:eq(6)").children("p")[0].className="time-alias2";
 					$("ul#col3").children("li:eq(6)").children("select")[0].className="slim hidden";
+					document.getElementById("back_time_6").value=$("ul#col3").children("li:eq(6)").children("p")[0].innerHTML;
 					break;
 				case "7":
 					$("ul#col2").children("li:eq(7)").children("p")[0].className="time-alias1";
 					$("ul#col2").children("li:eq(7)").children("select")[0].className="slim hidden";
+					document.getElementById("there_time_7").value=$("ul#col2").children("li:eq(7)").children("p")[0].innerHTML;
 					$("ul#col3").children("li:eq(7)").children("p")[0].className="time-alias2";
 					$("ul#col3").children("li:eq(7)").children("select")[0].className="slim hidden";
+					document.getElementById("back_time_7").value=$("ul#col3").children("li:eq(7)").children("p")[0].innerHTML;
 					break;
 			}
 		}

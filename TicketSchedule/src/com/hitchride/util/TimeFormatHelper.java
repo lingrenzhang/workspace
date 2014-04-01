@@ -2,6 +2,8 @@ package com.hitchride.util;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.DateFormat;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class TimeFormatHelper {
@@ -20,6 +22,12 @@ public class TimeFormatHelper {
 	public static final Time zerotime = new Time(0);
 	public static final int systemOffset = TimeZone.getDefault().getOffset(0);
 	
+	public static String getFormatedTime(Time time)
+	{
+		DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT, Locale.ENGLISH);
+		String s =df.format(time);
+		return s;
+	}
 	public static String getQuarterTime(Time time)
 	{
 		String suffix="";

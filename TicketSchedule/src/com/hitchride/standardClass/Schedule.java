@@ -126,44 +126,44 @@ public class Schedule implements Cloneable{
 					{
 						case 0:
 							result.append(" Sun");
-							result.append(" "+TimeFormatHelper.getQuarterTime(cftime[0]));
-							result.append(" "+TimeFormatHelper.getQuarterTime(cbtime[0]));
+							result.append(" "+TimeFormatHelper.getFormatedTime(cftime[0]));
+							result.append(" "+TimeFormatHelper.getFormatedTime(cbtime[0]));
 							result.append(br);
 						break;
 						case 1:
 							result.append(" Mon");
-							result.append(" "+TimeFormatHelper.getQuarterTime(cftime[1]));
-							result.append(" "+TimeFormatHelper.getQuarterTime(cbtime[1]));
+							result.append(" "+TimeFormatHelper.getFormatedTime(cftime[1]));
+							result.append(" "+TimeFormatHelper.getFormatedTime(cbtime[1]));
 							result.append(br);
 							break;
 						case 2:
 							result.append(" Thu");
-							result.append(" "+TimeFormatHelper.getQuarterTime(cftime[2]));
-							result.append(" "+TimeFormatHelper.getQuarterTime(cbtime[2]));
+							result.append(" "+TimeFormatHelper.getFormatedTime(cftime[2]));
+							result.append(" "+TimeFormatHelper.getFormatedTime(cbtime[2]));
 							result.append(br);
 							break;
 						case 3:
 							result.append(" Wed");
-							result.append(" "+TimeFormatHelper.getQuarterTime(cftime[3]));
-							result.append(" "+TimeFormatHelper.getQuarterTime(cbtime[3]));
+							result.append(" "+TimeFormatHelper.getFormatedTime(cftime[3]));
+							result.append(" "+TimeFormatHelper.getFormatedTime(cbtime[3]));
 							result.append(br);
 							break;
 						case 4:
 							result.append(" Tue");
-							result.append(" "+TimeFormatHelper.getQuarterTime(cftime[4]));
-							result.append(" "+TimeFormatHelper.getQuarterTime(cbtime[4]));
+							result.append(" "+TimeFormatHelper.getFormatedTime(cftime[4]));
+							result.append(" "+TimeFormatHelper.getFormatedTime(cbtime[4]));
 							result.append(br);
 							break;
 						case 5:
 							result.append(" Fri");
-							result.append(" "+TimeFormatHelper.getQuarterTime(cftime[5]));
-							result.append(" "+TimeFormatHelper.getQuarterTime(cbtime[5]));
+							result.append(" "+TimeFormatHelper.getFormatedTime(cftime[5]));
+							result.append(" "+TimeFormatHelper.getFormatedTime(cbtime[5]));
 							result.append(br);
 							break;
 						case 6:
 							result.append(" Sat");
-							result.append(" "+TimeFormatHelper.getQuarterTime(cftime[6]));
-							result.append(" "+TimeFormatHelper.getQuarterTime(cbtime[6]));
+							result.append(" "+TimeFormatHelper.getFormatedTime(cftime[6]));
+							result.append(" "+TimeFormatHelper.getFormatedTime(cbtime[6]));
 							result.append(br);
 							break;
 					}
