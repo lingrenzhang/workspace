@@ -192,6 +192,7 @@ public class Search extends HttpServlet {
 			NewScoreCalculator sc = new NewScoreCalculator();
 			resultList=sc.filterByCoordinates(actRide, 20);
 			
+			
 			request.setAttribute("results", resultList);
 			request.setAttribute("orig", actRide.origLoc.get_formatedAddr());
 			request.setAttribute("dest", actRide.destLoc.get_formatedAddr());

@@ -59,11 +59,14 @@ public class StatusService extends HttpServlet {
 					if (ride.get_user()==null)  //When ride coming from search
 					{
 						AllRides.getRides().inser_availride(ride);
-						ride.set_user(fromU);
+						//ride.set_user(fromU); (issue for GSON.Loop inside)
+						ride.userId=fromU.get_uid();
 						ride.insertToDB();
 						pride = new ParticipantRide(ride);
-						pride._rideInfo.set_user((User) fromU);
+						AllPartRides.getPartRides().insert_pride(pride);
+						//pride._rideInfo.set_user((User) fromU); (issue for GSON. Loop inside)
 						fromU.pRides.add(pride);
+						pride.insertToDB();
 					}
 					else
 					{

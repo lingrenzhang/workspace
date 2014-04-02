@@ -97,6 +97,17 @@ $(document).ready(function(){
 			$("#multipostwrapper").fadeOut(1000,function(){
 					$("#there_repeating").fadeIn(1000);
 			});
+			
+			var dayofweek=0;
+			for(var i=1;i<8;i++)
+			{
+				var cflag = document.getElementById("there_"+i).checked;
+				if (cflag==true)
+				{
+					dayofweek = dayofweek*10+i;
+				}
+			}
+			document.getElementById("dayofweek").value=dayofweek;
 		}
 		else
 		{

@@ -55,11 +55,11 @@
 $(document).ready(function(){
 	initCalandar();
 	document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
+	document.getElementById("headline").innerHTML="Departing<em>Today</em><span> - "+ new Date().toDateString() +"</span>";
 
 	//Display Related
 	var torigLat, torigLng, tdestLat, tdestLng;
 	var tomarker,tdmarker;
-
 	
 	var images = {
 		    url: '/TicketSchedule/Picture/pin_start.png',
@@ -358,8 +358,7 @@ window.onscroll = function(){
 			</div>
 			<div id="results">
 				<div class="ride_list">
-					<h3 class="headline first">Departing<em>Today</em>
-						<span> - Friday, July 5th</span>
+					<h3 id="headline" class="headline first"></h3>
 					</h3>
 					<% Iterator<Topic> itr = results.iterator(); %>
 					<% while (itr.hasNext()){ %>
@@ -374,30 +373,13 @@ window.onscroll = function(){
 								<a href="">Didn't find what you were looking for?						
 								</a>
 							</h2>
-							<p>Post a ride as a driver or passenger and get notified when new matches are found!							
+							<p>Create a topic about your travel plan so other people could find you!							
 							</p>
 							<form method="post" action="/TicketSchedule/servlet/RideCenter">	
 								<button id="createTopic" type="submit" class="button post">Create a Topic</button>
 							</form>
 						</div>
 						
-					</div>
-				</div>
-				<div class="page_list">
-					<span class="showing">Showing 1 - 2 of
-						<strong> 20 results</strong>
-					</span>
-					<div class="pagination">
-						<span class="first_page">
-							<span> Prev </span>
-						</span>
-						<span class="current_page">
-							<span>1</span>
-						</span>
-						<a href="id2">
-							<span>2</span>
-						</a>
-						<a href="id2" class="next_page"><span> Next</span></a>
 					</div>
 				</div>
 			</div>
