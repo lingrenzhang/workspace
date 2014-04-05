@@ -186,12 +186,10 @@ public class Search extends HttpServlet {
 				schedule.forwardFlexibility =  java.sql.Time.valueOf("12:00:00");
 				request.getSession().setAttribute("actRide", actRide);
 			}
-	
 				
 			List<Topic> resultList = new ArrayList<Topic>();
 			NewScoreCalculator sc = new NewScoreCalculator();
 			resultList=sc.filterByCoordinates(actRide, 20);
-			
 			
 			request.setAttribute("results", resultList);
 			request.setAttribute("orig", actRide.origLoc.get_formatedAddr());

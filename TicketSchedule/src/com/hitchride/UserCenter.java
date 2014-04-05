@@ -103,6 +103,7 @@ public class UserCenter extends HttpServlet {
 							value.append("<div class=\"ride_wrapper\">");	
 							value.append(parRide._rideInfo.getGeoHTML());
 							value.append(parRide._rideInfo.getScheduleHTML());
+							value.append("</a><a href='/TicketSchedule/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>Manage</button></div></a>");
 							value.append("</div></a>");
 							Topic topic= AllTopics.getTopics().get_topic(parRide.get_assoOwnerRideId());
 						}
@@ -123,7 +124,8 @@ public class UserCenter extends HttpServlet {
 							value.append("<a href=\"/TicketSchedule/servlet/Search?rid="+parRide._pid+"\">");
 							value.append(parRide._rideInfo.getGeoHTML());
 							value.append(parRide._rideInfo.getScheduleHTML());
-							value.append("</a><a href='/TicketSchedule/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>ManageRide</button></div></a>");
+							value.append("</a><a href='/TicketSchedule/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>Manage</button></div></a>");
+							value.append("<a href='/TicketSchedule/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>Delete</button></div></a>");
 							value.append("</div>");
 						}
 					}
@@ -144,7 +146,7 @@ public class UserCenter extends HttpServlet {
 					value.append("<div class=propwrapper><span>SureName </span>"+"<input class=\"userproperty\" name=surename value='"+userP._surename+"'></div>");
 					value.append("<div class=propwrapper><span>Address  </span>"+"<input class=\"userproperty\" name=address value='"+userP._address+"'></div>");
 					value.append("<input class=\"hidden\" name=uid value='"+userP.get_uid()+"'>");
-					value.append("<button type=submit class=\"btn btn-primary\">Update Profile</button>");
+					value.append("<button type=submit class=\"btn btn-primary\">Update</button>");
 					value.append("</form>");
 					value.append("</div></div></div>");
 					user.numofnewMessage = 0;

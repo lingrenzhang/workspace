@@ -18,9 +18,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>User Center</title>
-
-
-	
 	<!-- Bootstrap -->
 	<!--  
 	<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
@@ -61,7 +58,6 @@
  	
  	function getTopics()
  	{
-
  		document.getElementById("user_nav").innerHTML = 	
  			"<ul class=\"nav nav-pills nav-justified nav-stacked\" id=\"user_nav\">"
   		 	+	 "<li class=\"active\"><a href=\"javascript:getTopics()\">RideTopics</a></li>"
@@ -75,13 +71,11 @@
 			
 		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=topics");
 		document.getElementById("innerContent").innerHTML = content;
-		
  	}
  	
  	
  	function getMessages()
  	{
-
  		document.getElementById("user_nav").innerHTML = 	
  			"<ul class=\"nav nav-pills nav-justified nav-stacked\" id=\"user_nav\">"
   		 	+	 "<li><a href=\"javascript:getTopics()\">RideTopics</a></li>"
@@ -100,7 +94,6 @@
  	}
  	function getHistory()
  	{
-
  		document.getElementById("user_nav").innerHTML = 	
  			"<ul class=\"nav nav-pills nav-justified nav-stacked\" id=\"user_nav\">"
   		 	+	 "<li><a href=\"javascript:getTopics()\">RideTopics</a></li>"
