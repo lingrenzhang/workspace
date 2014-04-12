@@ -70,17 +70,20 @@ public class NewScoreCalculator {
 		return time.getHours()*3600 + time.getMinutes()*60 + time.getSeconds();
 	}
 	
-	private double timeScore(rideInfoParameters myArgs, rideInfoParameters rsParamObj) {
-//		return 1; // only consider destinations, like zimride
+	private double timeScore(
+			RideInfo myRide,
+			OwnerRideInfo ownerRide 
+	) {
 		// TODO: also consider backTime for roundtrips
 		// TODO: think of a non-boolean function
 		// TODO: take into account time spent driving to pick-up location
 		boolean retval = false;
-		int time1 = timeToInt(myArgs.forwardTime);
-		int time2 = timeToInt(rsParamObj.forwardTime);
-		int flex1 = timeToInt(myArgs.forwardFlexibility);
-		int flex2 = timeToInt(rsParamObj.forwardFlexibility);
-		retval = (flex1 + flex2) > Math.abs(time1-time2);
+		Time time1 = myRide.schedule.forwardTime;
+		Time flex1 = myRide.schedule.forwardFlexibility;
+		Time time2 = ownerRide._rideInfo.schedule.forwardTime;
+		Time flex2 = ownerRide._rideInfo.schedule.forwardFlexibility;
+		if(time2 == null || flex2 == null) return 0; // TODO: why should these guys be null in the first place? 
+		retval = (timeToInt(flex1) + timeToInt(flex2)) > Math.abs(timeToInt(time1)-timeToInt(time2));
 		return (retval ? 1 : 0);
 	}
 	
@@ -166,7 +169,7 @@ public class NewScoreCalculator {
 	}
 	
 	// filter by coordinates first, then sort the filtered results by driving distance
-	public List<Topic> sortByDrivingDistance(RideInfo myRid, int sortNum){
+	public List<Topic> sortByDrivingDistance(RideInfo myRide, int sortNum){
 		List<Topic> sortResults = new ArrayList<Topic>();
 		sortNum = Math.min(sortNum,_scoreResults.size());
 		for(int index = 0; index < sortNum; index++){
@@ -174,7 +177,9 @@ public class NewScoreCalculator {
 			OwnerRideInfo ownerRide = AllTopicRides.getTopicRides().getRide(scoreResult._topicId);
 			if (ownerRide!=null)
 			{	
-				scoreResult._score = destScoreByCoordinates(myRid, ownerRide, true);
+				double destMultiplier = destScoreByCoordinates(myRide, ownerRide, true);
+				double timeMultiplier = timeScore(myRide, ownerRide);
+				scoreResult._score = destMultiplier;
 			}
 			else
 			{
