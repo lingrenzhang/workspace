@@ -10,13 +10,6 @@
 <%@ page import="com.hitchride.standardClass.Topic" %>
 <%@ page import="com.hitchride.standardClass.RideInfo" %>
 <%
-	List<Topic> results = (List<Topic>) request.getAttribute("results");
-	if (results==null)
-	{
-		
-		List<Topic> nulltopic= new ArrayList<Topic>();
-		results= nulltopic;
-	}
 	boolean commute = true;
 %>
 <% 
@@ -46,6 +39,7 @@
 <link href="/TicketSchedule/CSS/custom_jqueryui.css" type="text/css" rel="stylesheet">
 
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
+<script src="/TicketSchedule/JS/site.js"></script>
 <script src="/TicketSchedule/JS/calandar.js"></script>
 <script src="/TicketSchedule/bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript"
@@ -76,35 +70,8 @@ $(document).ready(function(){
 	          scaledSize: new google.maps.Size(25, 25)
 	};
 	
-	$(".entry").hover(function(){
-		torigLat = $(this)[0].getAttribute("origLat");
-		torigLng = $(this)[0].getAttribute("origLng");
-		tdestLat = $(this)[0].getAttribute("destLat");
-		tdestLng = $(this)[0].getAttribute("destLng");
-		var toLatlng = new google.maps.LatLng(torigLat,torigLng);
-		var tdLatlng = new google.maps.LatLng(tdestLat,tdestLng);
-
-		tomarker = new google.maps.Marker({
-		      map: map,
-		      icon: images,
-		      position: toLatlng
-		 });
-		tdmarker = new google.maps.Marker({
-            map: map,
-            icon: imagee,
-            position: tdLatlng
- 		});
-	 	var bounds = new google.maps.LatLngBounds();
-	    bounds.extend(toLatlng);
-		bounds.extend(tdLatlng);
-		bounds.union(basicbounds);
-		map.fitBounds(bounds);
-	},
-	function(){
-		tomarker.setMap(null);
-		tdmarker.setMap(null);
-		map.fitBounds(basicbounds);
-	});
+	
+	
 	
 	//Search box realted
 	var searchBoxO;
@@ -252,6 +219,40 @@ $(document).ready(function(){
 	   }
 	}
   
+
+	var results = JSON.parse(getJson("/TicketSchedule/servlet/SearchTopics"));
+	listResults(results);
+	$(".entry").hover(function(){
+		torigLat = $(this)[0].getAttribute("origLat");
+		torigLng = $(this)[0].getAttribute("origLng");
+		tdestLat = $(this)[0].getAttribute("destLat");
+		tdestLng = $(this)[0].getAttribute("destLng");
+		var rank = $(this)[0].getAttribute("rank");
+		var toLatlng = new google.maps.LatLng(torigLat,torigLng);
+		var tdLatlng = new google.maps.LatLng(tdestLat,tdestLng);
+
+		tomarker = new google.maps.Marker({
+		      map: map,
+		      icon: images,
+		      position: toLatlng
+		 });
+		tdmarker = new google.maps.Marker({
+            map: map,
+            icon: imagee,
+            position: tdLatlng
+ 		});
+	 	var bounds = new google.maps.LatLngBounds();
+	    bounds.extend(toLatlng);
+		bounds.extend(tdLatlng);
+		bounds.union(basicbounds);
+		map.fitBounds(bounds);
+		loadSchedule(results[rank]);
+	},
+	function(){
+		tomarker.setMap(null);
+		tdmarker.setMap(null);
+		map.fitBounds(basicbounds);
+	});
 	
 });
 
@@ -267,13 +268,100 @@ window.onscroll = function(){
     	div.className="floatwrap";
     }
 };
-
 </script>
+<script>
+	function listResults(results){
+		var num = results.length;
+		var resultString="";
+		
+		for (var i=0;i<num;i++)
+		{
+			resultString =  resultString + getTopic(results[i],i);
+		}
+		document.getElementById("ride_content").innerHTML = resultString;
+	};
+	
+	function getTopic(topicInfo,rank)
+	{
+		var topicstring="";
+		topicstring = topicstring + "<a href=\"./RideCenter?topicId="+topicInfo._topicId +"&type=commute\">";
+		topicstring = topicstring + "<div class=\"entry\" origLat="+topicInfo.ownerRide._rideInfo.origLoc._lat+" ";
+		topicstring = topicstring + "origLng=" +  topicInfo.ownerRide._rideInfo.origLoc._lon+" ";
+		topicstring = topicstring + "destLat=" +  topicInfo.ownerRide._rideInfo.destLoc._lat+" ";
+		topicstring = topicstring + "destLng=" +  topicInfo.ownerRide._rideInfo.destLoc._lon+" ";
+		topicstring = topicstring + "rank=" +  rank +">";
+		
+		if (topicInfo.ownerRide._rideInfo.userType)
+		{
+			topicstring = topicstring + "<div class=\"passenger_box\"><p>";
+			topicstring = topicstring +"<span class=\"icon\"></span>";
+			topicstring = topicstring + topicInfo.owner._givenname+" is a <strong>passenger</strong></p></div>";
+		}
+		else{
+			topicstring = topicstring + "<div class=\"price_box\"><div class=\"seats\">";
+			topicstring = topicstring +"<span class=\"count\">"+topicInfo.ownerRide._rideInfo.totalSeats+"</span></div>";
+			topicstring = topicstring +"<p><b>"+topicInfo.ownerRide._rideInfo.price + "</b> / seat</p></div>";
+		}
+		
+		topicstring = topicstring + "<div class=\"userpic\">";
+		topicstring = topicstring + "<div class=\"username\">"+topicInfo.owner._givenname+"</div>";
+		topicstring = topicstring + "<img src= \"/TicketSchedule/UserProfile/"+topicInfo.owner._avatarID+"\" alt=\"Profile Picture\"></img>";
+		topicstring = topicstring + "<span class=\"passenger\"></span></div>";
+		topicstring = topicstring + "<div class=\"inner_content\"><h3>";
+		topicstring = topicstring + "<span class=\"inner\">"+topicInfo.ownerRide._rideInfo.origLoc._addr;
+		topicstring = topicstring + "<span class=\"trip_type round_trip\"></span>";
+		topicstring = topicstring + topicInfo.ownerRide._rideInfo.destLoc._addr+"</span></h3><h4>";
+		topicstring = topicstring + "From: "+topicInfo.ownerRide._rideInfo.origLoc._formatedAddr;
+		topicstring = topicstring + "To: "+topicInfo.ownerRide._rideInfo.destLoc.get_formatedAddr;
+		topicstring = topicstring + "</h4></div></div></a>";
+		return topicstring;
+	};
+	
+	function loadSchedule(topicInfo)
+	{
+		var schedule = "";
+		var ridesche = topicInfo.ownerRide._rideInfo.schedule;
+		if (ridesche._isCommute)
+		{
+			for (var i=0;i<7;i++)
+			{
+				 if (ridesche._dayOfWeek[i]){
+					 switch (i)
+					 {
+					 	case 1 : schedule = schedule + "Mon: ";
+					 		break;
+					 	case 2 : schedule = schedule + "Tue: ";
+					 		break;
+					 	case 3 : schedule = schedule + "Wed: ";
+					 		break;
+					 	case 4 : schedule = schedule + "Thu: ";
+					 		break;
+					 	case 5 : schedule = schedule + "Fri: ";
+				 			break;
+					 	case 6 : schedule = schedule + "Sat: ";
+				 			break;
+					 	case 0 : schedule = schedule + "Sun: ";
+				 			break;
+					 }
+					schedule = schedule + ridesche.cftime[i] + " " +  ridesche.cbtime[i] + "</br>";
+				 }
+				 
+			}
+		}
+		else
+		{
+			schedule = schedule + "Trip date: " + ridesche.tripDate + "</br>";
+			schedule = schedule + "Trip time: " + ridesche.tripTime;
+		}
+		
+		document.getElementById("schedule-info").innerHTML = schedule;
+		return schedule;
+	};
+</script>
+
 
 <title>Search Ride</title>
 </head>
-
-
 <body id="search_index">
 <div id="header_wrap">
 	<div id="logo_wrap">
@@ -360,13 +448,9 @@ window.onscroll = function(){
 				<div class="ride_list">
 					<h3 id="headline" class="headline first"></h3>
 					</h3>
-					<% Iterator<Topic> itr = results.iterator(); %>
-					<% while (itr.hasNext()){ %>
-					<% 	Topic topicInfo = itr.next(); %>
-    						<%=topicInfo.getHTML()%>
-					<% } %>
+					<div id="ride_content">
+					</div>
 					
-
 					<div id="action">
 						<div class="item postride">
 							<h2>
@@ -388,6 +472,8 @@ window.onscroll = function(){
 				<div class="floatable">
 					<div class="floatwrap" id="floatwrap">
 				 		<div id="map-canvas">
+						</div>
+						<div id="schedule-info">
 						</div>
 					</div>
 				</div>

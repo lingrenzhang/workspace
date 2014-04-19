@@ -26,6 +26,7 @@ import com.hitchride.standardClass.GeoInfo;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Schedule;
 import com.hitchride.standardClass.Topic;
+import com.hitchride.util.JsonHelper;
 import com.hitchride.util.QueryStringParser;
 import com.hitchride.util.TimeFormatHelper;
 /**
@@ -187,14 +188,9 @@ public class Search extends HttpServlet {
 				request.getSession().setAttribute("actRide", actRide);
 			}
 				
-			List<Topic> resultList = new ArrayList<Topic>();
-			NewScoreCalculator sc = new NewScoreCalculator();
-			resultList=sc.filterByCoordinates(actRide, 20);
-			
-			request.setAttribute("results", resultList);
 			request.setAttribute("orig", actRide.origLoc.get_formatedAddr());
 			request.setAttribute("dest", actRide.destLoc.get_formatedAddr());
-	
+			
 			RequestDispatcher rd = request.getRequestDispatcher("../SearchRide.jsp");
 			rd.forward(request, response);
 		}	
@@ -206,11 +202,13 @@ public class Search extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//rideInfoParameters myArgs = new rideInfoParameters();
 			RideInfo myRide = (RideInfo) request.getSession().getAttribute("actRide");
+		/*
 			List<Topic> resultList = new ArrayList<Topic>();
 			NewScoreCalculator sc = new NewScoreCalculator();
 			resultList=sc.filterByCoordinates(myRide, 20);
 			
 			request.setAttribute("results", resultList);
+		*/
 			request.setAttribute("orig", myRide.origLoc._addr);
 			request.setAttribute("dest", myRide.destLoc._addr);
 			

@@ -179,4 +179,14 @@
     <servlet-name>ManageRide</servlet-name>
     <url-pattern>/servlet/ManageRide</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SearchTopics</display-name>
+    <servlet-name>SearchTopics</servlet-name>
+    <servlet-class>com.hitchride.SearchTopics</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchTopics</servlet-name>
+    <url-pattern>/servlet/SearchTopics</url-pattern>
+  </servlet-mapping>
 </web-app>
