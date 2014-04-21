@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file is loaded by AuthorizationHelper to provide a centralized place to define method authority. -->
+<!-- The method name should match exactly what defined in code.-->
+<!-- Quick alternative is define supported function list for each user group. -->
+<!-- For complicate usage may possibly reference LDAP?-->
+<Authorization>
+	<PageAuth>
+ 	</PageAuth>
+	<MethodAuth>
+	    <SearchRide>1</SearchRide>
+    	<UpdateFreeRide>2</UpdateFreeRide>
+    	<CreateFreeRide>2</CreateFreeRide>
+    	<InsertFreeRide>2</InsertFreeRide>
+    	<InternalGroupSearch>8</InternalGroupSearch>
+    	<InternalGroupList>8</InternalGroupList>
+    	<CreateTopic>2</CreateTopic>
+    	<JoinTopic>2</JoinTopic>
+	</MethodAuth>
+</Authorization>

@@ -7,4 +7,5 @@ public class UserGroup {
 	public int _GID;
 	public String baseLocation;
 	
+	
 }
