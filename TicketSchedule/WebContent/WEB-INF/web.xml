@@ -189,4 +189,14 @@
     <servlet-name>SearchTopics</servlet-name>
     <url-pattern>/servlet/SearchTopics</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>mLogin</display-name>
+    <servlet-name>mLogin</servlet-name>
+    <servlet-class>com.hitchride.mLogin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>mLogin</servlet-name>
+    <url-pattern>/servlet/mLogin</url-pattern>
+  </servlet-mapping>
 </web-app>
