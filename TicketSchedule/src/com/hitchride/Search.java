@@ -6,8 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,14 +18,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.hitchride.calc.*;
 import com.hitchride.global.AllRides;
 import com.hitchride.global.Environment;
 import com.hitchride.standardClass.GeoInfo;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Schedule;
-import com.hitchride.standardClass.Topic;
-import com.hitchride.util.JsonHelper;
 import com.hitchride.util.QueryStringParser;
 import com.hitchride.util.TimeFormatHelper;
 /**

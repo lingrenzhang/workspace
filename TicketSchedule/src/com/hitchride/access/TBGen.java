@@ -47,6 +47,7 @@ public class TBGen {
 		//TBGen.generateTable("Message", TicketScheduleSchemaTb.Message);
 		//TBGen.generateTable("Topic", TicketScheduleSchemaTb.Topic);
 		///TBGen.generateTable("RideInfo", TicketScheduleSchemaTb.RideInfo);
-		TBGen.generateTable("TopicRide", TicketScheduleSchemaTb.TopicRide);
+		//TBGen.generateTable("TopicRide", TicketScheduleSchemaTb.TopicRide);
+		TBGen.generateTable("UserGroup", TicketScheduleSchemaTb.UserGroup);
 	}
 }

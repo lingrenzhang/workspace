@@ -69,6 +69,15 @@ public class AuthorizationHelper {
 		return false;
 	}
 	
+	//URL is for a third page
+	public void CheckAuthority(String methodName, int UserGroupLevel, String URL)
+	{
+		boolean valid = CheckAuthority(methodName,UserGroupLevel);
+		if (!valid)
+		{
+			//TO DO: page switch
+		}
+	}
 	public static void main(String[] args) //For unit test.
 	{
 		AuthorizationHelper authhelper = new AuthorizationHelper();
