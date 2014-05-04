@@ -1,15 +1,16 @@
 package com.hitchride.standardClass;
 
-import java.util.Date;
 import java.util.Vector;
 
-import com.hitchride.access.PartiRideAccess;
-import com.hitchride.access.UserTbAccess;
+import com.hitchride.access.PredefinedQuery;
+
 
 //User passively updates i
 public class User implements RideListener,UserInfo{
 	//UserInfo
 	private int _uid;
+	private int _authLevel=-1;
+	private int _groupId=-1;
 	public String _surename;
 	private String _givenname;
 	private String _avatarID;
@@ -30,17 +31,43 @@ public class User implements RideListener,UserInfo{
 	
 	public User(UserInfo user)
 	{
+		this.set_authLevel(user.get_userLevel());
 		this.set_uid(user.get_uid());
 		this.set_name(user.get_name());
 		this.set_avatarID(user.get_avatarID());
 		this.set_emailAddress(user.get_avatarID());
-
 	}
 	
 	@Override
 	public void updateRideInfo() {
 		// TODO Auto-generated method stub
 	}
+	
+	public int get_groupid()
+	{
+		return this._groupId;
+	}
+	
+	public void set_groupId(int groupId)
+	{
+		//Only allow for admin.
+		this._groupId = groupId;
+	}
+	
+	public int get_authLevel()
+	{ 
+		if (_authLevel==-1)
+		{
+			_authLevel = PredefinedQuery.getUserAuthByID(this._groupId);
+		}
+		return _authLevel;
+	}
+	
+	public void set_authLevel(int authLevel)
+	{
+		this._authLevel=authLevel;
+	}
+	
 	
 	@Override
 	public int get_uid() {
@@ -54,7 +81,6 @@ public class User implements RideListener,UserInfo{
 	public String get_name() {
 		return _givenname;
 	}
-
 	public void set_name(String name) {
 		this._givenname = name;
 	}
@@ -62,7 +88,6 @@ public class User implements RideListener,UserInfo{
 	public String get_surename() {
 		return _givenname;
 	}
-
 	public void set_surename(String surename) {
 		this._givenname = surename;
 	}

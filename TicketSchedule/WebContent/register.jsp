@@ -27,6 +27,34 @@ function validForm(){
 		|| (document.getElementById("givenname").value == "")
 		|| (document.getElementById("surname").value == ""))
 	return false;
+	if ((document.getElementById("authcode").value == ""))
+	{
+		return true;
+	}
+	else
+	{
+		var checkUrl = "./servlet/AuthCheck";
+		$.ajaxSetup({
+			async : false
+		});
+		$.get(checkUrl,    
+			{authCode : document.getElementById("authcode").value},     
+			 function(responseText){document.getElementById("groupID").value=responseText;},    
+				"html"   );
+
+		var resultvali= /^[1-9]/i;
+		
+		var result = document.getElementById("groupID").value;
+		if (resultvali.test(result))
+		{
+			return true;
+		}
+		else{
+			alert(result);
+		}
+		return false;
+		
+    }
 }
 
 
@@ -202,7 +230,7 @@ function _uploadAvatarCancel() {
 							</label>
 						</dt>
                         <dd>
-                        	<input type="password" class="required" placeholder="repassword" name="repassword" id="repassword" maxlength="50"  autocomplete="off">
+                        	<input type="password" class="required" placeholder="re-enter password" name="repassword" id="repassword" maxlength="50"  autocomplete="off">
                         </dd>
                         
                         
@@ -213,7 +241,7 @@ function _uploadAvatarCancel() {
 							</label>
 						</dt>
                         <dd>
-                       		<input type="text" class="required" placeholder="XXXX" name="givenname" id="givenname" maxlength="100" autocomplete="off">
+                       		<input type="text" class="required" placeholder="Micheal" name="givenname" id="givenname" maxlength="100" autocomplete="off">
                         	<p>Enter your given name</p>
                 	    </dd>
                 	    
@@ -224,10 +252,18 @@ function _uploadAvatarCancel() {
 							</label>
 						</dt>
                         <dd>
-                       		<input type="text" class="required" placeholder="XXXX" name="surname" id="surname" maxlength="100" autocomplete="off">
+                       		<input type="text" class="required" placeholder="Jordan" name="surname" id="surname" maxlength="100" autocomplete="off">
                         	<p>Enter your family name</p>
                 	    </dd>
-						
+						<dt>
+							<label class="register-label">
+								Authenication Code
+							</label>
+						</dt>
+						<dd>
+							<input type="text" class="optional" placeholder="Auth Code" name="authcode" id="authcode" maxlength="10" autocomplete="off">
+							<p>Length 9 auth code</p>
+						</dd>
 						
                 	    <dt>
                         	<label class="register-label">
@@ -264,12 +300,12 @@ function _uploadAvatarCancel() {
 				        -->
 				    </div>
 				</div>
-
+			
 				<input type="submit" value = "Register" id="register"></input>
 				
 				</fieldset>
-				<input type="text" class="hidden" id="avatarID" name="avatarID" value=""></input>
-
+				<input type="text" class="hidden" id="avatarID" name="avatarID" value=""/>
+				<input type="text" class="hidden" id="groupID" name="groupID" value=""/>
 			</form>
 		</div>
 	</div>

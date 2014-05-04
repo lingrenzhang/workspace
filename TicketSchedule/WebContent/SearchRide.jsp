@@ -23,6 +23,7 @@
 	else
 	{
 		 user = new User();
+		 user.set_authLevel(1);
 		 user.set_name("guest");
 		 user.set_emailAddress("guest");
 		 user.set_avatarID("default.jpg");
@@ -409,39 +410,46 @@ window.onscroll = function(){
 						<input id="distance" name="distance" value="<%=actRide==null?"":actRide.dist%>"></input>
 						<input id="duration" name="duration" value="<%=actRide==null?"":actRide.dura%>"></input>
 					</div>
-					<%if (commute == true) { %>
 					<div class="text_input datetime">
 						<label class="datetime_icon" for="search_date"></label>
 						<input id="search_date" class="slim datepicker hasDatepicker" type="text" value="exp" name="date">
 					</div>
-					<%}%>
 					
 					<button class="btn btn-primary" type="submit">Search</button>
-					<%if (commute == false) { %>
-					<div class="commute_input">
-						<a class="commute_day first" >
-							<span>Mon</span>
-						</a>
-						<a class="commute_day" >
-							<span>Tue</span>
-						</a>
-						<a class="commute_day" >
-							<span>Wed</span>
-						</a>
-						<a class="commute_day" >
-							<span>Thu</span>
-						</a>
-						<a class="commute_day" >
-							<span>Fri</span>
-						</a>
-						<a class="commute_day" >
-							<span>Sat</span>
-						</a>
-						<a class="commute_day last" >
-							<span>Sun</span>
-						</a>
-					</div>
-					<% } %>
+
+				
+				<%if (user.get_authLevel()>=4) {%>
+				    <div class="sup_method">
+				    	<input type="checkbox" name = "innergroup"/>InnerGroup
+				    	<input type="checkbox" name = "listAll"/>ListAll
+				    	<input type="checkbox" name = "useCommute">useCommute
+				    	<%if (commute == true) { %>
+						<div class="commute_input">
+							<a class="commute_day first" >
+								<span>Mon</span>
+							</a>
+							<a class="commute_day" >
+								<span>Tue</span>
+							</a>
+							<a class="commute_day" >
+								<span>Wed</span>
+							</a>
+							<a class="commute_day" >
+								<span>Thu</span>
+							</a>
+							<a class="commute_day" >
+								<span>Fri</span>
+							</a>
+							<a class="commute_day" >
+								<span>Sat</span>
+							</a>
+							<a class="commute_day last" >
+								<span>Sun</span>
+							</a>
+							<% } %>
+						</div>
+				    </div>
+				<%} %>
 				</form>
 			</div>
 			<div id="results">

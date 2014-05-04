@@ -14,6 +14,7 @@ public class AuthorizationHelper {
 	
 	public AuthorizationHelper()
 	{
+		//Environment issue here when working with JavaEE server
 		LoadMethodTable("./src/com/hitchride/authorization/MethodLevelDefine.xml");
 	}
 	

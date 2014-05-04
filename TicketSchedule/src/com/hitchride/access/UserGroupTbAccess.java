@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.hitchride.global.SQLServerConf;
+import com.mysql.jdbc.ResultSet;
 
 public class UserGroupTbAccess {
 	//id char(20)
@@ -47,5 +48,35 @@ public class UserGroupTbAccess {
             throw err;
 			//System.err.println("SQLException:"+e.getMessage());
 		}
+	}
+	
+	
+	public static int checkAuth(String authCode)
+	{
+		int result = -1;
+		try
+		{
+			Statement sql;
+			if (objConn==null)
+			{
+				getConnection();
+			}
+			sql=objConn.createStatement();
+			ResultSet rs = (ResultSet) sql.executeQuery("select groupid from UserGroup where authnicationCode='"+authCode+"'");
+			if(rs.next())
+			{
+				result = rs.getInt(1);
+			}
+		}
+		catch (java.lang.ClassNotFoundException e){
+			System.err.println("ClassNotFoundException:"+e.getMessage());
+		}
+		catch (SQLException e)
+		{
+            Error err=new Error("SQLException:"+e.getMessage());
+            throw err;
+			//System.err.println("SQLException:"+e.getMessage());
+		}
+		return result;
 	}
 }

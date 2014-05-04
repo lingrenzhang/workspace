@@ -44,6 +44,7 @@ public class AllUsers {
 			while(users.next())
 			{
 				User user = new User();
+				user.set_groupId(users.getInt("groupid"));
 				user.set_uid(users.getInt("userID"));
 				user.set_name(users.getString("givenname"));
 				user.set_avatarID(users.getString("avatarID"));

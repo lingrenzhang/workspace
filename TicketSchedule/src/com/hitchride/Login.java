@@ -72,6 +72,7 @@ public class Login extends HttpServlet {
 
 					int UID=rs.getInt("userID");
 					User user = (User) AllUsers.getUsers().getUser(UID);
+					
 					session.setAttribute("user", user);
 					AllUsers.getUsers().addActiveUser(UID);
 					

@@ -199,4 +199,14 @@
     <servlet-name>mLogin</servlet-name>
     <url-pattern>/servlet/mLogin</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AuthCheck</display-name>
+    <servlet-name>AuthCheck</servlet-name>
+    <servlet-class>com.hitchride.AuthCheck</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AuthCheck</servlet-name>
+    <url-pattern>/servlet/AuthCheck</url-pattern>
+  </servlet-mapping>
 </web-app>

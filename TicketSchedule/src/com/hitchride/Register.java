@@ -37,6 +37,7 @@ public class Register extends HttpServlet {
 		// TODO Auto-generated method stub
 		UserTbAccess  userTb = new UserTbAccess();
 		String userName = request.getParameter("emailAddress");
+		String groupId = request.getParameter("groupID");
 		String password = request.getParameter("password");
 		String givenname = request.getParameter("givenname");
 		String surname = request.getParameter("surname");
@@ -54,7 +55,7 @@ public class Register extends HttpServlet {
 		session.setAttribute("avatarID",avatarID);
 					
 		request.getSession().setMaxInactiveInterval(60*120);
-		response.sendRedirect("/TicketSchedule/Postride.jsp");
+		response.sendRedirect("/TicketSchedule/UserCenter.jsp");
 	}
 
 }
