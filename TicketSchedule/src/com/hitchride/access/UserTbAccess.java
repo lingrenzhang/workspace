@@ -27,7 +27,7 @@ public class UserTbAccess {
 		}
 		
 		
-		public void insertValue(String userName,String password,String givenname, String surname,String address,int userLevel,String avatarID)
+		public void insertValue(String userName,int groupId, String password,String givenname, String surname,String address,int userLevel,String avatarID)
 		{
 			if (userLevel==0)
 			{
@@ -41,8 +41,9 @@ public class UserTbAccess {
 					getConnection();
 				}
 				sql=objConn.createStatement();
-				sql.execute("insert into userTb (emailAddress,password,givenname,surname,address,userLevel,avatarID) values(\"" 
-						+ userName + "\",\""
+				sql.execute("insert into userTb (emailAddress,groupid,password,givenname,surname,address,userLevel,avatarID) values(\"" 
+						+ userName + "\","
+						+ groupId + ",\""
 						+ password + "\",\""
 						+ givenname + "\",\""
 						+ surname + "\",\""

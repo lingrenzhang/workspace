@@ -57,10 +57,11 @@ public class UserGroupTbAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
+			if (objConn==null || objConn.isClosed())
 			{
 				getConnection();
 			}
+			
 			sql=objConn.createStatement();
 			ResultSet rs = (ResultSet) sql.executeQuery("select groupid from UserGroup where authnicationCode='"+authCode+"'");
 			if(rs.next())

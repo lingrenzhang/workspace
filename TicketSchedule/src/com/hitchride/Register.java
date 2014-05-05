@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.hitchride.access.UserTbAccess;
+import com.hitchride.global.AllUsers;
+import com.hitchride.standardClass.User;
 /**
  * Servlet implementation class Register
  */
@@ -37,7 +39,7 @@ public class Register extends HttpServlet {
 		// TODO Auto-generated method stub
 		UserTbAccess  userTb = new UserTbAccess();
 		String userName = request.getParameter("emailAddress");
-		String groupId = request.getParameter("groupID");
+		int groupId = Integer.parseInt(request.getParameter("groupID"));
 		String password = request.getParameter("password");
 		String givenname = request.getParameter("givenname");
 		String surname = request.getParameter("surname");
@@ -45,14 +47,21 @@ public class Register extends HttpServlet {
 		String avatarID = request.getParameter("avatarID"); //Not required field
 		if (avatarID==null)
 			avatarID="default.jpg";
-		userTb.insertValue(userName, password, givenname, surname, address, 1,avatarID);
-
+		userTb.insertValue(userName,groupId, password, givenname, surname, address, 1,avatarID);
+		int userid = userTb.getIDbyName(givenname);
+		User user = new User();
+		
+		user.set_groupId(groupId);
+		user.set_userLevel(1);
+		user.set_uid(userid);
+		user.set_emailAddress(userName);
+		user.set_name(givenname);
+		
+		AllUsers.getUsers()._users.put(userid, user);
+		AllUsers.getUsers().addActiveUser(userid);
 		HttpSession session = request.getSession();
 		session.setAttribute("IsLogin", "true");
-		session.setAttribute("userName", givenname);
-		session.setAttribute("emailAddress", userName);
-		session.setAttribute("userLevel",1);
-		session.setAttribute("avatarID",avatarID);
+		session.setAttribute("user", user);
 					
 		request.getSession().setMaxInactiveInterval(60*120);
 		response.sendRedirect("/TicketSchedule/UserCenter.jsp");
