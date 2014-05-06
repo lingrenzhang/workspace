@@ -32,7 +32,7 @@
 	RideInfo actRide = (RideInfo) request.getSession().getAttribute("actRide");
 %>
 
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <link rel="stylesheet" href="/TicketSchedule/bootstrap/css/bootstrap.css">
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
@@ -46,7 +46,9 @@
 <script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
 </script>
-<script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=Mto5Y3Pq2fgwkY2Kt9n60bWl">
+</script>
+<script type="text/javascript">
 $(document).ready(function(){
 	initCalandar();
 	document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
@@ -81,36 +83,35 @@ $(document).ready(function(){
 	var dest;
 	var omarker;
 	var dmarker;
-	
+	/*
 	var mapOptions = {
 			  center: new google.maps.LatLng(37.397, -122.144),
 			  zoom: 8,
 			  mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
-	var map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
 
+	var map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
+	*/
+	var map = new BMap.Map("map-canvas");
+	var point = new BMap.Point(116.404,39.915);
+	map.centerAndZoom(point,15);
 	
 	var origLat="<%=actRide==null?"":actRide.origLoc.get_lat()%>";
 	var origLng="<%=actRide==null?"":actRide.origLoc.get_lon()%>";
 	var destLat="<%=actRide==null?"":actRide.destLoc.get_lat()%>";
 	var destLng="<%=actRide==null?"":actRide.destLoc.get_lon()%>";
-	var basicbounds = new google.maps.LatLngBounds();
+	var basicbounds = new BMap.Bounds();
 	
 	if (origLat!="" && origLng!="" && origLat!="" &&origLng!="")
 	{
-		var oLatlng = new google.maps.LatLng(origLat,origLng);
-		var dLatlng = new google.maps.LatLng(destLat,destLng);
+		var oLatlng = new BMap.Point(origLat,origLng);
+		var dLatlng = new Bmap.Point(destLat,destLng);
 		
-		omarker = new google.maps.Marker({
-		    map: map,
-		    icon: images,
-		    position: oLatlng
-		});
-		dmarker = new google.maps.Marker({
-			map: map,
-			icon: imagee,
-			position: dLatlng
-		});
+		omarker = new BMap.Marker(oLatlng);
+		map.addOverlay(omarker);
+		   
+		dmarker = new BMap.Marker(dLatlng);
+		map.addOverlay(dmarker);
 		
 		document.getElementById("origLat").value=origLat;
 		document.getElementById("origLng").value=origLng;
@@ -124,11 +125,16 @@ $(document).ready(function(){
 	
 	
 
-    orig = document.getElementById('search_s');
-	searchBoxO = new google.maps.places.SearchBox(orig);
-    dest = document.getElementById('search_e');
-	searchBoxD = new google.maps.places.SearchBox(dest);
+    //orig = document.getElementById('search_s');
+	searchBoxO = new BMap.Autocomplete(
+			{"input" : "search_s",
+			 "location" : map});
+    //dest = document.getElementById('search_e');
+	searchBoxD = new BMap.Autocomplete(
+			{"input" : "search_e",
+			 "location" : map});
 
+	/*
 	google.maps.event.addListener(searchBoxO, 'places_changed', function() {
 	  	  var places = searchBoxO.getPlaces();
 	  	  if (omarker!=null)
@@ -156,7 +162,44 @@ $(document).ready(function(){
 			  calculateDistances();
 		  }
 	});
+	*/
+	searchBoxO.addEventListener("onhighlight",function(e){
+		var str="";
+		var _value = e.fromitem.value;
+		var value="";
+		if (e.fromitem.index>-1){
+			value = _value.province + _value.city + _value.district + _value.street + _value.business;
+		}
+		str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+		value = "";
+		if (e.toitem.index > -1){
+			_value = e.toitem.value;
+			value = _value.province + _value.city + _value.district + _value.street + _value.business;
+		}
+		str += "<br />ToItem<br />index = "+ e.toitem.index + "<br />value = " + value;
+		document.getElementById("searchResultPanel1").innerHTML = str;
+	});
 
+	var myValue;
+	searchBoxO.addEventListener("onconfirm",function(e){
+		var _value = e.item.value;
+		myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
+		document.getElementById("searchResultPanel1").innerHTML = "onconfirm<br />index = "+ e.item.index + "<br />myValue = " + myValue;
+		setPlace();
+	});
+	
+	function setPlace(){
+		map.clearOverlays();
+		function myFun(){
+			var pp = local.getResults().getPoi(0).point;
+			map.centerAndZoom(pp,18);
+			map.addOverlay(new BMap.Marker(pp));
+		}
+		var local = new BMap.LocalSearch(map,{onSearchComplete : myFun});
+		local.search(myValue);
+	}
+	
+	/*
 	google.maps.event.addListener(searchBoxD, 'places_changed', function() {
 	   	  var places = searchBoxD.getPlaces();
 	   	  if (dmarker!=null)
@@ -185,7 +228,8 @@ $(document).ready(function(){
 			  calculateDistances();
 		  }
 	});
-	
+	*/
+	/*
 	function refit()
 	  {
 		  var oLatlng = new google.maps.LatLng(origLat,origLng);
@@ -219,7 +263,7 @@ $(document).ready(function(){
 		    document.getElementById("duration").value =response.rows[0].elements[0].duration.value;
 	   }
 	}
-  
+	*/  
 
 	var results = JSON.parse(getJson("/TicketSchedule/servlet/SearchTopics"));
 	listResults(results);
@@ -270,6 +314,7 @@ window.onscroll = function(){
     }
 };
 </script>
+
 <script>
 	function listResults(results){
 		var num = results.length;
@@ -373,9 +418,9 @@ window.onscroll = function(){
 		<div class="navbar navbar-default" role="navigation">
 		<div class="navbar navbar-default">
 			<ul class="nav navbar-nav">
-			  <li><a href="/TicketSchedule/UserCenter.jsp">UserCenter</a></li>
-			  <li><a href="/TicketSchedule/ManageRide.jsp">ManageRide</a></li>
-		      <li class="active"><a href="#">SearchRide</a></li>
+			  <li><a href="/Zh/TicketSchedule/UserCenter.jsp">用户中心</a></li>
+			  <li><a href="/Zh、TicketSchedule/ManageRide.jsp">行程管理</a></li>
+		      <li class="active"><a href="#">搜索拼车</a></li>
 		    </ul>
 		 </div>
 		</div>
@@ -393,14 +438,15 @@ window.onscroll = function(){
 						<label class="pin start" for="search_s"></label>
 						<input id="search_s" class="input_text" type="text" 
 							placeholder="Starting from..." name="s" alt="search_start" 
-							autocomplete="off" value=<%=(actRide ==null) ? "" : actRide.origLoc._addr%>>
-						</input>
+							autocomplete="off" value=<%=(actRide ==null) ? "" : actRide.origLoc._addr%>/>
+						<div id="searchResultPanel1" style="border:1px solid #C0C0C0;width:150px;height:auto;">
 					</div>
 					<div class="text_input">
 						<label class="pin end" for="search_e"></label>
 						<input id="search_e" class="input_text" type="text" 
 						placeholder="Going to..." name="e" alt="search_end" 
-						autocomplete="off" value=<%=(actRide ==null) ? "" : actRide.destLoc._addr%>>
+						autocomplete="off" value=<%=(actRide ==null) ? "" : actRide.destLoc._addr%>/>
+						<div id="searchResultPanel2" style="border:1px solid #C0C0C0;width:150px;height:auto;">
 					</div>
 					<div class="geo_internal" style="display:none">
 						<input id="origLat" name="origLat" value=""></input>
@@ -462,13 +508,13 @@ window.onscroll = function(){
 					<div id="action">
 						<div class="item postride">
 							<h2>
-								<a href="">Didn't find what you were looking for?						
+								<a href="">没有找到你要的拼车信息?						
 								</a>
 							</h2>
-							<p>Create a topic about your travel plan so other people could find you!							
+							<p>根据你的拼车信息创建讨论组，其他人可以检索并加入你!							
 							</p>
 							<form method="post" action="/TicketSchedule/servlet/RideCenter">	
-								<button id="createTopic" type="submit" class="button post">Create a Topic</button>
+								<button id="createTopic" type="submit" class="button post">创建讨论组</button>
 							</form>
 						</div>
 						
