@@ -92,8 +92,44 @@ $(document).ready(function(){
 
 	var map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
 	*/
+	//初始化地图
+	var geol;		
+	var nowLat=31.270998;
+	var nowLng=121.543146;
+	try {
+		if (typeof(navigator.geolocation) == 'undefined') {
+			geol = google.gears.factory.create('beta.geolocation');
+	    } else {
+	    	geol = navigator.geolocation;
+	    }
+	} catch (error) {
+			//alert(error.message);
+	}
+	if (geol) {
+			geol.getCurrentPosition(function(position) {
+		nowLat = position.coords.latitude;
+		nowLng = position.coords.longitude;
+		alert("纬度：" + nowLat + "， 经度：" + nowLng);
+	}, function(error) {
+		switch(error.code){
+		case error.TIMEOUT :
+			//alert("连接超时，请重试");
+			break;
+		case error.PERMISSION_DENIED :
+			//alert("您拒绝了使用位置共享服务，查询已取消");
+			break;
+		case error.POSITION_UNAVAILABLE : 
+			//alert("非常抱歉，我们暂时无法通过浏览器获取您的位置信息");
+			break;
+		}
+	}, {timeout:2000});	//设置2秒超时
+	}
+
+
 	var map = new BMap.Map("map-canvas");
-	var point = new BMap.Point(116.404,39.915);
+	var point = new BMap.Point(nowLng,nowLat);
+	map.addControl(new BMap.NavigationControl());    
+	map.addControl(new BMap.ScaleControl());
 	map.centerAndZoom(point,15);
 	
 	var origLat="<%=actRide==null?"":actRide.origLoc.get_lat()%>";
@@ -162,42 +198,36 @@ $(document).ready(function(){
 			  calculateDistances();
 		  }
 	});
-	*/
-	searchBoxO.addEventListener("onhighlight",function(e){
-		var str="";
-		var _value = e.fromitem.value;
-		var value="";
-		if (e.fromitem.index>-1){
-			value = _value.province + _value.city + _value.district + _value.street + _value.business;
-		}
-		str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
-		value = "";
-		if (e.toitem.index > -1){
-			_value = e.toitem.value;
-			value = _value.province + _value.city + _value.district + _value.street + _value.business;
-		}
-		str += "<br />ToItem<br />index = "+ e.toitem.index + "<br />value = " + value;
-		document.getElementById("searchResultPanel1").innerHTML = str;
-	});
-
-	var myValue;
+    */
 	searchBoxO.addEventListener("onconfirm",function(e){
 		var _value = e.item.value;
 		myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
-		document.getElementById("searchResultPanel1").innerHTML = "onconfirm<br />index = "+ e.item.index + "<br />myValue = " + myValue;
-		setPlace();
-	});
-	
-	function setPlace(){
-		map.clearOverlays();
 		function myFun(){
-			var pp = local.getResults().getPoi(0).point;
-			map.centerAndZoom(pp,18);
-			map.addOverlay(new BMap.Marker(pp));
+			if (omarker!=null)
+			{
+				map.removeOverlay(omarker);
+			}
+			point = new BMap.Point(local.getResults().getPoi(0).point.lng,local.getResults().getPoi(0).point.lat);
+			omarker = new BMap.Marker(point);
+			map.centerAndZoom(point,18);
+			map.addOverlay(omarker);
+			document.getElementById("origLat").value=point.lat;
+			document.getElementById("origLng").value=point.lng;
+			origLat=point.lat;
+			origLng=point.lng;
+			destLat=document.getElementById("destLat").value;
+			destLng=document.getElementById("destLng").value;
+			if (destLat !="" && destLng!="")
+			{
+			  refit();
+			  //calculateDistances();
+			}
+			
 		}
 		var local = new BMap.LocalSearch(map,{onSearchComplete : myFun});
 		local.search(myValue);
-	}
+	});
+
 	
 	/*
 	google.maps.event.addListener(searchBoxD, 'places_changed', function() {
@@ -229,15 +259,45 @@ $(document).ready(function(){
 		  }
 	});
 	*/
-	/*
+	searchBoxD.addEventListener("onconfirm",function(e){
+		var _value = e.item.value;
+		myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
+		function myFun(){
+			if (dmarker!=null)
+			{
+				map.removeOverlay(dmarker);
+			}
+			point = new BMap.Point(local.getResults().getPoi(0).point.lng,local.getResults().getPoi(0).point.lat);
+			dmarker = new BMap.Marker(point);
+			map.centerAndZoom(point,18);
+			map.addOverlay(dmarker);
+			document.getElementById("destLat").value=point.lat;
+			document.getElementById("destLng").value=point.lng;
+			destLat=point.lat;
+			destLng=point.lng;
+			origLat=document.getElementById("origLat").value;
+			origLng=document.getElementById("origLng").value;
+			if (origLat !="" && origLng!="")
+			{
+			  refit();
+			  //calculateDistances();
+			}
+			
+		}
+		var local = new BMap.LocalSearch(map,{onSearchComplete : myFun});
+		local.search(myValue);
+	});
+	
 	function refit()
 	  {
-		  var oLatlng = new google.maps.LatLng(origLat,origLng);
-		  var dLatlng = new google.maps.LatLng(destLat,destLng);
-		  basicbounds= new google.maps.LatLngBounds();
-		  basicbounds.extend(oLatlng);
-		  basicbounds.extend(dLatlng);
-		  map.fitBounds(basicbounds);
+		  var oLatlng = new BMap.Point(origLng,origLat);
+		  var dLatlng = new BMap.Point(destLng,destLat);
+		  basicbounds= new BMap.Bounds(oLatlng,dLatlng);
+		  var range = Math.max(basicbounds.toSpan().lat,basicbounds.toSpan().lng);
+		  var zoomNum = Math.floor(9-Math.log(range)/Math.log(2));
+		  map.setCenter(basicbounds.getCenter());
+		  map.setZoom(zoomNum);
+		  
 	  }
 
 	function calculateDistances() {
@@ -263,7 +323,7 @@ $(document).ready(function(){
 		    document.getElementById("duration").value =response.rows[0].elements[0].duration.value;
 	   }
 	}
-	*/  
+	  
 
 	var results = JSON.parse(getJson("/TicketSchedule/servlet/SearchTopics"));
 	listResults(results);
