@@ -46,8 +46,7 @@
 <script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
 </script>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=Mto5Y3Pq2fgwkY2Kt9n60bWl">
-</script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=Mto5Y3Pq2fgwkY2Kt9n60bWl"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	initCalandar();
@@ -72,9 +71,6 @@ $(document).ready(function(){
 	          anchor: new google.maps.Point(17, 34),
 	          scaledSize: new google.maps.Size(25, 25)
 	};
-	
-	
-	
 	
 	//Search box realted
 	var searchBoxO;
@@ -106,23 +102,23 @@ $(document).ready(function(){
 			//alert(error.message);
 	}
 	if (geol) {
-			geol.getCurrentPosition(function(position) {
+		geol.getCurrentPosition(function(position) {
 		nowLat = position.coords.latitude;
 		nowLng = position.coords.longitude;
 		alert("纬度：" + nowLat + "， 经度：" + nowLng);
-	}, function(error) {
-		switch(error.code){
-		case error.TIMEOUT :
-			//alert("连接超时，请重试");
-			break;
-		case error.PERMISSION_DENIED :
-			//alert("您拒绝了使用位置共享服务，查询已取消");
-			break;
-		case error.POSITION_UNAVAILABLE : 
-			//alert("非常抱歉，我们暂时无法通过浏览器获取您的位置信息");
-			break;
-		}
-	}, {timeout:2000});	//设置2秒超时
+		}, function(error) {
+			switch(error.code){
+			case error.TIMEOUT :
+				//alert("连接超时，请重试");
+				break;
+			case error.PERMISSION_DENIED :
+				//alert("您拒绝了使用位置共享服务，查询已取消");
+				break;
+			case error.POSITION_UNAVAILABLE : 
+				//alert("非常抱歉，我们暂时无法通过浏览器获取您的位置信息");
+				break;
+			}
+		}, {timeout:2000});	//设置2秒超时
 	}
 
 
@@ -499,14 +495,12 @@ window.onscroll = function(){
 						<input id="search_s" class="input_text" type="text" 
 							placeholder="Starting from..." name="s" alt="search_start" 
 							autocomplete="off" value=<%=(actRide ==null) ? "" : actRide.origLoc._addr%>/>
-						<div id="searchResultPanel1" style="border:1px solid #C0C0C0;width:150px;height:auto;">
 					</div>
 					<div class="text_input">
 						<label class="pin end" for="search_e"></label>
 						<input id="search_e" class="input_text" type="text" 
 						placeholder="Going to..." name="e" alt="search_end" 
 						autocomplete="off" value=<%=(actRide ==null) ? "" : actRide.destLoc._addr%>/>
-						<div id="searchResultPanel2" style="border:1px solid #C0C0C0;width:150px;height:auto;">
 					</div>
 					<div class="geo_internal" style="display:none">
 						<input id="origLat" name="origLat" value=""></input>

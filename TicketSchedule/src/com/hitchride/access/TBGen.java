@@ -44,10 +44,13 @@ public class TBGen {
 	public static void main(String args[]) throws ClassNotFoundException, SQLException
 	{
 		//Run this job to regenerate all the table definition.
-		//TBGen.generateTable("Message", TicketScheduleSchemaTb.Message);
-		//TBGen.generateTable("Topic", TicketScheduleSchemaTb.Topic);
-		///TBGen.generateTable("RideInfo", TicketScheduleSchemaTb.RideInfo);
+		//TBGen.generateTable("UserGroup", TicketScheduleSchemaTb.UserGroup);
+		//TBGen.generateTable("UserTb", TicketScheduleSchemaTb.UserTb);
+
+		//TBGen.generateTable("RideInfo", TicketScheduleSchemaTb.RideInfo);
+		//TBGen.generateTable("PartiRide", TicketScheduleSchemaTb.PartiRide);
 		//TBGen.generateTable("TopicRide", TicketScheduleSchemaTb.TopicRide);
-		TBGen.generateTable("UserGroup", TicketScheduleSchemaTb.UserGroup);
+		//TBGen.generateTable("Topic", TicketScheduleSchemaTb.Topic);
+		//TBGen.generateTable("Message", TicketScheduleSchemaTb.Message);
 	}
 }

@@ -15,6 +15,13 @@ public class TicketScheduleSchemaTb {
 		Topic
 	}
 	
+	public static final DataColumnSchema[] UserGroup={
+		new DataColumnSchema("GroupID","INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY"),
+		new DataColumnSchema("GroupName","VARCHAR(50)"),
+		new DataColumnSchema("GroupAuthLevel","INT"),
+		new DataColumnSchema("AuthnicationCode","VARCHAR(20)")
+	};
+	
 	public static final DataColumnSchema[] UserTb={
 		new DataColumnSchema("userId","INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY"),
 		new DataColumnSchema("emailAddress","VARCHAR(50)"),
@@ -97,7 +104,7 @@ public class TicketScheduleSchemaTb {
 		new DataColumnSchema("BarginMatch","INT(3) DEFAULT 0"),
 		
 		//Foreign keyconstrain
-		new DataColumnSchema("Foreign key (RideInfoID)","REFERENCE RideInfo(recordid)"),
+		new DataColumnSchema("Foreign key (RideInfoID)","REFERENCES RideInfo(recordid)"),
 		
 	};
 	
@@ -125,7 +132,7 @@ public class TicketScheduleSchemaTb {
 		new DataColumnSchema("M5Lon","DECIMAL(10,6)"),
 		
 		//Foreign key constrain
-		new DataColumnSchema("Foreign Key (userId)","Reference UserTb(userId)")
+		new DataColumnSchema("Foreign Key (userId)","References UserTb(userId)")
 	};
 
 	public static final DataColumnSchema[] Message={
@@ -148,12 +155,7 @@ public class TicketScheduleSchemaTb {
 		new DataColumnSchema("Foreign key (OwnerId)","References UserTb(userId)")
 	};
 	
-	public static final DataColumnSchema[] UserGroup={
-		new DataColumnSchema("GroupID","INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY"),
-		new DataColumnSchema("GroupName","VARCHAR(50)"),
-		new DataColumnSchema("GroupAuthLevel","INT"),
-		new DataColumnSchema("AuthnicationCode","VARCHAR(20)")
-	};
+
 	
 	public static DataColumnSchema[] getSchemaByName(String name)
 	{
