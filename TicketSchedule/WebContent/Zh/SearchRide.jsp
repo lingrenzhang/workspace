@@ -474,8 +474,8 @@ window.onscroll = function(){
 		<div class="navbar navbar-default" role="navigation">
 		<div class="navbar navbar-default">
 			<ul class="nav navbar-nav">
-			  <li><a href="/Zh/TicketSchedule/UserCenter.jsp">用户中心</a></li>
-			  <li><a href="/Zh、TicketSchedule/ManageRide.jsp">行程管理</a></li>
+			  <li><a href="/TicketSchedule/Zh/UserCenter.jsp">用户中心</a></li>
+			  <li><a href="/TicketSchedule/Zh/ManageRide.jsp">行程管理</a></li>
 		      <li class="active"><a href="#">搜索拼车</a></li>
 		    </ul>
 		 </div>

@@ -97,4 +97,59 @@ public class GeoUtil {
 				geo = new GeoInfo(formatedAddress,flat,flng);			
 				return geo;
 	}
+	
+	
+	
+	public GeoInfo baiduGeoCoding(double lat,double lng) throws IOException,JSONException
+	{
+		//?ak=ÄúµÄÃÜÔ¿&callback=renderReverse&location=39.983424,116.322987&output=json&pois=0//
+        String getURL= "http://api.map.baidu.com/geocoder/v2/?ak=EDf26616cd5fdfb811cc9b56edd8999a"
+        		+"&location="+lat+","+lng+"&output=json";
+				URL getUrl = new URL(getURL);
+				HttpURLConnection conn = (HttpURLConnection) getUrl.openConnection();
+				//JSONObject result = new JSONObject();
+			
+				conn.connect();
+			    BufferedReader reader = new BufferedReader(new InputStreamReader(
+			                conn.getInputStream(),"UTF-8"));
+			    StringBuffer lines=new StringBuffer();
+			    String line;
+			    while ((line = reader.readLine()) != null) {
+			            lines=lines.append(line);
+			            line =  null;
+			    }
+			    reader.close();
+			    conn.disconnect();
+			    
+			    GeoInfo geo=null;
+				String jsonoutput=lines.toString();
+				JSONObject json;
+				json = new JSONObject(jsonoutput);
+				JSONObject result = json.getJSONObject("result");
+				if (result==null)
+				{
+				    System.out.println("Address Not found");
+				  	return null;
+				}
+				String formatedAddress = result.getString("formatted_address");
+				//JSONObject addressComponent = result.getJSONObject("addressComponent");
+				double flat = result.getJSONObject("location").getDouble("lat");
+				double flng = result.getJSONObject("location").getDouble("lng");
+				geo = new GeoInfo(formatedAddress,flat,flng);			
+				return geo;
+	}
+	
+	public static void main(String[] args) 
+	{
+		GeoUtil geoUtil = new GeoUtil();
+		try {
+			GeoInfo origLoc = geoUtil.baiduGeoCoding(31.1,121.8);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

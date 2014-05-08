@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -14,7 +14,7 @@
     }
 %>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>User Center</title>
@@ -22,7 +22,7 @@
 	<!--  
 	<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
     -->
-    <link rel="stylesheet" href="./bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/TicketSchedule/bootstrap/css/bootstrap.css">
     <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
     <link href="/TicketSchedule/CSS/usercenter.css" type="text/css" rel="stylesheet">
 
@@ -36,7 +36,7 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="./bootstrap/js/bootstrap.js"></script>
+    <script src="/TicketSchedule/bootstrap/js/bootstrap.js"></script>
  <script>
  	var newmessage = <%=user.numofnewMessage%>;
  	function loadContent(url)
@@ -60,13 +60,13 @@
  	{
  		document.getElementById("user_nav").innerHTML = 	
  			"<ul class=\"nav nav-pills nav-justified nav-stacked\" id=\"user_nav\">"
-  		 	+	 "<li class=\"active\"><a href=\"javascript:getTopics()\">RideTopics</a></li>"
+  		 	+	 "<li class=\"active\"><a href=\"javascript:getTopics()\">我的行程</a></li>"
 	  		+	 "<li><a href=\"javascript:getMessages()\">"
 	  		+    	"<span class=\"badge pull-right\">"+newmessage
 	  		+		"</span>"
-	  		+    "Message</a></li>"
-	  		+	 "<li><a href=\"javascript:getHistory()\">History</a></li>"
-			+	 "<li><a href=\"javascript:getProfile()\">Profile</a></li>"
+	  		+    "我的消息</a></li>"
+	  		+	 "<li><a href=\"javascript:getHistory()\">历史记录</a></li>"
+			+	 "<li><a href=\"javascript:getProfile()\">个人信息</a></li>"
 			+"</ul>";
 			
 		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=topics");
@@ -78,13 +78,13 @@
  	{
  		document.getElementById("user_nav").innerHTML = 	
  			"<ul class=\"nav nav-pills nav-justified nav-stacked\" id=\"user_nav\">"
-  		 	+	 "<li><a href=\"javascript:getTopics()\">RideTopics</a></li>"
+  		 	+	 "<li><a href=\"javascript:getTopics()\">我的行程</a></li>"
 	  		+	 "<li class=\"active\"><a href=\"javascript:getMessages()\">"
 	  		+    	"<span class=\"badge pull-right active\">"+"0"
 	  		+		"</span>"
-	  		+    "Message</a></li>"
-	  		+	 "<li><a href=\"javascript:getHistory()\">History</a></li>"
-			+	 "<li><a href=\"javascript:getProfile()\">Profile</a></li>"
+	  		+    "我的消息</a></li>"
+	  		+	 "<li><a href=\"javascript:getHistory()\">历史记录</a></li>"
+			+	 "<li><a href=\"javascript:getProfile()\">个人信息</a></li>"
 			+"</ul>";
  		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=messages");		
 	    
@@ -96,13 +96,13 @@
  	{
  		document.getElementById("user_nav").innerHTML = 	
  			"<ul class=\"nav nav-pills nav-justified nav-stacked\" id=\"user_nav\">"
-  		 	+	 "<li><a href=\"javascript:getTopics()\">RideTopics</a></li>"
+  		 	+	 "<li><a href=\"javascript:getTopics()\">我的行程</a></li>"
 	  		+	 "<li><a href=\"javascript:getMessages()\">"
 	  		+    	"<span class=\"badge pull-right\">"+newmessage
 	  		+		"</span>"
-	  		+    "Message</a></li>"
-	  		+	 "<li class=\"active\"><a href=\"javascript:getHistory()\">History</a></li>"
-			+	 "<li><a href=\"javascript:getProfile()\">Profile</a></li>"
+	  		+    "我的消息</a></li>"
+	  		+	 "<li class=\"active\"><a href=\"javascript:getHistory()\">历史记录</a></li>"
+			+	 "<li><a href=\"javascript:getProfile()\">个人信息</a></li>"
 			+"</ul>";
  		alert(3);
  	}
@@ -110,13 +110,13 @@
  	{
  		document.getElementById("user_nav").innerHTML = 	
  			"<ul class=\"nav nav-pills nav-justified nav-stacked\" id=\"user_nav\">"
-  		 	+	 "<li><a href=\"javascript:getTopics()\">RideTopics</a></li>"
+  		 	+	 "<li><a href=\"javascript:getTopics()\">我的行程</a></li>"
 	  		+	 "<li><a href=\"javascript:getMessages()\">"
 	  		+    	"<span class=\"badge pull-right\">"+newmessage
 	  		+		"</span>"
-	  		+    "Message</a></li>"
-	  		+	 "<li><a href=\"javascript:getHistory()\">History</a></li>"
-			+	 "<li class=\"active\"><a href=\"javascript:getProfile()\">Profile</a></li>"
+	  		+    "我的消息</a></li>"
+	  		+	 "<li><a href=\"javascript:getHistory()\">历史记录</a></li>"
+			+	 "<li class=\"active\"><a href=\"javascript:getProfile()\">个人信息</a></li>"
 			+"</ul>";
  		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=profile");		
 		document.getElementById("innerContent").innerHTML = content;
@@ -137,9 +137,9 @@
 			<div class="navbar navbar-default" role="navigation">
 			  <div class="navbar navbar-default">
 			    <ul class="nav navbar-nav">
-			      <li class="active"><a href="#">UserCenter</a></li>
-			      <li><a href="/TicketSchedule/ManageRide.jsp">ManageRide</a></li>
-			      <li><a href="/TicketSchedule/SearchRide.jsp">SearchRide</a></li>
+			      <li class="active"><a href="#">用户中心</a></li>
+			      <li><a href="/TicketSchedule/Zh/ManageRide.jsp">行程管理</a></li>
+			      <li><a href="/TicketSchedule/Zh/SearchRide.jsp">搜索行程</a></li>
 			    </ul>
 			  </div>
 			</div>

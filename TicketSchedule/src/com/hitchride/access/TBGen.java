@@ -47,10 +47,10 @@ public class TBGen {
 		//TBGen.generateTable("UserGroup", TicketScheduleSchemaTb.UserGroup);
 		//TBGen.generateTable("UserTb", TicketScheduleSchemaTb.UserTb);
 
-		//TBGen.generateTable("RideInfo", TicketScheduleSchemaTb.RideInfo);
-		//TBGen.generateTable("PartiRide", TicketScheduleSchemaTb.PartiRide);
-		//TBGen.generateTable("TopicRide", TicketScheduleSchemaTb.TopicRide);
-		//TBGen.generateTable("Topic", TicketScheduleSchemaTb.Topic);
-		//TBGen.generateTable("Message", TicketScheduleSchemaTb.Message);
+		TBGen.generateTable("RideInfo", TicketScheduleSchemaTb.RideInfo);
+		TBGen.generateTable("PartiRide", TicketScheduleSchemaTb.PartiRide);
+		TBGen.generateTable("TopicRide", TicketScheduleSchemaTb.TopicRide);
+		TBGen.generateTable("Topic", TicketScheduleSchemaTb.Topic);
+		TBGen.generateTable("Message", TicketScheduleSchemaTb.Message);
 	}
 }

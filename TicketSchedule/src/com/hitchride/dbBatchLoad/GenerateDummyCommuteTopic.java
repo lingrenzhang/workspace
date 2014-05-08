@@ -1,3 +1,4 @@
+//Use google geoapi to generate dummy commute RideInfo and TopicRide
 package com.hitchride.dbBatchLoad;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class GenerateDummyCommuteTopic {
 
 	double _topleftlat,_topleftlng;
 	double _bottomrightlat,_bottomrightlng;
-	int _numberofUser=2000;
+	int _numberofUser=1000;
 	int _numberofRides=1000;
 	int _rideLengthRange = 10000;
 	int _scaleFactor=2; //rideLengthRange/2 - rideLenthRange*2
@@ -47,11 +48,13 @@ public class GenerateDummyCommuteTopic {
 			double destlng = origlng+Math.cos(angle)*r/radtodistance;
 			
 			//Register user:
-			int userId = rnd.nextInt(2000);
+			int userId = rnd.nextInt(_numberofUser);
 			try
 			{
-			    GeoInfo origLoc = geoUtil.reverseGeoCoding(origlat, origlng);
-			    GeoInfo destLoc = geoUtil.reverseGeoCoding(destlat, destlng);
+			    //GeoInfo origLoc = geoUtil.reverseGeoCoding(origlat, origlng);
+				GeoInfo origLoc = geoUtil.baiduGeoCoding(origlat, origlng);
+				//GeoInfo destLoc = geoUtil.reverseGeoCoding(destlat, destlng);
+				GeoInfo destLoc = geoUtil.baiduGeoCoding(destlat, destlng);
 			    Schedule schedule=new Schedule(true);
 			    RideInfo ride = new RideInfo();
 			    ride.userId=userId;
@@ -83,9 +86,11 @@ public class GenerateDummyCommuteTopic {
 	}
 	
 	public static void main(String[] args) throws IOException 
-	{
-		GenerateDummyCommuteTopic genDummy = new GenerateDummyCommuteTopic(37.511,-122.211,37.211,-121.911);
-		genDummy.generateDummyRide(500);
+	{   //Bayarea
+		//GenerateDummyCommuteTopic genDummy = new GenerateDummyCommuteTopic(37.511,-122.211,37.211,-121.911);
+		//Shanghai
+		GenerateDummyCommuteTopic genDummy = new GenerateDummyCommuteTopic(31.35,121.3,31.1,121.8);
+		genDummy.generateDummyRide(1);
 	}
 	
 	private double greatCircleDistance(double lat1, double lon1, double lat2, double lon2){

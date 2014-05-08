@@ -372,7 +372,7 @@ public static Connection objConn; //This reference is used for batch job.
 			if (rs.next())
 			{
 				maxRideId = rs.getInt(1);
-				System.out.println("Current Max Message ID: " + maxRideId);
+				System.out.println("Current Max Ride ID: " + maxRideId);
 			}
 		}
 		catch (java.lang.ClassNotFoundException e){

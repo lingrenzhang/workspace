@@ -66,6 +66,7 @@ public class UserCenter extends HttpServlet {
 					}
 					value.append("</div></div></div>");
 					user.numofnewMessage = 0;
+					response.setContentType("text/html; charset=UTF-8");
 					response.getWriter().write(value.toString());
 				}
 				if (content.equalsIgnoreCase("topics"))
@@ -130,6 +131,7 @@ public class UserCenter extends HttpServlet {
 						}
 					}
 					value.append("</div>");
+					response.setContentType("text/html; charset=UTF-8");
 					response.getWriter().write(value.toString());
 				}
 				
@@ -150,6 +152,7 @@ public class UserCenter extends HttpServlet {
 					value.append("</form>");
 					value.append("</div></div></div>");
 					user.numofnewMessage = 0;
+					response.setContentType("text/html; charset=UTF-8");
 					response.getWriter().write(value.toString());
 				}
 			}
