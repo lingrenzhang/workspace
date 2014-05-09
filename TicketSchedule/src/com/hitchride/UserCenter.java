@@ -13,6 +13,7 @@ import com.hitchride.global.AllPartRides;
 import com.hitchride.global.AllTopicRides;
 import com.hitchride.global.AllTopics;
 import com.hitchride.global.Environment;
+import com.hitchride.language.Dictionary;
 import com.hitchride.standardClass.Message;
 import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.ParticipantRide;
@@ -55,11 +56,21 @@ public class UserCenter extends HttpServlet {
 				User user = (User) request.getSession().getAttribute("user");
 				QueryStringParser qs = new QueryStringParser(request.getQueryString());
 				String content = qs.getString("content");
+				String language = qs.getString("language");
+				Dictionary dic;
+				if(null !=language && "Zh".equals(language))
+				{
+					dic = new Dictionary("Zh");
+				}
+				else
+				{
+					dic = new Dictionary("En");
+				}
 				if (content.equalsIgnoreCase("messages"))
 				{
 					StringBuilder value = new StringBuilder();
 				    value.append("<div class=\"panel panel-default\">");
-					value.append("<div class=\"panel-heading\">Your message</div>");
+					value.append("<div class=\"panel-heading\">"+dic.MyMessages+"</div>");
 					value.append("<div class=\"panel-body\">");
 					for( Iterator<Message> mesI = user.message.iterator();mesI.hasNext();){ 
 					    value.append(mesI.next().getHTMLMessage());
@@ -73,7 +84,7 @@ public class UserCenter extends HttpServlet {
 				{
 					StringBuilder value = new StringBuilder(1000);
 				    value.append("<div class=\"panel panel-default\">");
-					value.append("<div class=\"panel-heading\">Topic you own</div>");
+					value.append("<div class=\"panel-heading\">"+dic.MyTopic+"</div>");
 					value.append("<div class=\"panel-body\">");
 					for(Iterator<OwnerRideInfo> rideI = user.tRides.iterator();rideI.hasNext(); )
 					{
@@ -92,7 +103,7 @@ public class UserCenter extends HttpServlet {
 					
 					
 				    value.append("<div class=\"panel panel-default\">");
-					value.append("<div class=\"panel-heading\">Topic you participate</div>");
+					value.append("<div class=\"panel-heading\">"+dic.Participate+"</div>");
 					value.append("<div class=\"panel-body\">");
 					for(Iterator<ParticipantRide> prideI = user.pRides.iterator();prideI.hasNext(); )
 					{
@@ -113,7 +124,7 @@ public class UserCenter extends HttpServlet {
 					
 					
 				    value.append("<div class=\"panel panel-default\">");
-					value.append("<div class=\"panel-heading\">Free ride</div>");
+					value.append("<div class=\"panel-heading\">"+dic.FreeRide+"</div>");
 					value.append("<div class=\"panel-body\">");
 					for(Iterator<ParticipantRide> prideI = user.pRides.iterator();prideI.hasNext(); )
 					{
@@ -141,12 +152,12 @@ public class UserCenter extends HttpServlet {
 					UserProfile userP = UserTbAccess.loadUserProfile(user.get_uid());
 					StringBuilder value = new StringBuilder();
 				    value.append("<div class=\"panel panel-default\">");
-					value.append("<div class=\"panel-heading\">Your Profile</div>");
+					value.append("<div class=\"panel-heading\">"+dic.MyProfile+"</div>");
 					value.append("<div class=\"panel-body\">");
 					value.append("<form action=\"/TicketSchedule/servlet/UserProfile\" method=post>");
-					value.append("<div class=propwrapper><span>GivenName</span>"+"<input class=\"userproperty\" name=givenname value='"+userP._givenname+"'></div>");
-					value.append("<div class=propwrapper><span>SureName </span>"+"<input class=\"userproperty\" name=surename value='"+userP._surename+"'></div>");
-					value.append("<div class=propwrapper><span>Address  </span>"+"<input class=\"userproperty\" name=address value='"+userP._address+"'></div>");
+					value.append("<div class=propwrapper><span>"+dic.GivenName+"</span>"+"<input class=\"userproperty\" name=givenname value='"+userP._givenname+"'></div>");
+					value.append("<div class=propwrapper><span>"+dic.SureName+"</span>"+"<input class=\"userproperty\" name=surename value='"+userP._surename+"'></div>");
+					value.append("<div class=propwrapper><span>"+dic.Address+"  </span>"+"<input class=\"userproperty\" name=address value='"+userP._address+"'></div>");
 					value.append("<input class=\"hidden\" name=uid value='"+userP.get_uid()+"'>");
 					value.append("<button type=submit class=\"btn btn-primary\">Update</button>");
 					value.append("</form>");

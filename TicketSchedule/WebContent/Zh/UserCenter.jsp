@@ -69,7 +69,7 @@
 			+	 "<li><a href=\"javascript:getProfile()\">个人信息</a></li>"
 			+"</ul>";
 			
-		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=topics");
+		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=topics&language=Zh");
 		document.getElementById("innerContent").innerHTML = content;
  	}
  	
@@ -86,7 +86,7 @@
 	  		+	 "<li><a href=\"javascript:getHistory()\">历史记录</a></li>"
 			+	 "<li><a href=\"javascript:getProfile()\">个人信息</a></li>"
 			+"</ul>";
- 		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=messages");		
+ 		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=messages&language=Zh");		
 	    
 		document.getElementById("innerContent").innerHTML = content;
 		newmessage = 0;
@@ -118,7 +118,7 @@
 	  		+	 "<li><a href=\"javascript:getHistory()\">历史记录</a></li>"
 			+	 "<li class=\"active\"><a href=\"javascript:getProfile()\">个人信息</a></li>"
 			+"</ul>";
- 		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=profile");		
+ 		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=profile&language=Zh");		
 		document.getElementById("innerContent").innerHTML = content;
  	}
  </script>   
