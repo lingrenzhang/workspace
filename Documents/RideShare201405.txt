@@ -1,0 +1,78 @@
+Overall product enhancement for Web/Backend related part in Calander year 2014. Counting from Apr.
+
+Front End related:
+1.Support Baidu API. (1.5 weeks)
+
+2.Chinese language support. (1.5 weeks)
+
+3.Finer control of form (Form input validation) (0.5 week)
+
+4.Limitation on uploaded picture. (1 week)
+
+5.Proper display of information on different page. (Chinese/English, Large Scale requires continus improvement) (2 weeks)
+
+
+Back end related:
+1.More robust product model. Take user group property into account from matching algorithm (Guideline, general enhancement, no estimation):
+     Differentiate Commute/Trip/(instant?).Add table in DB with the product model change.
+
+2.Finer use of DB provide function. (Guideline, general enhancement, no estimation)
+    a. Alter table
+    b. Constrain
+
+3.Log and error handling.(Guideline)
+    Log: Debug,Info,Warning,Error,Fatal (Check log4j) Estimate(1 month)
+    Error: error message/code.
+
+4.Differentiate user authrority level. 
+	(Done, Current authority level is implement at frontend level. Will check DB access later, 1 month research with low priority later)
+
+5.Email notification. (1 week)
+
+
+6.Short message notification. (1 week)
+
+7.Support more bussiness logic from user feedback.	(Guideline, general enhancement)
+
+8.More user communication information. (1/2 week, continuous enhancment)
+
+9.User history and ranking system. (2 week, start to work when system in production)
+
+Other Large Story:
+1.Paying system. Corprate with AliPay or WePay. (Not for this year)
+2.Insurance, law contract. (Not for this year)
+
+  
+Instant Epic:
+1.OT rideshare issue.  (1st Epic)
+  Issues: a.Generate some test case with typical location in TaiCang, guatantee frequent used location are properly geococed.
+          b.Generate some sample Search pool(Suggested are Inner Group search)
+               Stuff to confirm:1.Is the OT work generally one time? What is the typical time an OT is anticipated?
+                                2.Any requirement for regular commute?
+    
+    General customer: Large office with people located in distance. Large plant with people located in distance. Those organization who have random OT requirement and wishes to reduce OT cost. Distance is normally about 10km.
+    Potential customer: P&G TaiCang office.
+
+
+2. Regular commute:  
+    Target user£º Those who lives far from their working site(Plant or office). Distance is normally on the scale of 20km.  
+    Potential user: Check large new community. Check estate management company for some large office site.
+
+3.Cross city one time trip:
+   For travel purpose. Use it a supplement of cross city coach for DIY tour. (More fit the US use case? Low priority)
+
+4. ºÚ³µË¾»ú:
+   The driver normally offer ride with some determined routines(Normally at some large Metro-Switch-Station, find a chance to talk with them). Help them to organize their schedule and provide more trusted and high quality service to the client.
+   Driver offer ride to several passenger for their commute.
+   
+
+
+Algorithm related:
+1. Matching inside same commute pool. Ride around scale of 20 km. 
+	Characterisitic: User normally in same group(Either work or live in similar place). Has regular time.
+2. Matching one time short trip mostly for OT. Ride around scale of 20 km.
+        Characterisitic: User normally in same group(Either work or live in similar place). Not having regular time, requirement 		comes in short time.
+3. Matching one time short distance trip. Ride around scale of 10 km.
+        Characterisitic: Couple of trip in the same line. Schedule not determined.
+4. Matching one time long distance trip. Ride around scale of 100 km.
+	Characterisitic: Trip scheduled several day before. 
