@@ -1,4 +1,4 @@
-package com.hitchride.access;
+package com.hitchride.dbStrucuture;
 
 
 //Note: The schemaTb is mainly used to persistent store DDL. Actual schemaTb has process the 
@@ -9,6 +9,8 @@ public class TicketScheduleSchemaTb {
 		UserTb,
 		UserGroup,
 		RideInfo,
+		TransientRide,
+		TransientTopic,
 		PartiRide,
 		TopicRide,
 		Message,
@@ -95,6 +97,50 @@ public class TicketScheduleSchemaTb {
 		new DataColumnSchema("FOREIGN KEY (userId)","References UserTb(userId)")
 	};
 	
+	public static final DataColumnSchema[] TransientRide={
+        //Key Info
+		new DataColumnSchema("userId","INT(10) UNSIGNED"), //Foreign Key constrain? 
+		                                          //Fixed value not visible to client.
+		new DataColumnSchema("transientRideId","INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE"),
+		//Geo Info
+		new DataColumnSchema("origFAddr","VARCHAR(100)"),
+		new DataColumnSchema("origAddr","VARCHAR(50)"),
+		new DataColumnSchema("origState","VARCHAR(20)"),
+		new DataColumnSchema("origCity","VARCHAR(30)"),
+		new DataColumnSchema("origLat","DECIMAL(10,6)"),
+		new DataColumnSchema("origLon","DECIMAL(10,6)"),
+
+		
+		new DataColumnSchema("destFAddr","VARCHAR(100)"),
+		new DataColumnSchema("destAddr","VARCHAR(50)"),
+		new DataColumnSchema("destState","VARCHAR(20)"),
+		new DataColumnSchema("destCity","VARCHAR(30)"),
+		new DataColumnSchema("destLat","DECIMAL(10,6)"),
+		new DataColumnSchema("destLon","DECIMAL(10,6)"),
+		
+		new DataColumnSchema("distance","INT(8)"),
+		new DataColumnSchema("duration","INT(8)"),
+		
+		//Schedule Info
+		new DataColumnSchema("rideDate","DATE"),
+		new DataColumnSchema("rideTime","TIME"),
+		new DataColumnSchema("rideFlex","TIME"),
+        
+        //Bargin Info
+		new DataColumnSchema("UserType","BOOL"),
+		new DataColumnSchema("TotalSeats","INT(2)"),
+		new DataColumnSchema("AvailSeats","INT(2)"),
+		new DataColumnSchema("PayperSeat","DECIMAL(6,2)"),
+		
+		//Constrain
+		new DataColumnSchema("FOREIGN KEY (userId)","References UserTb(userId)")
+	}; 
+	
+	
+	public static final DataColumnSchema[] TransientTopic={
+		new DataColumnSchema("transientRideId","INT(10) UNSIGNED"),
+	};
+	
 	public static final DataColumnSchema[] PartiRide={
 		new DataColumnSchema("RideInfoID","INT(10) UNSIGNED"), //Foreign Key constrain? 
         new DataColumnSchema("TopicId","INT(10)"),
@@ -103,7 +149,7 @@ public class TicketScheduleSchemaTb {
 		new DataColumnSchema("ScheduleMatch","INT(3) DEFAULT 0"),
 		new DataColumnSchema("BarginMatch","INT(3) DEFAULT 0"),
 		
-		//Foreign keyconstrain
+		//Foreign key constrain
 		new DataColumnSchema("Foreign key (RideInfoID)","REFERENCES RideInfo(recordid)"),
 		
 	};

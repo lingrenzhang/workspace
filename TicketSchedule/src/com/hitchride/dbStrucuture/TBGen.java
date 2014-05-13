@@ -1,4 +1,4 @@
-package com.hitchride.access;
+package com.hitchride.dbStrucuture;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -47,10 +47,14 @@ public class TBGen {
 		//TBGen.generateTable("UserGroup", TicketScheduleSchemaTb.UserGroup);
 		//TBGen.generateTable("UserTb", TicketScheduleSchemaTb.UserTb);
 
-		TBGen.generateTable("RideInfo", TicketScheduleSchemaTb.RideInfo);
-		TBGen.generateTable("PartiRide", TicketScheduleSchemaTb.PartiRide);
-		TBGen.generateTable("TopicRide", TicketScheduleSchemaTb.TopicRide);
-		TBGen.generateTable("Topic", TicketScheduleSchemaTb.Topic);
-		TBGen.generateTable("Message", TicketScheduleSchemaTb.Message);
+		//TBGen.generateTable("RideInfo", TicketScheduleSchemaTb.RideInfo);
+		//TBGen.generateTable("PartiRide", TicketScheduleSchemaTb.PartiRide);
+		//TBGen.generateTable("TopicRide", TicketScheduleSchemaTb.TopicRide);
+		//TBGen.generateTable("Topic", TicketScheduleSchemaTb.Topic);
+		
+		TBGen.generateTable("TransientRide", TicketScheduleSchemaTb.TransientRide);
+		//TBGen.generateTable("TransientTopic", TicketScheduleSchemaTb.TempoTopic);
+		
+		//TBGen.generateTable("Message", TicketScheduleSchemaTb.Message);
 	}
 }

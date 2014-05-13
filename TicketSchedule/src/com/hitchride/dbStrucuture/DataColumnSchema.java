@@ -1,4 +1,4 @@
-package com.hitchride.access;
+package com.hitchride.dbStrucuture;
 
 //Subset of MySQL schema table. For those function not used, treated at controllar layer.
 //Used as a centralized structure to generate tb.
