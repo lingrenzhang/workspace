@@ -79,15 +79,7 @@ $(document).ready(function(){
 	var dest;
 	var omarker;
 	var dmarker;
-	/*
-	var mapOptions = {
-			  center: new google.maps.LatLng(37.397, -122.144),
-			  zoom: 8,
-			  mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
 
-	var map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
-	*/
 	//初始化地图
 	var geol;		
 	var nowLat=31.270998;
@@ -165,35 +157,7 @@ $(document).ready(function(){
 			{"input" : "search_e",
 			 "location" : map});
 
-	/*
-	google.maps.event.addListener(searchBoxO, 'places_changed', function() {
-	  	  var places = searchBoxO.getPlaces();
-	  	  if (omarker!=null)
-	  	  {
-	      	omarker.setMap(null);
-	  	  }
-	  	  
-	  	  place = places[0];
-	      omarker = new google.maps.Marker({
-	            map: map,
-	            icon: images,
-	            title: place.name,
-	            position: place.geometry.location
-	          });
-	  	  
-		  document.getElementById("origLat").value=place.geometry.location.lat();
-		  document.getElementById("origLng").value=place.geometry.location.lng();
-		  origLat=place.geometry.location.lat();
-		  origLng=place.geometry.location.lng();
-		  destLat=document.getElementById("destLat").value;
-		  destLng=document.getElementById("destLng").value;
-		  if (destLat !="" && destLng!="")
-		  {
-			  refit();
-			  calculateDistances();
-		  }
-	});
-    */
+	
 	searchBoxO.addEventListener("onconfirm",function(e){
 		var _value = e.item.value;
 		myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
@@ -224,36 +188,7 @@ $(document).ready(function(){
 	});
 
 	
-	/*
-	google.maps.event.addListener(searchBoxD, 'places_changed', function() {
-	   	  var places = searchBoxD.getPlaces();
-	   	  if (dmarker!=null)
-	  	  {
-	      	 dmarker.setMap(null);
-	  	  }
-			
-	      place = places[0];
-          dmarker = new google.maps.Marker({
-	            map: map,
-	            icon: imagee,
-	            title: place.name,
-	            position: place.geometry.location
-	          });
-	     
-		  document.getElementById("destLat").value=place.geometry.location.lat();
-		  document.getElementById("destLng").value=place.geometry.location.lng();
-		  destLat=place.geometry.location.lat();
-		  destLng=place.geometry.location.lng();
-		  origLat=document.getElementById("origLat").value;
-		  origLng=document.getElementById("origLng").value;
-		  
-		  if (origLat !="" && origLng!="")
-		  {
-			  refit();
-			  calculateDistances();
-		  }
-	});
-	*/
+	
 	searchBoxD.addEventListener("onconfirm",function(e){
 		var _value = e.item.value;
 		myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
@@ -475,8 +410,8 @@ window.onscroll = function(){
 			<ul class="nav navbar-nav">
 			  <li><a href="/TicketSchedule/Zh/UserCenter.jsp">用户中心</a></li>
 			  <li><a href="/TicketSchedule/Zh/ManageRide.jsp">行程管理</a></li>
-		      <li class="active"><a href="#">上下班拼车</a></li>
-		      <li><a href="/TicketSchedule/Zh/SearchTransientRide.jsp">临时拼车</a></li>
+			  <li><a href="/TicketSchedule/Zh/SearchRide.jsp">上下班拼车</a></li>
+		      <li class="active"><a href="#">临时拼车</a></li>
 		    </ul>
 		 </div>
 		</div>
@@ -489,7 +424,7 @@ window.onscroll = function(){
 	<div id="content_container">
 		<div id="content">
 			<div id="head">
-				<form class="search" action="/TicketSchedule/servlet/Search" method="get" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
+				<form class="search" action="/TicketSchedule/servlet/SearchTransientRide" method="get" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
 					<div class="text_input">
 						<label class="pin start" for="search_s"></label>
 						<input id="search_s" class="input_text" type="text" 
@@ -562,13 +497,13 @@ window.onscroll = function(){
 					<div id="action">
 						<div class="item postride">
 							<h2>
-								<a href="">没有找到你要的拼车信息?						
+								<a href="">没有找到你要的临时拼车信息?						
 								</a>
 							</h2>
-							<p>根据你的拼车信息创建讨论组，其他人可以检索并加入你!							
+							<p>发布你的临时拼车信息，其他人可以找到并加入你!							
 							</p>
-							<form method="post" action="/TicketSchedule/servlet/RideCenter">	
-								<button id="createTopic" type="submit" class="button post">创建讨论组</button>
+							<form method="post" action="/TicketSchedule/servlet/TransientRideCenter">	
+								<button id="createTopic" type="submit" class="button post">发布临时拼车</button>
 							</form>
 						</div>
 						

@@ -209,4 +209,24 @@
     <servlet-name>AuthCheck</servlet-name>
     <url-pattern>/servlet/AuthCheck</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SearchTransientRide</display-name>
+    <servlet-name>SearchTransientRide</servlet-name>
+    <servlet-class>com.hitchride.SearchTransientRide</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchTransientRide</servlet-name>
+    <url-pattern>/servlet/SearchTransientRide</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TransientRideCenter</display-name>
+    <servlet-name>TransientRideCenter</servlet-name>
+    <servlet-class>com.hitchride.TransientRideCenter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TransientRideCenter</servlet-name>
+    <url-pattern>/TransientRideCenter</url-pattern>
+  </servlet-mapping>
 </web-app>

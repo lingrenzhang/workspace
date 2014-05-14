@@ -154,15 +154,6 @@ public class ManageRide extends HttpServlet {
 				myRide.userType=false;
 			}
 			
-			if (request.getParameter("who")!=null)
-			{
-				myRide.userType = request.getParameter("who").equals("offer");
-			}
-			else
-			{
-				myRide.userType=false;
-			}
-			 
 			//*************** Schedule *******************
 			Schedule schedule = new Schedule();
 			myRide.schedule=schedule;
