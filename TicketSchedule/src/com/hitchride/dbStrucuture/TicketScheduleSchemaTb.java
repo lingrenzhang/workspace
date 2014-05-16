@@ -139,6 +139,32 @@ public class TicketScheduleSchemaTb {
 	
 	public static final DataColumnSchema[] TransientTopic={
 		new DataColumnSchema("transientRideId","INT(10) UNSIGNED"),
+
+		new DataColumnSchema("nmiddlePoints","INT(1) UNSIGNED"),
+		new DataColumnSchema("middle1Faddr","varchar(100)"),
+		new DataColumnSchema("middle1Lat","DECIMAL(10,6)"),
+		new DataColumnSchema("middle1Lng","DECIMAL(10,6)"),
+		new DataColumnSchema("middle2Faddr","varchar(100)"),
+		new DataColumnSchema("middle2Lat","DECIMAL(10,6)"),
+		new DataColumnSchema("middle2Lng","DECIMAL(10,6)"),
+		new DataColumnSchema("middle3Faddr","varchar(100)"),
+		new DataColumnSchema("middle3Lat","DECIMAL(10,6)"),
+		new DataColumnSchema("middle3Lng","DECIMAL(10,6)"),
+		new DataColumnSchema("middle4Faddr","varchar(100)"),
+		new DataColumnSchema("middle4Lat","DECIMAL(10,6)"),
+		new DataColumnSchema("middle4Lng","DECIMAL(10,6)"),
+		new DataColumnSchema("middle5Faddr","varchar(100)"),
+		new DataColumnSchema("middle5Lat","DECIMAL(10,6)"),
+		new DataColumnSchema("middle5Lng","DECIMAL(10,6)"),
+		
+		new DataColumnSchema("nParticipant","INT(1) UNSIGNED"),
+		new DataColumnSchema("partiuid1","INT(10)"),
+		new DataColumnSchema("partiuid2","INT(10)"),
+		new DataColumnSchema("partiuid3","INT(10)"),
+		new DataColumnSchema("partiuid4","INT(10)"),
+		new DataColumnSchema("partiuid5","INT(10)"),
+		
+		new DataColumnSchema("FOREIGN KEY (transientRideId)","References TransientRide(TransientRideId)")
 	};
 	
 	public static final DataColumnSchema[] PartiRide={
@@ -222,8 +248,10 @@ public class TicketScheduleSchemaTb {
 				return TicketScheduleSchemaTb.Topic;
 			case Message:
 				return TicketScheduleSchemaTb.Message;
+		default:
+			System.out.println("Input table name not valid");
+			break;
 		}
-		System.out.println("Input table name not valid");
 		return null;
 	}
 }

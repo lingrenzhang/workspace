@@ -413,7 +413,7 @@ window.onscroll = function(){
 		topicstring = topicstring + "<span class=\"trip_type round_trip\"></span>";
 		topicstring = topicstring + topicInfo.ownerRide._rideInfo.destLoc._addr+"</span></h3><h4>";
 		topicstring = topicstring + "From: "+topicInfo.ownerRide._rideInfo.origLoc._formatedAddr;
-		topicstring = topicstring + "To: "+topicInfo.ownerRide._rideInfo.destLoc.get_formatedAddr;
+		topicstring = topicstring + "To: "+topicInfo.ownerRide._rideInfo.destLoc._formatedAddr;
 		topicstring = topicstring + "</h4></div></div></a>";
 		return topicstring;
 	};

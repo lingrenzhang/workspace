@@ -4,17 +4,19 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Date;
 
+import com.hitchride.global.AllUsers;
 import com.mysql.jdbc.ResultSet;
 
 //Typically load temporide directly. Not keeping persistent at memory.
 public class TransientRide implements PersistentStorage{
+	public User owner;
 	public int userId;
 	public int transientRideId;
 	
 	public GeoInfo origLoc,destLoc;
 	public int dist,dura;
 	
-	public Date rideData;
+	public Date rideDate;
 	public Time rideTime,rideFlex;
 	
 	public boolean userType;
@@ -30,10 +32,16 @@ public class TransientRide implements PersistentStorage{
   	boolean _isSaved = false;
   	java.util.Date _lastCp;
   	
+  	
+  //Initialize from RideInfo
+  	public TransientRide()
+  	{
+  		
+  	}
   	//Initialize from RideInfo
   	public TransientRide(RideInfo rideinfo)
   	{
-  		
+  		//TODO: Think about a way for the transformation.
   	}
   	
   	//Initialize from ResultSet
@@ -41,6 +49,7 @@ public class TransientRide implements PersistentStorage{
   	{
   		try {
   			this.userId = rs.getInt("userId");
+  			owner = (User) AllUsers.getUsers().getUser(userId);
   			this.transientRideId = rs.getInt("transientRideId");
   			
 			String origFAddr=rs.getString("origFAddr");
@@ -63,7 +72,7 @@ public class TransientRide implements PersistentStorage{
 			this.dist = rs.getInt("distance");
 			this.dura = rs.getInt("duration");
 			
-			this.rideData = rs.getDate("rideDate");
+			this.rideDate = rs.getDate("rideDate");
 			this.rideTime = rs.getTime("rideTime");
 			this.rideFlex = rs.getTime("rideFlex");
 			

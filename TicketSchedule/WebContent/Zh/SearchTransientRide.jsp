@@ -157,7 +157,6 @@ $(document).ready(function(){
 			{"input" : "search_e",
 			 "location" : map});
 
-	
 	searchBoxO.addEventListener("onconfirm",function(e){
 		var _value = e.item.value;
 		myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
@@ -255,7 +254,7 @@ $(document).ready(function(){
 	}
 	  
 
-	var results = JSON.parse(getJson("/TicketSchedule/servlet/SearchTopics"));
+	var results = JSON.parse(getJson("/TicketSchedule/servlet/SearchTransientRide"));
 	listResults(results);
 	$(".entry").hover(function(){
 		torigLat = $(this)[0].getAttribute("origLat");
@@ -312,43 +311,43 @@ window.onscroll = function(){
 		
 		for (var i=0;i<num;i++)
 		{
-			resultString =  resultString + getTopic(results[i],i);
+			resultString =  resultString + getTransientRide(results[i],i);
 		}
 		document.getElementById("ride_content").innerHTML = resultString;
 	};
 	
-	function getTopic(topicInfo,rank)
+	function getTransientRide(trInfo,rank)
 	{
 		var topicstring="";
-		topicstring = topicstring + "<a href=\"./RideCenter?topicId="+topicInfo._topicId +"&type=commute\">";
-		topicstring = topicstring + "<div class=\"entry\" origLat="+topicInfo.ownerRide._rideInfo.origLoc._lat+" ";
-		topicstring = topicstring + "origLng=" +  topicInfo.ownerRide._rideInfo.origLoc._lon+" ";
-		topicstring = topicstring + "destLat=" +  topicInfo.ownerRide._rideInfo.destLoc._lat+" ";
-		topicstring = topicstring + "destLng=" +  topicInfo.ownerRide._rideInfo.destLoc._lon+" ";
+		topicstring = topicstring + "<a href=\"./TransientTopic?trId="+trInfo.transientRideId +"&type=commute\">";
+		topicstring = topicstring + "<div class=\"entry\" origLat="+trInfo.origLoc._lat+" ";
+		topicstring = topicstring + "origLng=" +  trInfo.origLoc._lon+" ";
+		topicstring = topicstring + "destLat=" +  trInfo.destLoc._lat+" ";
+		topicstring = topicstring + "destLng=" +  trInfo.destLoc._lon+" ";
 		topicstring = topicstring + "rank=" +  rank +">";
 		
-		if (topicInfo.ownerRide._rideInfo.userType)
+		if (trInfo.userType)
 		{
 			topicstring = topicstring + "<div class=\"passenger_box\"><p>";
 			topicstring = topicstring +"<span class=\"icon\"></span>";
-			topicstring = topicstring + topicInfo.owner._givenname+" is a <strong>passenger</strong></p></div>";
+			topicstring = topicstring + trInfo.owner._givenname+" is a <strong>passenger</strong></p></div>";
 		}
 		else{
 			topicstring = topicstring + "<div class=\"price_box\"><div class=\"seats\">";
-			topicstring = topicstring +"<span class=\"count\">"+topicInfo.ownerRide._rideInfo.totalSeats+"</span></div>";
-			topicstring = topicstring +"<p><b>"+topicInfo.ownerRide._rideInfo.price + "</b> / seat</p></div>";
+			topicstring = topicstring +"<span class=\"count\">"+trInfo.totalSeats+"</span></div>";
+			topicstring = topicstring +"<p><b>"+trInfo.price + "</b> / seat</p></div>";
 		}
 		
 		topicstring = topicstring + "<div class=\"userpic\">";
-		topicstring = topicstring + "<div class=\"username\">"+topicInfo.owner._givenname+"</div>";
-		topicstring = topicstring + "<img src= \"/TicketSchedule/UserProfile/"+topicInfo.owner._avatarID+"\" alt=\"Profile Picture\"></img>";
+		topicstring = topicstring + "<div class=\"username\">"+trInfo.owner._givenname+"</div>";
+		topicstring = topicstring + "<img src= \"/TicketSchedule/UserProfile/"+trInfo.owner._avatarID+"\" alt=\"Profile Picture\"></img>";
 		topicstring = topicstring + "<span class=\"passenger\"></span></div>";
 		topicstring = topicstring + "<div class=\"inner_content\"><h3>";
-		topicstring = topicstring + "<span class=\"inner\">"+topicInfo.ownerRide._rideInfo.origLoc._addr;
+		topicstring = topicstring + "<span class=\"inner\">"+trInfo.origLoc._addr;
 		topicstring = topicstring + "<span class=\"trip_type round_trip\"></span>";
-		topicstring = topicstring + topicInfo.ownerRide._rideInfo.destLoc._addr+"</span></h3><h4>";
-		topicstring = topicstring + "From: "+topicInfo.ownerRide._rideInfo.origLoc._formatedAddr;
-		topicstring = topicstring + "To: "+topicInfo.ownerRide._rideInfo.destLoc.get_formatedAddr;
+		topicstring = topicstring + trInfo.destLoc._addr+"</span></h3><h4>";
+		topicstring = topicstring + "From: "+trInfo.origLoc._formatedAddr;
+		topicstring = topicstring + "To: "+trInfo.destLoc._formatedAddr;
 		topicstring = topicstring + "</h4></div></div></a>";
 		return topicstring;
 	};

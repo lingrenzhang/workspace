@@ -15,7 +15,7 @@ import com.hitchride.standardClass.Schedule;
 
 public class RideInfoAccess {
 
-public static Connection objConn; //This reference is used for batch job.
+	public static Connection objConn; //This reference is used for batch job.
 	
 	public static Connection getConnection() throws SQLException,	
 	java.lang.ClassNotFoundException

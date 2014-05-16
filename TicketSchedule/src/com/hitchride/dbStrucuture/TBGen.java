@@ -52,8 +52,8 @@ public class TBGen {
 		//TBGen.generateTable("TopicRide", TicketScheduleSchemaTb.TopicRide);
 		//TBGen.generateTable("Topic", TicketScheduleSchemaTb.Topic);
 		
-		TBGen.generateTable("TransientRide", TicketScheduleSchemaTb.TransientRide);
-		//TBGen.generateTable("TransientTopic", TicketScheduleSchemaTb.TempoTopic);
+		//TBGen.generateTable("TransientRide", TicketScheduleSchemaTb.TransientRide);
+		TBGen.generateTable("TransientTopic", TicketScheduleSchemaTb.TransientTopic);
 		
 		//TBGen.generateTable("Message", TicketScheduleSchemaTb.Message);
 	}
