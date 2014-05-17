@@ -57,20 +57,18 @@ $(document).ready(function(){
 	var torigLat, torigLng, tdestLat, tdestLng;
 	var tomarker,tdmarker;
 	
-	var images = {
-		    url: '/TicketSchedule/Picture/pin_start.png',
-	        size: new google.maps.Size(71, 71),
-	        origin: new google.maps.Point(0, 0),
-	        anchor: new google.maps.Point(17, 34),
-	        scaledSize: new google.maps.Size(25, 25)
-		  };
-	var imagee = {
-	          url: '/TicketSchedule/Picture/pin_end.png',
-	          size: new google.maps.Size(71, 71),
-	          origin: new google.maps.Point(0, 0),
-	          anchor: new google.maps.Point(17, 34),
-	          scaledSize: new google.maps.Size(25, 25)
-	};
+	var images = new BMap.Icon
+		    ("/TicketSchedule/Picture/pin_start.png",
+	        new BMap.Size(71, 71),{
+	        anchor: new BMap.Size(8, 16),
+	        //imageOffset: new google.maps.Point(0, 0)
+		  });
+	var imagee = new BMap.Icon
+		    ("/TicketSchedule/Picture/pin_end.png",
+	        new BMap.Size(71, 71),{
+	        anchor: new BMap.Size(8, 16),
+	        //imageOffset: new google.maps.Point(0, 0)
+		  });
 	
 	//Search box realted
 	var searchBoxO;
@@ -166,7 +164,7 @@ $(document).ready(function(){
 				map.removeOverlay(omarker);
 			}
 			point = new BMap.Point(local.getResults().getPoi(0).point.lng,local.getResults().getPoi(0).point.lat);
-			omarker = new BMap.Marker(point);
+			omarker = new BMap.Marker(point,{icon: images});
 			map.centerAndZoom(point,18);
 			map.addOverlay(omarker);
 			document.getElementById("origLat").value=point.lat;
@@ -197,7 +195,7 @@ $(document).ready(function(){
 				map.removeOverlay(dmarker);
 			}
 			point = new BMap.Point(local.getResults().getPoi(0).point.lng,local.getResults().getPoi(0).point.lat);
-			dmarker = new BMap.Marker(point);
+			dmarker = new BMap.Marker(point,{icon: imagee});
 			map.centerAndZoom(point,18);
 			map.addOverlay(dmarker);
 			document.getElementById("destLat").value=point.lat;
@@ -228,6 +226,13 @@ $(document).ready(function(){
 		  map.setZoom(zoomNum);
 		  
 	  }
+	function refitb(bounds)
+	{
+		 var range = Math.max(bounds.toSpan().lat,bounds.toSpan().lng);
+		 var zoomNum = Math.floor(9-Math.log(range)/Math.log(2));
+		 map.setCenter(bounds.getCenter());
+		 map.setZoom(zoomNum);
+	}
 
 	function calculateDistances() {
 		var service = new google.maps.DistanceMatrixService();
@@ -262,30 +267,31 @@ $(document).ready(function(){
 		tdestLat = $(this)[0].getAttribute("destLat");
 		tdestLng = $(this)[0].getAttribute("destLng");
 		var rank = $(this)[0].getAttribute("rank");
-		var toLatlng = new google.maps.LatLng(torigLat,torigLng);
-		var tdLatlng = new google.maps.LatLng(tdestLat,tdestLng);
+		var toLatlng = new BMap.Point(torigLng,torigLat);
+		var tdLatlng = new BMap.Point(tdestLng,tdestLat);
 
-		tomarker = new google.maps.Marker({
-		      map: map,
-		      icon: images,
-		      position: toLatlng
-		 });
-		tdmarker = new google.maps.Marker({
-            map: map,
-            icon: imagee,
-            position: tdLatlng
- 		});
-	 	var bounds = new google.maps.LatLngBounds();
+		
+		tomarker = new BMap.Marker(toLatlng,{icon: images});
+		
+		
+		tdmarker = new BMap.Marker(tdLatlng,{icon: imagee});
+		
+		
+	 	var bounds = new BMap.Bounds(basicbounds.getSouthWest(),basicbounds.getNorthEast());
 	    bounds.extend(toLatlng);
 		bounds.extend(tdLatlng);
-		bounds.union(basicbounds);
-		map.fitBounds(bounds);
-		loadSchedule(results[rank]);
+		refitb(bounds);
+		map.addOverlay(tomarker);
+		map.addOverlay(tdmarker);
+		//loadSchedule(results[rank]);
 	},
 	function(){
-		tomarker.setMap(null);
-		tdmarker.setMap(null);
-		map.fitBounds(basicbounds);
+		map.removeOverlay(tomarker);
+		map.removeOverlay(tdmarker);
+		//tomarker.setMap(null);
+		//tdmarker.setMap(null);
+		//refitb(basicbounds);
+		refitb(basicbounds);
 	});
 	
 });
@@ -343,12 +349,10 @@ window.onscroll = function(){
 		topicstring = topicstring + "<img src= \"/TicketSchedule/UserProfile/"+trInfo.owner._avatarID+"\" alt=\"Profile Picture\"></img>";
 		topicstring = topicstring + "<span class=\"passenger\"></span></div>";
 		topicstring = topicstring + "<div class=\"inner_content\"><h3>";
-		topicstring = topicstring + "<span class=\"inner\">"+trInfo.origLoc._addr;
-		topicstring = topicstring + "<span class=\"trip_type round_trip\"></span>";
-		topicstring = topicstring + trInfo.destLoc._addr+"</span></h3><h4>";
-		topicstring = topicstring + "From: "+trInfo.origLoc._formatedAddr;
-		topicstring = topicstring + "To: "+trInfo.destLoc._formatedAddr;
-		topicstring = topicstring + "</h4></div></div></a>";
+		topicstring = topicstring + "<span class=\"inner\">"+"出发地："+trInfo.origLoc._addr+"<br>";
+		topicstring = topicstring + "目的地："+trInfo.destLoc._addr+"</span></h3>";
+	
+		topicstring = topicstring + "</div></div></a>";
 		return topicstring;
 	};
 	
@@ -395,7 +399,7 @@ window.onscroll = function(){
 </script>
 
 
-<title>Search Ride</title>
+<title>临时拼车</title>
 </head>
 <body id="search_index">
 <div id="header_wrap">
@@ -449,41 +453,7 @@ window.onscroll = function(){
 						<input id="search_date" class="slim datepicker hasDatepicker" type="text" value="exp" name="date">
 					</div>
 					
-					<button class="btn btn-primary" type="submit">Search</button>
-
-				
-				<%if (user.get_authLevel()>=4) {%>
-				    <div class="sup_method">
-				    	<input type="checkbox" name = "innergroup"/>InnerGroup
-				    	<input type="checkbox" name = "listAll"/>ListAll
-				    	<input type="checkbox" name = "useCommute">useCommute
-				    	<%if (commute == true) { %>
-						<div class="commute_input">
-							<a class="commute_day first" >
-								<span>Mon</span>
-							</a>
-							<a class="commute_day" >
-								<span>Tue</span>
-							</a>
-							<a class="commute_day" >
-								<span>Wed</span>
-							</a>
-							<a class="commute_day" >
-								<span>Thu</span>
-							</a>
-							<a class="commute_day" >
-								<span>Fri</span>
-							</a>
-							<a class="commute_day" >
-								<span>Sat</span>
-							</a>
-							<a class="commute_day last" >
-								<span>Sun</span>
-							</a>
-							<% } %>
-						</div>
-				    </div>
-				<%} %>
+					<button class="btn btn-primary" type="submit">查找</button>
 				</form>
 			</div>
 			<div id="results">
@@ -538,9 +508,9 @@ window.onscroll = function(){
  			<span class="ui-icon ui-icon-circle-triangle-w">Next</span>
  		</a>
  		<div class="ui-datepicker-title">
- 			<span class="ui-datepicker-month" id="picker-Month">July</span>
+ 			<span class="ui-datepicker-month" id="picker-Month"></span>
  			&nbsp;
- 			<span class="ui-datepicker-year" id="picker-Year">2013</span>
+ 			<span class="ui-datepicker-year" id="picker-Year"></span>
  		</div>
  	</div>
  	<table class="ui-datepicker-calendar" id="ui-datepicker-calendar">
