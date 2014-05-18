@@ -50,6 +50,7 @@ public class Login extends HttpServlet {
 		HttpSession session;
 		session = request.getSession();
 		String UserName = request.getParameter("email"); 
+		
 		UserTbAccess userTb=new UserTbAccess();
 		ResultSet rs = userTb.selectByName(UserName,false);
 
@@ -58,17 +59,7 @@ public class Login extends HttpServlet {
 			{
 				if(rs.getString("password").equalsIgnoreCase(request.getParameter("password")))
 				{
-					
 					session.setAttribute("IsLogin", "true");
-
-					/*
-					user.set_name(rs.getString("givenname"));
-					user.set_uid(rs.getInt("userid"));
-					user.set_avatarID(rs.getString("avatarID"));
-					user.set_userLevel(rs.getString("userLevel"));
-					user.set_emailAddress(rs.getString("emailAddress"));
-					session.setAttribute("user", user);
-					*/
 
 					int UID=rs.getInt("userID");
 					User user = (User) AllUsers.getUsers().getUser(UID);
@@ -94,19 +85,40 @@ public class Login extends HttpServlet {
 					}
 					else
 					{
-						response.sendRedirect("/TicketSchedule/UserCenter.jsp");
+						if("Zh".equalsIgnoreCase(request.getParameter("language")))
+						{
+							response.sendRedirect("/TicketSchedule/Zh/UserCenter.jsp");
+						}
+						else
+						{
+							response.sendRedirect("/TicketSchedule/UserCenter.jsp");
+						}
 					}
 				}
 				else
 				{
 					request.setAttribute("isFailed", "true");
-					response.sendRedirect("/TicketSchedule/Login.jsp");
+					if("Zh".equalsIgnoreCase(request.getParameter("language")))
+					{
+						response.sendRedirect("/TicketSchedule/Zh/Login.jsp");
+					}
+					else
+					{
+						response.sendRedirect("/TicketSchedule/Login.jsp");
+					}
 				}
 			}
 			else
 			{
 				request.setAttribute("isFailed", "true");
-				response.sendRedirect("/TicketSchedule/Login.jsp");
+				response.sendRedirect("/TicketSchedule/Login.jsp");if("Zh".equalsIgnoreCase(request.getParameter("language")))
+				{
+					response.sendRedirect("/TicketSchedule/Zh/Login.jsp");
+				}
+				else
+				{
+					response.sendRedirect("/TicketSchedule/Login.jsp");
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

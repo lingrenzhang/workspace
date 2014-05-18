@@ -23,7 +23,7 @@ $(document).ready(function(){
 })
 </script>
 
-<title>Login</title>
+<title>登录</title>
 </head>
 <body>
 <div id="content_wrapper">
@@ -70,14 +70,15 @@ $(document).ready(function(){
 				</dd>
 			</dl>
 			<dl class="bottom">
-				<input type="hidden" name="origURL" value="">
-				<input type="hidden" name="key_id" value="1">
-				<input type="hidden" name="captcha_type" id="captcha_type" value="web_login">
-				<input type="hidden" name="method" id="method" value = ""></input>
-				<input type="submit" id="login" class="input-submit login-btn" stats="loginPage_login_button" value="登录" tabindex="5">
-				<input type="button" id="register" class="input-submit regist-btn" stats="loginPage_regist_button" value="注册" tabindex="6"
-				 onclick="window.location = '/TicketSchedule/Zh/register.jsp'">
 			</dl>
+			<input type="hidden" name="language" value="Zh"/>
+			<input type="hidden" name="origURL" value=""/>
+			<input type="hidden" name="key_id" value="1"/>
+			<input type="hidden" name="captcha_type" id="captcha_type" value="web_login"/>
+			<input type="hidden" name="method" id="method" value = ""/>
+			<input type="submit" id="login" class="input-submit login-btn" stats="loginPage_login_button" value="登录" tabindex="5"/>
+			<input type="button" id="register" class="input-submit regist-btn" stats="loginPage_regist_button" value="注册" tabindex="6"
+				 onclick="window.location = '/TicketSchedule/Zh/register.jsp'"/>
 		</form>
 			
 		</div>
