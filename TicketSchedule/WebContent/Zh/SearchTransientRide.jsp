@@ -8,7 +8,7 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="com.hitchride.standardClass.User" %>
 <%@ page import="com.hitchride.standardClass.Topic" %>
-<%@ page import="com.hitchride.standardClass.RideInfo" %>
+<%@ page import="com.hitchride.standardClass.TransientRide" %>
 <%
 	boolean commute = true;
 %>
@@ -29,7 +29,7 @@
 		 user.set_avatarID("default.jpg");
 		 user.set_userLevel(0);
 	}
-	RideInfo actRide = (RideInfo) request.getSession().getAttribute("actRide");
+	TransientRide tranRide = (TransientRide) request.getSession().getAttribute("tranRide");
 %>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -116,10 +116,10 @@ $(document).ready(function(){
 	map.addControl(new BMap.ScaleControl());
 	map.centerAndZoom(point,15);
 	
-	var origLat="<%=actRide==null?"":actRide.origLoc.get_lat()%>";
-	var origLng="<%=actRide==null?"":actRide.origLoc.get_lon()%>";
-	var destLat="<%=actRide==null?"":actRide.destLoc.get_lat()%>";
-	var destLng="<%=actRide==null?"":actRide.destLoc.get_lon()%>";
+	var origLat="<%=tranRide==null?"":tranRide.origLoc.get_lat()%>";
+	var origLng="<%=tranRide==null?"":tranRide.origLoc.get_lon()%>";
+	var destLat="<%=tranRide==null?"":tranRide.destLoc.get_lat()%>";
+	var destLng="<%=tranRide==null?"":tranRide.destLoc.get_lon()%>";
 	var basicbounds = new BMap.Bounds();
 	
 	if (origLat!="" && origLng!="" && origLat!="" &&origLng!="")
@@ -243,15 +243,22 @@ $(document).ready(function(){
 	  if (status != google.maps.DistanceMatrixStatus.OK) {
 	    alert('Error was: ' + status);
 	   } else {
-		    document.getElementById("distance").value =response.rows[0].elements[0].distance.value;
-		    document.getElementById("duration").value =response.rows[0].elements[0].duration.value;
-		    alert("distance:"+response.rows[0].elements[0].distance.value);
-		    alert("durantion:"+response.rows[0].elements[0].duration.value);
+		   var distance = response.rows[0].elements[0].distance.value;
+		   var duration = response.rows[0].elements[0].duration.value;
+		    document.getElementById("distance").setAttribute("value",distance);
+		    document.getElementById("duration").setAttribute("value",duration);
+		    alert("distance:"+distance);
+		    alert("durantion:"+duration);
+		    document.getElementById("distanceP").setAttribute("value",distance);
+		    document.getElementById("durationP").setAttribute("value",distance);
+		    
+		    var price = Math.floor(distance/1200);
+		    document.getElementById("price").setAttribute("value",price);
 	   }
 	}
 	  
 
-	var results = JSON.parse(getJson("/TicketSchedule/servlet/SearchTransientRide"));
+	var results = JSON.parse(getJson("/TicketSchedule/servlet/SearchTransientTopic"));
 	listResults(results);
 	$(".entry").hover(function(){
 		torigLat = $(this)[0].getAttribute("origLat");
@@ -377,23 +384,31 @@ function publishRide()
 		document.getElementById("search_e").setAttribute("value","");
 		document.getElementById("destLatP").setAttribute("value",destLat);
 		document.getElementById("destLngP").setAttribute("value",destLng);
-		document.getElementById("distanceP").setAttribute("value","");
-		document.getElementById("durationP").setAttribute("value","");
+		//Set when initialized
+		//document.getElementById("distanceP").setAttribute("value","");
+		//document.getElementById("durationP").setAttribute("value","");
 	}
 	
-	document.getElementById("add-topic-info").setAttribute("class", "panel");
+	document.getElementById("additional-info").setAttribute("class", "panel");
 }
 function onPublishValidate()
 {
 	
 }
+
+
 function asDriver()
 {
-	
+	document.getElementById("asDriver").setAttribute("class","active");
+	document.getElementById("asPassenger").setAttribute("class","");
+	document.getElementById("seats-content").style.display="inline";
 }
 
 function asPassenger()
 {
+	document.getElementById("asDriver").setAttribute("class","");
+	document.getElementById("asPassenger").setAttribute("class","active");
+	document.getElementById("seats-content").style.display="none";
 }
 </script>
 
@@ -430,21 +445,21 @@ function asPassenger()
 						<label class="pin start" for="search_s"></label>
 						<input id="search_s" class="input_text" type="text" 
 							placeholder="Starting from..." name="s" alt="search_start" 
-							autocomplete="off" value=<%=(actRide ==null) ? "" : actRide.origLoc._addr%>/>
+							autocomplete="off" value=<%=(tranRide ==null) ? "" : tranRide.origLoc._addr%>/>
 					</div>
 					<div class="text_input">
 						<label class="pin end" for="search_e"></label>
 						<input id="search_e" class="input_text" type="text" 
 						placeholder="Going to..." name="e" alt="search_end" 
-						autocomplete="off" value=<%=(actRide ==null) ? "" : actRide.destLoc._addr%>/>
+						autocomplete="off" value=<%=(tranRide ==null) ? "" : tranRide.destLoc._addr%>/>
 					</div>
 					<div class="geo_internal" style="display:none">
 						<input id="origLat" name="origLat" value=""></input>
 						<input id="origLng" name="origLng" value=""></input>
 						<input id="destLat" name="destLat" value=""></input>
 						<input id="destLng" name="destLng" value=""></input>
-						<input id="distance" name="distance" value="<%=actRide==null?"":actRide.dist%>"></input>
-						<input id="duration" name="duration" value="<%=actRide==null?"":actRide.dura%>"></input>
+						<input id="distance" name="distance" value="<%=tranRide==null?"":tranRide.dist%>"></input>
+						<input id="duration" name="duration" value="<%=tranRide==null?"":tranRide.dura%>"></input>
 					</div>
 					<div class="text_input datetime">
 						<label class="datetime_icon" for="search_date"></label>
@@ -459,8 +474,7 @@ function asPassenger()
 					<h3 id="headline" class="headline first"></h3>
 					<div id="ride_content">
 					</div>
-					
-					<div id="action">
+						<div id="action">
 						<div class="item postride">
 							<h2>
 								<a href="">没有找到你要的临时拼车信息?						
@@ -469,10 +483,7 @@ function asPassenger()
 							<p>补充更多临时拼车信息并发布，其他人可以找到并加入你!							
 							</p>
 							<button id="createTopic" type="submit" class="button post" onclick="publishRide()">发布临时拼车</button>
-							
-							
 						</div>
-						
 					</div>
 				</div>
 			</div>
@@ -482,7 +493,7 @@ function asPassenger()
 					<div class="floatwrap" id="floatwrap">
 				 		<div id="map-canvas">
 						</div>
-						<div class="panel" id="additional-info">
+						<div class="panel hidden" id="additional-info">
 							<form method="post" action="/TicketSchedule/servlet/TransientRideCenter" onsubmit="return onPublishValidate()">	
 								<div class="geo_Pinternal" style="display:none">
 									<input id="search_s" name="s" value=""/>
@@ -506,50 +517,52 @@ function asPassenger()
 							</form>
 								<div class="panel-heading">在此输入补充信息</div>
 								<div class="panel-body">
-								<div id="bargin-info">
-								    <div class="tabbable tabs-top">
-				  						<ul class="nav nav-tabs">
-				  							<li class="active" id="asDriver"><a href="javascript: asDriver()"><img src= "/TicketSchedule/Picture/car.jpg"></img>有车</a></li>
-				  							<li id="asPassenger"><a href="javascript: asPassenger()"><img src= "/TicketSchedule/Picture/nocar.jpg"></img>无车</a></li>
+									<div class="tabbable tabs-top">
+					  					<ul class="nav nav-tabs">
+					  						<li class="active" id="asDriver"><a href="javascript: asDriver()"><img src= "/TicketSchedule/Picture/car.jpg"></img>有车</a></li>
+					  						<li id="asPassenger"><a href="javascript: asPassenger()"><img src= "/TicketSchedule/Picture/nocar.jpg"></img>无车</a></li>
 										</ul>
 									</div>
 									<div id="bargin-content">
-										<img src= "/TicketSchedule/Picture/seats.jpg"></img>
-										<input type="text" id="seats" value="3"/>
-		 								<img src= "/TicketSchedule/Picture/yuansign.jpg"></img>
-										<input type="text" id="price" value="15"/>
+										<div id="seats-content" class="">
+											<img src= "/TicketSchedule/Picture/seats.jpg"></img>
+											<input type="text" id="seats" value="3"/>
+										</div>
+										<div id="price-content" class="">
+			 								<img src= "/TicketSchedule/Picture/yuansign.jpg"></img>
+											<input type="text" id="price" value="15"/>
+										</div>
+									</div>
+									<div id="schedule-info">
+										<img src= "/TicketSchedule/Picture/clock.jpg"/>
+										<select name="ride_time_ap" id="ride_time_ap">
+											<option value="AM">上午</option>
+											<option value="PM">下午</option>
+										</select>
+										<select name="ride_time_hour" id="ride_time_hour" class="slim">
+							                  <option value="1">1</option>	
+							                  <option value="2">2</option>
+							                  <option value="3">3</option>
+							                  <option value="4">4</option>
+							                  <option value="5">5</option>
+							                  <option value="6">6</option>
+							                  <option value="7">7</option>
+							                  <option value="8">8</option>
+							                  <option value="9">9</option>
+							                  <option value="10">10</option>
+							                  <option value="11">11</option>
+							                  <option value="12">12</option>
+		    				            </select>点
+										<select name="ride_time_minute" id="ride_time_minute" class="slim">
+							                  <option value="00">00</option>	
+							                  <option value="10">10</option>
+							                  <option value="20">20</option>
+							                  <option value="30">30</option>
+							                  <option value="40">40</option>
+							                  <option value="50">50</option>
+							        	</select>分
 									</div>
 								</div>
-								<div id="schedule-info">
-									<img src= "/TicketSchedule/Picture/clock.jpg"/>
-									<select name="ride_time_ap" id="ride_time_ap">
-										<option value="AM">上午</option>
-										<option value="PM">下午</option>
-									</select>
-									<select name="ride_time_hour" id="ride_time_hour" class="slim">
-						                  <option value="1">1</option>	
-						                  <option value="2">2</option>
-						                  <option value="3">3</option>
-						                  <option value="4">4</option>
-						                  <option value="5">5</option>
-						                  <option value="6">6</option>
-						                  <option value="7">7</option>
-						                  <option value="8">8</option>
-						                  <option value="9">9</option>
-						                  <option value="10">10</option>
-						                  <option value="11">11</option>
-						                  <option value="12">12</option>
-	    				            </select>点
-									<select name="ride_time_minute" id="ride_time_minute" class="slim">
-						                  <option value="00">00</option>	
-						                  <option value="10">10</option>
-						                  <option value="20">20</option>
-						                  <option value="30">30</option>
-						                  <option value="40">40</option>
-						                  <option value="50">50</option>
-						        	</select>分
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>

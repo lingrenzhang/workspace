@@ -50,28 +50,128 @@ public class SearchTransientRide extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Environment.getEnv();
 		{
-			TransientRide actRide = null;
-			if (request.getQueryString()!=null)
+			TransientRide tranRide = new TransientRide();
+			tranRide.userType = Boolean.parseBoolean(request.getParameter("userType"));
+			GeoInfo orig=null;
+			try
 			{
-				QueryStringParser qsp = new QueryStringParser(request.getQueryString());
-				if (qsp.getString("trid")!=null)
-				{
-					int trid = qsp.getInt("trid");
-					request.getSession().setAttribute("actTrid", trid);
+				Double origLat = Double.parseDouble(request.getParameter("origLat"));
+				Double origLon = Double.parseDouble(request.getParameter("origLng"));
+			    String origAddr = request.getParameter("s");
+			    origAddr = origAddr.replaceAll(" ","" );
+			    orig = new GeoInfo(origAddr,origLat,origLon);
+				request.setAttribute("orig", origAddr);
+			}
+			catch(Exception e)
+			{
+				System.out.println("Orig coordinate not initilized on client site.");
+				System.out.println("Caculating from server");
+				//origLat,OrigLng for some reason not caculated. Compute it from the original space
+				String jsonoutput;
+				JSONObject json;
+				String start = request.getParameter("s");
+				start = start.replaceAll(" ","" );
+				//String getURL = "https://maps.googleapis.com/maps/api/place/autocomplete/xml?input=" + start +"&types=geocode&sensor=true&key=";
+				String getURL = "http://maps.googleapis.com/maps/api/geocode/json?address="+start+"&sensor=false";
+				jsonoutput=jsonquery(getURL);
+				
+				try {
+					json = new JSONObject(jsonoutput);
+					String origAddr = json.getJSONArray("results").getJSONObject(0).getString("formatted_address");
+					origAddr = origAddr.replaceAll(" ","" );
+					request.setAttribute("orig", origAddr);
+					JSONObject geometry = json.getJSONArray("results").getJSONObject(0).getJSONObject("geometry");
+					Double origLat =geometry.getJSONObject("location").getDouble("lat");
+					Double origLon =geometry.getJSONObject("location").getDouble("lng");
+					orig = new GeoInfo(origAddr,origLat,origLon);
+				} catch (JSONException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+				}
+			}
+
+			tranRide.origLoc = orig;    
+			GeoInfo dest=null;
+			try
+			{
+				Double destLat = Double.parseDouble(request.getParameter("destLat"));
+				Double destLon = Double.parseDouble(request.getParameter("destLng"));
+			    String destAddr = request.getParameter("e");
+			    destAddr = destAddr.replaceAll(" ","" );
+			    request.setAttribute("dest", destAddr);
+			    dest = new GeoInfo(destAddr,destLat,destLon);
+			}
+			catch (Exception e)
+			{
+				System.out.println("Target coordinate not initilized on client site.");
+				System.out.println("Caculating from server");
+				String end = request.getParameter("e");
+				end = end.replace(" ", "");
+					//getURL = "https://maps.googleapis.com/maps/api/place/autocomplete/xml?input=" + end +"&types=geocode&sensor=true&key=";
+				String getURL = "http://maps.googleapis.com/maps/api/geocode/json?address="+end+"&sensor=false";
+				String jsonoutput=jsonquery(getURL);
+				try {
+					JSONObject json = new JSONObject(jsonoutput);
+				    String destAddr = json.getJSONArray("results").getJSONObject(0).getString("formatted_address");
+				    destAddr = destAddr.replaceAll(" ","" );
+				    request.setAttribute("dest", destAddr);
+				    JSONObject geometry = json.getJSONArray("results").getJSONObject(0).getJSONObject("geometry");
+				    Double destLat =geometry.getJSONObject("location").getDouble("lat");
+				    Double destLon =geometry.getJSONObject("location").getDouble("lng");
+				    dest = new GeoInfo(destAddr,destLat,destLon);
+				} catch (JSONException e1) {
+						// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 			
-			java.util.Date dateh = new java.util.Date();
-			Time time = new Time(dateh.getTime());
-			Date date = new Date(dateh.getTime());
-			List<TransientRide> resultList = TransientRideAccess.listTransisentRideByGroupId(1, date);
+			tranRide.destLoc = dest;
+				
+			//Distance duration
+			int dist=0;
+			int dura=0;
+			try{
+				dist = Integer.parseInt(request.getParameter("distance"));
+				dura = Integer.parseInt(request.getParameter("duration"));
+			}
+			catch(Exception e)
+			{
+				System.out.println("Distance and duration not initilized on client site.");
+				System.out.println("Caculating from server");
+				//Caculate by coordinate. Not very stable.
+				//getURL = "http://maps.googleapis.com/maps/api/distancematrix/json?origins="
+				//	+origLat+","+origLon+"&destinations="+destLat+","+destLon+"&sensor=false"; 
+				String getURL = "http://maps.googleapis.com/maps/api/distancematrix/json?origins="
+							+tranRide.origLoc._addr+"&destinations="+tranRide.destLoc._addr+"&sensor=false";  
+				String jsonoutput=jsonquery(getURL);
+				JSONObject json;
+				try {
+					json = new JSONObject(jsonoutput);
+				    JSONArray elements = json.getJSONArray("rows").getJSONObject(0).getJSONArray("elements");
+				    dura = elements.getJSONObject(0).getJSONObject("duration").getInt("value");
+				    dist = elements.getJSONObject(0).getJSONObject("distance").getInt("value");
+				} catch (JSONException e1) {
+					e1.printStackTrace();
+				}
+			}
+			tranRide.dura=dura;
+			tranRide.dist=dist;
+				
+			String date = request.getParameter("date");
+			Date d = TimeFormatHelper.setDate(date);
+			tranRide.rideDate=d;
 			
-			JsonHelper jsonhelp = new JsonHelper();
-			String tridesJson = jsonhelp.toJson(resultList);
-			//System.out.println(topicsJson);
-			response.setContentType("text/html; charset=UTF-8");
-			response.getWriter().write(tridesJson);
+			
+			request.getSession().setAttribute("tranRide", tranRide);
+			request.setAttribute("date", tranRide.rideDate);
+			request.setAttribute("orig", tranRide.origLoc.get_formatedAddr());
+			request.setAttribute("dest", tranRide.destLoc.get_formatedAddr());
+			
+			request.setCharacterEncoding("UTF8");
+			RequestDispatcher rd = request.getRequestDispatcher("../Zh/SearchTransientRide.jsp");
+			rd.forward(request, response);
 		}	
+		
 	}
 
 	/**

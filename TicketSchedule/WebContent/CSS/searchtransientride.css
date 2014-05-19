@@ -219,3 +219,14 @@ border-bottom: 1px solid transparent;
 border-top-right-radius: 3px;
 border-top-left-radius: 3px;
 }
+
+#seats-content
+{
+	display: inline;
+
+}
+
+#price-content
+{
+	display: inline;
+}

@@ -219,6 +219,16 @@
     <servlet-name>SearchTransientRide</servlet-name>
     <url-pattern>/servlet/SearchTransientRide</url-pattern>
   </servlet-mapping>
+   <servlet>
+    <description></description>
+    <display-name>SearchTransientTopic</display-name>
+    <servlet-name>SearchTransientTopic</servlet-name>
+    <servlet-class>com.hitchride.SearchTransientTopic</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchTransientTopic</servlet-name>
+    <url-pattern>/servlet/SearchTransientTopic</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>TransientRideCenter</display-name>
