@@ -76,7 +76,7 @@ public class GenerateDummyTransientTopic {
 				    ride.userType = rnd.nextBoolean();
 				    ride.availSeats = rnd.nextInt(4);
 				    ride.totalSeats = 4;
-				    ride.price = r/2000;
+				    ride.price = r/1000;
 				    
 				    
 				    TransientRideAccess.insertTransientRideInfo(ride);

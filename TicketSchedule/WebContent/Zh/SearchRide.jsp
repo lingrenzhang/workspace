@@ -518,7 +518,7 @@ window.onscroll = function(){
 					<button class="btn btn-primary" type="submit">Search</button>
 
 				
-				<%if (user.get_authLevel()>=4) {%>
+				<%if (user.get_authLevel()>=32) {%>
 				    <div class="sup_method">
 				    	<input type="checkbox" name = "innergroup"/>InnerGroup
 				    	<input type="checkbox" name = "listAll"/>ListAll
@@ -604,9 +604,9 @@ window.onscroll = function(){
  			<span class="ui-icon ui-icon-circle-triangle-w">Next</span>
  		</a>
  		<div class="ui-datepicker-title">
- 			<span class="ui-datepicker-month" id="picker-Month">July</span>
+ 			<span class="ui-datepicker-month" id="picker-Month"></span>
  			&nbsp;
- 			<span class="ui-datepicker-year" id="picker-Year">2013</span>
+ 			<span class="ui-datepicker-year" id="picker-Year"></span>
  		</div>
  	</div>
  	<table class="ui-datepicker-calendar" id="ui-datepicker-calendar">

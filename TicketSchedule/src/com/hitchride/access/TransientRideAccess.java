@@ -1,6 +1,7 @@
 package com.hitchride.access;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -183,7 +184,7 @@ public class TransientRideAccess {
 	
 	//Stored query
 	//Return first 100 stored ride
-	public static List<TransientRide> listTransisentRideByGroupId(int GroupId,Time time)
+	public static List<TransientRide> listTransisentRideByGroupId(int GroupId,Date date)
 	{
 		List<TransientRide> resultlist = new ArrayList<TransientRide>();
 		try {
@@ -193,7 +194,7 @@ public class TransientRideAccess {
 				objConn = getConnection();
 			} 
 			sql=objConn.createStatement();
-			ResultSet riders = (ResultSet) sql.executeQuery("select * from TransientRide");
+			ResultSet riders = (ResultSet) sql.executeQuery("select * from TransientRide where rideDate=\""+date+"\"");
 			int i=0;
 			while (riders.next() && i<100)
 			{

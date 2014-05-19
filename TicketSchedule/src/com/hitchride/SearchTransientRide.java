@@ -63,7 +63,8 @@ public class SearchTransientRide extends HttpServlet {
 			
 			java.util.Date dateh = new java.util.Date();
 			Time time = new Time(dateh.getTime());
-			List<TransientRide> resultList = TransientRideAccess.listTransisentRideByGroupId(1, time);
+			Date date = new Date(dateh.getTime());
+			List<TransientRide> resultList = TransientRideAccess.listTransisentRideByGroupId(1, date);
 			
 			JsonHelper jsonhelp = new JsonHelper();
 			String tridesJson = jsonhelp.toJson(resultList);

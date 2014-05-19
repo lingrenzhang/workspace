@@ -51,7 +51,7 @@
 $(document).ready(function(){
 	initCalandar();
 	document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
-	document.getElementById("headline").innerHTML="Departing<em>Today</em><span> - "+ new Date().toDateString() +"</span>";
+	document.getElementById("headline").innerHTML="今日出发：<span>"+ new Date().toDateString() +"</span>";
 
 	//Display Related
 	var torigLat, torigLng, tdestLat, tdestLng;
@@ -144,9 +144,7 @@ $(document).ready(function(){
 		map.fitBounds(basicbounds);
 	}
 	
-	
-
-    //orig = document.getElementById('search_s');
+   //orig = document.getElementById('search_s');
 	searchBoxO = new BMap.Autocomplete(
 			{"input" : "search_s",
 			 "location" : map});
@@ -183,8 +181,6 @@ $(document).ready(function(){
 		var local = new BMap.LocalSearch(map,{onSearchComplete : myFun});
 		local.search(myValue);
 	});
-
-	
 	
 	searchBoxD.addEventListener("onconfirm",function(e){
 		var _value = e.item.value;
@@ -270,12 +266,17 @@ $(document).ready(function(){
 		var toLatlng = new BMap.Point(torigLng,torigLat);
 		var tdLatlng = new BMap.Point(tdestLng,tdestLat);
 
+		if (tomarker!=null)
+		{
+			map.removeOverlay(tomarker);
+		}
+		if (tdmarker!=null)
+		{
+			map.removeOverlay(tdmarker);
+		}
 		
 		tomarker = new BMap.Marker(toLatlng,{icon: images});
-		
-		
 		tdmarker = new BMap.Marker(tdLatlng,{icon: imagee});
-		
 		
 	 	var bounds = new BMap.Bounds(basicbounds.getSouthWest(),basicbounds.getNorthEast());
 	    bounds.extend(toLatlng);
@@ -286,12 +287,17 @@ $(document).ready(function(){
 		//loadSchedule(results[rank]);
 	},
 	function(){
+		/*
 		map.removeOverlay(tomarker);
 		map.removeOverlay(tdmarker);
 		//tomarker.setMap(null);
 		//tdmarker.setMap(null);
 		//refitb(basicbounds);
-		refitb(basicbounds);
+		if (basicbounds.toSpan().lat>0.005 || basicbounds.toSpan().lng>0.005)
+		{
+			refitb(basicbounds);
+		}
+		*/
 	});
 	
 });
@@ -398,6 +404,17 @@ window.onscroll = function(){
 	};
 </script>
 
+<script type="text/javascript">
+function publishRide()
+{
+	document.getElementById("add-topic-info").setAttribute("class", "");
+}
+function onPublishValidate()
+{
+	
+}
+
+</script>
 
 <title>临时拼车</title>
 </head>
@@ -471,8 +488,29 @@ window.onscroll = function(){
 							</h2>
 							<p>发布你的临时拼车信息，其他人可以找到并加入你!							
 							</p>
-							<form method="post" action="/TicketSchedule/servlet/TransientRideCenter">	
-								<button id="createTopic" type="submit" class="button post">发布临时拼车</button>
+							<button id="createTopic" type="submit" class="button post" onclick="publishRide()">发布临时拼车</button>
+							
+							<form method="post" action="/TicketSchedule/servlet/TransientRideCenter" onsubmit="return onPublishValidate()">	
+								<div class="geo_Pinternal" style="display:none">
+									<input id="search_s" name="s" value=""/>
+									<input id="origLatP" name="origLat" value=""/>
+									<input id="origLngP" name="origLng" value=""/>
+									<input id="search_e" name="e" value=""/>
+									<input id="destLatP" name="destLat" value=""/>
+									<input id="destLngP" name="destLng" value=""/>
+									<input id="distanceP" name="distance" value=""/>
+									<input id="durationP" name="duration" value=""/>
+								</div>
+								<div class="schedule_Pinternal" style="display:none">
+									<input id="dateP" name="date" value=""/>
+									<input id="timeP" name="time" value=""/>
+								</div>
+								<div class="bargin_Pinternal" style="display:none">
+									<input id="userTypeP" name="userTypeP" value=""/>
+									<input id="totalSeatsP" name="totalSeats" value=""/>
+									<input id="payPerSeatP" name="payPerSeat" value=""/>
+								</div>
+								
 							</form>
 						</div>
 						
@@ -485,7 +523,19 @@ window.onscroll = function(){
 					<div class="floatwrap" id="floatwrap">
 				 		<div id="map-canvas">
 						</div>
-						<div id="schedule-info">
+						<div id="add-topic-info" class="hidden">
+							<span>更多信息</span>
+							<div id="schedule-info">
+								<img src= "/TicketSchedule/Picture/clock.jpg"></img>
+							</div>
+							<div id="bargin-info">
+								<img src= "/TicketSchedule/Picture/car.jpg"></img>
+								<span>有车</span>
+								<img src= "/TicketSchedule/Picture/passenger.jpg"></img>
+								<span>无车</span>
+								<img src= "/TicketSchedule/Picture/yuansign.jpg"></img>
+								<input value="15"/>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -418,7 +418,7 @@ window.onscroll = function(){
 					<button class="btn btn-primary" type="submit">Search</button>
 
 				
-				<%if (user.get_authLevel()>=4) {%>
+				<%if (user.get_authLevel()>=32) {%>
 				    <div class="sup_method">
 				    	<input type="checkbox" name = "innergroup"/>InnerGroup
 				    	<input type="checkbox" name = "listAll"/>ListAll
