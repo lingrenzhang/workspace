@@ -36,7 +36,7 @@
 
 <link rel="stylesheet" href="/TicketSchedule/bootstrap/css/bootstrap.css">
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
-<link href="/TicketSchedule/CSS/searchride.css" type="text/css" rel="stylesheet">
+<link href="/TicketSchedule/CSS/searchtransientride.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/custom_jqueryui.css" type="text/css" rel="stylesheet">
 
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
@@ -341,23 +341,25 @@ window.onscroll = function(){
 		if (trInfo.userType)
 		{
 			topicstring = topicstring + "<div class=\"passenger_box\"><p>";
-			topicstring = topicstring +"<span class=\"icon\"></span>";
-			topicstring = topicstring + trInfo.owner._givenname+" is a <strong>passenger</strong></p></div>";
+			topicstring = topicstring +"<span><img src='/TicketSchedule/Picture/nocar.jpg'/><br><span>";
+			topicstring = topicstring + trInfo.owner._givenname+"<br> <strong>不提供车</strong></p></div>";
 		}
 		else{
 			topicstring = topicstring + "<div class=\"price_box\"><div class=\"seats\">";
-			topicstring = topicstring +"<span class=\"count\">"+trInfo.totalSeats+"</span></div>";
-			topicstring = topicstring +"<p><b>"+trInfo.price + "</b> / seat</p></div>";
+			topicstring = topicstring +"<img src='/TicketSchedule/Picture/seats.jpg'/><span class='count'>"+trInfo.totalSeats+"</span></div>";
+			topicstring = topicstring +"<p><b>"+trInfo.price + "</b> / 座</p></div>";
 		}
 		
 		topicstring = topicstring + "<div class=\"userpic\">";
 		topicstring = topicstring + "<div class=\"username\">"+trInfo.owner._givenname+"</div>";
 		topicstring = topicstring + "<img src= \"/TicketSchedule/UserProfile/"+trInfo.owner._avatarID+"\" alt=\"Profile Picture\"></img>";
 		topicstring = topicstring + "<span class=\"passenger\"></span></div>";
-		topicstring = topicstring + "<div class=\"inner_content\"><h3>";
-		topicstring = topicstring + "<span class=\"inner\">"+"出发地："+trInfo.origLoc._addr+"<br>";
-		topicstring = topicstring + "目的地："+trInfo.destLoc._addr+"</span></h3>";
-	
+		topicstring = topicstring + "<div class=\"inner_content\"><h4>";
+		//topicstring = topicstring + "<span class=\"inner\">"+"出发地："+trInfo.origLoc._addr+"<br>";
+		//topicstring = topicstring + "目的地："+trInfo.destLoc._addr+"</span></h4>";
+		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_start.png\"/>"+"  出发地："+trInfo.origLoc._addr+"<br>";
+		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"  目的地："+trInfo.destLoc._addr+"<br>";
+		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/clock.jpg\"/ height='18' width='18' >"+" 出发时间："+trInfo.rideTime+"<br>";
 		topicstring = topicstring + "</div></div></a>";
 		return topicstring;
 	};
@@ -534,6 +536,8 @@ function onPublishValidate()
 								<img src= "/TicketSchedule/Picture/passenger.jpg"></img>
 								<span>无车</span>
 								<img src= "/TicketSchedule/Picture/yuansign.jpg"></img>
+								<input value="15"/>
+								<img src= "/TicketSchedule/Picture/seats.jpg"></img>
 								<input value="15"/>
 							</div>
 						</div>
