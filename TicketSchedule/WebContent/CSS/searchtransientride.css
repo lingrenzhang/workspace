@@ -5,7 +5,7 @@ margin-right: 10px;
 }
 
 #search_index #content #head form.search .text_input .pin.start, #search_routes #content #head form.search .text_input .pin.start {
-background-image: url(/TicketSchedule/Picture/pin_start.png);
+	background-image: url(/TicketSchedule/Picture/pin_start.png);
 }
 
 #search_index #content #head form.search .text_input .pin, #search_index #content #head form.search .text_input .datetime_icon, #search_routes #content #head form.search .text_input .pin, #search_routes #content #head form.search .text_input .datetime_icon {
@@ -48,7 +48,7 @@ width: 312px;
 
 
 #search_index #content #head form.search .text_input .pin.end, #search_routes #content #head form.search .text_input .pin.end {
-background-image: url(/TicketSchedule/Picture/pin_end.png);
+	background-image: url(/TicketSchedule/Picture/pin_end.png);
 }
 
 
@@ -138,5 +138,84 @@ margin-top: 20px;
 {
 font-size: 13px;
 color: #666;
-font-weight: 700;
+font-weight: 500;
+}
+
+select 
+{
+	width: 80px;
+	margin-top: 10px;
+}
+
+.slim select 
+{
+	width: 50px;
+}
+
+#seats 
+{
+	margin-top:10px;
+	width: 50px;
+}
+
+#price 
+{
+	margin-top:10px;
+	width: 50px;
+}
+
+#ride_time_hour
+{
+	width:60px;
+}
+
+#ride_time_minute
+{
+	width:60px;
+}
+
+.nav
+{
+	margin-bottom:0px;
+}
+#bargin-content
+{
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-left:13px;
+	border: 1px solid #ddd;
+	border-top:none;
+	
+	-webkit-border-radius: 0 0 4px 4px;
+	-moz-border-radius: 0 0 4px 4px;
+	border-radius: 0 0 4px 4px;
+}
+
+.panel {
+position:absolute;
+margin-top: 320px;
+width:320px;
+background-color: #fff;
+border: 1px solid;
+border-color: #ABBDB9;
+border-radius: 4px;
+-webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+
+.panel-body {
+padding: 5px 10px 5px 10px;
+}
+
+.panel>.panel-heading {
+color: #646464;
+background-color: #C5DAFF;
+border-color: #ABBDB9;
+}
+
+.panel-heading {
+padding: 4px 15px;
+border-bottom: 1px solid transparent;
+border-top-right-radius: 3px;
+border-top-left-radius: 3px;
 }

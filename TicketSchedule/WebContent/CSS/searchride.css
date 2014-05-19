@@ -48,7 +48,7 @@ width: 312px;
 
 
 #search_index #content #head form.search .text_input .pin.end, #search_routes #content #head form.search .text_input .pin.end {
-background-image: url(/TicketSchedule/Picture/pin_end.png);
+	background-image: url(/TicketSchedule/Picture/pin_end.png);
 }
 
 
@@ -133,3 +133,14 @@ margin-top: 20px;
 	right: 20px;
 	top: 25px;
 }
+
+
+.ride_list .entry .inner_content h4 {
+font-size: 12px;
+color: #999;
+font-weight: 400;
+}
+
+
+
+

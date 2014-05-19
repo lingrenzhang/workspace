@@ -701,7 +701,7 @@ $(document).ready(function(){
 		}
 	}
 </script>
-<title>Manage Ride</title>
+<title>管理行程</title>
 </head>
 <body>
 <div id="header_wrap">

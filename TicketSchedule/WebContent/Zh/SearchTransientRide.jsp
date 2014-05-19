@@ -110,7 +110,6 @@ $(document).ready(function(){
 		}, {timeout:2000});	//设置2秒超时
 	}
 
-
 	var map = new BMap.Map("map-canvas");
 	var point = new BMap.Point(nowLng,nowLat);
 	map.addControl(new BMap.NavigationControl());    
@@ -173,10 +172,12 @@ $(document).ready(function(){
 			destLng=document.getElementById("destLng").value;
 			if (destLat !="" && destLng!="")
 			{
-			  refit();
-			  //calculateDistances();
+				var oLatlng = new BMap.Point(origLng,origLat);
+				var dLatlng = new BMap.Point(destLng,destLat);
+				basicbounds= new BMap.Bounds(oLatlng,dLatlng);
+			  	refitb(basicbounds);
+			    calculateDistances();
 			}
-			
 		}
 		var local = new BMap.LocalSearch(map,{onSearchComplete : myFun});
 		local.search(myValue);
@@ -202,8 +203,11 @@ $(document).ready(function(){
 			origLng=document.getElementById("origLng").value;
 			if (origLat !="" && origLng!="")
 			{
-			  refit();
-			  //calculateDistances();
+				var oLatlng = new BMap.Point(origLng,origLat);
+				var dLatlng = new BMap.Point(destLng,destLat);
+				basicbounds= new BMap.Bounds(oLatlng,dLatlng);
+			 	refitb(basicbounds);
+			    calculateDistances();
 			}
 			
 		}
@@ -211,17 +215,6 @@ $(document).ready(function(){
 		local.search(myValue);
 	});
 	
-	function refit()
-	  {
-		  var oLatlng = new BMap.Point(origLng,origLat);
-		  var dLatlng = new BMap.Point(destLng,destLat);
-		  basicbounds= new BMap.Bounds(oLatlng,dLatlng);
-		  var range = Math.max(basicbounds.toSpan().lat,basicbounds.toSpan().lng);
-		  var zoomNum = Math.floor(9-Math.log(range)/Math.log(2));
-		  map.setCenter(basicbounds.getCenter());
-		  map.setZoom(zoomNum);
-		  
-	  }
 	function refitb(bounds)
 	{
 		 var range = Math.max(bounds.toSpan().lat,bounds.toSpan().lng);
@@ -230,6 +223,7 @@ $(document).ready(function(){
 		 map.setZoom(zoomNum);
 	}
 
+	//Use google api now. Change when required to.
 	function calculateDistances() {
 		var service = new google.maps.DistanceMatrixService();
 		var orig = new google.maps.LatLng(origLat,origLng);
@@ -251,6 +245,8 @@ $(document).ready(function(){
 	   } else {
 		    document.getElementById("distance").value =response.rows[0].elements[0].distance.value;
 		    document.getElementById("duration").value =response.rows[0].elements[0].duration.value;
+		    alert("distance:"+response.rows[0].elements[0].distance.value);
+		    alert("durantion:"+response.rows[0].elements[0].duration.value);
 	   }
 	}
 	  
@@ -284,7 +280,6 @@ $(document).ready(function(){
 		refitb(bounds);
 		map.addOverlay(tomarker);
 		map.addOverlay(tdmarker);
-		//loadSchedule(results[rank]);
 	},
 	function(){
 		/*
@@ -359,63 +354,47 @@ window.onscroll = function(){
 		//topicstring = topicstring + "目的地："+trInfo.destLoc._addr+"</span></h4>";
 		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_start.png\"/>"+"  出发地："+trInfo.origLoc._addr+"<br>";
 		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"  目的地："+trInfo.destLoc._addr+"<br>";
-		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/clock.jpg\"/ height='18' width='18' >"+" 出发时间："+trInfo.rideTime+"<br>";
+		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/clock_small.jpg\"/>"+" 出发时间："+trInfo.rideTime+"<br>";
 		topicstring = topicstring + "</div></div></a>";
 		return topicstring;
 	};
 	
-	function loadSchedule(topicInfo)
-	{
-		var schedule = "";
-		var ridesche = topicInfo.ownerRide._rideInfo.schedule;
-		if (ridesche._isCommute)
-		{
-			for (var i=0;i<7;i++)
-			{
-				 if (ridesche._dayOfWeek[i]){
-					 switch (i)
-					 {
-					 	case 1 : schedule = schedule + "Mon: ";
-					 		break;
-					 	case 2 : schedule = schedule + "Tue: ";
-					 		break;
-					 	case 3 : schedule = schedule + "Wed: ";
-					 		break;
-					 	case 4 : schedule = schedule + "Thu: ";
-					 		break;
-					 	case 5 : schedule = schedule + "Fri: ";
-				 			break;
-					 	case 6 : schedule = schedule + "Sat: ";
-				 			break;
-					 	case 0 : schedule = schedule + "Sun: ";
-				 			break;
-					 }
-					schedule = schedule + ridesche.cftime[i] + " " +  ridesche.cbtime[i] + "</br>";
-				 }
-				 
-			}
-		}
-		else
-		{
-			schedule = schedule + "Trip date: " + ridesche.tripDate + "</br>";
-			schedule = schedule + "Trip time: " + ridesche.tripTime;
-		}
-		
-		document.getElementById("schedule-info").innerHTML = schedule;
-		return schedule;
-	};
 </script>
 
 <script type="text/javascript">
 function publishRide()
 {
-	document.getElementById("add-topic-info").setAttribute("class", "");
+	if (origLat.value=="" ||destLat.value=="")
+	{
+		alert("先在搜索栏输入您的出发和目的地，并保证其位置显示在了地图上。然后在右下角输入具体信息。");
+		document.getElementById("topAnchor").click();
+	}
+	else
+	{
+		document.getElementById("search_s").setAttribute("value","");
+		document.getElementById("origLatP").setAttribute("value",origLat);
+		document.getElementById("origLngP").setAttribute("value",origLng);
+		document.getElementById("search_e").setAttribute("value","");
+		document.getElementById("destLatP").setAttribute("value",destLat);
+		document.getElementById("destLngP").setAttribute("value",destLng);
+		document.getElementById("distanceP").setAttribute("value","");
+		document.getElementById("durationP").setAttribute("value","");
+	}
+	
+	document.getElementById("add-topic-info").setAttribute("class", "panel");
 }
 function onPublishValidate()
 {
 	
 }
+function asDriver()
+{
+	
+}
 
+function asPassenger()
+{
+}
 </script>
 
 <title>临时拼车</title>
@@ -478,7 +457,6 @@ function onPublishValidate()
 			<div id="results">
 				<div class="ride_list">
 					<h3 id="headline" class="headline first"></h3>
-					</h3>
 					<div id="ride_content">
 					</div>
 					
@@ -488,10 +466,23 @@ function onPublishValidate()
 								<a href="">没有找到你要的临时拼车信息?						
 								</a>
 							</h2>
-							<p>发布你的临时拼车信息，其他人可以找到并加入你!							
+							<p>补充更多临时拼车信息并发布，其他人可以找到并加入你!							
 							</p>
 							<button id="createTopic" type="submit" class="button post" onclick="publishRide()">发布临时拼车</button>
 							
+							
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			
+			<div id="info">
+				<div class="floatable">
+					<div class="floatwrap" id="floatwrap">
+				 		<div id="map-canvas">
+						</div>
+						<div class="panel" id="additional-info">
 							<form method="post" action="/TicketSchedule/servlet/TransientRideCenter" onsubmit="return onPublishValidate()">	
 								<div class="geo_Pinternal" style="display:none">
 									<input id="search_s" name="s" value=""/>
@@ -512,33 +503,52 @@ function onPublishValidate()
 									<input id="totalSeatsP" name="totalSeats" value=""/>
 									<input id="payPerSeatP" name="payPerSeat" value=""/>
 								</div>
-								
 							</form>
-						</div>
-						
-					</div>
-				</div>
-			</div>
-			
-			<div id="info">
-				<div class="floatable">
-					<div class="floatwrap" id="floatwrap">
-				 		<div id="map-canvas">
-						</div>
-						<div id="add-topic-info" class="hidden">
-							<span>更多信息</span>
-							<div id="schedule-info">
-								<img src= "/TicketSchedule/Picture/clock.jpg"></img>
-							</div>
-							<div id="bargin-info">
-								<img src= "/TicketSchedule/Picture/car.jpg"></img>
-								<span>有车</span>
-								<img src= "/TicketSchedule/Picture/passenger.jpg"></img>
-								<span>无车</span>
-								<img src= "/TicketSchedule/Picture/yuansign.jpg"></img>
-								<input value="15"/>
-								<img src= "/TicketSchedule/Picture/seats.jpg"></img>
-								<input value="15"/>
+								<div class="panel-heading">在此输入补充信息</div>
+								<div class="panel-body">
+								<div id="bargin-info">
+								    <div class="tabbable tabs-top">
+				  						<ul class="nav nav-tabs">
+				  							<li class="active" id="asDriver"><a href="javascript: asDriver()"><img src= "/TicketSchedule/Picture/car.jpg"></img>有车</a></li>
+				  							<li id="asPassenger"><a href="javascript: asPassenger()"><img src= "/TicketSchedule/Picture/nocar.jpg"></img>无车</a></li>
+										</ul>
+									</div>
+									<div id="bargin-content">
+										<img src= "/TicketSchedule/Picture/seats.jpg"></img>
+										<input type="text" id="seats" value="3"/>
+		 								<img src= "/TicketSchedule/Picture/yuansign.jpg"></img>
+										<input type="text" id="price" value="15"/>
+									</div>
+								</div>
+								<div id="schedule-info">
+									<img src= "/TicketSchedule/Picture/clock.jpg"/>
+									<select name="ride_time_ap" id="ride_time_ap">
+										<option value="AM">上午</option>
+										<option value="PM">下午</option>
+									</select>
+									<select name="ride_time_hour" id="ride_time_hour" class="slim">
+						                  <option value="1">1</option>	
+						                  <option value="2">2</option>
+						                  <option value="3">3</option>
+						                  <option value="4">4</option>
+						                  <option value="5">5</option>
+						                  <option value="6">6</option>
+						                  <option value="7">7</option>
+						                  <option value="8">8</option>
+						                  <option value="9">9</option>
+						                  <option value="10">10</option>
+						                  <option value="11">11</option>
+						                  <option value="12">12</option>
+	    				            </select>点
+									<select name="ride_time_minute" id="ride_time_minute" class="slim">
+						                  <option value="00">00</option>	
+						                  <option value="10">10</option>
+						                  <option value="20">20</option>
+						                  <option value="30">30</option>
+						                  <option value="40">40</option>
+						                  <option value="50">50</option>
+						        	</select>分
+								</div>
 							</div>
 						</div>
 					</div>
@@ -598,6 +608,6 @@ function onPublishValidate()
  	</table>
 
  </div>
-
+<a class="hidden" id ="topAnchor" href="#"></a>
 </body>
 </html>
