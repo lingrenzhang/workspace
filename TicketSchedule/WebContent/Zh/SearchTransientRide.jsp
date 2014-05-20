@@ -13,7 +13,6 @@
 	boolean commute = true;
 %>
 <% 
-    
 	String IsLogin =(String) request.getSession().getAttribute("IsLogin");
 	User user;
 	if (IsLogin!= null)
@@ -118,14 +117,28 @@ $(document).ready(function(){
 	
 	var origLat="<%=tranRide==null?"":tranRide.origLoc.get_lat()%>";
 	var origLng="<%=tranRide==null?"":tranRide.origLoc.get_lon()%>";
+	var origAddr= "<%=(tranRide ==null) ? "12" : tranRide.origLoc._addr%>";
 	var destLat="<%=tranRide==null?"":tranRide.destLoc.get_lat()%>";
 	var destLng="<%=tranRide==null?"":tranRide.destLoc.get_lon()%>";
+	var destAddr= "<%=(tranRide ==null) ? "12" : tranRide.destLoc._addr%>";
+	document.getElementById("search_s").setAttribute("value",origAddr);
+	document.getElementById("search_e").setAttribute("value",destAddr);
+	
+	if (origAddr!="")
+	{
+		document.getElementById("search_s").setAttribute("placeholder",origAddr);
+	}
+	if (destAddr!="")
+	{
+		document.getElementById("search_e").setAttribute("placeholder",destAddr);
+	}
+	
 	var basicbounds = new BMap.Bounds();
 	
 	if (origLat!="" && origLng!="" && origLat!="" &&origLng!="")
 	{
-		var oLatlng = new BMap.Point(origLat,origLng);
-		var dLatlng = new Bmap.Point(destLat,destLng);
+		var oLatlng = new BMap.Point(origLng,origLat);
+		var dLatlng = new BMap.Point(destLng,destLat);
 		
 		omarker = new BMap.Marker(oLatlng);
 		map.addOverlay(omarker);
@@ -140,7 +153,7 @@ $(document).ready(function(){
 		
 		basicbounds.extend(oLatlng);
 		basicbounds.extend(dLatlng);
-		map.fitBounds(basicbounds);
+		refitb(basicbounds);
 	}
 	
    //orig = document.getElementById('search_s');
@@ -292,9 +305,8 @@ $(document).ready(function(){
 		/*
 		map.removeOverlay(tomarker);
 		map.removeOverlay(tdmarker);
-		//tomarker.setMap(null);
-		//tdmarker.setMap(null);
-		//refitb(basicbounds);
+		tomarker.setMap(null);
+		tdmarker.setMap(null);
 		if (basicbounds.toSpan().lat>0.005 || basicbounds.toSpan().lng>0.005)
 		{
 			refitb(basicbounds);
@@ -316,6 +328,7 @@ window.onscroll = function(){
     	div.className="floatwrap";
     }
 };
+
 </script>
 
 <script>
@@ -365,8 +378,8 @@ window.onscroll = function(){
 		topicstring = topicstring + "</div></div></a>";
 		return topicstring;
 	};
-	
 </script>
+
 
 <script type="text/javascript">
 function publishRide()
@@ -378,10 +391,10 @@ function publishRide()
 	}
 	else
 	{
-		document.getElementById("search_s").setAttribute("value","");
+		document.getElementById("search_sP").setAttribute("value","");
 		document.getElementById("origLatP").setAttribute("value",origLat);
 		document.getElementById("origLngP").setAttribute("value",origLng);
-		document.getElementById("search_e").setAttribute("value","");
+		document.getElementById("search_eP").setAttribute("value","");
 		document.getElementById("destLatP").setAttribute("value",destLat);
 		document.getElementById("destLngP").setAttribute("value",destLng);
 		//Set when initialized
@@ -391,6 +404,16 @@ function publishRide()
 	
 	document.getElementById("additional-info").setAttribute("class", "panel");
 }
+
+function onSearchValidate()
+{
+	if (document.getElementById("search_s").value=="" ||document.getElementById("search_e").value=="")
+	{
+		return false;
+	}
+	
+}
+
 function onPublishValidate()
 {
 	
@@ -440,18 +463,14 @@ function asPassenger()
 	<div id="content_container">
 		<div id="content">
 			<div id="head">
-				<form class="search" action="/TicketSchedule/servlet/SearchTransientRide" method="get" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
+				<form class="search" action="/TicketSchedule/servlet/SearchTransientRide" method="get" onkeypress="if(event.keyCode==13||event.which==13){return false;}" onSubmit = "return onSearchValidate()">
 					<div class="text_input">
 						<label class="pin start" for="search_s"></label>
-						<input id="search_s" class="input_text" type="text" 
-							placeholder="Starting from..." name="s" alt="search_start" 
-							autocomplete="off" value=<%=(tranRide ==null) ? "" : tranRide.origLoc._addr%>/>
+						<input id="search_s" class="input_text" type="text" placeholder="Starting from..." name="s" alt="search_start" value="" />
 					</div>
 					<div class="text_input">
 						<label class="pin end" for="search_e"></label>
-						<input id="search_e" class="input_text" type="text" 
-						placeholder="Going to..." name="e" alt="search_end" 
-						autocomplete="off" value=<%=(tranRide ==null) ? "" : tranRide.destLoc._addr%>/>
+						<input id="search_e" class="input_text" type="text" placeholder="Going to..." name="e" alt="search_end" value="" />
 					</div>
 					<div class="geo_internal" style="display:none">
 						<input id="origLat" name="origLat" value=""></input>
@@ -496,14 +515,14 @@ function asPassenger()
 						<div class="panel hidden" id="additional-info">
 							<form method="post" action="/TicketSchedule/servlet/TransientRideCenter" onsubmit="return onPublishValidate()">	
 								<div class="geo_Pinternal" style="display:none">
-									<input id="search_s" name="s" value=""/>
-									<input id="origLatP" name="origLat" value=""/>
-									<input id="origLngP" name="origLng" value=""/>
-									<input id="search_e" name="e" value=""/>
-									<input id="destLatP" name="destLat" value=""/>
-									<input id="destLngP" name="destLng" value=""/>
-									<input id="distanceP" name="distance" value=""/>
-									<input id="durationP" name="duration" value=""/>
+									<input id="search_sP" name="sP" value=""/>
+									<input id="origLatP" name="origLatP" value=""/>
+									<input id="origLngP" name="origLngP" value=""/>
+									<input id="search_eP" name="eP" value=""/>
+									<input id="destLatP" name="destLatP" value=""/>
+									<input id="destLngP" name="destLngP" value=""/>
+									<input id="distanceP" name="distanceP" value=""/>
+									<input id="durationP" name="durationP" value=""/>
 								</div>
 								<div class="schedule_Pinternal" style="display:none">
 									<input id="dateP" name="date" value=""/>
@@ -621,6 +640,6 @@ function asPassenger()
  	</table>
 
  </div>
-<a class="hidden" id ="topAnchor" href="#"></a>
+<!-- <a class="hidden" id ="topAnchor" href="#"></a> -->
 </body>
 </html>

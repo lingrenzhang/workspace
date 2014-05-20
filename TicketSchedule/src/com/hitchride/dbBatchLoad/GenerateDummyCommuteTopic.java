@@ -70,6 +70,8 @@ public class GenerateDummyCommuteTopic {
 			    ride.recordId = rid;
 			    OwnerRideInfo topicRide= new OwnerRideInfo(ride);
 			    TopicRideAccess.insertTopicRide(topicRide);
+			    Topic topic = new Topic(topicRide._recordId);
+			    TopicTbAccess.insertTopic(topic);
 			}
 			catch (JSONException e)
 			{

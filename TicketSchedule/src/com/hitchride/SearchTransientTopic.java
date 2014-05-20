@@ -51,6 +51,7 @@ public class SearchTransientTopic extends HttpServlet {
 		Environment.getEnv();
 		{
 			TransientRide actRide = null;
+
 			if (request.getQueryString()!=null)
 			{
 				QueryStringParser qsp = new QueryStringParser(request.getQueryString());
