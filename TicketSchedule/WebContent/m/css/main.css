@@ -1,0 +1,10 @@
+@CHARSET "UTF-8";
+
+.row {
+	max-width: 80rem;
+}
+
+.tab-bar .menu-icon
+{
+  width: auto; /* hack for menu icon bug */
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable = no" />
+<title>搭便车&nbsp;|&nbsp;登录</title>
+<link rel="stylesheet" href="css/foundation.css" />
+<link rel="stylesheet" href="foundation-icons/foundation-icons.css" />
+<link rel="stylesheet" href="css/main.css" />
+<script src="js/vendor/modernizr.js"></script>
+</head>
+<body>
+	<nav class="tab-bar">
+		<a href="#"><img
+			style="height: 36px; margin-top: -8px; margin-left: 2px;"
+			src="icon/har_logo_32_w.png" alt="Logo"></a>搭便车
+	</nav>
+	<section role="main" class="scroll-container">
+		<div class="row">
+			<h1>&nbsp;</h1>
+			<div class="small-2 large-4 medium-3 columns">&nbsp;</div>
+			<div id="main_div" class="small-8 large-4 medium-6  columns">
+				<form>
+					<div class="row">
+						<label>用户名 <input id="user_input" type="text"
+							placeholder="email地址" />
+						</label> <label>密码 <input id="passwd_input" type="password" />
+						</label>
+						<div class="row">
+							<div class="small-6 columns">
+								<a id="login" type="button" href="javascript: login()"
+									class="button small round">登录</a>
+							</div>
+							<div class="small-6 columns">
+								<a href="../Zh/register.jsp"
+									class="button small success round right">注册</a>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="small-2 large-4 medium-3 columns">&nbsp;</div>
+		</div>
+	</section>
+	<script src="js/vendor/jquery.js"></script>
+	<script src="js/foundation.min.js"></script>
+	<script>
+		$(document).foundation();
+	</script>
+	<script type="text/javascript">
+		function login() {
+			var user = $("#user_input")[0].value;
+			var passwd = $("#passwd_input")[0].value;
+			$("#login").addClass("disabled");
+			$.post(
+							"../servlet/mLogin",
+							{
+								email : user,
+								password : passwd
+							},
+							function(data) {
+								var result=JSON.parse(data);
+								if (result.status && result.status == "successful") {
+									window.location.assign(result.redirect);
+								} else {
+									$("#login").removeClass("disabled");
+									$("#main_div")
+											.prepend(
+													'<div data-alert class="alert-box round alert ">'
+															+ result.reason
+															+ '<a href="#" class="close">&times;</a></div>');
+									$(document).foundation();
+								}
+								console.log(result);
+							});
+
+		}
+	</script>
+</body>
+</html>

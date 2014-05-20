@@ -39,6 +39,7 @@ public class mLogin extends HttpServlet {
     class mLoginJson {
     	String status="failed";
     	String reason="";
+    	String redirect="";
     }
     
     /**
@@ -103,6 +104,7 @@ public class mLogin extends HttpServlet {
 					{
 					}
 					json.status="successful";
+					json.redirect="usercenter.html";
 				}
 				else
 				{
