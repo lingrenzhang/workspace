@@ -117,10 +117,10 @@ $(document).ready(function(){
 	
 	var origLat="<%=tranRide==null?"":tranRide.origLoc.get_lat()%>";
 	var origLng="<%=tranRide==null?"":tranRide.origLoc.get_lon()%>";
-	var origAddr= "<%=(tranRide ==null) ? "12" : tranRide.origLoc._addr%>";
+	var origAddr= "<%=(tranRide ==null) ? "" : tranRide.origLoc._addr%>";
 	var destLat="<%=tranRide==null?"":tranRide.destLoc.get_lat()%>";
 	var destLng="<%=tranRide==null?"":tranRide.destLoc.get_lon()%>";
-	var destAddr= "<%=(tranRide ==null) ? "12" : tranRide.destLoc._addr%>";
+	var destAddr= "<%=(tranRide ==null) ? "" : tranRide.destLoc._addr%>";
 	document.getElementById("search_s").setAttribute("value",origAddr);
 	document.getElementById("search_e").setAttribute("value",destAddr);
 	
@@ -260,8 +260,8 @@ $(document).ready(function(){
 		   var duration = response.rows[0].elements[0].duration.value;
 		    document.getElementById("distance").setAttribute("value",distance);
 		    document.getElementById("duration").setAttribute("value",duration);
-		    alert("distance:"+distance);
-		    alert("durantion:"+duration);
+		    //alert("distance:"+distance);
+		    //alert("durantion:"+duration);
 		    document.getElementById("distanceP").setAttribute("value",distance);
 		    document.getElementById("durationP").setAttribute("value",distance);
 		    
@@ -383,25 +383,25 @@ window.onscroll = function(){
 
 <script type="text/javascript">
 function publishRide()
-{
-	if (origLat.value=="" ||destLat.value=="")
 	{
-		alert("先在搜索栏输入您的出发和目的地，并保证其位置显示在了地图上。然后在右下角输入具体信息。");
-		document.getElementById("topAnchor").click();
-	}
-	else
-	{
-		document.getElementById("search_sP").setAttribute("value","");
-		document.getElementById("origLatP").setAttribute("value",origLat);
-		document.getElementById("origLngP").setAttribute("value",origLng);
-		document.getElementById("search_eP").setAttribute("value","");
-		document.getElementById("destLatP").setAttribute("value",destLat);
-		document.getElementById("destLngP").setAttribute("value",destLng);
-		//Set when initialized
-		//document.getElementById("distanceP").setAttribute("value","");
-		//document.getElementById("durationP").setAttribute("value","");
-	}
-	
+		if (document.getElementById("origLat") ||document.getElementById("destLat").value=="")
+		{
+			alert("先在搜索栏输入您的出发和目的地，并保证其位置显示在了地图上。然后在右下角输入具体信息。");
+			document.getElementById("topAnchor").click();
+
+		}
+		else
+		{
+			document.getElementById("search_sP").setAttribute("value","");
+			document.getElementById("origLatP").setAttribute("value",origLat);
+			document.getElementById("origLngP").setAttribute("value",origLng);
+			document.getElementById("search_eP").setAttribute("value","");
+			document.getElementById("destLatP").setAttribute("value",destLat);
+			document.getElementById("destLngP").setAttribute("value",destLng);
+			//Set when initialized
+			//document.getElementById("distanceP").setAttribute("value","");
+			//document.getElementById("durationP").setAttribute("value","");
+		}
 	document.getElementById("additional-info").setAttribute("class", "panel");
 }
 
@@ -419,6 +419,11 @@ function onPublishValidate()
 	
 }
 
+function initCurrentTime()
+{
+	var myDate= new Date();
+	document.getElementById()
+}
 
 function asDriver()
 {
@@ -533,21 +538,22 @@ function asPassenger()
 									<input id="totalSeatsP" name="totalSeats" value=""/>
 									<input id="payPerSeatP" name="payPerSeat" value=""/>
 								</div>
+								<button type="submit" id="internalSub"></button>
 							</form>
 								<div class="panel-heading">在此输入补充信息</div>
 								<div class="panel-body">
 									<div class="tabbable tabs-top">
 					  					<ul class="nav nav-tabs">
-					  						<li class="active" id="asDriver"><a href="javascript: asDriver()"><img src= "/TicketSchedule/Picture/car.jpg"></img>有车</a></li>
-					  						<li id="asPassenger"><a href="javascript: asPassenger()"><img src= "/TicketSchedule/Picture/nocar.jpg"></img>无车</a></li>
+					  						<li class="" id="asDriver"><a href="javascript: asDriver()"><img src= "/TicketSchedule/Picture/car.jpg"></img>有车</a></li>
+					  						<li class="active" id="asPassenger"><a href="javascript: asPassenger()"><img src= "/TicketSchedule/Picture/nocar.jpg"></img>无车</a></li>
 										</ul>
 									</div>
 									<div id="bargin-content">
-										<div id="seats-content" class="">
+										<div id="seats-content" style="display:none">
 											<img src= "/TicketSchedule/Picture/seats.jpg"></img>
 											<input type="text" id="seats" value="3"/>
 										</div>
-										<div id="price-content" class="">
+										<div id="price-content" >
 			 								<img src= "/TicketSchedule/Picture/yuansign.jpg"></img>
 											<input type="text" id="price" value="15"/>
 										</div>
@@ -580,6 +586,9 @@ function asPassenger()
 							                  <option value="40">40</option>
 							                  <option value="50">50</option>
 							        	</select>分
+									</div>
+									<div>
+										<button id="publishTopic" type="submit" class="button post" onclick="publishRide()">发布</button>
 									</div>
 								</div>
 						</div>
@@ -638,8 +647,7 @@ function asPassenger()
  		<tbody>
  		</tbody>
  	</table>
-
  </div>
-<!-- <a class="hidden" id ="topAnchor" href="#"></a> -->
+	<a class="hidden" id ="topAnchor" href="#"></a> 
 </body>
 </html>

@@ -151,8 +151,6 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffefb9, endCol
 
 
 
-
-
 .ride_list .entry {
 padding: 12px;
 overflow: hidden;
@@ -264,7 +262,7 @@ border-radius: 4px;
 }
 
 .userpic .username {
-background: #000;
+background: #666;
 background-color: rgba(0,0,0,0.5);
 color: #fff;
 position: absolute;

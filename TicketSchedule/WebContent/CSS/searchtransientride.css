@@ -85,14 +85,15 @@ background-color: #fcfcfc;
 
 #search_index #content #results h3.headline, #search_routes #content #results h3.headline {
 height: 30px;
-color: #777;
 text-shadow: 0 1px 0 #eee;
 line-height: 30px;
 padding: 0 14px;
 font-weight: 500;
 font-size: 1.17em;
 border-bottom: 1px solid #aab0b3;
-background-color: rgba(186, 227, 255, 0.4);
+color: #646464;
+background-color: #CCDDFF;
+border-color: #ABBDB9;
 }
 
 
@@ -229,4 +230,11 @@ border-top-left-radius: 3px;
 #price-content
 {
 	display: inline;
+}
+
+#publishTopic
+{
+	position: absolute;
+	right: 20px;
+	top: 40px;
 }
