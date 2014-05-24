@@ -24,6 +24,25 @@ function getJson(url)
 	return xmlhttp.responseText;
 }
 
+
+//Return null for not found.
+function getURLPara(key)
+{
+	var value;
+	var url = document.location.href;	
+	var reg = new RegExp("(?:"+key+"\=)(\\w+)(?:&*)");
+	value = reg.exec(url);
+	if (value!=null)
+	{
+		return value[1];
+	}
+	else
+	{
+		return null;
+	}
+}
+
+
 function formatDateSwitch(count)
 {
 	switch (count)
