@@ -35,7 +35,6 @@ display:block;
 text-indent:-99999px;
 overflow:hidden;
 background-repeat:no-repeat;
-width:16px;
 }
 .ui-datepicker-header {
 position:relative;
@@ -135,11 +134,11 @@ background:#4978a6;
 }
 .ui-icon-circle-triangle-e {
 -webkit-border-radius:10px;
-background-image:url(/assets/tiny-white-arrow.png);
-background-position:4px 4px;
+background-image:url(/TicketSchedule/Picture/tiny-left-arrow.jpg);
+background-position:0px 0px;
 }
 .ui-icon-circle-triangle-w {
 -webkit-border-radius:10px;
-background-image:url(/assets/tiny-white-arrow-left.png);
-background-position:4px 4px;
+background-image:url(/TicketSchedule/Picture/tiny-right-arrow.jpg);
+background-position:0px 0px;
 }

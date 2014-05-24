@@ -47,27 +47,30 @@
 </script>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=Mto5Y3Pq2fgwkY2Kt9n60bWl"></script>
 <script type="text/javascript">
+
+//Display Related
+var torigLat, torigLng, tdestLat, tdestLng;
+var tomarker,tdmarker;
+var map;
+var basicbounds;
+
+var images = new BMap.Icon
+("/TicketSchedule/Picture/pin_start.png",
+new BMap.Size(71, 71),{
+anchor: new BMap.Size(8, 16),
+//imageOffset: new google.maps.Point(0, 0)
+});
+var imagee = new BMap.Icon
+("/TicketSchedule/Picture/pin_end.png",
+new BMap.Size(71, 71),{
+anchor: new BMap.Size(8, 16),
+//imageOffset: new google.maps.Point(0, 0)
+});
+
 $(document).ready(function(){
 	initCalandar();
 	document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
 	document.getElementById("headline").innerHTML="今日出发：<span>"+ new Date().toDateString() +"</span>";
-
-	//Display Related
-	var torigLat, torigLng, tdestLat, tdestLng;
-	var tomarker,tdmarker;
-	
-	var images = new BMap.Icon
-		    ("/TicketSchedule/Picture/pin_start.png",
-	        new BMap.Size(71, 71),{
-	        anchor: new BMap.Size(8, 16),
-	        //imageOffset: new google.maps.Point(0, 0)
-		  });
-	var imagee = new BMap.Icon
-		    ("/TicketSchedule/Picture/pin_end.png",
-	        new BMap.Size(71, 71),{
-	        anchor: new BMap.Size(8, 16),
-	        //imageOffset: new google.maps.Point(0, 0)
-		  });
 	
 	//Search box realted
 	var searchBoxO;
@@ -109,7 +112,7 @@ $(document).ready(function(){
 		}, {timeout:2000});	//设置2秒超时
 	}
 
-	var map = new BMap.Map("map-canvas");
+	map = new BMap.Map("map-canvas");
 	var point = new BMap.Point(nowLng,nowLat);
 	map.addControl(new BMap.NavigationControl());    
 	map.addControl(new BMap.ScaleControl());
@@ -133,7 +136,7 @@ $(document).ready(function(){
 		document.getElementById("search_e").setAttribute("placeholder",destAddr);
 	}
 	
-	var basicbounds = new BMap.Bounds();
+	basicbounds = new BMap.Bounds();
 	
 	if (origLat!="" && origLng!="" && origLat!="" &&origLng!="")
 	{
@@ -228,13 +231,7 @@ $(document).ready(function(){
 		local.search(myValue);
 	});
 	
-	function refitb(bounds)
-	{
-		 var range = Math.max(bounds.toSpan().lat,bounds.toSpan().lng);
-		 var zoomNum = Math.floor(9-Math.log(range)/Math.log(2));
-		 map.setCenter(bounds.getCenter());
-		 map.setZoom(zoomNum);
-	}
+	
 
 	//Use google api now. Change when required to.
 	function calculateDistances() {
@@ -260,8 +257,6 @@ $(document).ready(function(){
 		   var duration = response.rows[0].elements[0].duration.value;
 		    document.getElementById("distance").setAttribute("value",distance);
 		    document.getElementById("duration").setAttribute("value",duration);
-		    //alert("distance:"+distance);
-		    //alert("durantion:"+duration);
 		    document.getElementById("distanceP").setAttribute("value",distance);
 		    document.getElementById("durationP").setAttribute("value",distance);
 		    
@@ -270,10 +265,42 @@ $(document).ready(function(){
 	   }
 	}
 	  
+	search();
+});
 
-	var results = JSON.parse(getJson("/TicketSchedule/servlet/SearchTransientTopic"));
-	listResults(results);
-	$(".entry").hover(function(){
+		
+window.onscroll = function(){
+    var t = document.documentElement.scrollTop || document.body.scrollTop; 
+    
+    if( t >= 180 ) {
+    	var div = document.getElementById("floatwrap");
+    	div.className="floatwrap fixed";
+    } else {
+    	var div = document.getElementById("floatwrap");
+    	div.className="floatwrap";
+    }
+};
+
+function search()
+{
+	var origAddr =document.getElementById("search_s").value;
+	var origLat = document.getElementById("origLat").value;
+	var origLng = document.getElementById("origLng").value;
+	var destAddr = document.getElementById("search_e").value;
+	var destLat = document.getElementById("destLat").value;
+	var destLng = document.getElementById("destLng").value;
+	var distance = document.getElementById("distance").value;
+	var duration = document.getElementById("duration").value;
+	var date = document.getElementById("search_date").value;
+	var queryURL = "/TicketSchedule/servlet/SearchTransientTopic";
+	queryURL = queryURL+"?s="+origAddr+"&origLat="+origLat+"&origLng="+origLng;
+	queryURL = queryURL+"&e="+destAddr+"&destLat="+destLat+"&destLng="+destLng;
+	queryURL = queryURL+"&distance="+distance+"&duration"+duration;
+	queryURL = queryURL+"&date="+date;
+	document.getElementById("headline").innerHTML="<span>出发日："+date+"</span>";
+    var results = JSON.parse(getJson(queryURL));
+    listResults(results);
+    $(".entry").hover(function(){
 		torigLat = $(this)[0].getAttribute("origLat");
 		torigLng = $(this)[0].getAttribute("origLng");
 		tdestLat = $(this)[0].getAttribute("destLat");
@@ -300,35 +327,16 @@ $(document).ready(function(){
 		refitb(bounds);
 		map.addOverlay(tomarker);
 		map.addOverlay(tdmarker);
-	},
-	function(){
-		/*
-		map.removeOverlay(tomarker);
-		map.removeOverlay(tdmarker);
-		tomarker.setMap(null);
-		tdmarker.setMap(null);
-		if (basicbounds.toSpan().lat>0.005 || basicbounds.toSpan().lng>0.005)
-		{
-			refitb(basicbounds);
-		}
-		*/
 	});
-	
-});
+}
 
-		
-window.onscroll = function(){
-    var t = document.documentElement.scrollTop || document.body.scrollTop; 
-    
-    if( t >= 180 ) {
-    	var div = document.getElementById("floatwrap");
-    	div.className="floatwrap fixed";
-    } else {
-    	var div = document.getElementById("floatwrap");
-    	div.className="floatwrap";
-    }
-};
-
+function refitb(bounds)
+{
+	 var range = Math.max(bounds.toSpan().lat,bounds.toSpan().lng);
+	 var zoomNum = Math.floor(9-Math.log(range)/Math.log(2));
+	 map.setCenter(bounds.getCenter());
+	 map.setZoom(zoomNum);
+}
 </script>
 
 <script>
@@ -422,7 +430,7 @@ function onPublishValidate()
 function initCurrentTime()
 {
 	var myDate= new Date();
-	document.getElementById()
+	document.getElementById();
 }
 
 function asDriver()
@@ -438,6 +446,8 @@ function asPassenger()
 	document.getElementById("asPassenger").setAttribute("class","active");
 	document.getElementById("seats-content").style.display="none";
 }
+
+
 </script>
 
 <title>临时拼车</title>
@@ -468,7 +478,7 @@ function asPassenger()
 	<div id="content_container">
 		<div id="content">
 			<div id="head">
-				<form class="search" action="/TicketSchedule/servlet/SearchTransientRide" method="get" onkeypress="if(event.keyCode==13||event.which==13){return false;}" onSubmit = "return onSearchValidate()">
+				<div class="search">
 					<div class="text_input">
 						<label class="pin start" for="search_s"></label>
 						<input id="search_s" class="input_text" type="text" placeholder="Starting from..." name="s" alt="search_start" value="" />
@@ -489,9 +499,8 @@ function asPassenger()
 						<label class="datetime_icon" for="search_date"></label>
 						<input id="search_date" class="slim datepicker hasDatepicker" type="text" value="exp" name="date">
 					</div>
-					
-					<button class="btn btn-primary" type="submit">查找</button>
-				</form>
+					<button class="btn btn-primary" type="submit" onclick="search()">查找</button>
+				</div>
 			</div>
 			<div id="results">
 				<div class="ride_list">
@@ -607,7 +616,7 @@ function asPassenger()
  style="position: absolute; z-index:1;display:none;">
  	<div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all">
 		<a class="ui-datepicker-prev ui-corner-all" onclick="prevMonth()" title="Prev">
-			<span class="ui-icon ui-icon-circle-triangle-w">Prev</span>
+			<span class="ui-icon ui-icon-circle-triangle-e">Prev</span>
 		</a>
  		<a class="ui-datepicker-next ui-corner-all" onclick="nextMonth()" title="Next">
  			<span class="ui-icon ui-icon-circle-triangle-w">Next</span>

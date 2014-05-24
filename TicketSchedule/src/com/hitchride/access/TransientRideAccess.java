@@ -194,7 +194,7 @@ public class TransientRideAccess {
 				objConn = getConnection();
 			} 
 			sql=objConn.createStatement();
-			ResultSet riders = (ResultSet) sql.executeQuery("select * from TransientRide where rideDate=\""+date+"\"");
+			ResultSet riders = (ResultSet) sql.executeQuery("select * from TransientRide where rideDate=\""+date+"\" order by ridetime");
 			int i=0;
 			while (riders.next() && i<100)
 			{

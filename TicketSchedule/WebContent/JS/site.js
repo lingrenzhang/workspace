@@ -23,3 +23,14 @@ function getJson(url)
 	xmlhttp.send();
 	return xmlhttp.responseText;
 }
+
+function formatDateSwitch(count)
+{
+	switch (count)
+	{
+		case 1: //from MM/DD/YYYY to Day Mon DD YYYY
+			
+			break;
+	}
+	
+}

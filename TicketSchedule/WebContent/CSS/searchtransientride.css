@@ -1,14 +1,14 @@
-form.search .text_input {
+.search .text_input {
 position: relative;
 float: left;
 margin-right: 10px;
 }
 
-#search_index #content #head form.search .text_input .pin.start, #search_routes #content #head form.search .text_input .pin.start {
+#search_index #content #head .search .text_input .pin.start, #search_routes #content #head .search .text_input .pin.start {
 	background-image: url(/TicketSchedule/Picture/pin_start.png);
 }
 
-#search_index #content #head form.search .text_input .pin, #search_index #content #head form.search .text_input .datetime_icon, #search_routes #content #head form.search .text_input .pin, #search_routes #content #head form.search .text_input .datetime_icon {
+#search_index #content #head .search .text_input .pin, #search_index #content #head .search .text_input .datetime_icon, #search_routes #content #head .search .text_input .pin, #search_routes #content #head .search .text_input .datetime_icon {
 background-position: center 7px;
 background-repeat: no-repeat;
 display: block;
@@ -19,7 +19,7 @@ top: 1px;
 width: 16px;
 }
 
-#search_index #content #head form.search .text_input input[type="text"], #search_routes #content #head form.search .text_input input[type="text"] {
+#search_index #content #head .search .text_input input[type="text"], #search_routes #content #head .search .text_input input[type="text"] {
 height: 21px;
 padding-left: 27px;
 width: 312px;
@@ -47,19 +47,19 @@ width: 312px;
 }
 
 
-#search_index #content #head form.search .text_input .pin.end, #search_routes #content #head form.search .text_input .pin.end {
+#search_index #content #head .search .text_input .pin.end, #search_routes #content #head .search .text_input .pin.end {
 	background-image: url(/TicketSchedule/Picture/pin_end.png);
 }
 
 
-#search_index #content #head form.search .text_input.datetime .slim.datepicker, #search_routes #content #head form.search .text_input.datetime .slim.datepicker {
+#search_index #content #head .search .text_input.datetime .slim.datepicker, #search_routes #content #head .search .text_input.datetime .slim.datepicker {
 font-size: 13px !important;
 }
-#search_index #content #head form.search .text_input.datetime input[type="text"], #search_routes #content #head form.search .text_input.datetime input[type="text"] {
+#search_index #content #head .search .text_input.datetime input[type="text"], #search_routes #content #head .search .text_input.datetime input[type="text"] {
 width: 69px;
 }
 
-#search_index #content #head form.search .text_input .datetime_icon, #search_routes #content #head form.search .text_input .datetime_icon {
+#search_index #content #head .search .text_input .datetime_icon, #search_routes #content #head .search .text_input .datetime_icon {
 background-image: url("/TicketSchedule/Picture/calendar_input_icon.png");
 width: 15px;
 }

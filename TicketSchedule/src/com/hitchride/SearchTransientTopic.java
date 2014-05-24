@@ -50,28 +50,41 @@ public class SearchTransientTopic extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Environment.getEnv();
 		{
-			TransientRide actRide = null;
-
 			if (request.getQueryString()!=null)
 			{
-				QueryStringParser qsp = new QueryStringParser(request.getQueryString());
-				if (qsp.getString("trid")!=null)
+				try
 				{
-					int trid = qsp.getInt("trid");
-					request.getSession().setAttribute("actTrid", trid);
+					String date = request.getParameter("date");
+					Date sdate = TimeFormatHelper.setDate(date);
+					List<TransientRide> resultList = TransientRideAccess.listTransisentRideByGroupId(1, sdate);
+					
+					JsonHelper jsonhelp = new JsonHelper();
+					String tridesJson = jsonhelp.toJson(resultList);
+					//System.out.println(topicsJson);
+					response.setContentType("text/html; charset=UTF-8");
+					response.getWriter().write(tridesJson);
+				
+				}
+				catch(Exception e)
+				{
+					System.out.println("Not proper structure of query.");
+					response.setContentType("text/html; charset=UTF-8");
+					response.sendError(406);
 				}
 			}
-			
-			java.util.Date dateh = new java.util.Date();
-			Time time = new Time(dateh.getTime());
-			Date date = new Date(dateh.getTime());
-			List<TransientRide> resultList = TransientRideAccess.listTransisentRideByGroupId(1, date);
-			
-			JsonHelper jsonhelp = new JsonHelper();
-			String tridesJson = jsonhelp.toJson(resultList);
-			//System.out.println(topicsJson);
-			response.setContentType("text/html; charset=UTF-8");
-			response.getWriter().write(tridesJson);
+			else
+			{
+				java.util.Date dateh = new java.util.Date();
+				Time time = new Time(dateh.getTime());
+				Date date = new Date(dateh.getTime());
+				List<TransientRide> resultList = TransientRideAccess.listTransisentRideByGroupId(1, date);
+				
+				JsonHelper jsonhelp = new JsonHelper();
+				String tridesJson = jsonhelp.toJson(resultList);
+				//System.out.println(topicsJson);
+				response.setContentType("text/html; charset=UTF-8");
+				response.getWriter().write(tridesJson);
+			}
 		}	
 	}
 
