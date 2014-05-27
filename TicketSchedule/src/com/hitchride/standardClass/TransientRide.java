@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Date;
 
+import com.hitchride.access.TopicRideAccess;
+import com.hitchride.access.TransientRideAccess;
 import com.hitchride.global.AllUsers;
 import com.mysql.jdbc.ResultSet;
 
@@ -91,8 +93,16 @@ public class TransientRide implements PersistentStorage{
   	
 	@Override
 	public void insertToDB() {
-		// TODO Auto-generated method stub
-		
+		int rows = TransientRideAccess.insertTransientRideInfo(this);
+		if (rows == 0)
+		{
+			System.out.println("Insert failed for topicride: "+ this.transientRideId + " attempting update.");
+			rows = TransientRideAccess.updateTransientRide(this);
+			if (rows== 0)
+			{
+				System.out.println("Update also failed for topicride: "+this.transientRideId + " Please check DB integrity.");
+			}
+		}
 	}
 
 	@Override

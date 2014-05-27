@@ -116,7 +116,7 @@ window.onclick = function(e){
   	   datepicker.css({"display":"none"});
   	   mapcanvas.css({"display":""});
 	}
-}
+};
 
 function nextMonth()
 {

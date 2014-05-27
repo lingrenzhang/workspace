@@ -47,6 +47,12 @@
 </script>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=Mto5Y3Pq2fgwkY2Kt9n60bWl"></script>
 <script type="text/javascript">
+//New Topic Related
+var origLat,origLng,destLat,destLng;
+var origAddr,destAddr;
+var distance,duration;
+var date;
+
 
 //Display Related
 var torigLat, torigLng, tdestLat, tdestLng;
@@ -70,6 +76,7 @@ anchor: new BMap.Size(8, 16),
 $(document).ready(function(){
 	initCalandar();
 	document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
+	date=document.getElementById("search_date").value;
 	document.getElementById("headline").innerHTML="今日出发：<span>"+ new Date().toDateString() +"</span>";
 	
 	//Search box realted
@@ -118,12 +125,12 @@ $(document).ready(function(){
 	map.addControl(new BMap.ScaleControl());
 	map.centerAndZoom(point,15);
 	
-	var origLat="<%=tranRide==null?"":tranRide.origLoc.get_lat()%>";
-	var origLng="<%=tranRide==null?"":tranRide.origLoc.get_lon()%>";
-	var origAddr= "<%=(tranRide ==null) ? "" : tranRide.origLoc._addr%>";
-	var destLat="<%=tranRide==null?"":tranRide.destLoc.get_lat()%>";
-	var destLng="<%=tranRide==null?"":tranRide.destLoc.get_lon()%>";
-	var destAddr= "<%=(tranRide ==null) ? "" : tranRide.destLoc._addr%>";
+	origLat="<%=tranRide==null?"":tranRide.origLoc.get_lat()%>";
+	origLng="<%=tranRide==null?"":tranRide.origLoc.get_lon()%>";
+	origAddr= "<%=(tranRide ==null) ? "" : tranRide.origLoc._addr%>";
+	destLat="<%=tranRide==null?"":tranRide.destLoc.get_lat()%>";
+	destLng="<%=tranRide==null?"":tranRide.destLoc.get_lon()%>";
+	destAddr= "<%=(tranRide ==null) ? "" : tranRide.destLoc._addr%>";
 	document.getElementById("search_s").setAttribute("value",origAddr);
 	document.getElementById("search_e").setAttribute("value",destAddr);
 	
@@ -253,12 +260,10 @@ $(document).ready(function(){
 	  if (status != google.maps.DistanceMatrixStatus.OK) {
 	    alert('Error was: ' + status);
 	   } else {
-		   var distance = response.rows[0].elements[0].distance.value;
-		   var duration = response.rows[0].elements[0].duration.value;
+		   distance = response.rows[0].elements[0].distance.value;
+		   duration = response.rows[0].elements[0].duration.value;
 		    document.getElementById("distance").setAttribute("value",distance);
 		    document.getElementById("duration").setAttribute("value",duration);
-		    document.getElementById("distanceP").setAttribute("value",distance);
-		    document.getElementById("durationP").setAttribute("value",distance);
 		    
 		    var price = Math.floor(distance/1200);
 		    document.getElementById("price").setAttribute("value",price);
@@ -283,15 +288,15 @@ window.onscroll = function(){
 
 function search()
 {
-	var origAddr =document.getElementById("search_s").value;
-	var origLat = document.getElementById("origLat").value;
-	var origLng = document.getElementById("origLng").value;
-	var destAddr = document.getElementById("search_e").value;
-	var destLat = document.getElementById("destLat").value;
-	var destLng = document.getElementById("destLng").value;
-	var distance = document.getElementById("distance").value;
-	var duration = document.getElementById("duration").value;
-	var date = document.getElementById("search_date").value;
+	origAddr =document.getElementById("search_s").value;
+	origLat = document.getElementById("origLat").value;
+	origLng = document.getElementById("origLng").value;
+	destAddr = document.getElementById("search_e").value;
+	destLat = document.getElementById("destLat").value;
+	destLng = document.getElementById("destLng").value;
+	distance = document.getElementById("distance").value;
+	duration = document.getElementById("duration").value;
+	date = document.getElementById("search_date").value;
 	var queryURL = "/TicketSchedule/servlet/SearchTransientTopic";
 	queryURL = queryURL+"?s="+origAddr+"&origLat="+origLat+"&origLng="+origLng;
 	queryURL = queryURL+"&e="+destAddr+"&destLat="+destLat+"&destLng="+destLng;
@@ -354,7 +359,7 @@ function refitb(bounds)
 	function getTransientRide(trInfo,rank)
 	{
 		var topicstring="";
-		topicstring = topicstring + "<a href=\"./TransientTopic?trId="+trInfo.transientRideId +"&type=commute\">";
+		topicstring = topicstring + "<a href=\"./TransientTopic.jsp?trId="+trInfo.transientRideId +"\">";
 		topicstring = topicstring + "<div class=\"entry\" origLat="+trInfo.origLoc._lat+" ";
 		topicstring = topicstring + "origLng=" +  trInfo.origLoc._lon+" ";
 		topicstring = topicstring + "destLat=" +  trInfo.destLoc._lat+" ";
@@ -391,41 +396,48 @@ function refitb(bounds)
 
 <script type="text/javascript">
 function publishRide()
-	{
-		if (document.getElementById("origLat") ||document.getElementById("destLat").value=="")
-		{
-			alert("先在搜索栏输入您的出发和目的地，并保证其位置显示在了地图上。然后在右下角输入具体信息。");
-			document.getElementById("topAnchor").click();
-
-		}
-		else
-		{
-			document.getElementById("search_sP").setAttribute("value","");
-			document.getElementById("origLatP").setAttribute("value",origLat);
-			document.getElementById("origLngP").setAttribute("value",origLng);
-			document.getElementById("search_eP").setAttribute("value","");
-			document.getElementById("destLatP").setAttribute("value",destLat);
-			document.getElementById("destLngP").setAttribute("value",destLng);
-			//Set when initialized
-			//document.getElementById("distanceP").setAttribute("value","");
-			//document.getElementById("durationP").setAttribute("value","");
-		}
-	document.getElementById("additional-info").setAttribute("class", "panel");
-}
-
-function onSearchValidate()
 {
-	if (document.getElementById("search_s").value=="" ||document.getElementById("search_e").value=="")
+	if (onPublishValidate())
+	{
+		var queryURL = "/TicketSchedule/servlet/SearchTransientRide";
+		queryURL = queryURL+"?s="+document.getElementById("search_s").value;
+		queryURL = queryURL+"&origLat="+origLat;
+		queryURL = queryURL+"&origLng="+origLng;
+		queryURL = queryURL+"&e="+document.getElementById("search_e").value;
+		queryURL = queryURL+"&destLat="+destLat;
+		queryURL = queryURL+"&destLng="+destLng;
+		queryURL = queryURL+"&distance="+distance;
+		queryURL = queryURL+"&duration="+duration;
+		date = document.getElementById("search_date").value;
+		queryURL = queryURL+"&date="+date;
+		var tranid = getJson(queryURL);
+		window.location.href = "/TicketSchedule/Zh/TransientTopic.jsp?trId="+tranid;
+	}
+	else
 	{
 		return false;
 	}
-	
 }
 
 function onPublishValidate()
 {
-	
+	if (document.getElementById("origLat").value=="" ||document.getElementById("destLat").value=="")
+	{
+		alert("先在搜索栏输入您的出发和目的地，并保证其位置显示在了地图上。然后在右下角输入具体信息。");
+		document.getElementById("topAnchor").click();
+		document.getElementById("additional-info").setAttribute("class", "panel");
+		return false;
+	}
+	if (document.getElementById("additional-info").getAttribute("class")=="panel hidden")
+	{
+		document.getElementById("additional-info").setAttribute("class","panel");
+		return false;
+	}
+	//More input validation here
+	return true;
 }
+
+
 
 function initCurrentTime()
 {
@@ -527,29 +539,7 @@ function asPassenger()
 				 		<div id="map-canvas">
 						</div>
 						<div class="panel hidden" id="additional-info">
-							<form method="post" action="/TicketSchedule/servlet/TransientRideCenter" onsubmit="return onPublishValidate()">	
-								<div class="geo_Pinternal" style="display:none">
-									<input id="search_sP" name="sP" value=""/>
-									<input id="origLatP" name="origLatP" value=""/>
-									<input id="origLngP" name="origLngP" value=""/>
-									<input id="search_eP" name="eP" value=""/>
-									<input id="destLatP" name="destLatP" value=""/>
-									<input id="destLngP" name="destLngP" value=""/>
-									<input id="distanceP" name="distanceP" value=""/>
-									<input id="durationP" name="durationP" value=""/>
-								</div>
-								<div class="schedule_Pinternal" style="display:none">
-									<input id="dateP" name="date" value=""/>
-									<input id="timeP" name="time" value=""/>
-								</div>
-								<div class="bargin_Pinternal" style="display:none">
-									<input id="userTypeP" name="userTypeP" value=""/>
-									<input id="totalSeatsP" name="totalSeats" value=""/>
-									<input id="payPerSeatP" name="payPerSeat" value=""/>
-								</div>
-								<button type="submit" id="internalSub"></button>
-							</form>
-								<div class="panel-heading">在此输入补充信息</div>
+							<div class="panel-heading">在此输入补充信息</div>
 								<div class="panel-body">
 									<div class="tabbable tabs-top">
 					  					<ul class="nav nav-tabs">

@@ -124,5 +124,4 @@ public class TransientRideCenter extends HttpServlet {
 			response.sendRedirect("/TicketSchedule/servlet/TransientRideCenter?transientRideId="+ride.recordId);
 		}
 	}
-
 }
