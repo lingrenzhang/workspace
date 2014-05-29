@@ -7,7 +7,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.Time;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,20 +14,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.hitchride.access.TransientRideAccess;
-import com.hitchride.global.AllRides;
 import com.hitchride.global.Environment;
 import com.hitchride.standardClass.GeoInfo;
-import com.hitchride.standardClass.RideInfo;
-import com.hitchride.standardClass.Schedule;
 import com.hitchride.standardClass.TransientRide;
+import com.hitchride.standardClass.TransientTopic;
 import com.hitchride.standardClass.User;
-import com.hitchride.util.JsonHelper;
-import com.hitchride.util.QueryStringParser;
 import com.hitchride.util.TimeFormatHelper;
 
 /**
@@ -115,6 +105,8 @@ public class SearchTransientRide extends HttpServlet {
 			tranRide.price = Double.parseDouble(request.getParameter("price"));
 					
 			tranRide.insertToDB();
+			TransientTopic trantopic = new TransientTopic(tranRide.transientRideId);
+			trantopic.insertToDB();
 		
 			request.getSession().setAttribute("tranRide", tranRide);
 			response.setContentType("text/html; charset=UTF-8");
@@ -193,7 +185,8 @@ public class SearchTransientRide extends HttpServlet {
 					
 					
 			tranRide.insertToDB();
-			
+			TransientTopic trantopic = new TransientTopic(tranRide.transientRideId);
+			trantopic.insertToDB();
 		
 			request.getSession().setAttribute("tranRide", tranRide);
 			
