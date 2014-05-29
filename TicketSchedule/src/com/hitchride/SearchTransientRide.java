@@ -106,11 +106,13 @@ public class SearchTransientRide extends HttpServlet {
 			Date d = TimeFormatHelper.setDate(date);
 			tranRide.rideDate=d;
 			
-			tranRide.rideFlex =new Time(15*60000-TimeFormatHelper.systemOffset);
 			
-			tranRide.rideTime =new Time(8*3600000+15*60000-TimeFormatHelper.systemOffset);
-			tranRide.totalSeats = 4;
-			tranRide.price = 123.4;
+			tranRide.rideFlex =new Time(15*60000-TimeFormatHelper.systemOffset);
+			long rtime =Integer.parseInt(request.getParameter("time_hour"))*3600000+Integer.parseInt(request.getParameter("time_minute"))*60000;
+			tranRide.rideTime =new Time(rtime-TimeFormatHelper.systemOffset);
+			
+			tranRide.totalSeats = Integer.parseInt(request.getParameter("seats"));
+			tranRide.price = Double.parseDouble(request.getParameter("price"));
 					
 			tranRide.insertToDB();
 		
@@ -184,8 +186,8 @@ public class SearchTransientRide extends HttpServlet {
 			tranRide.rideDate=d;
 			
 			tranRide.rideFlex =new Time(15*60000-TimeFormatHelper.systemOffset);
-			
-			tranRide.rideTime =new Time(8*3600000+15*60000-TimeFormatHelper.systemOffset);
+			long rtime =Integer.parseInt(request.getParameter("ride_time"))*3600000+Integer.parseInt(request.getParameter("ride_hour"))*60000;
+			tranRide.rideTime =new Time(rtime-TimeFormatHelper.systemOffset);
 			tranRide.totalSeats = 4;
 			tranRide.price = 123.4;
 					

@@ -52,6 +52,7 @@ var origLat,origLng,destLat,destLng;
 var origAddr,destAddr;
 var distance,duration;
 var date;
+var userType=true;
 
 
 //Display Related
@@ -410,6 +411,24 @@ function publishRide()
 		queryURL = queryURL+"&duration="+duration;
 		date = document.getElementById("search_date").value;
 		queryURL = queryURL+"&date="+date;
+		var time_hour;
+		if (document.getElementById("ride_time_ap").value=="AM")
+		{
+			time_hour=  document.getElementById("ride_time_hour").value;
+		}
+		else
+		{
+			time_hour=  Number(document.getElementById("ride_time_hour").value)+Number(12);
+		}
+		var time_minute = document.getElementById("ride_time_minute").value;
+		
+		queryURL = queryURL+"&time_hour="+time_hour;
+		queryURL = queryURL+"&time_minute="+time_minute;
+		queryURL = queryURL+"&userType="+userType;
+		queryURL = queryURL+"&price="+document.getElementById("price").value;
+		queryURL = queryURL+"&seats="+document.getElementById("seats").value;
+		
+		
 		var tranid = getJson(queryURL);
 		window.location.href = "/TicketSchedule/Zh/TransientTopic.jsp?trId="+tranid;
 	}
@@ -450,6 +469,7 @@ function asDriver()
 	document.getElementById("asDriver").setAttribute("class","active");
 	document.getElementById("asPassenger").setAttribute("class","");
 	document.getElementById("seats-content").style.display="inline";
+	userType = false;
 }
 
 function asPassenger()
@@ -457,6 +477,7 @@ function asPassenger()
 	document.getElementById("asDriver").setAttribute("class","");
 	document.getElementById("asPassenger").setAttribute("class","active");
 	document.getElementById("seats-content").style.display="none";
+	urserType = true;
 }
 
 
