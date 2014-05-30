@@ -30,12 +30,8 @@
 
 <script type="text/javascript">
 //New Topic Related
-var origLat,origLng,destLat,destLng;
-var origAddr,destAddr;
-var distance,duration;
-var date;
-var userType=true;
-
+var ttopic;
+var tride;
 
 //Display Related
 var torigLat, torigLng, tdestLat, tdestLng;
@@ -57,11 +53,9 @@ anchor: new BMap.Size(8, 16),
 });
 
 $(document).ready(function(){
-	//Search box realted
-	var searchBoxO;
-	var searchBoxD;
-	var orig;
-	var dest;
+	
+	loadContent();
+	
 	var omarker;
 	var dmarker;
 
@@ -103,13 +97,12 @@ $(document).ready(function(){
 	map.addControl(new BMap.ScaleControl());
 	map.centerAndZoom(point,15);
 	
-	origLat="<%=tranRide==null?"":tranRide.origLoc.get_lat()%>";
-	origLng="<%=tranRide==null?"":tranRide.origLoc.get_lon()%>";
-	origAddr= "<%=(tranRide ==null) ? "" : tranRide.origLoc._addr%>";
-	destLat="<%=tranRide==null?"":tranRide.destLoc.get_lat()%>";
-	destLng="<%=tranRide==null?"":tranRide.destLoc.get_lon()%>";
-	destAddr= "<%=(tranRide ==null) ? "" : tranRide.destLoc._addr%>";
-	
+	origLat=tride.origLoc._lat;
+	origLng=tride.origLoc._lon;
+	origAddr= tride.origLoc._formattedAddr;
+	destLat=tride.destLoc._lat;
+	destLng=tride.destLoc._lon;
+	destAddr= tride.destLoc._formattedAddr;
 	
 	basicbounds = new BMap.Bounds();
 	
@@ -124,11 +117,11 @@ $(document).ready(function(){
 		dmarker = new BMap.Marker(dLatlng,{icon: imagee});
 		map.addOverlay(dmarker);
 		
-		
 		basicbounds.extend(oLatlng);
 		basicbounds.extend(dLatlng);
 		refitb(basicbounds);
 	}
+	loadRide();
 	
 });
 
@@ -153,7 +146,56 @@ function refitb(bounds)
 	 map.setZoom(zoomNum);
 }
 </script>
+<script>
+function loadContent()
+{
+	var trid = getURLPara("trId");
+	var queryURL = "/TicketSchedule/servlet/TransientRideCenter?trId="+trid;
+	
+	var result = JSON.parse(getJson(queryURL));
+	tride = result.tride;
+	ttopic = result.ttopic;
+}
 
+function loadRide()
+{
+	var topicstring="";
+	topicstring = topicstring + "<div class=\"entry\" origLat="+tride.origLoc._lat+" ";
+	topicstring = topicstring + "origLng=" +  tride.origLoc._lon+" ";
+	topicstring = topicstring + "destLat=" +  tride.destLoc._lat+" ";
+	topicstring = topicstring + "destLng=" +  tride.destLoc._lon+" "+">";
+	
+
+	
+	topicstring = topicstring + "<div class=\"userpic\">";
+	topicstring = topicstring + "<div class=\"username\">"+tride.owner._givenname+"</div>";
+	topicstring = topicstring + "<img src= \"/TicketSchedule/UserProfile/"+tride.owner._avatarID+"\" alt=\"Profile Picture\"></img>";
+	topicstring = topicstring + "<span class=\"passenger\"></span></div>";
+	topicstring = topicstring + "<div class=\"inner_content\"><h5>";
+	//topicstring = topicstring + "<span class=\"inner\">"+"出发地："+trInfo.origLoc._addr+"<br>";
+	//topicstring = topicstring + "目的地："+trInfo.destLoc._addr+"</span></h4>";
+	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_start.png\"/>"+"  出发地："+tride.origLoc._addr+"<br>";
+	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"  目的地："+tride.destLoc._addr+"<br>";
+	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/clock_small.jpg\"/>"+" 出发时间："+tride.rideTime+"<br>";
+	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/mobileicon.jpg\"/>"+" 联系方式："+tride.owner._cellphone+"<br>";
+	topicstring = topicstring + "</h5></div>";
+	
+	if (tride.userType)
+	{
+		topicstring = topicstring + "<div class=\"passenger_box\"><p>";
+		topicstring = topicstring +"<span><img src='/TicketSchedule/Picture/nocar.jpg'/><br><span>";
+		topicstring = topicstring + tride.owner._givenname+"<br> <strong>不提供车</strong></p></div>";
+	}
+	else{
+		topicstring = topicstring + "<div class=\"price_box\"><div class=\"seats\">";
+		topicstring = topicstring +"<img src='/TicketSchedule/Picture/seats.jpg'/><span class='count'>"+tride.totalSeats+"</span></div>";
+		topicstring = topicstring +"<p><b>"+tride.price + "</b> / 座</p></div>";
+	}
+	topicstring =topicstring+"</div>";
+	
+	document.getElementById("topicbody").innerHTML=topicstring;
+}
+</script>
 
 
 <title>临时拼车</title>
@@ -184,12 +226,17 @@ function refitb(bounds)
 <div id="content_wrapper">
 	<div id="content_container">
 		<div id="content">
-			<div id="results">
-				<div class="ride_list">
-					<h3 id="headline" class="headline first"></h3>
-					<div id="ride_content">	</div>
+			<div id="topicinfo">
+				<div id="topichead">行程信息</div>
+				<div id="topicbody">
+				
+				
+
+				</div>
+				<div id="participants">
 				</div>
 			</div>
+
 			
 			<div id="info">
 				<div class="floatable">

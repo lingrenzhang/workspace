@@ -8,14 +8,10 @@ import java.util.Random;
 
 import org.json.JSONException;
 
-import com.hitchride.access.RideInfoAccess;
-import com.hitchride.access.TopicRideAccess;
 import com.hitchride.access.TransientRideAccess;
 import com.hitchride.standardClass.GeoInfo;
-import com.hitchride.standardClass.OwnerRideInfo;
-import com.hitchride.standardClass.RideInfo;
-import com.hitchride.standardClass.Schedule;
 import com.hitchride.standardClass.TransientRide;
+import com.hitchride.standardClass.TransientTopic;
 import com.hitchride.util.TimeFormatHelper;
 
 public class GenerateDummyTransientTopic {
@@ -81,6 +77,8 @@ public class GenerateDummyTransientTopic {
 				    
 				    TransientRideAccess.insertTransientRideInfo(ride);
 				    
+				    TransientTopic ttopic= new TransientTopic(ride.transientRideId);
+				    ttopic.insertToDB();
 				    /*
 				    OwnerRideInfo topicRide= new OwnerRideInfo(ride);
 				    TopicRideAccess.insertTopicRide(topicRide);

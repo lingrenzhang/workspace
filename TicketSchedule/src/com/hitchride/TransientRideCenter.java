@@ -59,8 +59,8 @@ public class TransientRideCenter extends HttpServlet {
 		    JsonHelper jsonhelp = new JsonHelper();
 		    String trideJson = jsonhelp.toJson(tride);
 			String ttopicJson = jsonhelp.toJson(ttopic);
-			String result = "{tride:"+trideJson+",ttopic:"+ttopicJson+"}";
-		    
+			String result = "{\"tride\":"+trideJson+",\"ttopic\":"+ttopicJson+"}";
+			response.setContentType("text/html; charset=UTF-8");
 			response.getWriter().write(result);
 		}
 	}

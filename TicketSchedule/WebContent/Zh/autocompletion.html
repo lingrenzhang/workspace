@@ -9,17 +9,8 @@ body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;}
 #r-result{height:100%;width:20%;float:left;}
 </style>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Mto5Y3Pq2fgwkY2Kt9n60bWl"></script>
-<title>关键字输入提示词条</title>
-</head>
-<body>
-<div id="l-map"></div>
-<div id="r-result">
-    请输入:<br /><input type="text" id="suggestId" size="20" value="百度" style="width:150px;" /></div><div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto;">
-</div>
-</body>
-</html>
-<script type="text/javascript">
 
+<script type="text/javascript">
 // 百度地图API功能
 function G(id) {
     return document.getElementById(id);
@@ -74,3 +65,14 @@ function setPlace(){
 }
 
 </script>
+
+
+<title>关键字输入提示词条</title>
+</head>
+<body>
+<div id="l-map"></div>
+<div id="r-result">
+    请输入:<br /><input type="text" id="suggestId" size="20" value="百度" style="width:150px;" /></div><div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto;">
+</div>
+</body>
+</html>
