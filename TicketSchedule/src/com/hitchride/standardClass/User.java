@@ -16,6 +16,7 @@ public class User implements RideListener,UserInfo{
 	private String _avatarID;
 	private int _userLevel;
 	private String _emailAddress;
+	public String _cellphone;
 	
 	public Vector<ParticipantRide> pRides= new Vector<ParticipantRide>();
 	public Vector<OwnerRideInfo> tRides= new Vector<OwnerRideInfo>();
@@ -36,6 +37,7 @@ public class User implements RideListener,UserInfo{
 		this.set_name(user.get_name());
 		this.set_avatarID(user.get_avatarID());
 		this.set_emailAddress(user.get_avatarID());
+		this.set_cellphone(user.get_cellphone());
 	}
 	
 	@Override
@@ -148,6 +150,14 @@ public class User implements RideListener,UserInfo{
 		return result.toString();
 	}
 
+	@Override
+	public String get_cellphone() {
+		return this._cellphone;
+	}
+
+	public void set_cellphone(String cellphone){
+		this._cellphone = cellphone;
+	}
 	
 	
 }

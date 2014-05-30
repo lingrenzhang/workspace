@@ -48,6 +48,7 @@ public class AllUsers {
 				user.set_uid(users.getInt("userID"));
 				user.set_name(users.getString("givenname"));
 				user.set_avatarID(users.getString("avatarID"));
+				user.set_cellphone(users.getString("cellphone"));
 				_users.put(user.get_uid(), user);
 				i++;
 			}

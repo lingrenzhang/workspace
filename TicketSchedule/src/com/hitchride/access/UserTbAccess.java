@@ -27,7 +27,7 @@ public class UserTbAccess {
 		}
 		
 		
-		public void insertValue(String userName,int groupId, String password,String givenname, String surname,String address,int userLevel,String avatarID)
+		public void insertValue(String userName,int groupId, String password,String givenname, String surname,String address,int userLevel,String avatarID,String cellphone)
 		{
 			if (userLevel==0)
 			{
@@ -41,7 +41,7 @@ public class UserTbAccess {
 					getConnection();
 				}
 				sql=objConn.createStatement();
-				sql.execute("insert into userTb (emailAddress,groupid,password,givenname,surname,address,userLevel,avatarID) values(\"" 
+				sql.execute("insert into userTb (emailAddress,groupid,password,givenname,surname,address,userLevel,avatarID,cellphone) values(\"" 
 						+ userName + "\","
 						+ groupId + ",\""
 						+ password + "\",\""
@@ -49,7 +49,8 @@ public class UserTbAccess {
 						+ surname + "\",\""
 						+ address + "\","
 						+ userLevel + ",\""
-						+ avatarID +"\")");
+						+ avatarID +"\",\""
+						+ cellphone +"\")");
 			}
 			catch (java.lang.ClassNotFoundException e){
 				System.err.println("ClassNotFoundException:"+e.getMessage());
@@ -216,6 +217,7 @@ public class UserTbAccess {
 	        		user._surename =rs.getString("surname");
 	        		user.set_userLevel(rs.getInt("userLevel"));
 	        		user._password = rs.getString("password");
+	        		user._cellphone = rs.getString("cellphone");
 	        	}
 	        	else
 	        	{
@@ -240,14 +242,15 @@ public class UserTbAccess {
 					getConnection();
 				}
 				sql=objConn.createStatement();
-				sql.execute("insert into userTb (emailAddress,password,givenname,surname,address,userLevel,avatarID) values(\"" 
+				sql.execute("insert into userTb (emailAddress,password,givenname,surname,address,userLevel,avatarID,cellphone) values(\"" 
 						+ user._emailAddress + "\",\""
 						+ user._password + "\",\""
 						+ user._givenname + "\",\""
 						+ user._surename + "\",\""
 						+ user._address + "\","
 						+ user.get_userLevel() + ",\""
-						+ user._avatarID +"\")");
+						+ user._avatarID +"\",\"" 
+						+ user._cellphone+"\")");
 			}
 			catch (java.lang.ClassNotFoundException e){
 				System.err.println("ClassNotFoundException:"+e.getMessage());
@@ -276,6 +279,7 @@ public class UserTbAccess {
 						+ "givenname=\""+ user._givenname
 						+ "\",surname=\""+ user._surename
 						+ "\",address=\""+user._address
+						+ "\",cellphone=\""+user._cellphone
 						+ "\" where emailAddress=\""+ user._emailAddress+"\"");
 			}
 			catch (java.lang.ClassNotFoundException e){

@@ -18,7 +18,7 @@ public class LoadUserFromRide {
 		{
 			String name = rs.getString("username");
 			String address = rs.getString("origAddr");
-			utb.insertValue(name, 1,"111111", name, "", address, rnd.nextInt(10), "default.jpg");
+			utb.insertValue(name, 1,"111111", name, "", address, rnd.nextInt(10), "default.jpg","13112345678");
 		}
 
 	}
