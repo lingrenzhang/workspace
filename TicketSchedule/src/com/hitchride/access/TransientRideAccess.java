@@ -212,4 +212,34 @@ public class TransientRideAccess {
 		return resultlist;
 	}
 
+	
+	public static TransientRide getTransisentRideById(int trId)
+	{
+		TransientRide tride;
+		try {
+			Statement sql;
+			if (objConn==null)
+			{
+				objConn = getConnection();
+			} 
+			sql=objConn.createStatement();
+			ResultSet ride = (ResultSet) sql.executeQuery("select * from TransientRide where transientRideId="+trId);
+
+			if (ride.next() )
+			{
+				tride = new TransientRide(ride);
+			}
+			else
+			{
+				return null;
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return tride;
+	}
 }
