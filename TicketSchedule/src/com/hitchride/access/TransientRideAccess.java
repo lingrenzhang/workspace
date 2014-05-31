@@ -5,14 +5,10 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.hitchride.global.SQLServerConf;
-import com.hitchride.standardClass.GeoInfo;
-import com.hitchride.standardClass.RideInfo;
-import com.hitchride.standardClass.Schedule;
 import com.hitchride.standardClass.TransientRide;
 import com.mysql.jdbc.ResultSet;
 
@@ -212,4 +208,34 @@ public class TransientRideAccess {
 		return resultlist;
 	}
 
+	
+	public static TransientRide getTransisentRideById(int trId)
+	{
+		TransientRide tride=null;
+		try {
+			Statement sql;
+			if (objConn==null)
+			{
+				objConn = getConnection();
+			} 
+			sql=objConn.createStatement();
+			ResultSet ride = (ResultSet) sql.executeQuery("select * from TransientRide where transientRideId="+trId);
+
+			if (ride.next() )
+			{
+				tride = new TransientRide(ride);
+			}
+			else
+			{
+				return null;
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return tride;
+	}
 }

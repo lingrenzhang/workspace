@@ -45,9 +45,10 @@ public class Register extends HttpServlet {
 		String surname = request.getParameter("surname");
 		String address = request.getParameter("address");
 		String avatarID = request.getParameter("avatarID"); //Not required field
+		String cellphone = request.getParameter("cellphone");
 		if (avatarID==null)
 			avatarID="default.jpg";
-		userTb.insertValue(userName,groupId, password, givenname, surname, address, 1,avatarID);
+		userTb.insertValue(userName,groupId, password, givenname, surname, address, 1,avatarID,cellphone);
 		int userid = userTb.getIDbyName(givenname);
 		User user = new User();
 		

@@ -237,6 +237,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>TransientRideCenter</servlet-name>
-    <url-pattern>/TransientRideCenter</url-pattern>
+    <url-pattern>/servlet/TransientRideCenter</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -1,0 +1,126 @@
+#map-canvas {
+position: relative; 
+float: right;
+width: 450px;
+height: 400px;
+margin-left: 30px;
+background-color: rgb(229, 227, 223); 
+overflow: hidden;
+ -webkit-transform: translateZ(0px);
+}
+
+
+#content #info {
+width: 320px;
+margin-left: 20px;
+float: right;
+}
+
+#info .floatable {
+width: 320px;
+position: absolute;
+}
+
+
+.floatwrap.fixed {
+width: 320px;
+position: fixed;
+top: 0;
+margin-top: 20px;
+}
+
+#topicinfo
+{
+	position: relative;
+	float:left;
+	width:500px;
+	border: 1px solid #a7a7a7;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	-ms-border-radius: 6px;
+	-o-border-radius: 6px;
+	border-radius: 6px;
+	background-color: #fcfcfc;
+}
+#topichead
+{
+height: 30px;
+text-shadow: 0 1px 0 #eee;
+line-height: 30px;
+padding: 0 14px;
+font-weight: 500;
+font-size: 1.17em;
+border-bottom: 1px solid #aab0b3;
+color: #646464;
+background-color: #CCDDFF;
+border-color: #ABBDB9;
+}
+
+#topicbody
+{
+	height:200px;
+	padding: 10px 0px 0px 10px;
+}
+
+.passenger_box
+{
+	position: absolute;
+	top: 140px;
+	left:6px;
+	text-align: center;
+	width: 75px;
+	height: 65px;
+	padding: 6px;
+}
+
+.price_box
+{
+
+position: absolute;
+top: 140px;
+left:10px;
+text-align: center;
+border: 1px solid #7a8494;
+padding: 5px;
+width: 65px;
+height: 65px;
+background-color: #fff;
+background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(255,255,255,0.5)), color-stop(100%, rgba(255,255,255,0.8)));
+background-image: -webkit-linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.8));
+background-image: -moz-linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.8));
+background-image: -o-linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.8));
+background-image: -ms-linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.8));
+background-image: linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.8));
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+-ms-border-radius: 8px;
+-o-border-radius: 8px;
+border-radius: 8px;
+}
+
+.price_box .seats {
+width: 60px;
+height: 38px;
+}
+
+.price_box .count {
+float: left;
+font-size: 30px;
+line-height: 30px;
+width: 21px;
+text-align: left;
+font-weight: bold;
+margin: 0 4px 0 5px;
+}
+
+.price_box p {
+border-top: 1px solid #ccc;
+padding-top: 4px;
+font-size: 12px;
+}
+
+
+#participants {
+	border-top: 1px solid #ccc;
+	padding-top:4px;
+}

@@ -13,6 +13,7 @@ public class UserProfile implements PersistentStorage {
 	private int _userLevel;
 	public String _emailAddress;
 	public String _password;
+	public String _cellphone;
 	
 	public int get_uid() {
 		return _uid;

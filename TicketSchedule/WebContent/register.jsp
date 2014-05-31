@@ -25,7 +25,8 @@ function validForm(){
 		|| (document.getElementById("password").value =="")
 		|| (document.getElementById("emailAddress").value == "")
 		|| (document.getElementById("givenname").value == "")
-		|| (document.getElementById("surname").value == ""))
+		|| (document.getElementById("surname").value == "")
+		|| (document.getElementById("cellphone").value == ""))
 	return false;
 	if ((document.getElementById("authcode").value == ""))
 	{
@@ -255,6 +256,16 @@ function _uploadAvatarCancel() {
                        		<input type="text" class="required" placeholder="Jordan" name="surname" id="surname" maxlength="100" autocomplete="off">
                         	<p>Enter your family name</p>
                 	    </dd>
+                	    
+                	    <dt>
+							<label class="register-label">
+								Cell Phone
+							</label>
+						</dt>
+						<dd>
+							<input type="text" class="required" placeholder="Cell Phone" name="cellphone" id="cellphone" maxlength="15" autocomplete="off">
+							<p>Length 11 cellphone number</p>
+						</dd>
 						<dt>
 							<label class="register-label">
 								Authenication Code

@@ -189,8 +189,6 @@ public class SearchTransientRide extends HttpServlet {
 			trantopic.insertToDB();
 		
 			request.getSession().setAttribute("tranRide", tranRide);
-			
-			
 			//response.setContentType("text/html; charset=UTF-8");
 			 
 			RequestDispatcher rd = request.getRequestDispatcher("../Zh/SearchTransientTopic.jsp?trId="+tranRide.transientRideId);

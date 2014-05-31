@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.hitchride.access.TransientRideAccess;
+import com.hitchride.access.TransientTopicAccess;
 import com.hitchride.global.AllPartRides;
 import com.hitchride.global.AllTopicRides;
 import com.hitchride.global.AllTopics;
@@ -16,7 +18,10 @@ import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Topic;
+import com.hitchride.standardClass.TransientRide;
+import com.hitchride.standardClass.TransientTopic;
 import com.hitchride.standardClass.User;
+import com.hitchride.util.JsonHelper;
 import com.hitchride.util.QueryStringParser;
 
 /**
@@ -47,49 +52,16 @@ public class TransientRideCenter extends HttpServlet {
 		}
 		else{
 			QueryStringParser qsPar = new QueryStringParser(request.getQueryString());
-			int topicId = qsPar.getInt("topicId");
-		    Topic topic = AllTopics.getTopics().get_topic(topicId);
-		    request.getSession().setAttribute("topic",topic);
-		    User user = (User) request.getSession().getAttribute("user");
-		    Boolean isOwnerMode = (user.get_uid() == topic.ownerRide._rideInfo.get_user().get_uid());
-		    request.setAttribute("isOwnerMode", isOwnerMode);
+			int trId = qsPar.getInt("trId");
+			TransientRide tride = TransientRideAccess.getTransisentRideById(trId);
+		    TransientTopic ttopic = TransientTopicAccess.getTransientTopicById(trId);
 		    
-		    if (!isOwnerMode)
-		    {
-			    Boolean alreadyPart = false;
-			    for(Iterator<ParticipantRide> prI = topic.parRides.iterator(); prI.hasNext();)
-			    {
-			    	    ParticipantRide pride=prI.next();
-			    		if (pride._rideInfo.get_user().get_uid()==user.get_uid())
-			    		{
-			    			alreadyPart = true;
-			    		}
-
-			    }
-			    for(Iterator<ParticipantRide> prI = topic._requestPride.iterator(); prI.hasNext();)
-			    {
-			    	    ParticipantRide pride=prI.next();
-			    		if (pride._rideInfo.get_user().get_uid()==user.get_uid())
-			    		{
-			    			alreadyPart = true;
-			    		}
-			    }
-			    if (!alreadyPart)
-			    {
-			    	RideInfo ride = (RideInfo) request.getSession().getAttribute("actRide");
-			    	ParticipantRide pride = new ParticipantRide(ride);
-			    	pride.set_status(0);
-				    request.setAttribute("participantRide", pride);
-			    }
-			    request.setAttribute("alreadyPart", alreadyPart);
-		    }
-		    else
-		    {
-		    	
-		    }
-		    
-			RequestDispatcher rd = request.getRequestDispatcher("/RideCenter.jsp");
-			rd.forward(request, response);
+		    JsonHelper jsonhelp = new JsonHelper();
+		    String trideJson = jsonhelp.toJson(tride);
+			String ttopicJson = jsonhelp.toJson(ttopic);
+			String result = "{\"tride\":"+trideJson+",\"ttopic\":"+ttopicJson+"}";
+			response.setContentType("text/html; charset=UTF-8");
+			response.getWriter().write(result);
 		}
 	}
 	
