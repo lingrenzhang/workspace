@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable = no" />
-<title>搭便车 | 用户中心</title>
+<title>搭便车 | 寻找临时拼车</title>
 <link rel="stylesheet" href="css/foundation.css" />
 <link rel="stylesheet" href="foundation-icons/foundation-icons.css" />
 <link rel="stylesheet" href="css/main.css" />
@@ -25,11 +25,11 @@
 					<section class="top-bar-section">
 						<ul class="right">
 							<li class="divider"></li>
-							<li class="active"><a href="#" class="">用户中心</a></li>
+							<li class=""><a href="#" class="">用户中心</a></li>
 							<li class="divider"></li>
 							<li><a href="#" class="">拼车管理</a></li>
 							<li class="divider"></li>
-							<li><a href="searchtransientride.html" class="">寻找临时拼车</a></li>
+							<li class="active"><a href="searchtransientride.html">寻找临时拼车</a></li>
 						</ul>
 					</section>
 				</nav>
@@ -39,34 +39,28 @@
 					<a class="left-off-canvas-toggle menu-icon"><span></span></a>
 				</section>
 				<section class="middle tab-bar-section">
-					<h1 class="title">用户中心</h1>
+					<h1 class="title">今日拼车</h1>
 				</section>
 			</nav>
 			<aside class="left-off-canvas-menu">
 				<ul class="off-canvas-list">
 					<li><label class="first">搭便车</label></li>
 					<li><a href="#" class=""><i class="fi-calendar"></i>&nbsp;拼车管理</a></li>
-					<li><a href="searchtransientride.html" class=""><i class="fi-magnifying-glass"></i>&nbsp;寻找临时拼车</a></li>
+					<li><a href="searchtransientride.html" class="active"><i
+							class="fi-magnifying-glass"></i>&nbsp;寻找临时拼车</a></li>
 				</ul>
 				<hr>
 				<ul class="off-canvas-list">
 					<li><label class="first"><i class="fi-home"></i>&nbsp;用户中心</label></li>
-					<li><a href="#" class="active"><i class="fi-comments"></i>&nbsp;我的行程</a></li>
+					<li><a href="#" class=""><i class="fi-comments"></i>&nbsp;我的行程</a></li>
 					<li><a href="#" class=""><i class="fi-mail"></i>&nbsp;我的消息</a></li>
 					<li><a href="#" class=""><i class="fi-clock"></i>&nbsp;历史记录</a></li>
 					<li><a href="#" class=""><i class="fi-torso"></i>&nbsp;个人信息</a></li>
 				</ul>
 			</aside>
 			<a class="exit-off-canvas" href="#"></a>
-			<section role="main" class="scroll-container">
-				<br> <br> <br> <br> <br> <br> <br>
-				<br> <br> <br> <br> <br> <br> <br>
-				<br> <br> <br> <br> <br> <br> <br>
-				<br> <br> <br> <br> <br> <br> <br>
-				<br> <br> <br> <br> <br> <br> <br>
-				<br> <br> <br> <br> <br> <br> <br>
-				<br> <br> <br> <br> <br> <br> <br>
-				<br> <br>
+
+			<section role="main" class="scroll-container" id="main">
 			</section>
 		</div>
 	</div>
@@ -74,7 +68,38 @@
 	<script src="js/vendor/jquery.js"></script>
 	<script src="js/foundation.min.js"></script>
 	<script>
+		function getTransientTide() {
+			$.get("../servlet/SearchTransientTopic", function(data) {
+				var result = JSON.parse(data);
+				for (index = 0; index < result.length; ++index) {
+					var r=result[index];
+					var ride="";
+					ride = '<div class="row"><hr><div class="small-3 columns header text-center"><a class="th"> <img src="../UserProfile/';
+					ride = ride + r.owner._avatarID;
+					ride = ride + '" /></a><div class="row text-center"><i class="fi-torso"></i>';
+					ride = ride + r.owner._givenname;
+					ride = ride + '</div></div><div class="small-7 columns ride-info"><i class="fi-home"></i>';
+					ride = ride + r.origLoc._formatedAddr;
+					ride = ride + '<br><br><i class="fi-target"></i>';
+					ride = ride + r.destLoc._formatedAddr;
+					ride = ride + '<br><br><i class="fi-clock"></i>';
+					ride = ride + r.rideTime;
+					ride = ride + '</div><span class="label small-2 columns ride-avail bottom">空座：';
+					ride = ride + r.availSeats;
+					ride = ride + '<br>';
+					if (r.userType) {
+						ride = ride + 'TAXI';
+					} else {
+						ride = ride + r.price +'/座';
+					}
+					ride = ride + '</span></div>';
+					$('#main').append(ride);
+				}
+			});
+
+		}
 		$(document).foundation();
+		getTransientTide();
 	</script>
 </body>
 </html>
