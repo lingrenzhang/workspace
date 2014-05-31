@@ -111,7 +111,7 @@ public class Login extends HttpServlet {
 			else
 			{
 				request.setAttribute("isFailed", "true");
-				response.sendRedirect("/TicketSchedule/Login.jsp");if("Zh".equalsIgnoreCase(request.getParameter("language")))
+				if("Zh".equalsIgnoreCase(request.getParameter("language")))
 				{
 					response.sendRedirect("/TicketSchedule/Zh/Login.jsp");
 				}

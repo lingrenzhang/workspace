@@ -10,7 +10,7 @@ public class Environment {
 	public int maxTranRideId;
 	private Environment(){
 		//Confirm the proper initialize routine.
-			auth = new AuthorizationHelper();
+			//auth = new AuthorizationHelper();
             AllUsers.getUsers();
 			AllRides.getRides();
 			AllPartRides.getPartRides();
