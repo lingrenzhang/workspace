@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.hitchride.access.PartiRideAccess;
 import com.hitchride.access.TransientTopicAccess;
+import com.hitchride.global.AllUsers;
 
 public class TransientTopic implements PersistentStorage{
 
@@ -12,6 +13,7 @@ public class TransientTopic implements PersistentStorage{
 	public GeoInfo[] middle;
 	public int nParticipant=0;
 	public int[] partiuid;
+	public User[] parti;
 	
 	
 	public TransientTopic(int transientRideId)
@@ -24,7 +26,8 @@ public class TransientTopic implements PersistentStorage{
 		GeoInfo middle4 = new GeoInfo(0,0);
 		GeoInfo middle5 = new GeoInfo(0,0); //This one is just to reduce the side effect. 
 		middle = new GeoInfo[]{middle0,middle1,middle2,middle3,middle4,middle5};
-		partiuid = new int[]{0,0,0,0,0};
+		partiuid = new int[]{0,0,0,0,0,0};
+		parti = new User[]{null,null,null,null,null,null};
 	}
 	
 	public boolean addMiddlePoint(GeoInfo geo)
@@ -79,6 +82,7 @@ public class TransientTopic implements PersistentStorage{
 		else
 		{
 			partiuid[nParticipant]=uid;
+			parti[nParticipant] = (User) AllUsers.getUsers().getUser(uid);
 			nParticipant++;
 		}
 		return true;
@@ -97,10 +101,12 @@ public class TransientTopic implements PersistentStorage{
 					if (j==4)
 					{
 						partiuid[j]=0;
+						parti[j]=null;
 					}
 					else
 					{
 						partiuid[j]=partiuid[j+1];
+						parti[j]=parti[j+1];
 					}
 				}
 				nParticipant--;

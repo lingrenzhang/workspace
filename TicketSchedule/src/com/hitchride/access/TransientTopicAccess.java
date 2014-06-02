@@ -5,9 +5,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.hitchride.global.AllUsers;
 import com.hitchride.global.SQLServerConf;
 import com.hitchride.standardClass.GeoInfo;
 import com.hitchride.standardClass.TransientTopic;
+import com.hitchride.standardClass.User;
 import com.mysql.jdbc.ResultSet;
 
 public class TransientTopicAccess {
@@ -137,9 +139,10 @@ public class TransientTopicAccess {
 					ttopic.middle[i-1]=geoinfo;
 				}
 				ttopic.nParticipant = rs.getInt("nParticipant");
-				for (int i=1;i<ttopic.nParticipant;i++)
+				for (int i=1;i<=ttopic.nParticipant;i++)
 				{
 					ttopic.partiuid[i-1]=rs.getInt("partiuid"+i);
+					ttopic.parti[i-1]=(User) AllUsers.getUsers().getUser(ttopic.partiuid[i-1]);
 				}
 			}
 			else

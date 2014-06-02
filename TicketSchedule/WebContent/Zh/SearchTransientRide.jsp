@@ -480,7 +480,6 @@ function asPassenger()
 	urserType = true;
 }
 
-
 </script>
 
 <title>临时拼车</title>

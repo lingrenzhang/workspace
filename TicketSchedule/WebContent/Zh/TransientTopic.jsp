@@ -39,6 +39,12 @@ var tomarker,tdmarker;
 var map;
 var basicbounds;
 
+var nmp= 0 ;
+var mp= new Array();
+
+var nparti = 0;
+var parti = new Array();
+
 var images = new BMap.Icon
 ("/TicketSchedule/Picture/pin_start.png",
 new BMap.Size(71, 71),{
@@ -52,9 +58,38 @@ anchor: new BMap.Size(8, 16),
 //imageOffset: new google.maps.Point(0, 0)
 });
 
+var imagem = new BMap.Icon(
+	"/TicketSchedule/Picture/mpicon.png",
+	new BMap.Size(71,71),{
+		anchor: new BMap.Size(9,18),
+});
+
 $(document).ready(function(){
 	
 	loadContent();
+	
+	var searchBoxM = new BMap.Autocomplete(
+			{"input" : "addMiddle",
+			 "location" : map});
+	
+	searchBoxM.addEventListener("onconfirm",function(e){
+		var _value = e.item.value;
+		myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
+		function myFun(){
+			var mmarker;
+			if (mmarker!=null)
+			{
+				map.removeOverlay(mmarker);
+			}
+			point = new BMap.Point(local.getResults().getPoi(0).point.lng,local.getResults().getPoi(0).point.lat);
+			mmarker = new BMap.Marker(point,{icon: imagee});
+			map.addOverlay(mmarker);
+		}
+		var local = new BMap.LocalSearch(map,{onSearchComplete : myFun});
+		local.search(myValue);
+	});
+	
+		
 	
 	var omarker;
 	var dmarker;
@@ -122,7 +157,8 @@ $(document).ready(function(){
 		refitb(basicbounds);
 	}
 	loadRide();
-	
+	loadMiddle();
+	loadParti();
 });
 
 		
@@ -146,6 +182,11 @@ function refitb(bounds)
 	 map.setZoom(zoomNum);
 }
 </script>
+
+
+
+
+
 <script>
 function loadContent()
 {
@@ -155,6 +196,11 @@ function loadContent()
 	var result = JSON.parse(getJson(queryURL));
 	tride = result.tride;
 	ttopic = result.ttopic;
+	nmp = result.ttopic.nmiddlePoints;
+	mp = result.ttopic.middle;
+	nparti = result.ttopic.nParticipant;
+	partiuid = result.ttopic.partiuid;
+	parti = result.ttopic.parti;
 }
 
 function loadRide()
@@ -164,8 +210,6 @@ function loadRide()
 	topicstring = topicstring + "origLng=" +  tride.origLoc._lon+" ";
 	topicstring = topicstring + "destLat=" +  tride.destLoc._lat+" ";
 	topicstring = topicstring + "destLng=" +  tride.destLoc._lon+" "+">";
-	
-
 	
 	topicstring = topicstring + "<div class=\"userpic\">";
 	topicstring = topicstring + "<div class=\"username\">"+tride.owner._givenname+"</div>";
@@ -178,8 +222,7 @@ function loadRide()
 	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"  目的地："+tride.destLoc._addr+"<br>";
 	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/clock_small.jpg\"/>"+" 出发时间："+tride.rideTime+"<br>";
 	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/mobileicon.jpg\"/>"+" 联系方式："+tride.owner._cellphone+"<br>";
-	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"途经： "+"<br>";
-	topicstring = topicstring + "<div id=middlepoint><input id=addmiddle></input></div>";
+	topicstring = topicstring + "<div id=middlepoint></div>";
 	topicstring = topicstring + "</h5></div>";
 	
 	if (tride.userType)
@@ -195,7 +238,48 @@ function loadRide()
 	}
 	topicstring =topicstring+"</div>";
 	
-	document.getElementById("topicbody").innerHTML=topicstring;
+	document.getElementById("topicbody").innerHTML=topicstring;	
+}
+
+function loadMiddle()
+{
+	var middlestring="";
+	middlestring = middlestring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"途经： "+"<br>";
+	for (i=0;i<nmp;i++)
+	{
+		middlestring= middlestring+ "<img src=\"/TicketSchedule/Picture/smallminus.jpg\" id=deleteButton"+i+" onClick=deleteMiddlePoint("+i+") />"+mp[i]._formatedAddr+"<br>";
+	}
+	middlestring = middlestring + "<img src=\"/TicketSchedule/Picture/smallplus.jpg\" id=addButton"+i+" onClick=addMiddlePoint()/> <input id=addMiddle></input>";
+	document.getElementById("middlepoint").innerHTML=middlestring;
+}
+
+function loadParti()
+{
+	var partistring="";
+	partistring= partistring+"";
+	
+	for (i=0;i<nparti;i++)
+	{
+		partistring = partistring + "<div class=\"userpic\">";
+		partistring = partistring + "<div class=\"username\">"+parti[i]._givenname+"</div>";
+		partistring = partistring + "<img src= \"/TicketSchedule/UserProfile/"+parti[i]._avatarID+"\" alt=\"Profile Picture\"></img>";
+		partistring = partistring + "<span class=\"passenger\"></span></div>";
+	}
+	
+	document.getElementById("participants").innerHTML=partistring;
+}
+</script>
+
+<script>
+function addMiddlePoint()
+{
+	alert("Not implemented add mp");
+}
+
+function deleteMiddlePoint(id)
+{
+	alert("Not implemented delete mp");
+	
 }
 </script>
 
