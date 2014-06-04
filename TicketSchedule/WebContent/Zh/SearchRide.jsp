@@ -43,9 +43,11 @@
 <script src="/TicketSchedule/JS/site.js"></script>
 <script src="/TicketSchedule/JS/calandar.js"></script>
 <script src="/TicketSchedule/bootstrap/js/bootstrap.js"></script>
+<!-- 
 <script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
 </script>
+ -->
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=Mto5Y3Pq2fgwkY2Kt9n60bWl"></script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -57,20 +59,18 @@ $(document).ready(function(){
 	var torigLat, torigLng, tdestLat, tdestLng;
 	var tomarker,tdmarker;
 	
-	var images = {
-		    url: '/TicketSchedule/Picture/pin_start.png',
-	        size: new google.maps.Size(71, 71),
-	        origin: new google.maps.Point(0, 0),
-	        anchor: new google.maps.Point(17, 34),
-	        scaledSize: new google.maps.Size(25, 25)
-		  };
-	var imagee = {
-	          url: '/TicketSchedule/Picture/pin_end.png',
-	          size: new google.maps.Size(71, 71),
-	          origin: new google.maps.Point(0, 0),
-	          anchor: new google.maps.Point(17, 34),
-	          scaledSize: new google.maps.Size(25, 25)
-	};
+	var images = new BMap.Icon
+	("/TicketSchedule/Picture/pin_start.png",
+	new BMap.Size(71, 71),{
+	anchor: new BMap.Size(8, 16),
+	//imageOffset: new google.maps.Point(0, 0)
+	});
+	var imagee = new BMap.Icon
+	("/TicketSchedule/Picture/pin_end.png",
+	new BMap.Size(71, 71),{
+	anchor: new BMap.Size(8, 16),
+	//imageOffset: new google.maps.Point(0, 0)
+	});
 	
 	//Search box realted
 	var searchBoxO;
