@@ -36,11 +36,17 @@
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
 <script src="/TicketSchedule/JS/site.js"></script>
 <script src="/TicketSchedule/bootstrap/js/bootstrap.js"></script>
+<!--
 <script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
 </script>
-<script>
+-->
 
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=Mto5Y3Pq2fgwkY2Kt9n60bWl"></script>
+<script>
+var map;
+var origLat,origLng,destLat,destLng;
+var origAddr,destAddr;
 function asPassenger()
 {
 	document.getElementById("asPassenger").setAttribute("class", "active");
@@ -502,129 +508,139 @@ $(document).ready(function(){
 <script>
 	function initizlieMap()
 	{
-		var dLat="";
-		var dLng="";
-		var oLat="";
-		var oLng="";
 		
-		var mapOptions = {
-			      center: new google.maps.LatLng(37.4, -122.0),
-			      zoom: 9,
-			      mapTypeId: google.maps.MapTypeId.ROADMAP
-	    };
-		var map = new google.maps.Map(document.getElementById("post-map-canvas"),mapOptions);
-
-		var orig = document.getElementById('s');
-		var searchBoxO = new google.maps.places.SearchBox(orig);
-		var omarkers= [];
-		var dest = document.getElementById('e');
-		var searchBoxD = new google.maps.places.SearchBox(dest);
-		var dmarkers = [];
-		var bounds = new google.maps.LatLngBounds();
+		var images = new BMap.Icon
+		("/TicketSchedule/Picture/pin_start.png",
+		new BMap.Size(71, 71),{
+		anchor: new BMap.Size(8, 16),
+		});
+		var imagee = new BMap.Icon
+		("/TicketSchedule/Picture/pin_end.png",
+		new BMap.Size(71, 71),{
+		anchor: new BMap.Size(8, 16),
+		});
 		
-		searchBoxO.onclick = function(){
-		   alert("onchange triggered");
-		};
-		google.maps.event.addListener(searchBoxO, 'places_changed', function() {
-		  	  var places = searchBoxO.getPlaces();
+		
+		var geol;		
+		var nowLat=31.271998;
+		var nowLng=121.542146;
+		try {
+			if (typeof(navigator.geolocation) == 'undefined') {
+				geol = google.gears.factory.create('beta.geolocation');
+		    } else {
+		    	geol = navigator.geolocation;
+		    }
+		} catch (error) {
+				//alert(error.message);
+		}
+		if (geol) {
+			geol.getCurrentPosition(function(position) {
+			nowLat = position.coords.latitude;
+			nowLng = position.coords.longitude;
+			}, function(error) {
+				switch(error.code){
+				case error.TIMEOUT :
+					//alert("连接超时，请重试");
+					break;
+				case error.PERMISSION_DENIED :
+					//alert("您拒绝了使用位置共享服务，查询已取消");
+					break;
+				case error.POSITION_UNAVAILABLE : 
+					//alert("非常抱歉，我们暂时无法通过浏览器获取您的位置信息");
+					break;
+				}
+			}, {timeout:2000});	//设置2秒超时
+		}
+		
 
-		  	  for (var i = 0, marker; marker = omarkers[i]; i++) {
-		        marker.setMap(null);
-		      }
+		map = new BMap.Map("post-map-canvas");
+		var point = new BMap.Point(nowLng,nowLat);
+		map.addControl(new BMap.NavigationControl());    
+		map.addControl(new BMap.ScaleControl());
+		map.centerAndZoom(point,15);
 
-		      omarkers = [];
-		      
-		      for (var i = 0, place; place = places[i]; i++) {
-		        var image = {
-		          url: place.icon,
-		          size: new google.maps.Size(71, 71),
-		          origin: new google.maps.Point(0, 0),
-		          anchor: new google.maps.Point(17, 34),
-		          scaledSize: new google.maps.Size(25, 25)
-		        };
-
-		        var marker = new google.maps.Marker({
-		            map: map,
-		            icon: image,
-		            title: place.name,
-		            position: place.geometry.location
-		          });
-		        omarkers.push(marker);
-
-		        bounds.extend(place.geometry.location);
-		      }
-		      map.fitBounds(bounds);
-
-			      
-		  	  place = places[0];
-			  document.getElementById("origLat").value=place.geometry.location.lat();
-			  document.getElementById("origLng").value=place.geometry.location.lng();
-			  oLat=place.geometry.location.lat();
-			  oLng=place.geometry.location.lng();
-			  dLat=document.getElementById("destLat").value;
-			  dLng=document.getElementById("destLng").value;
-			  if (dLat !="" && dLng!="")
-			  {
-				  calculateDistances();
-			  }
+		var searchBoxO = new BMap.Autocomplete(
+				{"input" : "s",
+				 "location" : map});
+		var searchBoxD = new BMap.Autocomplete(
+				{"input" : "e",
+				 "location" : map});
+		
+		var omarker;
+		var dmarker;
+		var basicbounds = new BMap.Bounds();
+		
+		
+		
+		searchBoxO.addEventListener("onconfirm",function(e){
+			var _value = e.item.value;
+			myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
+			function myFun(){
+				if (omarker!=null)
+				{
+					map.removeOverlay(omarker);
+				}
+				point = new BMap.Point(local.getResults().getPoi(0).point.lng,local.getResults().getPoi(0).point.lat);
+				omarker = new BMap.Marker(point,{icon: images});
+				map.centerAndZoom(point,18);
+				map.addOverlay(omarker);
+				document.getElementById("origLat").value=point.lat;
+				document.getElementById("origLng").value=point.lng;
+				origLat=point.lat;
+				origLng=point.lng;
+				destLat=document.getElementById("destLat").value;
+				destLng=document.getElementById("destLng").value;
+				if (destLat !="" && destLng!="")
+				{
+					var oLatlng = new BMap.Point(origLng,origLat);
+					var dLatlng = new BMap.Point(destLng,destLat);
+					basicbounds= new BMap.Bounds(oLatlng,dLatlng);
+				  	refitb(basicbounds);
+				    calculateDistances();
+				}
+			}
+			var local = new BMap.LocalSearch(map,{onSearchComplete : myFun});
+			local.search(myValue);
 		});
-
-		google.maps.event.addListener(searchBoxD, 'places_changed', function() {
-		   	  var places = searchBoxD.getPlaces();
-		   	  for (var i = 0, marker; marker = dmarkers[i]; i++) {
-		        marker.setMap(null);
-		      }
-
-		      dmarkers = [];
-		      for (var i = 0, place; place = places[i]; i++) {
-		        var image = {
-		          url: place.icon,
-		          size: new google.maps.Size(71, 71),
-		          origin: new google.maps.Point(0, 0),
-		          anchor: new google.maps.Point(17, 34),
-		          scaledSize: new google.maps.Size(25, 25)
-		        };
-
-		        var marker = new google.maps.Marker({
-		            map: map,
-		            icon: image,
-		            title: place.name,
-		            position: place.geometry.location
-		          });
-		        dmarkers.push(marker);
-
-		        bounds.extend(place.geometry.location);
-		      }
-		      map.fitBounds(bounds);
-		      place = places[0];
-			  document.getElementById("destLat").value=place.geometry.location.lat();
-			  document.getElementById("destLng").value=place.geometry.location.lng();
-			  dLat=place.geometry.location.lat();
-			  dLng=place.geometry.location.lng();
-			  oLat=document.getElementById("origLat").value;
-			  oLng=document.getElementById("origLng").value;
-			  
-			  if (oLat !="" && oLng!="")
-			  {
-				  calculateDistances();
-			  }
+		
+		searchBoxD.addEventListener("onconfirm",function(e){
+			var _value = e.item.value;
+			myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
+			function myFun(){
+				if (dmarker!=null)
+				{
+					map.removeOverlay(dmarker);
+				}
+				point = new BMap.Point(local.getResults().getPoi(0).point.lng,local.getResults().getPoi(0).point.lat);
+				dmarker = new BMap.Marker(point,{icon: imagee});
+				map.centerAndZoom(point,18);
+				map.addOverlay(dmarker);
+				document.getElementById("destLat").value=point.lat;
+				document.getElementById("destLng").value=point.lng;
+				destLat=point.lat;
+				destLng=point.lng;
+				origLat=document.getElementById("origLat").value;
+				origLng=document.getElementById("origLng").value;
+				if (origLat !="" && origLng!="")
+				{
+					var oLatlng = new BMap.Point(origLng,origLat);
+					var dLatlng = new BMap.Point(destLng,destLat);
+					basicbounds= new BMap.Bounds(oLatlng,dLatlng);
+				 	refitb(basicbounds);
+				    calculateDistances();
+				}
+				
+			}
+			var local = new BMap.LocalSearch(map,{onSearchComplete : myFun});
+			local.search(myValue);
 		});
-			   	
-		google.maps.event.addListener(map, 'bounds_changed', function() {
-		   	  var bounds = map.getBounds();
-		      searchBoxO.setBounds(bounds);
-		});
-
-		google.maps.event.addListener(map, 'bounds_changed', function() {
-		    var bounds = map.getBounds();
-		    searchBoxD.setBounds(bounds);
-		  });
+		
 		  
 		
 		function calculateDistances() {
 		   var service = new google.maps.DistanceMatrixService();
-		   var orig = new google.maps.LatLng(oLat,oLng);
-		   var dest = new google.maps.LatLng(dLat,dLng);
+		   var orig = new google.maps.LatLng(origLat,origLng);
+		   var dest = new google.maps.LatLng(destLat,destLng);
 		   service.getDistanceMatrix(
 			    {
 			      origins: [orig],
@@ -646,6 +662,15 @@ $(document).ready(function(){
 			   }
 			}
 	};
+</script>
+<script>
+function refitb(bounds)
+{
+	 var range = Math.max(bounds.toSpan().lat,bounds.toSpan().lng);
+	 var zoomNum = Math.floor(9-Math.log(range)/Math.log(2));
+	 map.setCenter(bounds.getCenter());
+	 map.setZoom(zoomNum);
+}
 </script>
 <script>
 	function loadValue(rid)

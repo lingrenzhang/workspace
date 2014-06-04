@@ -2,7 +2,6 @@ package com.hitchride.standardClass;
 
 import java.util.Date;
 
-import com.hitchride.access.PartiRideAccess;
 import com.hitchride.access.TransientTopicAccess;
 import com.hitchride.global.AllUsers;
 
@@ -88,7 +87,7 @@ public class TransientTopic implements PersistentStorage{
 		return true;
 	}
 	
-	public boolean deleteParti(int uid)
+	public boolean removeParti(int uid)
 	{
 		boolean found=false;
 		for(int i=0;i<nParticipant;i++)
@@ -129,6 +128,21 @@ public class TransientTopic implements PersistentStorage{
 		}
 		
 	}
+	
+	public void updateDB(){
+		int rows = TransientTopicAccess.updateTransientTopic(this);
+  		if (rows==0)
+  		{
+ 			System.out.println("Update failed for transientTopic: "+ this.transientRideId + " attempting insert.");
+  			rows = TransientTopicAccess.insertTransientTopic(this);
+  			if (rows==0)
+  			{
+  	  			System.out.println("Insert also failed for rideinfo: "+ this.transientRideId + " Check DB integrity.");
+  			}
+  		}
+	}
+	
+	
 	@Override
 	public boolean isChanged() {
 		// TODO Auto-generated method stub

@@ -89,8 +89,6 @@ $(document).ready(function(){
 		local.search(myValue);
 	});
 	
-		
-	
 	var omarker;
 	var dmarker;
 
@@ -201,6 +199,8 @@ function loadContent()
 	nparti = result.ttopic.nParticipant;
 	partiuid = result.ttopic.partiuid;
 	parti = result.ttopic.parti;
+	
+
 }
 
 function loadRide()
@@ -255,17 +255,41 @@ function loadMiddle()
 
 function loadParti()
 {
+	var userid=<%=user.get_uid()%>;
 	var partistring="";
 	partistring= partistring+"";
+	var isOwner;
+	if (userid!=tride.userId)
+	{
+		isOwner=false;
+	}
+	else
+	{
+		isOwner=true;
+	}
+	var userAlreadyExist = false;
 	
 	for (i=0;i<nparti;i++)
 	{
+		if (parti[i]._uid==userid)
+		{
+			userAlreadyExist = true;
+		}
+		partistring = partistring + "<div id=parti"+i+"><a href='javascript:deleteUser("+i+")' class=deleteParti><img src=\"/TicketSchedule/Picture/smallminus.jpg\"></img></a>";
 		partistring = partistring + "<div class=\"userpic\">";
 		partistring = partistring + "<div class=\"username\">"+parti[i]._givenname+"</div>";
 		partistring = partistring + "<img src= \"/TicketSchedule/UserProfile/"+parti[i]._avatarID+"\" alt=\"Profile Picture\"></img>";
-		partistring = partistring + "<span class=\"passenger\"></span></div>";
+		partistring = partistring + "<span class=\"passenger\"></span></div></div>";
 	}
 	
+	if (!isOwner && !userAlreadyExist)
+	{
+		partistring = partistring + "<div id=parti"+i+"><a href='javascript:addUser("+i+")' class=deleteParti><img src=\"/TicketSchedule/Picture/smallplus.jpg\"></img></a>";
+		partistring = partistring + "<div class=\"userpic\">";
+		partistring = partistring + "<div class=\"username\">"+'<%=user.get_name()%>'+"</div>";
+		partistring = partistring + "<img src= \"/TicketSchedule/UserProfile/"+'<%=user.get_avatarID()%>'+"\" alt=\"Profile Picture\"></img>";
+		partistring = partistring + "<span class=\"passenger\"></span></div></div>";
+	}
 	document.getElementById("participants").innerHTML=partistring;
 }
 </script>
@@ -280,6 +304,41 @@ function deleteMiddlePoint(id)
 {
 	alert("Not implemented delete mp");
 	
+}
+
+function deleteUser(number)
+{
+	nparti=nparti-1;
+	var deleteId=parti[number]._uid;
+	for(i=number;i<5;i++)
+	{
+		parti[i]=parti[i+1];
+	}
+	loadParti();
+	
+	var trid = getURLPara("trId");
+	var url = "/TicketSchedule/servlet/UpdateTParticipant?trId="+trid;
+	url = url+"&deleteId="+deleteId;
+	url = url+"&method=delete";
+	getJson(url);
+}
+
+function addUser(number)
+{
+	var insertId=<%=user.get_uid()%>;
+
+	var trid = getURLPara("trId");
+	var url = "/TicketSchedule/servlet/UpdateTParticipant?trId="+trid;
+	url = url+"&insertId="+insertId;
+	url = url+"&method=insert";
+	getJson(url);
+	loadContent();
+	loadParti();
+}
+
+function updateOk(result)
+{
+	alert(result);
 }
 </script>
 
