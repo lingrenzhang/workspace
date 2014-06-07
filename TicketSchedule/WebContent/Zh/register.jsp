@@ -34,7 +34,7 @@ function validForm(){
 	}
 	else
 	{
-		var checkUrl = "./servlet/AuthCheck";
+		var checkUrl = "/TicketSchedule/servlet/AuthCheck";
 		$.ajaxSetup({
 			async : false
 		});

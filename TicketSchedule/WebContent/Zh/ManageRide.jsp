@@ -522,8 +522,10 @@ $(document).ready(function(){
 		
 		
 		var geol;		
-		var nowLat=31.271998;
-		var nowLng=121.542146;
+		//var nowLat=31.271998;
+		//var nowLng=121.542146;
+		var nowLat=31.4656;
+		var nowLng=121.1460;
 		try {
 			if (typeof(navigator.geolocation) == 'undefined') {
 				geol = google.gears.factory.create('beta.geolocation');

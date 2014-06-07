@@ -19,9 +19,20 @@ public static Connection objConn; //This reference is used for batch job.
 	java.lang.ClassNotFoundException
 	{
 		Class.forName(SQLServerConf.DriverName);
-		objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		if (objConn==null)
+		{
+			objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		}  
+		else
+		{
+			if (objConn.isClosed())
+			{
+				objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+			}
+		}
 		return objConn;
 	}
+	
 	
 	public static int insertTopicRide(OwnerRideInfo topicride)
 	{
@@ -29,10 +40,8 @@ public static Connection objConn; //This reference is used for batch job.
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+			
 			sql=objConn.createStatement();
 			/*
 			new DataColumnSchema("userId","INT(10)"), //Foreign Key constrain? 
@@ -61,10 +70,8 @@ public static Connection objConn; //This reference is used for batch job.
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+			 
 			sql=objConn.createStatement();
 				
 			//Ride fixed. Update middle point here.
@@ -119,10 +126,8 @@ public static Connection objConn; //This reference is used for batch job.
 		Hashtable<Integer,OwnerRideInfo> allTRides = new Hashtable<Integer,OwnerRideInfo>(5000);
 		try {
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+			 
 			sql=objConn.createStatement();
 			ResultSet triders = sql.executeQuery("select * from TopicRide");
 			while (triders.next())

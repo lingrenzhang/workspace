@@ -17,9 +17,20 @@ public class TransientRideAccess {
 	public static Connection getConnection() throws SQLException,java.lang.ClassNotFoundException
 	{
 		Class.forName(SQLServerConf.DriverName);
-		objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		if (objConn==null)
+		{
+			objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		}  
+		else
+		{
+			if (objConn.isClosed())
+			{
+				objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+			}
+		}
 		return objConn;
 	}
+	
 	
 	public static int insertTransientRideInfo(TransientRide ride)
 	{
@@ -27,10 +38,8 @@ public class TransientRideAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+			
 			sql=objConn.createStatement();
 
 		 rows = sql.executeUpdate("insert into TransientRide values(\"" + 
@@ -84,10 +93,8 @@ public class TransientRideAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+			
 			sql=objConn.createStatement();
 			
 			rows = sql.executeUpdate("update TransientRide set " 
@@ -145,10 +152,8 @@ public class TransientRideAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			}
+			getConnection();
+			
 			sql=objConn.createStatement();
 			ResultSet rs=(ResultSet) sql.executeQuery("Select Max(transientRideId) from transientRide;");
 			if (rs.next())
@@ -185,10 +190,8 @@ public class TransientRideAccess {
 		List<TransientRide> resultlist = new ArrayList<TransientRide>();
 		try {
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+			 
 			sql=objConn.createStatement();
 			ResultSet riders = (ResultSet) sql.executeQuery("select * from TransientRide where rideDate=\""+date+"\" order by ridetime");
 			int i=0;
@@ -214,10 +217,8 @@ public class TransientRideAccess {
 		TransientRide tride=null;
 		try {
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+			
 			sql=objConn.createStatement();
 			ResultSet ride = (ResultSet) sql.executeQuery("select * from TransientRide where transientRideId="+trId);
 

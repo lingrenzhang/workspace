@@ -17,27 +17,27 @@ public class UserHistoryAccess {
 	java.lang.ClassNotFoundException
 	{
 		Class.forName(SQLServerConf.DriverName);
-		objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		if (objConn==null)
+		{
+			objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		}  
+		else
+		{
+			if (objConn.isClosed())
+			{
+				objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+			}
+		}
 		return objConn;
 	}
+	
 	
 	
 	public static void insertRecord(UserHistory userHistory, boolean batch) throws Exception
 	{
 		Connection con;
-		if(batch)
-		{
-			//Use centralized connection pool for runtime finally
-			if (objConn==null)
-			{
-				objConn= CarpoolTbAccess.getConnection();
-			}
-			con=objConn;
-		}
-		else
-		{
-			con=UserTbAccess.getConnection();
-		}
+		con = UserHistoryAccess.getConnection();
+			
 
 		try
 		{
@@ -63,11 +63,7 @@ public class UserHistoryAccess {
 		Connection con;
 		//Use centralized connection pool for runtime finally 
 		//Use one consistent connection for the User History table. 
-		if (objConn==null)
-		{
-			objConn= UserTbAccess.getConnection();
-		}
-		con=objConn;
+		con= getConnection();
 		
 		try
 		{

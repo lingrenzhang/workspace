@@ -22,9 +22,20 @@ public class UserTbAccess {
 		java.lang.ClassNotFoundException
 		{
 			Class.forName(SQLServerConf.DriverName);
-			objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+			if (objConn==null)
+			{
+				objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+			}  
+			else
+			{
+				if (objConn.isClosed())
+				{
+					objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+				}
+			}
 			return objConn;
 		}
+		
 		
 		
 		public void insertValue(String userName,int groupId, String password,String givenname, String surname,String address,int userLevel,String avatarID,String cellphone)
@@ -36,10 +47,8 @@ public class UserTbAccess {
 			try
 			{
 				Statement sql;
-				if (objConn==null)
-				{
-					getConnection();
-				}
+				getConnection();
+				
 				sql=objConn.createStatement();
 				sql.execute("insert into userTb (emailAddress,groupid,password,givenname,surname,address,userLevel,avatarID,cellphone) values(\"" 
 						+ userName + "\","
@@ -69,10 +78,8 @@ public class UserTbAccess {
         	try
         	{
 				Statement sql;
-				if (objConn==null)
-				{
-					getConnection();
-				}
+				getConnection();
+				
 				
 				sql=objConn.createStatement();
 				String query = "select * from userTb";
@@ -95,19 +102,10 @@ public class UserTbAccess {
         	try
         	{
 				Statement sql;
-				if (batch)
-				{
-					if (objConn==null)
-					{
-						getConnection();
-					}
-					sql=objConn.createStatement();
-				}
-				else
-				{
-					Connection conn = getConnection();
-					sql=conn.createStatement();
-				}
+				getConnection();
+				sql=objConn.createStatement();
+				
+				
 				String query = "select * from userTb where emailAddress=\""+name+"\"";
 				result = sql.executeQuery(query);
         	}
@@ -127,10 +125,8 @@ public class UserTbAccess {
         	try
         	{
 				Statement sql;
-				if (objConn==null)
-				{
-					getConnection();
-				}
+				getConnection();
+				
 				sql=objConn.createStatement();
 				String query = "select * from userTb where userId=\""+userId+"\"";
 				result = sql.executeQuery(query);
@@ -152,11 +148,8 @@ public class UserTbAccess {
         	int result=0;
         	try
         	{
-				if (objConn==null)
-				{
-					getConnection();
+				getConnection();
 						
-				}
 				sql=objConn.createStatement();
 	        	String query = "select userid from usertb where givenname= '"+name+"'";
 	        	rs = sql.executeQuery(query);
@@ -177,10 +170,8 @@ public class UserTbAccess {
         	Statement sql;
         	try
         	{
-				if (objConn==null)
-				{
-					getConnection();
-				}
+				getConnection();
+				
 				sql=objConn.createStatement();
 	        	String query = "delete from usertb where userid= '"+user.get_uid()+"'";
 	        	rows = sql.executeUpdate(query);
@@ -200,10 +191,8 @@ public class UserTbAccess {
         	ResultSet rs;
         	try
         	{
-				if (objConn==null)
-				{
-					getConnection();
-				}
+				getConnection();
+				
 				sql=objConn.createStatement();
 	        	String query = "select * from userTb where userid= '"+ userid +"'";
 	        	rs = sql.executeQuery(query);
@@ -237,10 +226,8 @@ public class UserTbAccess {
 			try
 			{
 				Statement sql;
-				if (objConn==null)
-				{
-					getConnection();
-				}
+				getConnection();
+			
 				sql=objConn.createStatement();
 				sql.execute("insert into userTb (emailAddress,password,givenname,surname,address,userLevel,avatarID,cellphone) values(\"" 
 						+ user._emailAddress + "\",\""
@@ -270,10 +257,8 @@ public class UserTbAccess {
         	try
 			{
 				Statement sql;
-				if (objConn==null)
-				{
-					getConnection();
-				}
+				getConnection();
+				
 				sql=objConn.createStatement();
 				rows=sql.executeUpdate("update userTb set "
 						+ "givenname=\""+ user._givenname
@@ -299,10 +284,8 @@ public class UserTbAccess {
         	try
 			{
 				Statement sql;
-				if (objConn==null)
-				{
-					getConnection();
-				}
+				getConnection();
+		
 				sql=objConn.createStatement();
 				rows=sql.executeUpdate("update userTb set "
 						+ "givenname=\""+ givenname

@@ -17,9 +17,20 @@ public class PredefinedQuery {
 	java.lang.ClassNotFoundException
 	{
 		Class.forName(SQLServerConf.DriverName);
-		objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		if (objConn==null)
+		{
+			objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		}  
+		else
+		{
+			if (objConn.isClosed())
+			{
+				objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+			}
+		}
 		return objConn;
 	}
+	
 	
 	
 	public static int getUserAuthByID(int groupId)
@@ -28,10 +39,8 @@ public class PredefinedQuery {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				getConnection();
-			}
+			getConnection();
+			
 			sql=objConn.createStatement();
 			ResultSet rs = (ResultSet) sql.executeQuery("select GroupAuthLevel from usergroup where groupid="+groupId);
 			if (rs.next()){

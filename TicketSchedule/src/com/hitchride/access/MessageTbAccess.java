@@ -22,19 +22,28 @@ public class MessageTbAccess {
 	java.lang.ClassNotFoundException
 	{
 		Class.forName(SQLServerConf.DriverName);
-		objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		if (objConn==null)
+		{
+			objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		}  
+		else
+		{
+			if (objConn.isClosed())
+			{
+				objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+			}
+		}
 		return objConn;
 	}
+	
 	
 	public static void insertMessage(int messageId, int from,int to,int topicID, String messageContent, Timestamp timestamp, Boolean isSystemMessage)
 	{
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			}
+			getConnection();
+			
 			sql=objConn.createStatement();
 			sql.execute("insert into message (MessageId,fromUser,toUser,topicID,messageContent, timestamp,isSystemMessage) values(\"" + 
 			messageId +"\",\""
@@ -59,10 +68,8 @@ public class MessageTbAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			}
+			getConnection();
+
 			sql=objConn.createStatement();
 			sql.execute("insert into message (MessageId,fromUser,toUser,topicID,messageContent, timestamp,isSystemMessage) values(\"" 
 			+message._messageId +"\",\""
@@ -88,10 +95,8 @@ public class MessageTbAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			}
+			getConnection();
+			
 			sql=objConn.createStatement();
 			ResultSet rs=sql.executeQuery("Select Max(MessageId) from Message;");
 			if (rs.next())
@@ -115,10 +120,8 @@ public class MessageTbAccess {
 		Hashtable<Integer,Message> allMessages = new Hashtable<Integer,Message>(5000);
 		try {
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+			
 			sql=objConn.createStatement();
 			ResultSet messagers = sql.executeQuery("select * from Message");
 			while (messagers.next())

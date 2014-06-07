@@ -25,9 +25,20 @@ public class TopicTbAccess {
 	java.lang.ClassNotFoundException
 	{
 		Class.forName(SQLServerConf.DriverName);
-		objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		if (objConn==null)
+		{
+			objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		}  
+		else
+		{
+			if (objConn.isClosed())
+			{
+				objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+			}
+		}
 		return objConn;
 	}
+	
 	
 	public static int insertTopic(Topic topic)
 	{
@@ -35,10 +46,8 @@ public class TopicTbAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+			 
 			sql=objConn.createStatement();
 			StringBuilder parRideIds= new StringBuilder();
 			boolean first=true;
@@ -122,10 +131,8 @@ public class TopicTbAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+			
 			sql=objConn.createStatement();
 			StringBuilder parRideIds= new StringBuilder();
 			boolean first=true;
@@ -205,12 +212,8 @@ public class TopicTbAccess {
 		Hashtable<Integer,Topic> allTopics = new Hashtable<Integer,Topic>(5000);
 		try {
 			Statement sql;
-			if (objConn==null)
-			{
+			getConnection();
 				
-					objConn = getConnection();
-				
-			} 
 			sql=objConn.createStatement();
 			ResultSet topicrs = sql.executeQuery("select * from Topic");
 			while (topicrs.next())

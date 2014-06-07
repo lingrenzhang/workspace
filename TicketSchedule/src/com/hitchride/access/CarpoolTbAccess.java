@@ -16,9 +16,20 @@ public class CarpoolTbAccess {
 	public static Connection getConnection() throws SQLException,java.lang.ClassNotFoundException
 	{
 		Class.forName(SQLServerConf.DriverName);
-		objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		if (objConn==null)
+		{
+			objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		}  
+		else
+		{
+			if (objConn.isClosed())
+			{
+				objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+			}
+		}
 		return objConn;
 	}
+	
 	
 	//Explicitly dispose the static connection whenever batch operation involves;
 	public static void disposeConnection() throws SQLException,java.lang.ClassNotFoundException
@@ -56,18 +67,7 @@ public class CarpoolTbAccess {
 			String forwardTime, String forwardFlexibility, String backTime, String backFlexibility, boolean batch) throws Exception
 	{
 		Connection con;
-		if(batch)
-		{
-			if (objConn==null)
-			{
-				objConn= CarpoolTbAccess.getConnection();
-			}
-			con=objConn;
-		}
-		else
-		{
-			con=CarpoolTbAccess.getConnection();
-		}
+		con = getConnection();
 		
 		//Do santity check here
 		if (detourFactor.length()>4)
@@ -114,19 +114,8 @@ public class CarpoolTbAccess {
 	public static void insertLocation(int recordId, Float origlat,Float origlng,Float destlat,Float destlng, boolean batch) throws ClassNotFoundException, SQLException
 	{
 		Connection con;
-		if(batch)
-		{
-			if (objConn==null)
-			{
-				objConn= CarpoolTbAccess.getConnection();
-			}
-			con=objConn;
-		}
-		else
-		{
-			con=CarpoolTbAccess.getConnection();
-		}
-		
+		con= CarpoolTbAccess.getConnection();
+	
 		//Do santity check here
 		
 		try
@@ -147,19 +136,7 @@ public class CarpoolTbAccess {
 	public static void insertDisDua(int recordId, int dist,int dura, boolean batch) throws ClassNotFoundException, SQLException
 	{
 		Connection con;
-		if(batch)
-		{
-			if (objConn==null)
-			{
-				objConn= CarpoolTbAccess.getConnection();
-			}
-			con=objConn;
-		}
-		else
-		{
-			con=CarpoolTbAccess.getConnection();
-		}
-		
+		con= CarpoolTbAccess.getConnection();
 		//Do santity check here
 		
 		try
@@ -186,19 +163,8 @@ public class CarpoolTbAccess {
 			double destLat, double destLon, int dist, int dura, boolean batch) throws Exception
 	{
 		Connection con;
-		if(batch)
-		{
-			if (objConn==null)
-			{
-				objConn= CarpoolTbAccess.getConnection();
-			}
-			con=objConn;
-		}
-		else
-		{
-			con=CarpoolTbAccess.getConnection();
-		}
-		
+		con= CarpoolTbAccess.getConnection();
+					
 		//Do santity check here
 		if (detourFactor.length()>4)
 		{

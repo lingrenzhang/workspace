@@ -21,9 +21,20 @@ public class RideInfoAccess {
 	java.lang.ClassNotFoundException
 	{
 		Class.forName(SQLServerConf.DriverName);
-		objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		if (objConn==null)
+		{
+			objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		}  
+		else
+		{
+			if (objConn.isClosed())
+			{
+				objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+			}
+		}
 		return objConn;
 	}
+	
 	
 	public static int insertRideInfo(RideInfo ride)
 	{
@@ -31,10 +42,8 @@ public class RideInfoAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+			
 			sql=objConn.createStatement();
 
 		 rows = sql.executeUpdate("insert into RideInfo values(\"" + 
@@ -150,10 +159,8 @@ public class RideInfoAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+			
 			sql=objConn.createStatement();
 			
 			rows = sql.executeUpdate("update RideInfo set " 
@@ -265,10 +272,8 @@ public class RideInfoAccess {
 		Hashtable<Integer,RideInfo> allRides = new Hashtable<Integer,RideInfo>(5000);
 		try {
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+			
 			sql=objConn.createStatement();
 			ResultSet riders = sql.executeQuery("select * from RideInfo");
 			while (riders.next())
@@ -363,10 +368,8 @@ public class RideInfoAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			}
+			getConnection();
+			
 			sql=objConn.createStatement();
 			ResultSet rs=sql.executeQuery("Select Max(recordId) from RideInfo;");
 			if (rs.next())

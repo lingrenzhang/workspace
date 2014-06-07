@@ -17,9 +17,20 @@ public class TransientTopicAccess {
 	public static Connection getConnection() throws SQLException,java.lang.ClassNotFoundException
 	{
 		Class.forName(SQLServerConf.DriverName);
-		objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		if (objConn==null)
+		{
+			objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		}  
+		else
+		{
+			if (objConn.isClosed())
+			{
+				objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+			}
+		}
 		return objConn;
 	}
+	
 	
 	public static int insertTransientTopic(TransientTopic topic)
 	{
@@ -27,10 +38,8 @@ public class TransientTopicAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+			 
 			sql=objConn.createStatement();
 
 		 rows = sql.executeUpdate("insert into TransientTopic values(\"" + 
@@ -73,10 +82,8 @@ public class TransientTopicAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+			 
 			sql=objConn.createStatement();
 			
 			rows = sql.executeUpdate("update TransientTopic set " 
@@ -120,10 +127,8 @@ public class TransientTopicAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+			 
 			sql=objConn.createStatement();
 		
 			ResultSet rs= (ResultSet) sql.executeQuery("select * from transientTopic where transientRideId="+trid);
@@ -169,10 +174,8 @@ public class TransientTopicAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+			 
 			sql=objConn.createStatement();
 		
 			ResultSet rs= (ResultSet) sql.executeQuery("select * from transientTopic where transientRideId="+trid);
@@ -218,10 +221,8 @@ public class TransientTopicAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+			 
 			sql=objConn.createStatement();
 		
 			ResultSet rs= (ResultSet) sql.executeQuery("select * from transientTopic where transientRideId="+trid);

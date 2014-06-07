@@ -19,9 +19,20 @@ public class UserGroupTbAccess {
 	java.lang.ClassNotFoundException
 	{
 		Class.forName(SQLServerConf.DriverName);
-		objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		if (objConn==null)
+		{
+			objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		}  
+		else
+		{
+			if (objConn.isClosed())
+			{
+				objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+			}
+		}
 		return objConn;
 	}
+	
 	
 	
 	public void insertValue(String groupName,int groupAuthLevel, String authnicationCode)
@@ -29,10 +40,8 @@ public class UserGroupTbAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				getConnection();
-			}
+			getConnection();
+			
 			sql=objConn.createStatement();
 			sql.execute("insert into UserGroupTb (groupName,groupAuthLevel,authnicationCode) values(\"" 
 					+ groupName + "\",\""
@@ -57,10 +66,7 @@ public class UserGroupTbAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null || objConn.isClosed())
-			{
-				getConnection();
-			}
+			getConnection();
 			
 			sql=objConn.createStatement();
 			ResultSet rs = (ResultSet) sql.executeQuery("select groupid from UserGroup where authnicationCode='"+authCode+"'");

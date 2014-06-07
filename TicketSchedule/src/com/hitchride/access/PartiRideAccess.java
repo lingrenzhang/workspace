@@ -22,7 +22,17 @@ public class PartiRideAccess {
 	java.lang.ClassNotFoundException
 	{
 		Class.forName(SQLServerConf.DriverName);
-		objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		if (objConn==null)
+		{
+			objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+		}  
+		else
+		{
+			if (objConn.isClosed())
+			{
+				objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+			}
+		}
 		return objConn;
 	}
 	
@@ -32,10 +42,7 @@ public class PartiRideAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
 			sql=objConn.createStatement();
 			/*
 			new DataColumnSchema("RideInfoID","INT(10)"), //Foreign Key constrain? 
@@ -70,10 +77,8 @@ public class PartiRideAccess {
 		try
 		{
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+				
 			sql=objConn.createStatement();
 	
 			rows = sql.executeUpdate("update partiride set "
@@ -98,10 +103,8 @@ public class PartiRideAccess {
 		Hashtable<Integer,ParticipantRide> allPRides = new Hashtable<Integer,ParticipantRide>(5000);
 		try {
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+			getConnection();
+
 			sql=objConn.createStatement();
 			ResultSet priders = sql.executeQuery("select * from PartiRide");
 			while (priders.next())
@@ -143,10 +146,8 @@ public class PartiRideAccess {
 	{
 		try {
 			Statement sql;
-			if (objConn==null)
-			{
-				objConn = getConnection();
-			} 
+		    getConnection();
+
 			sql=objConn.createStatement();
 			sql.execute("delete from PartiRide where rideinfoid="+rideid);
 		} catch (ClassNotFoundException e) {
