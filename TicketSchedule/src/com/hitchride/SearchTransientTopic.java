@@ -49,6 +49,15 @@ public class SearchTransientTopic extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Environment.getEnv();
+		boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
+		if (!islogin)
+		{
+			request.getSession().setAttribute("fromLocation", "/TicketSchedule/UserCenter.jsp");
+			request.getSession().setAttribute("queryString", request.getQueryString());
+			request.getSession().setMaxInactiveInterval(60*120);
+			response.sendRedirect("/TicketSchedule/Login.jsp");
+		}
+		else
 		{
 			if (request.getQueryString()!=null)
 			{

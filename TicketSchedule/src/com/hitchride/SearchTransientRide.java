@@ -40,9 +40,19 @@ public class SearchTransientRide extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Environment.getEnv();
+		boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
+		if (!islogin)
+		{
+			request.getSession().setAttribute("fromLocation", "/TicketSchedule/UserCenter.jsp");
+			request.getSession().setAttribute("queryString", request.getQueryString());
+			request.getSession().setMaxInactiveInterval(60*120);
+			response.sendRedirect("/TicketSchedule/Login.jsp");
+		}
+		else
 		{
 			//GeoInfo is optional for the search. Not taking into account right now
 			//Also not search geoinfo at this layer.  Client layer is responsible for guarantee the issue 
+			
 			TransientRide tranRide = new TransientRide();
 			tranRide.owner = (User) request.getSession().getAttribute("user");
 			tranRide.userId = tranRide.owner.get_uid();
@@ -119,6 +129,15 @@ public class SearchTransientRide extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Environment.getEnv();
+		boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
+		if (!islogin)
+		{
+			request.getSession().setAttribute("fromLocation", "/TicketSchedule/UserCenter.jsp");
+			request.getSession().setAttribute("queryString", request.getQueryString());
+			request.getSession().setMaxInactiveInterval(60*120);
+			response.sendRedirect("/TicketSchedule/Login.jsp");
+		}
+		else
 		{
 			//GeoInfo is optional for the search. Not taking into account right now
 			//Also not search geoinfo at this layer.  Client layer is responsible for guarantee the issue 

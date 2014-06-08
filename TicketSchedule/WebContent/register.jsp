@@ -67,63 +67,67 @@ var __avatar_y = 0;
 var __avatar_w = 0;
 var __avatar_h = 0;
 
+$(document).ready(function(){
+	$("#divBG").resizable().children().not("#divCuter").remove();
+	var gbOS = $("#divBG").offset();
+	$("#divCuter").resizable({ containment: "#divBG", aspectRatio: 1, minHeight: 20, minWidth: 20,
+	    stop: function() {
+	        _viewImg();
+	    }
+	}).draggable({
+	    containment: "#divBG",
+	    scroll: false,
+	    stop: function() {
+	        _viewImg();
+	    }
+	}).offset({ 
+		top: gbOS.top + 63, 
+		left: gbOS.left + 63 });   
+});
+	
+	function _uploadImg() {
+	    $.ajaxFileUpload({
+	        url: __avatar_handlerUrl,
+	        secureuri: false,
+	        fileElementId: 'avatarFile',
+	        data: { myaction: "upload" },
+	        success: function(data) {
+	            var obj = $.parseJSON(data);
+	            if (obj.result == 1) {
+	                var file = obj.msg;
+	                avatarFileName = file;
+	                document.getElementById("avatarID").value = obj.avatarID;
+	                __avatar_size = obj.size;
+	                if (obj.size != 1) {
+	                    file += ".view.jpg";
+	                }
+	                var pof = $("#divContenter").offset();
+	                $("#divBG").css({
+	                    "background-image": "url(" + file + ")",
+	                    width: obj.w,
+	                    height: obj.h
+	                }).offset({ top: pof.top + (300 - obj.h) / 2 + 1, left: pof.left + (300 - obj.w) / 2 + 1 });
+	 				//set cuter size
+	                var mh = Math.min(175, obj.h);
+	                var mw = Math.min(175, obj.w);
+	                $("#divCuter").height(mh).width(mw);
+					//put cuter to the middle
+	                pof = $("#divBG").offset();
+	                $("#divCuter").offset({ top: pof.top + (obj.h - mh) / 2 + 1, left: pof.left + (obj.w - mw) / 2 + 1 });
+	                _viewImg();
+	            }
+	            else {
+	                alert(obj.msg);
+	            }
+	        },
+	        error: function() {
+	            alert("upload failure，please check file format.");
+	        }
+	    });
+	}
 
-$("#divBG").resizable().children().not("#divCuter").remove();
-var gbOS = $("#divBG").offset();
-$("#divCuter").resizable({ containment: "#divBG", aspectRatio: 1, minHeight: 20, minWidth: 20,
-    stop: function() {
-        _viewImg();
-    }
-}).draggable({
-    containment: "#divBG",
-    scroll: false,
-    stop: function() {
-        _viewImg();
-    }
-}).offset({ 
-	top: gbOS.top + 63, 
-	left: gbOS.left + 63 });   
 
-function _uploadImg() {
-    $.ajaxFileUpload({
-        url: __avatar_handlerUrl,
-        secureuri: false,
-        fileElementId: 'avatarFile',
-        data: { myaction: "upload" },
-        success: function(data) {
-            var obj = $.parseJSON(data);
-            if (obj.result == 1) {
-                var file = obj.msg;
-                avatarFileName = file;
-                document.getElementById("avatarID").value = obj.avatarID;
-                __avatar_size = obj.size;
-                if (obj.size != 1) {
-                    file += ".view.jpg";
-                }
-                var pof = $("#divContenter").offset();
-                $("#divBG").css({
-                    "background-image": "url(" + file + ")",
-                    width: obj.w,
-                    height: obj.h
-                }).offset({ top: pof.top + (300 - obj.h) / 2 + 1, left: pof.left + (300 - obj.w) / 2 + 1 });
- 				//set cuter size
-                var mh = Math.min(175, obj.h);
-                var mw = Math.min(175, obj.w);
-                $("#divCuter").height(mh).width(mw);
-				//put cuter to the middle
-                pof = $("#divBG").offset();
-                $("#divCuter").offset({ top: pof.top + (obj.h - mh) / 2 + 1, left: pof.left + (obj.w - mw) / 2 + 1 });
-                _viewImg();
-            }
-            else {
-                alert(obj.msg);
-            }
-        },
-        error: function() {
-            alert("upload failure，please check file format.");
-        }
-    });
-}
+
 
 function _viewImg() {
     if (avatarFileName != "") {

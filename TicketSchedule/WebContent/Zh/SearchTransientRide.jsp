@@ -49,6 +49,8 @@
 -->
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=Mto5Y3Pq2fgwkY2Kt9n60bWl"></script>
 <script type="text/javascript">
+
+var isLogin=<%=IsLogin%>;
 //New Topic Related
 var origLat,origLng,destLat,destLng;
 var origAddr,destAddr;
@@ -132,10 +134,10 @@ $(document).ready(function(){
 	
 	origLat="<%=tranRide==null?"":tranRide.origLoc.get_lat()%>";
 	origLng="<%=tranRide==null?"":tranRide.origLoc.get_lon()%>";
-	origAddr= "<%=(tranRide ==null) ? "" : tranRide.origLoc._addr%>";
+	origAddr= "<%=(tranRide ==null) ? "" : tranRide.origLoc.get_formatedAddr()%>";
 	destLat="<%=tranRide==null?"":tranRide.destLoc.get_lat()%>";
 	destLng="<%=tranRide==null?"":tranRide.destLoc.get_lon()%>";
-	destAddr= "<%=(tranRide ==null) ? "" : tranRide.destLoc._addr%>";
+	destAddr= "<%=(tranRide ==null) ? "" : tranRide.destLoc.get_formatedAddr()%>";
 	document.getElementById("search_s").setAttribute("value",origAddr);
 	document.getElementById("search_e").setAttribute("value",destAddr);
 	
@@ -150,7 +152,7 @@ $(document).ready(function(){
 	
 	basicbounds = new BMap.Bounds();
 	
-	if (origLat!="" && origLng!="" && origLat!="" &&origLng!="")
+	if (origLat!="" && origLng!="" && destLat!="" &&destLng!="")
 	{
 		var oLatlng = new BMap.Point(origLng,origLat);
 		var dLatlng = new BMap.Point(destLng,destLat);
@@ -245,36 +247,48 @@ $(document).ready(function(){
 	
 	
 
-	//Use google api now. Change when required to.
+	//Rough distance here
 	function calculateDistances() {
-		var service = new google.maps.DistanceMatrixService();
-		var orig = new google.maps.LatLng(origLat,origLng);
-		var dest = new google.maps.LatLng(destLat,destLng);
-		service.getDistanceMatrix(
+
+		var dx, dy, dew;
+
+		var DEF_PI = 3.14159265359; // PI
+		var DEF_2PI= 6.28318530712; // 2*PI
+		var DEF_PI180= 0.01745329252; // PI/180.0
+		var DEF_R =6370693.5; // radius of earth
+
+		ew1 = origLng* DEF_PI180;
+		ns1 = origLat * DEF_PI180;
+		ew2 = destLng * DEF_PI180;
+		ns2 = destLat * DEF_PI180;
+
+		dew = ew1 - ew2;
+
+		if (dew > DEF_PI)
 		{
-		  origins: [orig],
-		  destinations: [dest],
-		  travelMode: google.maps.TravelMode.DRIVING,
-		  unitSystem: google.maps.UnitSystem.METRIC,
-		  avoidHighways: false,
-		  avoidTolls: false
-		 }, callback);
+			dew = DEF_2PI - dew;
+		}
+		else
+		{
+			if (dew < -DEF_PI)
+			{
+				dew = DEF_2PI + dew;
+			}
+		}
+		dx = DEF_R * Math.cos(ns1) * dew; // 东西方向长度(在纬度圈上的投影长度)
+		dy = DEF_R * (ns1 - ns2); // 南北方向长度(在经度圈上的投影长度)
+			
+		distance = Math.sqrt(dx * dx + dy * dy)*1.1;
+		duration = distance/12;
+
+		
+		document.getElementById("distance").setAttribute("value",distance);
+		document.getElementById("duration").setAttribute("value",duration);
+		    
+		var price = Math.floor(distance/1200);
+		document.getElementById("price").setAttribute("value",price);
 	}
 		
-	function callback(response, status) {
-	  if (status != google.maps.DistanceMatrixStatus.OK) {
-	    alert('Error was: ' + status);
-	   } else {
-		   distance = response.rows[0].elements[0].distance.value;
-		   duration = response.rows[0].elements[0].duration.value;
-		    document.getElementById("distance").setAttribute("value",distance);
-		    document.getElementById("duration").setAttribute("value",duration);
-		    
-		    var price = Math.floor(distance/1200);
-		    document.getElementById("price").setAttribute("value",price);
-	   }
-	}
-	  
 	search();
 });
 
@@ -402,13 +416,33 @@ function refitb(bounds)
 <script type="text/javascript">
 function publishRide()
 {
+	if (!isLogin)
+	{
+		window.location.href="/TicketSchedule/Zh/Login.jsp";
+	}
 	if (onPublishValidate())
 	{
 		var queryURL = "/TicketSchedule/servlet/SearchTransientRide";
-		queryURL = queryURL+"?s="+document.getElementById("search_s").value;
+		if (document.getElementById("search_s").value!="") //Weird bug when integrating baidu api with the input box.
+		{
+			queryURL = queryURL+"?s="+document.getElementById("search_s").value; 
+		}
+		else
+		{
+			queryURL = queryURL+"?s="+origAddr;
+		}
 		queryURL = queryURL+"&origLat="+origLat;
 		queryURL = queryURL+"&origLng="+origLng;
-		queryURL = queryURL+"&e="+document.getElementById("search_e").value;
+		
+		if (document.getElementById("search_e").value!="") //Weird bug when integrating baidu api with the input box.
+		{
+		queryURL = queryURL+"&e="+document.getElementById("search_e").value; 
+		}
+		else
+		{
+			queryURL = queryURL+"&e="+destAddr;
+		}
+
 		queryURL = queryURL+"&destLat="+destLat;
 		queryURL = queryURL+"&destLng="+destLng;
 		queryURL = queryURL+"&distance="+distance;

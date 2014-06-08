@@ -64,8 +64,15 @@ var imagem = new BMap.Icon(
 		anchor: new BMap.Size(9,18),
 });
 
+var isLogin=<%=IsLogin%>
+
+
 $(document).ready(function(){
 	
+	if (!isLogin)
+	{
+		window.location.href = "/TicketSchedule/Zh/Login.jsp";
+	}
 	loadContent();
 	
 	var searchBoxM = new BMap.Autocomplete(

@@ -43,6 +43,7 @@ function getURLPara(key)
 }
 
 
+
 function formatDateSwitch(count)
 {
 	switch (count)

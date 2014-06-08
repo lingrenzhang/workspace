@@ -67,22 +67,23 @@ var __avatar_y = 0;
 var __avatar_w = 0;
 var __avatar_h = 0;
 
-
-$("#divBG").resizable().children().not("#divCuter").remove();
-var gbOS = $("#divBG").offset();
-$("#divCuter").resizable({ containment: "#divBG", aspectRatio: 1, minHeight: 20, minWidth: 20,
-    stop: function() {
-        _viewImg();
-    }
-}).draggable({
-    containment: "#divBG",
-    scroll: false,
-    stop: function() {
-        _viewImg();
-    }
-}).offset({ 
-	top: gbOS.top + 63, 
-	left: gbOS.left + 63 });   
+$(document).ready(function(){
+	$("#divBG").resizable().children().not("#divCuter").remove();
+	var gbOS = $("#divBG").offset();
+	$("#divCuter").resizable({ containment: "#divBG", aspectRatio: 1, minHeight: 20, minWidth: 20,
+	    stop: function() {
+	        _viewImg();
+	    }
+	}).draggable({
+	    containment: "#divBG",
+	    scroll: false,
+	    stop: function() {
+	        _viewImg();
+	    }
+	}).offset({ 
+		top: gbOS.top + 63, 
+		left: gbOS.left + 63 });   
+});
 
 function _uploadImg() {
     $.ajaxFileUpload({
@@ -169,8 +170,7 @@ function _uploadAvatarOK() {
             avatarFileName = "";
             __avatar_size = 1;
             setTimeout('$("#divSaveInfo").html("");', 1500);
-        }
-    )
+        });
     }
 }
 function _uploadAvatarCancel() {
@@ -180,7 +180,7 @@ function _uploadAvatarCancel() {
             $("#imgAvatarView").hide();
             avatarFileName = "";
             __avatar_size = 1;
-        })
+        });
         if (window.OnAvatarUploadCancel) {//External function
             OnAvatarUploadCancel();
         }
