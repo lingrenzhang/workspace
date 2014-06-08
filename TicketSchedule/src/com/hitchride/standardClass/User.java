@@ -140,12 +140,27 @@ public class User implements RideListener,UserInfo{
 		result.append("<div id=\"user_info\">");
 		result.append("Welcome "+ this.get_name());
 		result.append("</div>");
-        result.append("<div id=\"message_info\">");
-        result.append("<a href=\"/TicketSchedule/UserCenter.jsp\">You have "+this.numofnewMessage + " new messages</a>");
-        result.append("</div>");
+		if (this.get_uid()!=0)
+		{
+	        result.append("<div id=\"message_info\">");
+	        result.append("<a href=\"/TicketSchedule/UserCenter.jsp\">You have "+this.numofnewMessage + " new messages</a>");
+	        result.append("</div>");
+		}
+		else
+		{
+			 result.append("<div id=\"login\">");
+		     result.append("<a href=\"/TicketSchedule/Zh/Login.jsp\">Login please</a>");
+		     result.append("</div>");
+		}
         result.append("<div id=\"user_level\">");
         result.append("Level: "+ this.get_userLevel());
         result.append("</div>");
+        if (this.get_uid()!=0)
+        {
+	        result.append("<div id=\"logout\">");
+	        result.append("<a href='/TicketSchedule/servlet/Logout?uid="+this.get_uid()+"'>Logout</a>");
+	        result.append("</div>");
+        }
 
 		return result.toString();
 	}

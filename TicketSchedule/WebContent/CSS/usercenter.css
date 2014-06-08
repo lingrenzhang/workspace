@@ -156,3 +156,8 @@ color: #ffffff;
 border-color: #0077cc;
 background-color: #0066cc;
 }
+
+#UserCenter #content_wrapper .inner_content_wrapper #content_wrapper
+{
+	margin-top: 0px;
+}

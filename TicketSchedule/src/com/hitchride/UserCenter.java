@@ -46,10 +46,21 @@ public class UserCenter extends HttpServlet {
 			boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
 			if (!islogin)
 			{
+				if (request.getParameter("language").equalsIgnoreCase("ZH"))
+				{
+					request.getSession().setAttribute("fromLocation", "/TicketSchedule/Zh/UserCenter.jsp");
+					request.getSession().setAttribute("queryString", request.getQueryString());
+					request.getSession().setMaxInactiveInterval(60*120);
+					response.sendRedirect("/TicketSchedule/Zh/Login.jsp");
+				}
+				else
+				{	
 				request.getSession().setAttribute("fromLocation", "/TicketSchedule/UserCenter.jsp");
 				request.getSession().setAttribute("queryString", request.getQueryString());
 				request.getSession().setMaxInactiveInterval(60*120);
 				response.sendRedirect("/TicketSchedule/Login.jsp");
+				}
+				
 			}
 			else
 			{
