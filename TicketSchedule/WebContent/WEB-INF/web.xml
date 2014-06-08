@@ -263,4 +263,14 @@
     <servlet-name>Logout</servlet-name>
     <url-pattern>/servlet/Logout</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateTMiddlePoint</display-name>
+    <servlet-name>UpdateTMiddlePoint</servlet-name>
+    <servlet-class>com.hitchride.UpdateTMiddlePoint</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateTMiddlePoint</servlet-name>
+    <url-pattern>/servlet/UpdateTMiddlePoint</url-pattern>
+  </servlet-mapping>
 </web-app>

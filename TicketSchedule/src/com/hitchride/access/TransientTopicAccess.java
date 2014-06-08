@@ -259,4 +259,97 @@ public class TransientTopicAccess {
 		}
 		return result;
 	}
+	
+	public static boolean removeMiddleP(int trid,int mid)
+	{
+		boolean result=false;
+		TransientTopic ttopic = new TransientTopic(trid);
+		try
+		{
+			Statement sql;
+			getConnection();
+			 
+			sql=objConn.createStatement();
+		
+			ResultSet rs= (ResultSet) sql.executeQuery("select * from transientTopic where transientRideId="+trid);
+			if (rs.next())
+			{
+				ttopic.nmiddlePoints = rs.getInt("nmiddlePoints");
+				for(int i=1;i<=ttopic.nmiddlePoints;i++)
+				{
+					String addr = rs.getString("middle"+i+"Faddr");
+					double lat = rs.getDouble("middle"+i+"Lat");
+					double lng = rs.getDouble("middle"+i+"Lng");
+					GeoInfo geoinfo = new GeoInfo(addr,lat,lng);
+					ttopic.middle[i-1]=geoinfo;
+				}
+				ttopic.nParticipant = rs.getInt("nParticipant");
+				for (int i=1;i<=ttopic.nParticipant;i++)
+				{
+					ttopic.partiuid[i-1]=rs.getInt("partiuid"+i);
+					ttopic.parti[i-1]=(User) AllUsers.getUsers().getUser(ttopic.partiuid[i-1]);
+				}
+			}
+			else
+			{
+				return false;
+			}
+			result = ttopic.deleteMiddlePoint(mid);
+			ttopic.updateDB();
+		}catch (java.lang.ClassNotFoundException e){
+			System.err.println("ClassNotFoundException:"+e.getMessage());
+		}
+		catch (SQLException e)
+		{
+			System.err.println("SQLException:"+e.getMessage());
+		}
+		return result;
+		
+	}
+	
+	public static boolean addMiddleP(int trid,GeoInfo geo)
+	{
+		boolean result=false;
+		TransientTopic ttopic = new TransientTopic(trid);
+		try
+		{
+			Statement sql;
+			getConnection();
+			 
+			sql=objConn.createStatement();
+		
+			ResultSet rs= (ResultSet) sql.executeQuery("select * from transientTopic where transientRideId="+trid);
+			if (rs.next())
+			{
+				ttopic.nmiddlePoints = rs.getInt("nmiddlePoints");
+				for(int i=1;i<=ttopic.nmiddlePoints;i++)
+				{
+					String addr = rs.getString("middle"+i+"Faddr");
+					double lat = rs.getDouble("middle"+i+"Lat");
+					double lng = rs.getDouble("middle"+i+"Lng");
+					GeoInfo geoinfo = new GeoInfo(addr,lat,lng);
+					ttopic.middle[i-1]=geoinfo;
+				}
+				ttopic.nParticipant = rs.getInt("nParticipant");
+				for (int i=1;i<=ttopic.nParticipant;i++)
+				{
+					ttopic.partiuid[i-1]=rs.getInt("partiuid"+i);
+					ttopic.parti[i-1]=(User) AllUsers.getUsers().getUser(ttopic.partiuid[i-1]);
+				}
+			}
+			else
+			{
+				return false;
+			}
+			result = ttopic.addMiddlePoint(geo);
+			ttopic.updateDB();
+		}catch (java.lang.ClassNotFoundException e){
+			System.err.println("ClassNotFoundException:"+e.getMessage());
+		}
+		catch (SQLException e)
+		{
+			System.err.println("SQLException:"+e.getMessage());
+		}
+		return result;
+	}
 }

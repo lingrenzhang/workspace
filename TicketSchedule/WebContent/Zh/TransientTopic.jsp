@@ -70,6 +70,9 @@ var imagem = new BMap.Icon(
 
 var isLogin=<%=IsLogin%>;
 
+//
+var mAddr;
+var mLat,mLng;
 
 $(document).ready(function(){
 	
@@ -79,26 +82,7 @@ $(document).ready(function(){
 	}
 	loadContent();
 	
-	var searchBoxM = new BMap.Autocomplete(
-			{"input" : "addMiddle",
-			 "location" : map});
-	
-	searchBoxM.addEventListener("onconfirm",function(e){
-		var _value = e.item.value;
-		myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
-		function myFun(){
-			var mmarker;
-			if (mmarker!=null)
-			{
-				map.removeOverlay(mmarker);
-			}
-			point = new BMap.Point(local.getResults().getPoi(0).point.lng,local.getResults().getPoi(0).point.lat);
-			mmarker = new BMap.Marker(point,{icon: imagee});
-			map.addOverlay(mmarker);
-		}
-		var local = new BMap.LocalSearch(map,{onSearchComplete : myFun});
-		local.search(myValue);
-	});
+	bindAutoComplete();
 	
 	var omarker;
 	var dmarker;
@@ -260,9 +244,9 @@ function loadMiddle()
 	middlestring = middlestring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"途经： "+"<br>";
 	for (i=0;i<nmp;i++)
 	{
-		middlestring= middlestring+ "<img src=\"/TicketSchedule/Picture/smallminus.jpg\" id=deleteButton"+i+" onClick=deleteMiddlePoint("+i+") />"+mp[i]._formatedAddr+"<br>";
+		middlestring= middlestring+ "<a href='javascript:deleteMiddlePoint("+i+")'><img src=\"/TicketSchedule/Picture/smallminus.jpg\" /></a>"+mp[i]._formatedAddr+"<br>";
 	}
-	middlestring = middlestring + "<img src=\"/TicketSchedule/Picture/smallplus.jpg\" id=addButton"+i+" onClick=addMiddlePoint()/> <input id=addMiddle></input>";
+	middlestring = middlestring + "<a href='javascript:addMiddlePoint("+i+")'><img src=\"/TicketSchedule/Picture/smallplus.jpg\" /></a> <input id=addMiddle></input>";
 	document.getElementById("middlepoint").innerHTML=middlestring;
 }
 
@@ -310,12 +294,41 @@ function loadParti()
 <script>
 function addMiddlePoint()
 {
-	alert("Not implemented add mp");
+	if (mLat==null)
+	{
+		
+	}
+	else
+	{	
+		var trid = getURLPara("trId");
+		var url = "/TicketSchedule/servlet/UpdateTMiddlePoint?trId="+trid;
+		url = url+"&mAddr="+mAddr;
+		url = url+"&mLat="+mLat;
+		url = url+"&mLng="+mLng;
+		url = url+"&method=insert";
+		getJson(url);
+		loadContent();
+		loadMiddle();
+		bindAutoComplete();
+	}
 }
 
 function deleteMiddlePoint(id)
 {
-	alert("Not implemented delete mp");
+	nmp=nmp-1;
+	var deleteId=id;
+	for(i=id;i<5;i++)
+	{
+		mp[i]=mp[i+1];
+	}
+	loadMiddle();
+	bindAutoComplete();
+	
+	var trid = getURLPara("trId");
+	var url = "/TicketSchedule/servlet/UpdateTMiddlePoint?trId="+trid;
+	url = url+"&deleteId="+deleteId;
+	url = url+"&method=delete";
+	getJson(url);
 	
 }
 
@@ -349,6 +362,33 @@ function addUser(number)
 	loadParti();
 }
 
+function bindAutoComplete()
+{
+	var searchBoxM = new BMap.Autocomplete(
+			{"input" : "addMiddle",
+			 "location" : map});
+	
+	searchBoxM.addEventListener("onconfirm",function(e){
+		var _value = e.item.value;
+		myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
+		function myFun(){
+			var mmarker;
+			if (mmarker!=null)
+			{
+				map.removeOverlay(mmarker);
+			}
+			point = new BMap.Point(local.getResults().getPoi(0).point.lng,local.getResults().getPoi(0).point.lat);
+			mmarker = new BMap.Marker(point,{icon: imagee});
+			map.addOverlay(mmarker);
+			
+			mLat=point.lat;
+			mLng=point.lng;
+			mAddr=myValue;
+		}
+		var local = new BMap.LocalSearch(map,{onSearchComplete : myFun});
+		local.search(myValue);
+	});
+}
 function updateOk(result)
 {
 	alert(result);
