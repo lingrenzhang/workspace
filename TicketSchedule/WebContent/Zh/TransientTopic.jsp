@@ -12,6 +12,10 @@
 <% 
 	String IsLogin =(String) request.getSession().getAttribute("IsLogin");
 	User user= (User) request.getSession().getAttribute("user");
+	if (user==null)
+	{
+		user=new User();  //Prevent null pointer error.
+	}
 	Boolean isOwnerMode = (Boolean) request.getAttribute("isOwnerMode");
 	TransientRide tranRide = (TransientRide) request.getSession().getAttribute("tranRide");
 %>
@@ -64,14 +68,14 @@ var imagem = new BMap.Icon(
 		anchor: new BMap.Size(9,18),
 });
 
-var isLogin=<%=IsLogin%>
+var isLogin=<%=IsLogin%>;
 
 
 $(document).ready(function(){
 	
 	if (!isLogin)
 	{
-		window.location.href = "/TicketSchedule/Zh/Login.jsp";
+		window.location.href = "/TicketSchedule/Zh/Login.jsp?";
 	}
 	loadContent();
 	

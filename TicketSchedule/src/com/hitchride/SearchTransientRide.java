@@ -43,7 +43,7 @@ public class SearchTransientRide extends HttpServlet {
 		boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
 		if (!islogin)
 		{
-			request.getSession().setAttribute("fromLocation", "/TicketSchedule/UserCenter.jsp");
+			request.getSession().setAttribute("fromLocation", "/TicketSchedule/Zh/SearchTransientRide.jsp");
 			request.getSession().setAttribute("queryString", request.getQueryString());
 			request.getSession().setMaxInactiveInterval(60*120);
 			response.sendRedirect("/TicketSchedule/Login.jsp");
@@ -132,7 +132,7 @@ public class SearchTransientRide extends HttpServlet {
 		boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
 		if (!islogin)
 		{
-			request.getSession().setAttribute("fromLocation", "/TicketSchedule/UserCenter.jsp");
+			request.getSession().setAttribute("fromLocation", "/TicketSchedule/Zh/SearchTransientRide.jsp");
 			request.getSession().setAttribute("queryString", request.getQueryString());
 			request.getSession().setMaxInactiveInterval(60*120);
 			response.sendRedirect("/TicketSchedule/Login.jsp");

@@ -45,7 +45,7 @@ public class TransientRideCenter extends HttpServlet {
 		boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
 		if (!islogin)
 		{
-			request.getSession().setAttribute("fromLocation", "/TicketSchedule/servlet/RideCenter");
+			request.getSession().setAttribute("fromLocation", "/TicketSchedule/Zh/TransientTopic.jsp");
 			request.getSession().setAttribute("queryString", request.getQueryString());
 			request.getSession().setMaxInactiveInterval(60*120);
 			response.sendRedirect("/TicketSchedule/Login.jsp");
