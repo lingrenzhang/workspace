@@ -45,6 +45,8 @@ var basicbounds;
 
 var nmp= 0 ;
 var mp= new Array();
+var mmarkers= new Array();
+var mmarker;
 
 var nparti = 0;
 var parti = new Array();
@@ -81,8 +83,6 @@ $(document).ready(function(){
 		window.location.href = "/TicketSchedule/Zh/Login.jsp?";
 	}
 	loadContent();
-	
-	bindAutoComplete();
 	
 	var omarker;
 	var dmarker;
@@ -245,9 +245,18 @@ function loadMiddle()
 	for (i=0;i<nmp;i++)
 	{
 		middlestring= middlestring+ "<a href='javascript:deleteMiddlePoint("+i+")'><img src=\"/TicketSchedule/Picture/smallminus.jpg\" /></a>"+mp[i]._formatedAddr+"<br>";
+		mmarkers[i] = new BMap.Marker(new BMap.Point(mp[i]._lon,mp[i]._lat),{icon: imagee});
+		map.addOverlay(mmarkers[i]);
 	}
-	middlestring = middlestring + "<a href='javascript:addMiddlePoint("+i+")'><img src=\"/TicketSchedule/Picture/smallplus.jpg\" /></a> <input id=addMiddle></input>";
+	if(i!=4) //Backbone support 5. Use 4 for display now.
+	{
+		middlestring = middlestring + "<a href='javascript:addMiddlePoint("+i+")'><img src=\"/TicketSchedule/Picture/smallplus.jpg\" /></a> <input id=addMiddle></input>";
+	}
 	document.getElementById("middlepoint").innerHTML=middlestring;
+	if (i!=4)
+	{
+		bindAutoComplete();
+	}
 }
 
 function loadParti()
@@ -279,7 +288,7 @@ function loadParti()
 		partistring = partistring + "<span class=\"passenger\"></span></div></div>";
 	}
 	
-	if (!isOwner && !userAlreadyExist)
+	if (!isOwner && !userAlreadyExist && i!=5)
 	{
 		partistring = partistring + "<div id=parti"+i+"><a href='javascript:addUser("+i+")' class=deleteParti><img src=\"/TicketSchedule/Picture/smallplus.jpg\"></img></a>";
 		partistring = partistring + "<div class=\"userpic\">";
@@ -294,6 +303,11 @@ function loadParti()
 <script>
 function addMiddlePoint()
 {
+	for (i=0;i<nmp;i++)
+	{
+		map.removeOverlay(mmarkers[i]);
+		map.removeOverlay(mmarker);
+	}
 	if (mLat==null)
 	{
 		
@@ -309,20 +323,25 @@ function addMiddlePoint()
 		getJson(url);
 		loadContent();
 		loadMiddle();
-		bindAutoComplete();
+		
 	}
 }
 
 function deleteMiddlePoint(id)
 {
+	for (i=0;i<nmp;i++)
+	{
+		map.removeOverlay(mmarkers[i]);
+	}
 	nmp=nmp-1;
+	
 	var deleteId=id;
 	for(i=id;i<5;i++)
 	{
 		mp[i]=mp[i+1];
 	}
 	loadMiddle();
-	bindAutoComplete();
+
 	
 	var trid = getURLPara("trId");
 	var url = "/TicketSchedule/servlet/UpdateTMiddlePoint?trId="+trid;
@@ -372,7 +391,7 @@ function bindAutoComplete()
 		var _value = e.item.value;
 		myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
 		function myFun(){
-			var mmarker;
+			
 			if (mmarker!=null)
 			{
 				map.removeOverlay(mmarker);
