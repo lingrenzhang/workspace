@@ -5,7 +5,7 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Register</title>
+<title>注册</title>
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/style.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/register.css" type="text/css" rel="stylesheet">
@@ -54,7 +54,6 @@ function validForm(){
 			alert(result);
 		}
 		return false;
-		
     }
 }
 
@@ -201,84 +200,79 @@ function _uploadAvatarCancel() {
 <div id="content_wrapper">
 	<div id="content_container" class="clearfix">
 		<div id="wide_column_left" class="newAddRideStyle">
-			<form action="/TicketSchedule/servlet/Register" method="Post" id="add_ride" class="standard requires_login_results" onkeypress="if(event.keyCode==13||event.which==13){return false;}" onsubmit="return validForm()">
+			<form action="/TicketSchedule/servlet/Register" method="Post" id="add_ride" class="standard requires_login_results" onkeypress="if(event.keyCode==13||event.which==13){return false;}" onsubmit="return validForm()" accept-charset="UTF-8">
 				<fieldset id="reg_fld">
 					<dl id="reg_dl">
 						<dt>
 							<label class="register-label">
 								<span class="req">*</span>
-								Username
+								用户名
 							</label>
 						</dt>
 						<dd class="emailAddress" id="emailAddress">
-							<input type="text" class="required" placeholder="emailAddress" name="emailAddress" id="emailAddress" maxlength="50"  autocomplete="off">
+							<input type="text" class="required" placeholder="邮箱" name="emailAddress" id="emailAddress" maxlength="50"  autocomplete="off">
                         </dd>
                         
                         <dt>
                         	<label class="register-label">
 								<span class="req">*</span>
-								Password
+								密码
 							</label>
 						</dt>
 						<dd>
-                        	<input type="password" class="required" placeholder="password" name="password" id="password" maxlength="50"  autocomplete="off">
+                        	<input type="password" class="required" placeholder="密码" name="password" id="password" maxlength="50"  autocomplete="off">
                         </dd>
                         
                         <dt>
                         	<label class="register-label">
 								<span class="req">*</span>
-								Confirm Password
+								确认密码
 							</label>
 						</dt>
                         <dd>
-                        	<input type="password" class="required" placeholder="re-enter password" name="repassword" id="repassword" maxlength="50"  autocomplete="off">
+                        	<input type="password" class="required" placeholder="再次输入密码" name="repassword" id="repassword" maxlength="50"  autocomplete="off">
                         </dd>
-                        
-                        
-                        <dt>
-                        	<label class="register-label">
-								<span class="req">*</span>
-								Given Name
-							</label>
-						</dt>
-                        <dd>
-                       		<input type="text" class="required" placeholder="Micheal" name="givenname" id="givenname" maxlength="100" autocomplete="off">
-                        	<p>Enter your given name</p>
-                	    </dd>
-                	    
 						<dt>
                         	<label class="register-label">
 								<span class="req">*</span>
-								Family name/Surname
+								姓
 							</label>
 						</dt>
                         <dd>
-                       		<input type="text" class="required" placeholder="Jordan" name="surname" id="surname" maxlength="100" autocomplete="off">
-                        	<p>Enter your family name</p>
+                       		<input type="text" class="required" placeholder="你的姓" name="surname" id="surname" maxlength="100" autocomplete="off">
+                	    </dd>
+                	    <dt>
+                        	<label class="register-label">
+								<span class="req">*</span>
+								名
+							</label>
+						</dt>
+                        <dd>
+                       		<input type="text" class="required" placeholder="你的名字" name="givenname" id="givenname" maxlength="100" autocomplete="off">
                 	    </dd>
                 	    <dt>
 							<label class="register-label">
-								Cell Phone
+								电话
 							</label>
 						</dt>
 						<dd>
-							<input type="text" class="required" placeholder="Cell Phone" name="cellphone" id="cellphone" maxlength="15" autocomplete="off">
-							<p>Length 11 cellphone number</p>
+							<input type="text" class="required" placeholder="手机号码" name="cellphone" id="cellphone" maxlength="15" autocomplete="off">
+							<p>11位手机号码</p>
 						</dd>
 						<dt>
 							<label class="register-label">
-								Authenication Code
+								授权码
 							</label>
 						</dt>
 						<dd>
-							<input type="text" class="optional" placeholder="Auth Code" name="authcode" id="authcode" maxlength="10" autocomplete="off">
-							<p>Length 9 auth code</p>
+							<input type="text" class="optional" placeholder="abcdefgi" name="authcode" id="authcode" maxlength="10" autocomplete="off">
+							<p>9位授权码</p>
 						</dd>
 						
                 	    <dt>
                         	<label class="register-label">
 								<span class="req">*</span>
-								Upload Picture
+								上传头像
 							</label>
 						</dt>
                         <dd>
@@ -312,7 +306,7 @@ function _uploadAvatarCancel() {
 				    </div>
 				</div>
 			
-				<input type="submit" value = "Register" id="register"></input>
+				<input type="submit" value = "注册" id="register"></input>
 				
 				</fieldset>
 				<input type="text" class="hidden" id="avatarID" name="avatarID" value=""/>

@@ -11,61 +11,79 @@ import javax.servlet.http.HttpSession;
 import com.hitchride.access.UserTbAccess;
 import com.hitchride.global.AllUsers;
 import com.hitchride.standardClass.User;
+
 /**
  * Servlet implementation class Register
  */
 public class Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Register() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public Register() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		UserTbAccess  userTb = new UserTbAccess();
-		String userName = request.getParameter("emailAddress");
+		UserTbAccess userTb = new UserTbAccess();
+		String userName = new String(request.getParameter("emailAddress")
+				.getBytes("iso-8859-1"), "UTF-8");
 		int groupId = Integer.parseInt(request.getParameter("groupID"));
 		String password = request.getParameter("password");
-		String givenname = request.getParameter("givenname");
-		String surname = request.getParameter("surname");
-		String address = request.getParameter("address");
-		String avatarID = request.getParameter("avatarID"); //Not required field
+		String givenname = new String(request.getParameter("givenname")
+				.getBytes("iso-8859-1"), "UTF-8");
+		String surname = new String(request.getParameter("surname").getBytes(
+				"iso-8859-1"), "UTF-8");
+		System.out.println("givenname");
+		System.out.println(givenname);
+		String address;
+		if (request.getParameter("address") != null) {
+			address = new String(request.getParameter("address").getBytes(
+					"iso-8859-1"), "UTF-8");
+		} else {
+			address = "";
+		}
+		String avatarID = request.getParameter("avatarID"); // Not required
+															// field
 		String cellphone = request.getParameter("cellphone");
-		if (avatarID==null)
-			avatarID="default.jpg";
-		userTb.insertValue(userName,groupId, password, givenname, surname, address, 1,avatarID,cellphone);
+		if (avatarID == null)
+			avatarID = "default.jpg";
+		userTb.insertValue(userName, groupId, password, givenname, surname,
+				address, 1, avatarID, cellphone);
 		int userid = userTb.getIDbyName(givenname);
 		User user = new User();
-		
+
 		user.set_groupId(groupId);
 		user.set_userLevel(1);
 		user.set_uid(userid);
 		user.set_emailAddress(userName);
 		user.set_name(givenname);
-		
+
 		AllUsers.getUsers()._users.put(userid, user);
 		AllUsers.getUsers().addActiveUser(userid);
 		HttpSession session = request.getSession();
 		session.setAttribute("IsLogin", "true");
 		session.setAttribute("user", user);
-					
-		request.getSession().setMaxInactiveInterval(60*120);
-		response.sendRedirect("/TicketSchedule/UserCenter.jsp");
+
+		request.getSession().setMaxInactiveInterval(60 * 120);
+		response.sendRedirect("/TicketSchedule/Zh/UserCenter.jsp");
 	}
 
 }
