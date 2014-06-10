@@ -62,6 +62,14 @@ border-color: #ABBDB9;
 	padding: 10px 0px 0px 10px;
 }
 
+input
+{
+	width: 250px;
+	height: 20px;
+	margin-right: 20px;
+}
+
+
 .passenger_box
 {
 	position: absolute;
@@ -131,16 +139,12 @@ font-size: 12px;
 .inner_content
 {
 	position: absolute;
+	width: 360px;
 	left: 120px;
 	top:40px;
 }
 
 
-#addMiddle
-{
-	width: 200px;
-	margin-right: 20px;
-}
 
 #addMiddleButton
 {

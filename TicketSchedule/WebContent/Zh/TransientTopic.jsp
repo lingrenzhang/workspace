@@ -77,7 +77,6 @@ var mAddr;
 var mLat,mLng;
 
 $(document).ready(function(){
-	
 	if (!isLogin)
 	{
 		window.location.href = "/TicketSchedule/Zh/Login.jsp?";
@@ -196,8 +195,6 @@ function loadContent()
 	nparti = result.ttopic.nParticipant;
 	partiuid = result.ttopic.partiuid;
 	parti = result.ttopic.parti;
-	
-
 }
 
 function loadRide()
@@ -342,13 +339,11 @@ function deleteMiddlePoint(id)
 	}
 	loadMiddle();
 
-	
 	var trid = getURLPara("trId");
 	var url = "/TicketSchedule/servlet/UpdateTMiddlePoint?trId="+trid;
 	url = url+"&deleteId="+deleteId;
 	url = url+"&method=delete";
 	getJson(url);
-	
 }
 
 function deleteUser(number)

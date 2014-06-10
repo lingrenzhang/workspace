@@ -19,7 +19,9 @@ function getJson(url)
     {// code for IE6, IE5
       xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
     }
+    url=encodeURI(url);
 	xmlhttp.open("GET",url,false);
+	xmlhttp.setRequestHeader("Cache-Control","no-cache");
 	xmlhttp.send();
 	return xmlhttp.responseText;
 }
