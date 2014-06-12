@@ -82,7 +82,9 @@ public class UserTbAccess {
 				
 				
 				sql=objConn.createStatement();
-				String query = "select * from userTb";
+				sql.setFetchSize(100);
+				//String query = "select * from userTb";
+				String query ="select * from userTb where userid>0";
 				result = sql.executeQuery(query);
 
         	}
