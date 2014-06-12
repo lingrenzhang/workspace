@@ -15,13 +15,13 @@ import org.json.JSONObject;
 
 
 import com.hitchride.access.CarpoolTbAccess;
-import com.mysql.jdbc.ResultSet;
+import com.mysql.jdbc.ResultSetImpl;
 
 public class UpdateDistDura {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException, JSONException
 	{
-		ResultSet rs;
+		ResultSetImpl rs;
 		rs = CarpoolTbAccess.listAllGeoPosi();
 		int counter=0;
 		//for(int i=0; i<1000; i++){

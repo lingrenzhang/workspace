@@ -10,7 +10,7 @@ import com.hitchride.global.SQLServerConf;
 import com.hitchride.standardClass.GeoInfo;
 import com.hitchride.standardClass.TransientTopic;
 import com.hitchride.standardClass.User;
-import com.mysql.jdbc.ResultSet;
+import com.mysql.jdbc.ResultSetImpl;
 
 public class TransientTopicAccess {
 	public static Connection objConn; //This reference is used for batch job.
@@ -131,7 +131,7 @@ public class TransientTopicAccess {
 			 
 			sql=objConn.createStatement();
 		
-			ResultSet rs= (ResultSet) sql.executeQuery("select * from transientTopic where transientRideId="+trid);
+			ResultSetImpl rs= (ResultSetImpl) sql.executeQuery("select * from transientTopic where transientRideId="+trid);
 			if (rs.next())
 			{
 				ttopic.nmiddlePoints = rs.getInt("nmiddlePoints");
@@ -178,7 +178,7 @@ public class TransientTopicAccess {
 			 
 			sql=objConn.createStatement();
 		
-			ResultSet rs= (ResultSet) sql.executeQuery("select * from transientTopic where transientRideId="+trid);
+			ResultSetImpl rs= (ResultSetImpl) sql.executeQuery("select * from transientTopic where transientRideId="+trid);
 			if (rs.next())
 			{
 				ttopic.nmiddlePoints = rs.getInt("nmiddlePoints");
@@ -225,7 +225,7 @@ public class TransientTopicAccess {
 			 
 			sql=objConn.createStatement();
 		
-			ResultSet rs= (ResultSet) sql.executeQuery("select * from transientTopic where transientRideId="+trid);
+			ResultSetImpl rs= (ResultSetImpl) sql.executeQuery("select * from transientTopic where transientRideId="+trid);
 			if (rs.next())
 			{
 				ttopic.nmiddlePoints = rs.getInt("nmiddlePoints");
@@ -271,7 +271,7 @@ public class TransientTopicAccess {
 			 
 			sql=objConn.createStatement();
 		
-			ResultSet rs= (ResultSet) sql.executeQuery("select * from transientTopic where transientRideId="+trid);
+			ResultSetImpl rs= (ResultSetImpl) sql.executeQuery("select * from transientTopic where transientRideId="+trid);
 			if (rs.next())
 			{
 				ttopic.nmiddlePoints = rs.getInt("nmiddlePoints");
@@ -318,7 +318,7 @@ public class TransientTopicAccess {
 			 
 			sql=objConn.createStatement();
 		
-			ResultSet rs= (ResultSet) sql.executeQuery("select * from transientTopic where transientRideId="+trid);
+			ResultSetImpl rs= (ResultSetImpl) sql.executeQuery("select * from transientTopic where transientRideId="+trid);
 			if (rs.next())
 			{
 				ttopic.nmiddlePoints = rs.getInt("nmiddlePoints");

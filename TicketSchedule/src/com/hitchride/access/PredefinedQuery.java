@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.hitchride.global.SQLServerConf;
-import com.mysql.jdbc.ResultSet;
+import com.mysql.jdbc.ResultSetImpl;
 
 //PredinedQuery, something like stored procedure from functional consideration
 //Keep separate to better view the typical call as (they may need authority?)
@@ -42,7 +42,7 @@ public class PredefinedQuery {
 			getConnection();
 			
 			sql=objConn.createStatement();
-			ResultSet rs = (ResultSet) sql.executeQuery("select GroupAuthLevel from usergroup where groupid="+groupId);
+			ResultSetImpl rs = (ResultSetImpl) sql.executeQuery("select GroupAuthLevel from usergroup where groupid="+groupId);
 			if (rs.next()){
 				result = rs.getInt(1);
 			}

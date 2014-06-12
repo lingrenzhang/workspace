@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.hitchride.global.SQLServerConf;
-import com.mysql.jdbc.ResultSet;
+import com.mysql.jdbc.ResultSetImpl;
 
 
 
@@ -93,21 +93,21 @@ public class CarpoolTbAccess {
 		}
 	}
 	
-	public static ResultSet listAllLocation() throws ClassNotFoundException, SQLException
+	public static ResultSetImpl listAllLocation() throws ClassNotFoundException, SQLException
 	{
-		ResultSet rs;
+		ResultSetImpl rs;
 		Connection con =CarpoolTbAccess.getConnection();
 		Statement sql=(Statement) con.createStatement();
-		rs=(ResultSet) sql.executeQuery("select recordId,origCity,origAddr,destCity,destAddr from carpoolTb");
+		rs=(ResultSetImpl) sql.executeQuery("select recordId,origCity,origAddr,destCity,destAddr from carpoolTb");
 		return rs;
 	}
 	
-	public static ResultSet listAllGeoPosi() throws ClassNotFoundException, SQLException
+	public static ResultSetImpl listAllGeoPosi() throws ClassNotFoundException, SQLException
 	{
-		ResultSet rs;
+		ResultSetImpl rs;
 		Connection con =CarpoolTbAccess.getConnection();
 		Statement sql=(Statement) con.createStatement();
-		rs=(ResultSet) sql.executeQuery("select recordId,origLat,origLon,destLat,destLon from carpoolTb");
+		rs=(ResultSetImpl) sql.executeQuery("select recordId,origLat,origLon,destLat,destLon from carpoolTb");
 		return rs;
 	}
 	
@@ -207,21 +207,21 @@ public class CarpoolTbAccess {
 		CarpoolTbAccess.insertValue("xiyao", true, true, 67, "CA", "SanJose", "origNbhd", "origAddr", "destState", "destCity", "destNbhd", "destAddr", "0.33", "07:00:00", "00:15:00", "18:00:00", "00:15:00", true);		
 	}
 
-	public static ResultSet getForMessageBox(String recordId) throws ClassNotFoundException, SQLException
+	public static ResultSetImpl getForMessageBox(String recordId) throws ClassNotFoundException, SQLException
 	{
-		ResultSet rs;
+		ResultSetImpl rs;
 		Connection con =CarpoolTbAccess.getConnection();
 		Statement sql=(Statement) con.createStatement();
-		rs=(ResultSet) sql.executeQuery("select recordId,origCity,origAddr,destCity,destAddr,userName,participants from carpoolTb where recordId="+recordId);
+		rs=(ResultSetImpl) sql.executeQuery("select recordId,origCity,origAddr,destCity,destAddr,userName,participants from carpoolTb where recordId="+recordId);
 		return rs;
 	}
 	
-	public static ResultSet rideInitialLoad() throws ClassNotFoundException, SQLException
+	public static ResultSetImpl rideInitialLoad() throws ClassNotFoundException, SQLException
 	{
-		ResultSet rs;
+		ResultSetImpl rs;
 		Connection con =CarpoolTbAccess.getConnection();
 		Statement sql=(Statement) con.createStatement();
-		rs=(ResultSet) sql.executeQuery("select * from carpoolTb");
+		rs=(ResultSetImpl) sql.executeQuery("select * from carpoolTb");
 		return rs;
 	}
 	

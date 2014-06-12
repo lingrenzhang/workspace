@@ -7,7 +7,7 @@ import java.sql.Date;
 import com.hitchride.access.TopicRideAccess;
 import com.hitchride.access.TransientRideAccess;
 import com.hitchride.global.AllUsers;
-import com.mysql.jdbc.ResultSet;
+import com.mysql.jdbc.ResultSetImpl;
 
 //Typically load temporide directly. Not keeping persistent at memory.
 public class TransientRide implements PersistentStorage{
@@ -46,8 +46,8 @@ public class TransientRide implements PersistentStorage{
   		//TODO: Think about a way for the transformation.
   	}
   	
-  	//Initialize from ResultSet
-  	public TransientRide(ResultSet rs)
+  	//Initialize from ResultSetImpl
+  	public TransientRide(ResultSetImpl rs)
   	{
   		try {
   			this.userId = rs.getInt("userId");

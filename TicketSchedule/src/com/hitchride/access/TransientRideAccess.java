@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.hitchride.global.SQLServerConf;
 import com.hitchride.standardClass.TransientRide;
-import com.mysql.jdbc.ResultSet;
+import com.mysql.jdbc.ResultSetImpl;
 
 public class TransientRideAccess {
 	public static Connection objConn; //This reference is used for batch job.
@@ -155,7 +155,7 @@ public class TransientRideAccess {
 			getConnection();
 			
 			sql=objConn.createStatement();
-			ResultSet rs=(ResultSet) sql.executeQuery("Select Max(transientRideId) from transientRide;");
+			ResultSetImpl rs=(ResultSetImpl) sql.executeQuery("Select Max(transientRideId) from transientRide;");
 			if (rs.next())
 			{
 				maxRideId = rs.getInt(1);
@@ -193,7 +193,7 @@ public class TransientRideAccess {
 			getConnection();
 			 
 			sql=objConn.createStatement();
-			ResultSet riders = (ResultSet) sql.executeQuery("select * from TransientRide where rideDate=\""+date+"\" order by ridetime");
+			ResultSetImpl riders = (ResultSetImpl) sql.executeQuery("select * from TransientRide where rideDate=\""+date+"\" order by ridetime");
 			int i=0;
 			while (riders.next() && i<100)
 			{
@@ -220,7 +220,7 @@ public class TransientRideAccess {
 			getConnection();
 			
 			sql=objConn.createStatement();
-			ResultSet ride = (ResultSet) sql.executeQuery("select * from TransientRide where transientRideId="+trId);
+			ResultSetImpl ride = (ResultSetImpl) sql.executeQuery("select * from TransientRide where transientRideId="+trId);
 
 			if (ride.next() )
 			{

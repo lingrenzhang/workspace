@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.hitchride.global.SQLServerConf;
-import com.mysql.jdbc.ResultSet;
+import com.mysql.jdbc.ResultSetImpl;
 
 public class UserGroupTbAccess {
 	//id char(20)
@@ -69,7 +69,7 @@ public class UserGroupTbAccess {
 			getConnection();
 			
 			sql=objConn.createStatement();
-			ResultSet rs = (ResultSet) sql.executeQuery("select groupid from UserGroup where authnicationCode='"+authCode+"'");
+			ResultSetImpl rs = (ResultSetImpl) sql.executeQuery("select groupid from UserGroup where authnicationCode='"+authCode+"'");
 			if(rs.next())
 			{
 				result = rs.getInt(1);

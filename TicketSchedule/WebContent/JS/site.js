@@ -19,6 +19,7 @@ function getJson(url)
     {// code for IE6, IE5
       xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
     }
+    url=url+"&t="+Math.random(); //IE cache issue. The no Cahche is not working somehow...
     url=encodeURI(url);
 	xmlhttp.open("GET",url,false);
 	xmlhttp.setRequestHeader("Cache-Control","no-cache");
