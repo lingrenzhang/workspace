@@ -53,8 +53,6 @@ public class Register extends HttpServlet {
 				.getBytes("iso-8859-1"), "UTF-8");
 		String surname = new String(request.getParameter("surname").getBytes(
 				"iso-8859-1"), "UTF-8");
-		System.out.println("givenname");
-		System.out.println(givenname);
 		String address;
 		if (request.getParameter("address") != null) {
 			address = new String(request.getParameter("address").getBytes(
