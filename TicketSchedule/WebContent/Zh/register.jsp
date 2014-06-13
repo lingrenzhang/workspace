@@ -1,15 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%
+String err = request.getParameter("err")==null?"": request.getParameter("err");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>注册</title>
-<link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
-<link href="/TicketSchedule/CSS/style.css" type="text/css" rel="stylesheet">
-<link href="/TicketSchedule/CSS/register.css" type="text/css" rel="stylesheet">
-<link href="/TicketSchedule/CSS/ui-lightness/jquery.ui.all.css" type="text/css" rel="stylesheet">
+<link href="/TicketSchedule/CSS/master.css" type="text/css"
+	rel="stylesheet">
+<link href="/TicketSchedule/CSS/style.css" type="text/css"
+	rel="stylesheet">
+<link href="/TicketSchedule/CSS/register.css" type="text/css"
+	rel="stylesheet">
+<link href="/TicketSchedule/CSS/ui-lightness/jquery.ui.all.css"
+	type="text/css" rel="stylesheet">
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
 <script src="/TicketSchedule/JS/jquery-ui-1.8.13.custom.min.js"></script>
 <script src="/TicketSchedule/JS/ajaxFileUpload.js"></script>
@@ -191,108 +198,111 @@ function _uploadAvatarCancel() {
 
 </head>
 <body>
-<div id="header_wrap">
-	<div id="logo_wrap">
-		<div id="logo">
+	<div id="header_wrap">
+		<div id="logo_wrap">
+			<div id="logo"></div>
 		</div>
 	</div>
-</div>
-<div id="content_wrapper">
-	<div id="content_container" class="clearfix">
-		<div id="wide_column_left" class="newAddRideStyle">
-			<form action="/TicketSchedule/servlet/Register" method="Post" id="add_ride" class="standard requires_login_results" onkeypress="if(event.keyCode==13||event.which==13){return false;}" onsubmit="return validForm()" accept-charset="UTF-8">
-				<fieldset id="reg_fld">
-					<dl id="reg_dl">
-						<dt>
-							<label class="register-label">
-								<span class="req">*</span>
-								用户名
-							</label>
-						</dt>
-						<dd class="emailAddress" id="emailAddress">
-							<input type="text" class="required" placeholder="邮箱" name="emailAddress" id="emailAddress" maxlength="50"  autocomplete="off">
-                        </dd>
-                        
-                        <dt>
-                        	<label class="register-label">
-								<span class="req">*</span>
-								密码
-							</label>
-						</dt>
-						<dd>
-                        	<input type="password" class="required" placeholder="密码" name="password" id="password" maxlength="50"  autocomplete="off">
-                        </dd>
-                        
-                        <dt>
-                        	<label class="register-label">
-								<span class="req">*</span>
-								确认密码
-							</label>
-						</dt>
-                        <dd>
-                        	<input type="password" class="required" placeholder="再次输入密码" name="repassword" id="repassword" maxlength="50"  autocomplete="off">
-                        </dd>
-						<dt>
-                        	<label class="register-label">
-								<span class="req">*</span>
-								姓
-							</label>
-						</dt>
-                        <dd>
-                       		<input type="text" class="required" placeholder="你的姓" name="surname" id="surname" maxlength="100" autocomplete="off">
-                	    </dd>
-                	    <dt>
-                        	<label class="register-label">
-								<span class="req">*</span>
-								名
-							</label>
-						</dt>
-                        <dd>
-                       		<input type="text" class="required" placeholder="你的名字" name="givenname" id="givenname" maxlength="100" autocomplete="off">
-                	    </dd>
-                	    <dt>
-							<label class="register-label">
-								电话
-							</label>
-						</dt>
-						<dd>
-							<input type="text" class="required" placeholder="手机号码" name="cellphone" id="cellphone" maxlength="15" autocomplete="off">
-							<p>11位手机号码</p>
-						</dd>
-						<dt>
-							<label class="register-label">
-								授权码
-							</label>
-						</dt>
-						<dd>
-							<input type="text" class="optional" placeholder="abcdefgi" name="authcode" id="authcode" maxlength="10" autocomplete="off">
-							<p>9位授权码</p>
-						</dd>
-						
-                	    <dt>
-                        	<label class="register-label">
-								<span class="req">*</span>
-								上传头像
-							</label>
-						</dt>
-                        <dd>
-                        	 <input type="file" id="avatarFile" name="avatarFile" onchange="_uploadImg();">
-                	    </dd>
-                	    
-					</dl>
-					
-					<div id="divUploadAvatar">
-				    <div id="divContenter" style="display:none;">
-				        <div id="divBG">
-				            <div id="divCuter">
-				            </div>
-				        </div>
-				    </div>
-				    <div id="divAvatarInfo">
-				        <div id="divImgAvatar">
-				            <img id="imgAvatarView" alt="Avatar" style="display: none;" />
-				        </div>
-				        <!--  
+	<div id="content_wrapper">
+		<div id="content_container" class="clearfix">
+			<div id="wide_column_left" class="newAddRideStyle">
+				<form action="/TicketSchedule/servlet/Register" method="Post"
+					id="add_ride" class="standard requires_login_results"
+					onkeypress="if(event.keyCode==13||event.which==13){return false;}"
+					onsubmit="return validForm()" accept-charset="UTF-8">
+					<fieldset id="reg_fld">
+						<dl id="reg_dl">
+							<dt>
+								<label class="register-label"> <span class="req">*</span>
+									用户名
+								</label>
+							</dt>
+							<dd class="emailAddress" id="emailAddress">
+								<input type="text" class="required" placeholder="邮箱"
+									name="emailAddress" id="emailAddress" maxlength="50"
+									autocomplete="off"> <%= err.equals("existed_user")?"<p style=\"color:#FF0000;\">用户名已存在</p>":""%>
+							</dd>
+
+							<dt>
+								<label class="register-label"> <span class="req">*</span>
+									密码
+								</label>
+							</dt>
+							<dd>
+								<input type="password" class="required" placeholder="密码"
+									name="password" id="password" maxlength="50" autocomplete="off">
+							</dd>
+
+							<dt>
+								<label class="register-label"> <span class="req">*</span>
+									确认密码
+								</label>
+							</dt>
+							<dd>
+								<input type="password" class="required" placeholder="再次输入密码"
+									name="repassword" id="repassword" maxlength="50"
+									autocomplete="off">
+							</dd>
+							<dt>
+								<label class="register-label"> <span class="req">*</span>
+									姓
+								</label>
+							</dt>
+							<dd>
+								<input type="text" class="required" placeholder="你的姓"
+									name="surname" id="surname" maxlength="100" autocomplete="off">
+							</dd>
+							<dt>
+								<label class="register-label"> <span class="req">*</span>
+									名
+								</label>
+							</dt>
+							<dd>
+								<input type="text" class="required" placeholder="你的名字"
+									name="givenname" id="givenname" maxlength="100"
+									autocomplete="off">
+							</dd>
+							<dt>
+								<label class="register-label"> 电话 </label>
+							</dt>
+							<dd>
+								<input type="text" class="required" placeholder="手机号码"
+									name="cellphone" id="cellphone" maxlength="15"
+									autocomplete="off">
+								<p>11位手机号码</p>
+							</dd>
+							<dt>
+								<label class="register-label"> 授权码 </label>
+							</dt>
+							<dd>
+								<input type="text" class="optional" placeholder="abcdefgi"
+									name="authcode" id="authcode" maxlength="10" autocomplete="off">
+								<p>9位授权码</p>
+							</dd>
+
+							<dt>
+								<label class="register-label"> <span class="req">*</span>
+									上传头像
+								</label>
+							</dt>
+							<dd>
+								<input type="file" id="avatarFile" name="avatarFile"
+									onchange="_uploadImg();">
+							</dd>
+
+						</dl>
+
+						<div id="divUploadAvatar">
+							<div id="divContenter" style="display: none;">
+								<div id="divBG">
+									<div id="divCuter"></div>
+								</div>
+							</div>
+							<div id="divAvatarInfo">
+								<div id="divImgAvatar">
+									<img id="imgAvatarView" alt="Avatar" style="display: none;" />
+								</div>
+								<!--  
 				        <div id="divUploadTxt">
 				        	You can use left block to resize picture;
 				        </div>
@@ -303,18 +313,19 @@ function _uploadAvatarCancel() {
 				        <div id="divSaveInfo">
 				        </div>
 				        -->
-				    </div>
-				</div>
-			
-				<input type="submit" value = "注册" id="register"></input>
-				
-				</fieldset>
-				<input type="text" class="hidden" id="avatarID" name="avatarID" value=""/>
-				<input type="text" class="hidden" id="groupID" name="groupID" value=""/>
-			</form>
+							</div>
+						</div>
+
+						<input type="submit" value="注册" id="register"></input>
+
+					</fieldset>
+					<input type="text" class="hidden" id="avatarID" name="avatarID"
+						value="" /> <input type="text" class="hidden" id="groupID"
+						name="groupID" value="" />
+				</form>
+			</div>
 		</div>
 	</div>
-</div>
 
 </body>
 </html>
