@@ -26,6 +26,7 @@
 <link href="/TicketSchedule/CSS/style.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
 
+<link rel="shortcut icon" href="/TicketSchedule/favicon.ico" type="image/x-icon" /> 
 
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
 <script src="/TicketSchedule/JS/site.js"></script>

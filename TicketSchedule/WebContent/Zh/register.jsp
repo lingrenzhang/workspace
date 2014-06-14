@@ -10,6 +10,7 @@
 <link href="/TicketSchedule/CSS/style.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/register.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/ui-lightness/jquery.ui.all.css" type="text/css" rel="stylesheet">
+<link rel="shortcut icon" href="/TicketSchedule/favicon.ico" type="image/x-icon" /> 
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
 <script src="/TicketSchedule/JS/jquery-ui-1.8.13.custom.min.js"></script>
 <script src="/TicketSchedule/JS/ajaxFileUpload.js"></script>

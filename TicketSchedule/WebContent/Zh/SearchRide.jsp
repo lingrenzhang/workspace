@@ -39,6 +39,8 @@
 <link href="/TicketSchedule/CSS/searchride.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/custom_jqueryui.css" type="text/css" rel="stylesheet">
 
+<link rel="shortcut icon" href="/TicketSchedule/favicon.ico" type="image/x-icon" /> 
+
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
 <script src="/TicketSchedule/JS/site.js"></script>
 <script src="/TicketSchedule/JS/calandar.js"></script>

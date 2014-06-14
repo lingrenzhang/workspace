@@ -55,6 +55,12 @@ public class TransientRideCenter extends HttpServlet {
 			int trId = qsPar.getInt("trId");
 			TransientRide tride = TransientRideAccess.getTransisentRideById(trId);
 		    TransientTopic ttopic = TransientTopicAccess.getTransientTopicById(trId);
+		    //Runtime bug that sometimes tride is initilialized but ttopic is not.
+		    if (tride!=null && ttopic ==null ) 
+		    {
+		    	ttopic = new TransientTopic(trId);
+		    	ttopic.insertToDB();
+		    }
 		    
 		    JsonHelper jsonhelp = new JsonHelper();
 		    String trideJson = jsonhelp.toJson(tride);

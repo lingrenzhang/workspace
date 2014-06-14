@@ -173,6 +173,7 @@
 
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/ridecenter.css" type="text/css" rel="stylesheet">
+<link rel="shortcut icon" href="/TicketSchedule/favicon.ico" type="image/x-icon" /> 
 
 </head>
 <body onload="initialize()">

@@ -8,6 +8,7 @@
 
 <link href="../CSS/style.css" type="text/css" rel="stylesheet">
 <link href="../CSS/custom_login.css" type="text/css" rel="stylesheet">
+<link rel="shortcut icon" href="/TicketSchedule/favicon.ico" type="image/x-icon" /> 
 <script src="../JS/jquery-1.10.1.js"></script>
 <script>
 function refreshCode_login(){
