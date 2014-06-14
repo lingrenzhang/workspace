@@ -1,18 +1,21 @@
 package com.hitchride;
 
 /*
-Login API
+ Login API
 
-Method: POST
-Field: email/password
-Return: json
-Format:
-{
-	  "status": "successful|failed",
-	  "reason": String
-}
-*/    
+ Method: POST
+ Field: 
+ email(as user name)
+ password
 
+ Return: json
+ Format:
+ {
+ "status": "successful|failed",
+ "reason": String,
+ "redirect": target URL
+ }
+ */
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -35,94 +38,82 @@ import com.hitchride.standardClass.User;
  */
 public class mLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-    class mLoginJson {
-    	String status="failed";
-    	String reason="";
-    	String redirect="";
-    }
-    
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public mLogin() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	class mLoginJson {
+		String status = "failed";
+		String reason = "";
+		String redirect = "";
+	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public mLogin() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		mLoginJson json = new mLoginJson();;
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		mLoginJson json = new mLoginJson();
 		Environment.getEnv();
-		
+
 		HttpSession session;
 		session = request.getSession();
-		String UserName = request.getParameter("email"); 
-		UserTbAccess userTb=new UserTbAccess();
-		ResultSet rs = userTb.selectByName(UserName,false);
+		String UserName = request.getParameter("email");
+		UserTbAccess userTb = new UserTbAccess();
+		ResultSet rs = userTb.selectByName(UserName, false);
 
 		try {
-			if (rs.next())
-			{
-				if(rs.getString("password").equalsIgnoreCase(request.getParameter("password")))
-				{
-					
+			if (rs.next()) {
+				if (rs.getString("password").equalsIgnoreCase(
+						request.getParameter("password"))) {
+
 					session.setAttribute("IsLogin", "true");
 
-					/*
-					user.set_name(rs.getString("givenname"));
-					user.set_uid(rs.getInt("userid"));
-					user.set_avatarID(rs.getString("avatarID"));
-					user.set_userLevel(rs.getString("userLevel"));
-					user.set_emailAddress(rs.getString("emailAddress"));
-					session.setAttribute("user", user);
-					*/
-
-					int UID=rs.getInt("userID");
+					int UID = rs.getInt("userID");
 					User user = (User) AllUsers.getUsers().getUser(UID);
 					session.setAttribute("user", user);
 					AllUsers.getUsers().addActiveUser(UID);
-					
-					request.getSession().setMaxInactiveInterval(60*120);
+
+					request.getSession().setMaxInactiveInterval(60 * 120);
 					String from = (String) session.getAttribute("fromLocation");
 					request.removeAttribute("fromLocation");
-					if (from!=null)
-					{
-						String queryString = (String)session.getAttribute("queryString");
+					if (from != null) {
+						String queryString = (String) session
+								.getAttribute("queryString");
 						session.removeAttribute("queryString");
+					} else {
 					}
-					else
-					{
-					}
-					json.status="successful";
-					json.redirect="usercenter.html";
+					json.status = "successful";
+					json.redirect = "usercenter.html";
+				} else {
+					json.reason = "wrong password";
 				}
-				else
-				{
-					json.reason="wrong password";
-				}
-			}
-			else
-			{
-				json.reason="wrong username";
+			} else {
+				json.reason = "wrong username";
 			}
 			Gson gson = new Gson();
 			response.getWriter().write(gson.toJson(json));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			
+
 		}
-		
+
 	}
 
 }

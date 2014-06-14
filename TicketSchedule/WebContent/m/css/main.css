@@ -4,24 +4,37 @@
 	max-width: 80rem;
 }
 
-.tab-bar .menu-icon
-{
-  width: auto; /* hack for menu icon bug */
+.tab-bar .menu-icon {
+	width: auto; /* hack for menu icon bug */
 }
 
-.header{
+.header {
 	padding-left: 0.2rem;
 	padding-right: 0.2rem;
 	font-size: 0.6rem;
 }
 
- .ride-info{
+.ride-info {
 	padding-left: 0.1rem;
 	padding-right: 0.1rem;
 	font-size: 0.9rem;
 }
 
-.ride-avail{
+.ride-avail {
 	padding-left: 0rem;
 	padding-right: 0rem;
+}
+
+.off-canvas-wrap {
+	height: 100%;
+}
+
+.inner-wrap {
+	height: 100%;
+	position: fixed;
+}
+
+#main{
+	height: 100%;
+	overflow-y:auto;
 }

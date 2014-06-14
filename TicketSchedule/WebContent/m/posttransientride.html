@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, user-scalable = no" />
+<title>搭便车 | 发布临时拼车</title>
+<link rel="stylesheet" href="css/foundation.css" />
+<link rel="stylesheet" href="foundation-icons/foundation-icons.css" />
+<link rel="stylesheet" href="css/main.css" />
+<script src="js/vendor/modernizr.js"></script>
+<script type="text/javascript"
+	src="http://api.map.baidu.com/api?v=1.5&ak=Mto5Y3Pq2fgwkY2Kt9n60bWl"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="css/jquery.datetimepicker.css" />
+</head>
+<body>
+	<div class="off-canvas-wrap" data-offcanvas>
+		<div class="inner-wrap">
+			<div class="row">
+				<nav class="top-bar hide-for-small" data-offcanvas>
+					<ul class="title-area">
+						<li class="name"><h1>
+								<a href="#"><img
+									style="height: 36px; margin-top: -8px; margin-left: 2px;"
+									src="icon/har_logo_32_w.png" alt="Logo">搭便车</a>
+							</h1></li>
+					</ul>
+					<section class="top-bar-section">
+						<ul class="right">
+							<li class="divider"></li>
+							<li class=""><a href="#" class="">用户中心</a></li>
+							<li class="divider"></li>
+							<li><a href="#" class="">拼车管理</a></li>
+							<li class="divider"></li>
+							<li class="active"><a href="searchtransientride.html">寻找临时拼车</a></li>
+						</ul>
+					</section>
+				</nav>
+			</div>
+			<nav class="tab-bar show-for-small">
+				<section class="left-small">
+					<a class="left-off-canvas-toggle menu-icon"><span></span></a>
+				</section>
+				<section class="middle tab-bar-section">
+					<h1 class="title">发布临时拼车</h1>
+				</section>
+			</nav>
+			<aside class="left-off-canvas-menu">
+				<ul class="off-canvas-list">
+					<li><label class="first">搭便车</label></li>
+					<li><a href="#" class=""><i class="fi-calendar"></i>&nbsp;拼车管理</a></li>
+					<li><a href="searchtransientride.html" class="active"><i
+							class="fi-magnifying-glass"></i>&nbsp;寻找临时拼车</a></li>
+				</ul>
+				<hr>
+				<ul class="off-canvas-list">
+					<li><label class="first"><i class="fi-home"></i>&nbsp;用户中心</label></li>
+					<li><a href="#" class=""><i class="fi-comments"></i>&nbsp;我的行程</a></li>
+					<li><a href="#" class=""><i class="fi-mail"></i>&nbsp;我的消息</a></li>
+					<li><a href="#" class=""><i class="fi-clock"></i>&nbsp;历史记录</a></li>
+					<li><a href="#" class=""><i class="fi-torso"></i>&nbsp;个人信息</a></li>
+				</ul>
+			</aside>
+			<a class="exit-off-canvas" href="#"></a>
+
+			<section role="main" class="scroll-container" id="main">
+				<div class="row">
+					<label>出发地点<input id="orig_input" type="text"
+						placeholder="地址" />
+					</label> <label>到达地点<input id="dest_input" type="text"
+						placeholder="地址" />
+					</label> <input type="text" id="date_input"> <label>价格（元）<input
+						type="number" id="price_input">
+					</label> <label>自驾<input type="checkbox" id="userType_input">
+					</label> <label>提供座位数<select id="seats">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+					</select>
+					</label>
+				</div>
+				<div class="row text-center">
+					<a id="post" type="button" href="javascript: postRide()"
+						class="button small round">发布拼车</a>
+				</div>
+				<hr>
+				<div id="map_container"></div>
+			</section>
+		</div>
+	</div>
+
+	<script src="js/vendor/jquery.js"></script>
+	<script type="text/javascript" src="js/jquery.datetimepicker.js"></script>
+	<script src="js/foundation.min.js"></script>
+	<script>
+		var origLat = 0;
+		var origLng = 0;
+		var destLat = 0;
+		var destLng = 0;
+		$(document).foundation();
+		$('#date_input').datetimepicker({
+			lang : 'ch',
+			inline : true,
+			//timepicker : false,
+			format : 'm/d/Y',
+			formatDate : 'Y/m/d',
+			minDate : '-1970/01/02', // yesterday is minimum date
+			step : 5
+		});
+
+		var map = new BMap.Map("map_container");
+		map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
+
+		function bindAuto() {
+			var origBoxM = new BMap.Autocomplete({
+				"input" : "orig_input",
+				"location" : "上海市"
+			});
+
+			origBoxM.addEventListener("onconfirm", function(e) {
+				console.log(e);
+				var local = new BMap.LocalSearch(map, {
+					onSearchComplete : function(results) {
+						if (local.getStatus() == BMAP_STATUS_SUCCESS) {
+							var point = new BMap.Point(local.getResults()
+									.getPoi(0).point.lng, local.getResults()
+									.getPoi(0).point.lat);
+							origLat = local.getResults().getPoi(0).point.lat;
+							origLng = local.getResults().getPoi(0).point.lng;
+						}
+					}
+				});
+				local.search(e.item.value.province + e.item.value.city
+						+ e.item.value.district + e.item.value.street
+						+ e.item.value.business);
+			});
+
+			var destBoxM = new BMap.Autocomplete({
+				"input" : "dest_input",
+				"location" : "上海市"
+			});
+
+			destBoxM.addEventListener("onconfirm", function(e) {
+				var local = new BMap.LocalSearch(map, {
+					onSearchComplete : function(results) {
+						if (local.getStatus() == BMAP_STATUS_SUCCESS) {
+							var point = new BMap.Point(local.getResults()
+									.getPoi(0).point.lng, local.getResults()
+									.getPoi(0).point.lat);
+							destLat = local.getResults().getPoi(0).point.lat;
+							destLng = local.getResults().getPoi(0).point.lng;
+						}
+					}
+				});
+				local.search(e.item.value.province + e.item.value.city
+						+ e.item.value.district + e.item.value.street
+						+ e.item.value.business);
+			});
+		}
+		bindAuto();
+		function postRide() {
+
+		}
+	</script>
+</body>
+</html>
