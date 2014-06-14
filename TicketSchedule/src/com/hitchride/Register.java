@@ -1,6 +1,8 @@
 package com.hitchride;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -51,8 +53,6 @@ public class Register extends HttpServlet {
 				.getBytes("iso-8859-1"), "UTF-8");
 		String surname = new String(request.getParameter("surname").getBytes(
 				"iso-8859-1"), "UTF-8");
-		System.out.println("givenname");
-		System.out.println(givenname);
 		String address;
 		if (request.getParameter("address") != null) {
 			address = new String(request.getParameter("address").getBytes(
@@ -65,25 +65,36 @@ public class Register extends HttpServlet {
 		String cellphone = request.getParameter("cellphone");
 		if (avatarID == null)
 			avatarID = "default.jpg";
-		userTb.insertValue(userName, groupId, password, givenname, surname,
-				address, 1, avatarID, cellphone);
-		int userid = userTb.getIDbyName(givenname);
-		User user = new User();
+		ResultSet rs = userTb.selectByName(userName, false);
+		try {
+			if (rs.next()) {
+				response.sendRedirect("../Zh/register.jsp?err=existed_user");
+			} else {
+				userTb.insertValue(userName, groupId, password, givenname,
+						surname, address, 1, avatarID, cellphone);
+				int userid = userTb.getIDbyName(givenname);
+				User user = new User();
 
-		user.set_groupId(groupId);
-		user.set_userLevel(1);
-		user.set_uid(userid);
-		user.set_emailAddress(userName);
-		user.set_name(givenname);
+				user.set_groupId(groupId);
+				user.set_userLevel(1);
+				user.set_uid(userid);
+				user.set_emailAddress(userName);
+				user.set_name(givenname);
 
-		AllUsers.getUsers()._users.put(userid, user);
-		AllUsers.getUsers().addActiveUser(userid);
-		HttpSession session = request.getSession();
-		session.setAttribute("IsLogin", "true");
-		session.setAttribute("user", user);
+				AllUsers.getUsers()._users.put(userid, user);
+				AllUsers.getUsers().addActiveUser(userid);
+				HttpSession session = request.getSession();
+				session.setAttribute("IsLogin", "true");
+				session.setAttribute("user", user);
 
-		request.getSession().setMaxInactiveInterval(60 * 120);
-		response.sendRedirect("/TicketSchedule/Zh/UserCenter.jsp");
+				request.getSession().setMaxInactiveInterval(60 * 120);
+				response.sendRedirect("../Zh/UserCenter.jsp");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
 	}
 
 }
