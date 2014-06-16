@@ -27,7 +27,14 @@ public class UserProfile extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String givenname = request.getParameter("givenname");
+		String surename = request.getParameter("surename");
+		String address = request.getParameter("address");
+		String oldpwd =request.getParameter("oldpwd");
+		String newpwd =request.getParameter("newpwd");
+		int uid = Integer.parseInt(request.getParameter("uid"));
+		UserTbAccess.updateUserProfile(givenname, surename, address, uid);
+		response.sendRedirect("/TicketSchedule/UserCenter.jsp");
 	}
 
 	/**
@@ -37,9 +44,28 @@ public class UserProfile extends HttpServlet {
 		String givenname = request.getParameter("givenname");
 		String surename = request.getParameter("surename");
 		String address = request.getParameter("address");
+		String oldpwd =request.getParameter("oldpwd");
+		String newpwd =request.getParameter("newpwd");
+		
 		int uid = Integer.parseInt(request.getParameter("uid"));
-		UserTbAccess.updateUserProfile(givenname, surename, address, uid);
-		response.sendRedirect("/TicketSchedule/UserCenter.jsp");
+		if (newpwd.equals("")|| newpwd.equals("null"))
+		{
+			
+			UserTbAccess.updateUserProfile(givenname, surename, address, uid);
+			response.sendRedirect("/TicketSchedule/Zh/UserCenter.jsp");
+		}
+		else
+		{
+			if (UserTbAccess.verifyPassword(uid, oldpwd))
+			{
+				UserTbAccess.updateUserProfile(givenname, surename, address,newpwd,uid);
+				response.sendRedirect("/TicketSchedule/Zh/UserCenter.jsp");
+			}
+			else
+			{
+				response.sendRedirect("/TicketSchedule/Zh/UserCenter.jsp?content=profile&msg=wrongPWD");
+			}
+		}
 	}
 
 }

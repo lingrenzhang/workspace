@@ -60,7 +60,6 @@ public class UserCenter extends HttpServlet {
 				request.getSession().setMaxInactiveInterval(60*120);
 				response.sendRedirect("/TicketSchedule/Login.jsp");
 				}
-				
 			}
 			else
 			{
@@ -165,14 +164,19 @@ public class UserCenter extends HttpServlet {
 				    value.append("<div class=\"panel panel-default\">");
 					value.append("<div class=\"panel-heading\">"+dic.MyProfile+"</div>");
 					value.append("<div class=\"panel-body\">");
-					value.append("<form action=\"/TicketSchedule/servlet/UserProfile\" method=post>");
-					value.append("<div class=propwrapper><span>"+dic.GivenName+"</span>"+"<input class=\"userproperty\" name=givenname value='"+userP._givenname+"'></div>");
-					value.append("<div class=propwrapper><span>"+dic.SureName+"</span>"+"<input class=\"userproperty\" name=surename value='"+userP._surename+"'></div>");
-					value.append("<div class=propwrapper><span>"+dic.Address+"  </span>"+"<input class=\"userproperty\" name=address value='"+userP._address+"'></div>");
+					value.append("<form action=\"/TicketSchedule/servlet/UserProfile\" method=post onSubmit=\"return validateNewpwd()\">");
+					value.append("<div class=propwrapper><span>"+dic.GivenName+"</span>"+"<input type=text class=\"userproperty\" name=givenname value='"+userP._givenname+"'></div>");
+					value.append("<div class=propwrapper><span>"+dic.SureName+"</span>"+"<input type=text class=\"userproperty\" name=surename value='"+userP._surename+"'></div>");
+					value.append("<div class=propwrapper><span>"+dic.Address+" </span>"+"<input type=text class=\"userproperty\" name=address value='"+userP._address+"'></div>");
+					value.append("<div class=propwrapper><span>"+dic.OldPassword+"  </span>"+"<input type=password class=\"userproperty\" name=oldpwd id=oldpwd value=''></div>");
+					value.append("<div class=propwrapper><span>"+dic.NewPassword+"  </span>"+"<input type=password class=\"userproperty\" name=newpwd id=newpwd value=''></div>");
+					value.append("<div class=propwrapper><span>"+dic.ConfirmPassword+"  </span>"+"<input type=password class=\"userproperty\" name=newpwd2 id=newpwd2 value=''></div>");
 					value.append("<input class=\"hidden\" name=uid value='"+userP.get_uid()+"'>");
-					value.append("<button type=submit class=\"btn btn-primary\">Update</button>");
+					value.append("<button type=submit class=\"btn btn-primary\">"+dic.Update+"</button>");
 					value.append("</form>");
 					value.append("</div></div></div>");
+			   
+
 					user.numofnewMessage = 0;
 					response.setContentType("text/html; charset=UTF-8");
 					response.getWriter().write(value.toString());

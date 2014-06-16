@@ -24,7 +24,7 @@ public class CarpoolTbAccess {
 		{
 			if (objConn.isClosed())
 			{
-				objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);
+				objConn = DriverManager.getConnection(SQLServerConf.ServerURL,SQLServerConf.UserName,SQLServerConf.Password);			    
 			}
 		}
 		return objConn;

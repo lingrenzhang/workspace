@@ -306,6 +306,84 @@ public class UserTbAccess {
         	return rows;
         }
         
+        public static int updateUserProfile(String givenname, String surename, String address, String password, int uid)
+        {
+        	int rows=0;
+        	try
+			{
+				Statement sql;
+				getConnection();
+		
+				sql=objConn.createStatement();
+				rows=sql.executeUpdate("update userTb set "
+						+ "givenname=\""+ givenname
+						+ "\",surname=\""+ surename
+						+ "\",address=\""+ address
+						+ "\",password=\""+password
+						+ "\" where userid=\""+ uid+"\"");
+			}
+			catch (java.lang.ClassNotFoundException e){
+				System.err.println("ClassNotFoundException:"+e.getMessage());
+			}
+			catch (SQLException e)
+			{
+                Error err=new Error("SQLException:"+e.getMessage());
+                throw err;
+			}
+        	return rows;
+        }
+        
+        public static boolean verifyPassword(int uid,String password)
+        {
+        	boolean result=false;
+        	try
+			{
+				Statement sql;
+				getConnection();
+				sql=objConn.createStatement();
+				ResultSet rs = sql.executeQuery("select password from userTb where userId="+uid);
+				rs.next();
+			    String realpass= rs.getString("password");
+			    if (realpass.equals(password)){
+			    	result=true;
+			    }
+			}
+			catch (java.lang.ClassNotFoundException e){
+				System.err.println("ClassNotFoundException:"+e.getMessage());
+			}
+			catch (SQLException e)
+			{
+                Error err=new Error("SQLException:"+e.getMessage());
+                throw err;
+			}
+        	return result;
+        }
+        
+        public static boolean verifyPassword(String userName,String password)
+        {
+        	boolean result=false;
+        	try
+			{
+				Statement sql;
+				getConnection();
+				sql=objConn.createStatement();
+				ResultSet rs = sql.executeQuery("select password from userTb where userName="+userName);
+			    String realpass= rs.getString("password");
+			    rs.next();
+			    if (realpass.equals(password)){
+			    	result=true;
+			    }
+			}
+			catch (java.lang.ClassNotFoundException e){
+				System.err.println("ClassNotFoundException:"+e.getMessage());
+			}
+			catch (SQLException e)
+			{
+                Error err=new Error("SQLException:"+e.getMessage());
+                throw err;
+			}
+        	return result;
+        }
         
         protected void finalize(){
         	if (objConn!=null){

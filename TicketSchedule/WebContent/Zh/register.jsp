@@ -9,22 +9,13 @@ String err = request.getParameter("err")==null?"": request.getParameter("err");
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>注册</title>
-<<<<<<< HEAD
-<link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
-<link href="/TicketSchedule/CSS/style.css" type="text/css" rel="stylesheet">
+
+
+<link href="/TicketSchedule/CSS/master.css" type="text/css"	rel="stylesheet">
+<link href="/TicketSchedule/CSS/style.css" type="text/css"	rel="stylesheet">
 <link href="/TicketSchedule/CSS/register.css" type="text/css" rel="stylesheet">
-<link href="/TicketSchedule/CSS/ui-lightness/jquery.ui.all.css" type="text/css" rel="stylesheet">
+<link href="/TicketSchedule/CSS/ui-lightness/jquery.ui.all.css"	type="text/css" rel="stylesheet">
 <link rel="shortcut icon" href="/TicketSchedule/favicon.ico" type="image/x-icon" /> 
-=======
-<link href="/TicketSchedule/CSS/master.css" type="text/css"
-	rel="stylesheet">
-<link href="/TicketSchedule/CSS/style.css" type="text/css"
-	rel="stylesheet">
-<link href="/TicketSchedule/CSS/register.css" type="text/css"
-	rel="stylesheet">
-<link href="/TicketSchedule/CSS/ui-lightness/jquery.ui.all.css"
-	type="text/css" rel="stylesheet">
->>>>>>> bf718c68431d66ed605d3424921f213010cb53c9
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
 <script src="/TicketSchedule/JS/jquery-ui-1.8.13.custom.min.js"></script>
 <script src="/TicketSchedule/JS/ajaxFileUpload.js"></script>

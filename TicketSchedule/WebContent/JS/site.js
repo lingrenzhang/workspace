@@ -4,9 +4,7 @@ $(".requireLogin").click(function(){
 	{
 		window.location.href="/TicketSchedule/Login.jsp";
 	}
-}
-
-);
+});
 
 function getJson(url)
 {

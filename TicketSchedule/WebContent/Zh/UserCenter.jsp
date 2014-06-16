@@ -38,25 +38,11 @@
     <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/TicketSchedule/bootstrap/js/bootstrap.js"></script>
+    <script src="/TicketSchedule/JS/site.js"></script>
  <script>
  	var newmessage = <%=user.numofnewMessage%>;
- 	function loadContent(url)
- 	{
- 		var xmlhttp;
- 	    if (window.XMLHttpRequest)
- 	    {// code for IE7+, Firefox, Chrome, Opera, Safari
- 	      	xmlhttp=new XMLHttpRequest();
- 	    }
- 	    else
- 	    {// code for IE6, IE5
- 	      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
- 	    }
- 		xmlhttp.open("GET",url,false);
- 		xmlhttp.send();
- 		return xmlhttp.responseText;
- 	}
- 	 	
- 	
+ 	var content = '<%=request.getParameter("content")%>';
+ 	var msg = '<%=request.getParameter("msg")%>';
  	function getTopics()
  	{
  		document.getElementById("user_nav").innerHTML = 	
@@ -70,7 +56,7 @@
 			+	 "<li><a href=\"javascript:getProfile()\">个人信息</a></li>"
 			+"</ul>";
 			
-		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=topics&language=Zh");
+		var content = getJson("/TicketSchedule/servlet/UserCenter?content=topics&language=Zh");
 		document.getElementById("innerContent").innerHTML = content;
  	}
  	
@@ -87,7 +73,7 @@
 	  		+	 "<li><a href=\"javascript:getHistory()\">历史记录</a></li>"
 			+	 "<li><a href=\"javascript:getProfile()\">个人信息</a></li>"
 			+"</ul>";
- 		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=messages&language=Zh");		
+ 		var content = getJson("/TicketSchedule/servlet/UserCenter?content=messages&language=Zh");		
 	    
 		document.getElementById("innerContent").innerHTML = content;
 		newmessage = 0;
@@ -105,7 +91,7 @@
 	  		+	 "<li class=\"active\"><a href=\"javascript:getHistory()\">历史记录</a></li>"
 			+	 "<li><a href=\"javascript:getProfile()\">个人信息</a></li>"
 			+"</ul>";
- 		alert(3);
+ 		alert("功能开发中...");
  	}
  	function getProfile()
  	{
@@ -119,14 +105,61 @@
 	  		+	 "<li><a href=\"javascript:getHistory()\">历史记录</a></li>"
 			+	 "<li class=\"active\"><a href=\"javascript:getProfile()\">个人信息</a></li>"
 			+"</ul>";
- 		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=profile&language=Zh");		
+ 		var content = getJson("/TicketSchedule/servlet/UserCenter?content=profile&language=Zh");		
 		document.getElementById("innerContent").innerHTML = content;
  	}
- </script>   
-    
+ 	
+ 	function init(){
+	 	if (content!="" || content!=null)
+	 	{
+	 		if (content=='profile')
+	 		{
+	 			getProfile();
+	 			if (msg!="" || msg!=null)
+	 			{
+	 				if (msg=='wrongPWD')
+	 				{
+	 					alert("密码错误！");
+	 				}
+	 			}
+	 			return;
+	 		}
+	 		getTopics();
+	 	}
+ 	};
+</script>   
+<script>
+function validateNewpwd()
+{
+	var oldpwd= document.getElementById("oldpwd").value;
+	var newpwd= document.getElementById("newpwd").value;
+	var newpwd2= document.getElementById("newpwd2").value;
+	if (newpwd!=newpwd2)
+	{
+		alert("两次输入新密码不匹配");
+		return false;
+	}
+	else if (newpwd!="")
+	{
+		var regu="^\\w{6,12}$";
+		var re=new RegExp(regu);
+		if(!re.test(newpwd)){
+			alert("密码为6-12位数字字母");
+			return false;
+		}
+		if(oldpwd=="")
+		{
+			alert("请输入旧密码");
+			return false;
+		}
+	}
+	return true;
+}
+
+</script>
     
 </head>
-<body onload="getTopics()">
+<body onload="init()">
 	
 <div id="UserCenter">
 	<div id="header_wrap">

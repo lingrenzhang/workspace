@@ -21,7 +21,10 @@ public class Dictionary {
 				SureName="SureName ";
 				Address="Address  ";
 				MyProfile="My Profile";
-				
+				Update="Update";
+				OldPassword="OldPassword";
+				NewPassword="NewPassword";
+				ConfirmPassword="ConfirmPassword";
 				break;
 			case Zh:
 				MyTopic="我主持的行程组";
@@ -34,6 +37,10 @@ public class Dictionary {
 				SureName="姓  ";
 				Address="地址";
 				MyProfile="个人信息";
+				Update="更新";
+				OldPassword="旧密码";
+				NewPassword="新密码";
+				ConfirmPassword="确认新密码";
 				break;
 			
 		}
@@ -49,4 +56,9 @@ public class Dictionary {
 	public String SureName;
 	public String Address;
 	public String MyProfile;
+	public String Update;
+	public String OldPassword;
+	public String NewPassword;
+	public String ConfirmPassword;
+
 }
