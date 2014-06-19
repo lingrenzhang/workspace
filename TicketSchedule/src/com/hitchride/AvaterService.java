@@ -68,19 +68,15 @@ public class AvaterService extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String action = request.getParameter("myaction");
-		
-		//if (action.equals("upload"))
-		{
-			response.setContentType("text/html");   
-			response.setCharacterEncoding("UTF-8");
-			String realDir = request.getSession().getServletContext().getRealPath("");
-			String contextpath = request.getContextPath();
-			String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ contextpath + "/";
+		response.setContentType("text/html");   
+		response.setCharacterEncoding("UTF-8");
+		String realDir = request.getSession().getServletContext().getRealPath("");
+		String contextpath = request.getContextPath();
+		String basePath = request.getScheme() + "://"
+		+ request.getServerName() + ":" + request.getServerPort()
+		+ contextpath + "/";
 	
-			try {
+		try {
 			String filePath = "UserProfile";
 			String realPath = realDir+"\\"+filePath;
 			//Create path if not exist
@@ -101,7 +97,6 @@ public class AvaterService extends HttpServlet {
 				String state="SUCCESS";
 				String realFileName="";
 	
-				
 	            String msg = "";
 	            String result = "1";
 	            String ww = "170";
@@ -123,10 +118,12 @@ public class AvaterService extends HttpServlet {
 			        try{
 			            if(!fis.isFormField() && fis.getName().length()>0){
 			                fileName = fis.getName();
+			                fileName = fileName.toLowerCase();
 							Pattern reg=Pattern.compile("[.]jpg|png|jpeg|gif$");
 							Matcher matcher=reg.matcher(fileName);
 							if(!matcher.find()) {
 								state = "Illegal format£¡";
+								response.getWriter().print("{\"msg\": \"Illegal file format.\"}");
 								break;
 							}
 							realFileName = new Date().getTime()+fileName.substring(fileName.lastIndexOf("."),fileName.length());
@@ -149,26 +146,34 @@ public class AvaterService extends HttpServlet {
 			                    }
 			                }
 			            }
-	
 			        }catch(Exception e){
 			            e.printStackTrace();
 			        }
 			    }
 			    response.setStatus(200);
-			    msg= basePath+filePath+"/"+realFileName;
-			    //String retxt ="{src:'"+basePath+filePath+"/"+realFileName+"',status:success}";
-			    String retxt="{ \"result\":" + result + ",\"size\":" + size + 
-			    ",\"msg\":\"" + msg + "\",\"avatarID\":\"" + realFileName +
-			    "\",\"w\":" + ww + ",\"h\":" + hh + "}";
-			    response.getWriter().print(retxt);
+			    String retxt="";
+			    if (!realFileName.equalsIgnoreCase(""))
+			    {
+				    msg= basePath+filePath+"/"+realFileName;
+				    //String retxt ="{src:'"+basePath+filePath+"/"+realFileName+"',status:success}";
+				    retxt="{ \"result\":" + result + ",\"size\":" + size + 
+				    ",\"msg\":\"" + msg + "\",\"avatarID\":\"" + realFileName +
+				    "\",\"w\":" + ww + ",\"h\":" + hh + "}";
+				    response.getWriter().print(retxt);
+			    }
+			    else
+			    {
+			    	//retxt="{\"result\":\"2\",\"msg\":\"Not proper filetype or file too large.\"}";
+			    }
+			   
 			}
-			}catch(Exception ee) {
-				ee.printStackTrace();
+			else
+			{
+				response.setStatus(501);
+				response.getWriter().print("{msg: \"Input file too large. Limit to 1Mb.\"}");
 			}
+		}catch(Exception ee) {
+			ee.printStackTrace();
 		}
-		
-		
-
-		
 	}
 }

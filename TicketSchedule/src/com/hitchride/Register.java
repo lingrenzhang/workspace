@@ -80,6 +80,7 @@ public class Register extends HttpServlet {
 				user.set_uid(userid);
 				user.set_emailAddress(userName);
 				user.set_name(givenname);
+				user.set_avatarID(avatarID);
 
 				AllUsers.getUsers()._users.put(userid, user);
 				AllUsers.getUsers().addActiveUser(userid);
@@ -93,7 +94,6 @@ public class Register extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-
 		}
 	}
 

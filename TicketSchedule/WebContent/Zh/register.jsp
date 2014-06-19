@@ -125,8 +125,15 @@ function _uploadImg() {
                 alert(obj.msg);
             }
         },
-        error: function() {
-            alert("upload failure，please check file format.");
+        error: function(data) {
+        	var obj = $.parseJSON(data);
+        	if (obj!=null)
+        	{
+        		alert(obj.msg);
+        	}
+        	else{
+        		alert("upload failure，please check file format.");
+        	}
         }
     });
 }
