@@ -71,6 +71,7 @@ public class AvaterService extends HttpServlet {
 		response.setContentType("text/html");   
 		response.setCharacterEncoding("UTF-8");
 		String realDir = request.getSession().getServletContext().getRealPath("");
+		System.out.print("Picdir is" + realDir);
 		String contextpath = request.getContextPath();
 		String basePath = request.getScheme() + "://"
 		+ request.getServerName() + ":" + request.getServerPort()
@@ -78,7 +79,7 @@ public class AvaterService extends HttpServlet {
 	
 		try {
 			String filePath = "UserProfile";
-			String realPath = realDir+"\\"+filePath;
+			String realPath = realDir+"/"+filePath;
 			//Create path if not exist
 			File dir = new File(realPath);
 			if(!dir.isDirectory())
@@ -127,7 +128,7 @@ public class AvaterService extends HttpServlet {
 								break;
 							}
 							realFileName = new Date().getTime()+fileName.substring(fileName.lastIndexOf("."),fileName.length());
-			                url = realPath+"\\"+realFileName;
+			                url = realPath+"/"+realFileName;
 	
 			                BufferedInputStream in = new BufferedInputStream(fis.openStream());//Get input stream
 			                FileOutputStream a = new FileOutputStream(new File(url));
