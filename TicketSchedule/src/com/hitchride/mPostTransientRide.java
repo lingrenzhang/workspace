@@ -1,7 +1,7 @@
 package com.hitchride;
 
 /*
-PostTransientRide API
+mPostTransientRide API
 
 Method: POST
 Field: 
@@ -14,8 +14,7 @@ destLng: destination Lng
 destAddr: destination address
 distance: distance
 duration: duration
-date: date
-time: time
+dateTime: Y/m/d H:i
 seats: seats
 price: price
 
@@ -36,6 +35,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -94,6 +96,7 @@ public class mPostTransientRide extends HttpServlet {
 		else
 		{
 			TransientRide tranRide = new TransientRide();
+
 			tranRide.owner = (User) request.getSession().getAttribute("user");
 			tranRide.userId = tranRide.owner.get_uid();
 			tranRide.transientRideId = Environment.getEnv().maxTranRideId+1;
@@ -142,15 +145,25 @@ public class mPostTransientRide extends HttpServlet {
 			tranRide.dura=dura;
 			tranRide.dist=dist;
 				
-			String date = request.getParameter("date");
-			Date d = TimeFormatHelper.setDate(date);
+			String dateTime = request.getParameter("dateTime");
+			DateFormat df = new SimpleDateFormat("M/d/y H:m");
+			java.sql.Date d = null;
+			java.util.Date javad = null;
+			try {
+				javad = df.parse(dateTime);
+				d= new java.sql.Date(javad.getTime());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			tranRide.rideDate=d;
 			
 			tranRide.rideFlex =new Time(15*60000-TimeFormatHelper.systemOffset);
-			long rtime =Integer.parseInt(request.getParameter("time_hour"))*3600000+Integer.parseInt(request.getParameter("time_minute"))*60000;
+			long rtime =javad.getHours()*3600000+javad.getMinutes()*60000;
 			tranRide.rideTime =new Time(rtime-TimeFormatHelper.systemOffset);
 			
 			tranRide.totalSeats = Integer.parseInt(request.getParameter("seats"));
+			tranRide.availSeats = tranRide.totalSeats;
 			tranRide.price = Double.parseDouble(request.getParameter("price"));
 					
 			tranRide.insertToDB();

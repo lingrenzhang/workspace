@@ -71,17 +71,18 @@
 						placeholder="地址" />
 					</label> <label>到达地点<input id="dest_input" type="text"
 						placeholder="地址" />
-					</label> <input type="text" id="date_input"> <label>价格（元）<input
-						type="number" id="price_input">
+					</label> <input type="text" id="date_input"> <label>每人出的价格（元）<input
+						type="number" id="price_input" value="5">
 					</label> <label>自驾<input type="checkbox" id="userType_input">
-					</label> <label>提供座位数<select id="seats">
+					</label> <label>提供座位数<select id="seats_input">
 							<option value="1">1</option>
 							<option value="2">2</option>
-							<option value="3">3</option>
+							<option value="3" selected="true">3</option>
 							<option value="4">4</option>
 					</select>
 					</label>
 				</div>
+				<div class="row text-center" id="msg_box"></div>
 				<div class="row text-center">
 					<a id="post" type="button" href="javascript: postRide()"
 						class="button small round">发布拼车</a>
@@ -96,19 +97,23 @@
 	<script type="text/javascript" src="js/jquery.datetimepicker.js"></script>
 	<script src="js/foundation.min.js"></script>
 	<script>
-		var origLat = 0;
-		var origLng = 0;
-		var destLat = 0;
-		var destLng = 0;
+		var origLat = null;
+		var origLng = null;
+		var destLat = null;
+		var destLng = null;
 		$(document).foundation();
+		var ct = new Date();
+		ct.setUTCHours(ct.getUTCHours() + 1);
 		$('#date_input').datetimepicker({
 			lang : 'ch',
 			inline : true,
-			//timepicker : false,
-			format : 'm/d/Y',
-			formatDate : 'Y/m/d',
+			format : 'm/d/Y H:i',
+			value : ct.dateFormat('m/d/Y H:i'),
 			minDate : '-1970/01/02', // yesterday is minimum date
-			step : 5
+			step : 5,
+			onGenerate : function(ct) {
+				console.log(ct);
+			}
 		});
 
 		var map = new BMap.Map("map_container");
@@ -121,7 +126,6 @@
 			});
 
 			origBoxM.addEventListener("onconfirm", function(e) {
-				console.log(e);
 				var local = new BMap.LocalSearch(map, {
 					onSearchComplete : function(results) {
 						if (local.getStatus() == BMAP_STATUS_SUCCESS) {
@@ -162,7 +166,103 @@
 		}
 		bindAuto();
 		function postRide() {
+			if ($("#orig_input")[0].value == "") {
+				$("#msg_box")
+						.prepend(
+								'<div data-alert class="alert-box round alert ">'
+										+ "请输入出发地点"
+										+ '<a href="#" class="close">&times;</a></div>');
+				$(document).foundation();
+				return;
+			}
+			var origAddr = $("#orig_input")[0].value;
+			if (origLat == null || origLng == null) {
+				$("#msg_box")
+						.prepend(
+								'<div data-alert class="alert-box round alert ">'
+										+ "找不到出发地点，请在下拉框中选择"
+										+ '<a href="#" class="close">&times;</a></div>');
+				$(document).foundation();
+				return;
+			}
 
+			if ($("#dest_input")[0].value == "") {
+				$("#msg_box")
+						.prepend(
+								'<div data-alert class="alert-box round alert ">'
+										+ "请输入到达地点"
+										+ '<a href="#" class="close">&times;</a></div>');
+				$(document).foundation();
+				return;
+			}
+			var destAddr = $("#dest_input")[0].value;
+			if (destLat == null || destLng == null) {
+				$("#msg_box")
+						.prepend(
+								'<div data-alert class="alert-box round alert ">'
+										+ "找不到到达地点，请在下拉框中选择"
+										+ '<a href="#" class="close">&times;</a></div>');
+				$(document).foundation();
+				return;
+			}
+			var dateTime = $("#date_input")[0].value;
+			var distance = 0;
+			var duration = 0;
+
+			if (isNaN(parseFloat($('#price_input')[0].value))) {
+				$("#msg_box")
+						.prepend(
+								'<div data-alert class="alert-box round alert ">'
+										+ "请输入有效的价格"
+										+ '<a href="#" class="close">&times;</a></div>');
+				$(document).foundation();
+				return;
+			}
+			var price = $('#price_input')[0].value;
+			var userType = !$('#userType_input')[0].value;
+			var seats = $('#seats_input')[0].value;
+
+			$("#post").addClass("disabled");
+			$
+					.post(
+							"../servlet/mPostTransientRide",
+							{
+								userType : userType,
+								origLat : origLat,
+								origLng : origLng,
+								origAddr : origAddr,
+								destLat : destLat,
+								destLng : destLng,
+								destAddr : destAddr,
+								distance : distance,
+								duration : duration,
+								dateTime : dateTime,
+								seats : seats,
+								price : price
+							},
+							function(data) {
+								var result = JSON.parse(data);
+								if (result.status
+										&& result.status == "successful") {
+									window.location.assign(result.redirect);
+								} else {
+									$("#post").removeClass("disabled");
+									$("#msg_box")
+											.prepend(
+													'<div data-alert class="alert-box round alert ">'
+															+ result.reason
+															+ '<a href="#" class="close">&times;</a></div>');
+									$(document).foundation();
+									if (result.redirect
+											&& result.redirect != "") {
+										window.location.assign(result.redirect);
+									}
+								}
+								console.log(result);
+							}).fail(function() {
+						$("#post").removeClass("disabled");
+						alert("error");
+					});
 		}
 	</script>
 </body>
