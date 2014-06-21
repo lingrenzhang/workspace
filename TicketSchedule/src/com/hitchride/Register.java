@@ -81,6 +81,7 @@ public class Register extends HttpServlet {
 				user.set_emailAddress(userName);
 				user.set_name(givenname);
 				user.set_avatarID(avatarID);
+				user._cellphone=cellphone;
 
 				AllUsers.getUsers()._users.put(userid, user);
 				AllUsers.getUsers().addActiveUser(userid);
