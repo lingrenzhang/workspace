@@ -113,6 +113,8 @@ public class mGetTransientRide extends HttpServlet {
 		    if (tride==null) {
 		    	json.reason="no such trId";
 		    } else {
+		    	json.trId = trId;
+		    	
 		    	json.owner.uid=tride.owner.get_uid();
 		    	json.owner.name=tride.owner.get_name();
 		    	json.owner.pic=tride.owner.get_avatarID();
