@@ -99,7 +99,7 @@ public class mLogin extends HttpServlet {
 					} else {
 					}
 					json.status = "successful";
-					json.redirect = "usercenter.html";
+					json.redirect = "searchtransientride.html";
 				} else {
 					json.reason = "wrong password";
 				}
