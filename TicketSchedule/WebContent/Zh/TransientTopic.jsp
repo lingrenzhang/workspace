@@ -427,7 +427,7 @@ function updateOk(result)
 				  <li><a href="/TicketSchedule/Zh/UserCenter.jsp">用户中心</a></li>
 				  <li><a href="/TicketSchedule/Zh/ManageRide.jsp">行程管理</a></li>
 				  <li><a href="/TicketSchedule/Zh/SearchRide.jsp">上下班拼车</a></li>
-			      <li class="active"><a href="#">临时拼车</a></li>
+			      <li class="active"><a href="/TicketSchedule/Zh/SearchTransientRide.jsp">临时拼车</a></li>
 			    </ul>
 			 </div>
 		</div>
