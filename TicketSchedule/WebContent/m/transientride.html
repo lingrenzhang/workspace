@@ -39,7 +39,7 @@
 					<a class="left-off-canvas-toggle menu-icon"><span></span></a>
 				</section>
 				<section class="middle tab-bar-section">
-					<h1 class="title">今日拼车</h1>
+					<h1 class="title">拼车信息</h1>
 				</section>
 			</nav>
 			<aside class="left-off-canvas-menu">
@@ -64,8 +64,7 @@
 				<div class="row">
 					<br>
 					<div class="text-center">
-						<a id="post" type="button" href="posttransientride.html"
-							class="button small round">我要发布拼车</a>
+						<div id="result">TODO</div>
 					</div>
 				</div>
 			</section>
@@ -76,40 +75,12 @@
 	<script src="js/foundation.min.js"></script>
 	<script>
 		function getTransientTide() {
-			$
-					.get(
-							"../servlet/SearchTransientTopic",
-							function(data) {
-								var result = JSON.parse(data);
-								for (index = 0; index < result.length; ++index) {
-									var r = result[index];
-									var ride = "";
-									ride = '<div class="row"><hr><div class="small-3 columns header text-center"><a class="th"> <img src="../UserProfile/';
-					ride = ride + r.owner._avatarID;
-					ride = ride + '" /></a><div class="row text-center"><i class="fi-torso"></i>';
-									ride = ride + r.owner._givenname;
-									ride = ride
-											+ '</div></div><div class="small-7 columns ride-info"><i class="fi-home"></i>';
-									ride = ride + r.origLoc._formatedAddr;
-									ride = ride
-											+ '<br><br><i class="fi-target"></i>';
-									ride = ride + r.destLoc._formatedAddr;
-									ride = ride
-											+ '<br><br><i class="fi-clock"></i>';
-									ride = ride + r.rideTime;
-									ride = ride
-											+ '</div><span class="label small-2 columns ride-avail bottom">空座：';
-									ride = ride + r.availSeats;
-									ride = ride + '<br>';
-									if (r.userType) {
-										ride = ride + 'TAXI';
-									} else {
-										ride = ride + r.price + '/座';
-									}
-									ride = ride + '</span></div>';
-									$('#main').append(ride);
-								}
-							});
+			$.get("../servlet/mGetTransientRide?trId="
+					+ location.hash.replace('#', ''), function(data) {
+				var result = JSON.parse(data);
+				$('#result')[0].innerHTML=data;
+				console.log(result);
+			});
 
 		}
 		$(document).foundation();

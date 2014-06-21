@@ -1,7 +1,7 @@
 package com.hitchride;
 
 /*
- Login API
+ mLogin API
 
  Method: POST
  Field: 

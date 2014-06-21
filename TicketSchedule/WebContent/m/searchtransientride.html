@@ -75,7 +75,7 @@
 	<script src="js/vendor/jquery.js"></script>
 	<script src="js/foundation.min.js"></script>
 	<script>
-		function getTransientTide() {
+		function getTransientRides() {
 			$
 					.get(
 							"../servlet/SearchTransientTopic",
@@ -84,16 +84,18 @@
 								for (index = 0; index < result.length; ++index) {
 									var r = result[index];
 									var ride = "";
-									ride = '<div class="row"><hr><div class="small-3 columns header text-center"><a class="th"> <img src="../UserProfile/';
+									ride = '<div class="row panel"><div class="small-3 columns header text-center"><div class="th"> <img src="../UserProfile/';
 					ride = ride + r.owner._avatarID;
-					ride = ride + '" /></a><div class="row text-center"><i class="fi-torso"></i>';
+					ride = ride + '" /></div><div class="row text-center"><i class="fi-torso"></i>';
 									ride = ride + r.owner._givenname;
 									ride = ride
-											+ '</div></div><div class="small-7 columns ride-info"><i class="fi-home"></i>';
+											+ '</div></div><a href="transientride.html#'+r.transientRideId+'"><div class="small-7 columns ride-info "><i class="fi-home"></i>';
 									ride = ride + r.origLoc._formatedAddr;
 									ride = ride
 											+ '<br><br><i class="fi-target"></i>';
 									ride = ride + r.destLoc._formatedAddr;
+									ride = ride + '<br><br><i class="fi-calendar"></i>"';
+									ride = ride + r.rideDate;
 									ride = ride
 											+ '<br><br><i class="fi-clock"></i>';
 									ride = ride + r.rideTime;
@@ -106,14 +108,14 @@
 									} else {
 										ride = ride + r.price + '元/座';
 									}
-									ride = ride + '</span></div>';
+									ride = ride + '</span></a></div>';
 									$('#main').append(ride);
 								}
 							});
 
 		}
 		$(document).foundation();
-		getTransientTide();
+		getTransientRides();
 	</script>
 </body>
 </html>

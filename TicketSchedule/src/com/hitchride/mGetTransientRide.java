@@ -121,7 +121,6 @@ public class mGetTransientRide extends HttpServlet {
 		    	json.origLoc.lat=tride.origLoc.get_lat();
 		    	json.origLoc.lon=tride.origLoc.get_lon();
 		    	json.origLoc.addr=tride.origLoc._addr;
-		    	System.out.println(tride.origLoc._addr);
 		    	
 		    	json.destLoc.lat=tride.destLoc.get_lat();
 		    	json.destLoc.lon=tride.destLoc.get_lon();
@@ -139,6 +138,7 @@ public class mGetTransientRide extends HttpServlet {
 		    	json.availSeats=tride.availSeats;
 		    	json.price=tride.price;
 		    	
+		    	json.status="successful";
 		    }
 		}
 		Gson gson = new Gson();
