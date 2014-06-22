@@ -13,13 +13,9 @@
 	boolean commute = true;
 %>
 <% 
-	String IsLogin =(String) request.getSession().getAttribute("IsLogin");
-	User user;
-	if (IsLogin!= null)
-	{
-		user = (User) request.getSession().getAttribute("user");
-	}
-	else
+	User user= (User) request.getSession().getAttribute("user");
+    String IsLogin="true";
+	if (user == null)
 	{
 		 user = new User();
 		 user.set_authLevel(1);
@@ -27,6 +23,7 @@
 		 user.set_emailAddress("guest");
 		 user.set_avatarID("default.jpg");
 		 user.set_userLevel(0);
+		 IsLogin="false";
 	}
 	TransientRide tranRide = (TransientRide) request.getSession().getAttribute("tranRide");
 %>

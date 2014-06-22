@@ -10,11 +10,17 @@
 <%@ page import="com.hitchride.standardClass.Topic" %>
 <%@ page import="com.hitchride.standardClass.TransientRide" %>
 <% 
-	String IsLogin =(String) request.getSession().getAttribute("IsLogin");
+	String IsLogin ="true";
 	User user= (User) request.getSession().getAttribute("user");
 	if (user==null)
 	{
-		user=new User();  //Prevent null pointer error.
+		 user = new User(); //Prevent null pointer error.
+		 user.set_authLevel(1);
+		 user.set_name("guest");
+		 user.set_emailAddress("guest");
+		 user.set_avatarID("default.jpg");
+		 user.set_userLevel(0);
+		 IsLogin="false";
 	}
 	Boolean isOwnerMode = (Boolean) request.getAttribute("isOwnerMode");
 	TransientRide tranRide = (TransientRide) request.getSession().getAttribute("tranRide");

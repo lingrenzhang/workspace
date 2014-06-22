@@ -8,7 +8,7 @@ import com.hitchride.access.PredefinedQuery;
 //User passively updates i
 public class User implements RideListener,UserInfo{
 	//UserInfo
-	private int _uid;
+	private int _uid=0;
 	private int _authLevel=-1;
 	private int _groupId=-1;
 	public String _surename;
