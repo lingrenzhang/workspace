@@ -27,20 +27,20 @@ public class Dictionary {
 				ConfirmPassword="ConfirmPassword";
 				break;
 			case Zh:
-				MyTopic="ÎÒÖ÷³ÖµÄĞĞ³Ì×é";
-				Participate = "ÎÒ¼ÓÈëµÄĞĞ³Ì×é";
-				FreeRide = "Î´Æ´³µĞĞ³Ì";
-				From="³ö·¢µØ";
-				To="Ä¿µÄµØ";
-				MyMessages="ÎÒµÄÏûÏ¢";
-				GivenName="Ãû  ";
-				SureName="ĞÕ  ";
-				Address="µØÖ·";
-				MyProfile="¸öÈËĞÅÏ¢";
-				Update="¸üĞÂ";
-				OldPassword="¾ÉÃÜÂë";
-				NewPassword="ĞÂÃÜÂë";
-				ConfirmPassword="È·ÈÏĞÂÃÜÂë";
+				MyTopic="æˆ‘ä¸»æŒçš„è¡Œç¨‹ç»„";
+				Participate = "æˆ‘åŠ å…¥çš„è¡Œç¨‹ç»„";
+				FreeRide = "æœªæ‹¼è½¦è¡Œç¨‹";
+				From="å‡ºå‘åœ°";
+				To="ç›®çš„åœ°";
+				MyMessages="æˆ‘çš„æ¶ˆæ¯";
+				GivenName="å  ";
+				SureName="å§“  ";
+				Address="åœ°å€";
+				MyProfile="ä¸ªäººä¿¡æ¯";
+				Update="æ›´æ–°";
+				OldPassword="æ—§å¯†ç ";
+				NewPassword="æ–°å¯†ç ";
+				ConfirmPassword="ç¡®è®¤æ–°å¯†ç ";
 				break;
 			
 		}

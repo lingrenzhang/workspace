@@ -44,7 +44,7 @@ public class AvaterService extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("image/JPEG");
 		response.setHeader("Pragma", "No-Cache");
-	         //Çå³ı¸ÃÒ³Êä³ö»º´æ£¬ÉèÖÃ¸ÃÒ³ÎŞ»º´æ 
+	         //æ¸…é™¤è¯¥é¡µè¾“å‡ºç¼“å­˜ï¼Œè®¾ç½®è¯¥é¡µæ— ç¼“å­˜ 
 			/*
 	            context.Response.Buffer = true;
 	            context.Response.ExpiresAbsolute = System.DateTime.Now.AddMilliseconds(0);
@@ -123,7 +123,7 @@ public class AvaterService extends HttpServlet {
 							Pattern reg=Pattern.compile("[.]jpg|png|jpeg|gif$");
 							Matcher matcher=reg.matcher(fileName);
 							if(!matcher.find()) {
-								state = "Illegal format£¡";
+								state = "Illegal formatï¼";
 								response.getWriter().print("{\"msg\": \"Illegal file format.\"}");
 								break;
 							}
