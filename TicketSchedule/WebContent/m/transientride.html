@@ -61,11 +61,101 @@
 			<a class="exit-off-canvas" href="#"></a>
 
 			<section role="main" class="scroll-container" id="main">
-				<div class="row">
+				<div class="row hide" id="ride_info">
 					<br>
-					<div class="text-center">
-						<div id="result">TODO</div>
+					<div class="row panel">
+						<div class="small-3 columns header text-center">
+							<div class="th">
+								<img id="owner_pic" src="../UserProfile/default.jpg" />
+							</div>
+							<div class="row text-center">
+								<i class="fi-torso"></i>
+								<div id="owner_name"></div>
+							</div>
+						</div>
+						<div class="small-9 columns text-center">
+							<div class="row text-center">
+								<a id="owner_call" type="button" href="#"
+									class="button small round expand"><i class="fi-telephone"></i>电话联系</a>
+							</div>
+							<div class="row text-center">
+								<a id="owner_sms" type="button" href="#"
+									class="button small round expand"><i class="fi-mail"></i>短信联系</a>
+							</div>
+						</div>
 					</div>
+					<div class="row panel">
+						<div class="row">
+							<div class="small-1 columns header text-center">
+								<i class="fi-calendar"></i>
+							</div>
+							<div class="small-11 columns">
+								<div id="date"></div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="small-1 columns header text-center">
+								<i class="fi-clock"></i>
+							</div>
+							<div class="small-11 columns">
+								<div id="time"></div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="small-1 columns header text-center">
+								<i class="fi-home"></i>
+							</div>
+							<div class="small-11 columns">
+								<div id="origAddr"></div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="small-1 columns header text-center">
+								<i class="fi-target"></i>
+							</div>
+							<div class="small-11 columns">
+								<div id="destAddr"></div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="small-1 columns header text-center">
+								<i class="fi-info"></i>
+							</div>
+							<div class="small-11 columns">
+								<div id="userType"></div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="small-1 columns header text-center">
+								<i class="fi-yen"></i>
+							</div>
+							<div class="small-11 columns">
+								<span id="price"></span>元
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="small-1 columns header text-center">
+								<i class="fi-torsos-all"></i>
+							</div>
+							<div class="small-11 columns">
+								剩余<span id="seat"></span>座
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="text-center hide" id="failed">
+					<div data-alert class="alert-box round alert ">找不到该拼车信息</div>
+				</div>
+				<div class="text-center">
+					<a id="post" type="button" href="javascript:history.go(-1)"
+						class="button small round">返回</a>
 				</div>
 			</section>
 		</div>
@@ -78,8 +168,28 @@
 			$.get("../servlet/mGetTransientRide?trId="
 					+ location.hash.replace('#', ''), function(data) {
 				var result = JSON.parse(data);
-				$('#result')[0].innerHTML=data;
-				console.log(result);
+				if (result.status && result.status == "successful") {
+					$('#ride_info').removeClass('hide');
+					$('#owner_name')[0].innerHTML = result.owner.name;
+					$('#owner_pic')[0].src = '../UserProfile/'
+							+ result.owner.pic;
+					$('#owner_call')[0].href = 'tel:'+result.owner.cellPhone;
+					$('#owner_sms')[0].href = 'sms://'+result.owner.cellPhone;
+					$('#date')[0].innerHTML = result.date;
+					$('#time')[0].innerHTML = result.time;
+					$('#origAddr')[0].innerHTML = result.origLoc.addr;
+					$('#destAddr')[0].innerHTML = result.destLoc.addr;
+					var userType = "自驾";
+					if (result.userType == true) {
+						userType = "TAXI";
+					}
+					$('#userType')[0].innerHTML = userType;
+					$('#price')[0].innerHTML = result.price;
+					$('#seat')[0].innerHTML = result.availSeats;
+				} else {
+					$('#ride_info').addClass('hide');
+					$('#failed').removeClass('hide');
+				}
 			});
 
 		}
