@@ -1,4 +1,4 @@
-package com.hitchride;
+package com.hitchride.m;
 
 /*
 mPostTransientRide API
@@ -32,7 +32,7 @@ import com.hitchride.access.TransientTopicAccess;
 import com.hitchride.global.AllPartRides;
 import com.hitchride.global.AllTopicRides;
 import com.hitchride.global.AllTopics;
-import com.hitchride.mPostTransientRide.mPostTransientRideJson;
+import com.hitchride.m.mPostTransientRide.mPostTransientRideJson;
 import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.RideInfo;

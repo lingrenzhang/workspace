@@ -2,7 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable = no" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable = no" />
 <title>搭便车&nbsp;|&nbsp;登录</title>
 <link rel="stylesheet" href="css/foundation.css" />
 <link rel="stylesheet" href="foundation-icons/foundation-icons.css" />
@@ -22,8 +23,7 @@
 			<div id="main_div" class="small-8 large-4 medium-6  columns">
 				<form>
 					<div class="row">
-						<label>用户名 <input id="user_input" type="text"
-							placeholder="email地址" />
+						<label>用户名 <input id="user_input" type="text" />
 						</label> <label>密码 <input id="passwd_input" type="password" />
 						</label>
 						<div class="row">
@@ -32,9 +32,10 @@
 									class="button small round">登录</a>
 							</div>
 							<div class="small-6 columns">
-							
+
 								<a href="javascript: void()"
-									class="button small round right disabled"><span data-tooltip class="has-tip" title="注册请联系人事部门">注册</span></a>
+									class="button small round right disabled"><span
+									data-tooltip class="has-tip" title="注册请联系人事部门">注册</span></a>
 							</div>
 						</div>
 					</div>
@@ -54,7 +55,7 @@
 			var passwd = $("#passwd_input")[0].value;
 			$("#login").addClass("disabled");
 			$.post(
-							"../servlet/mLogin",
+							"../api/mLogin",
 							{
 								email : user,
 								password : passwd

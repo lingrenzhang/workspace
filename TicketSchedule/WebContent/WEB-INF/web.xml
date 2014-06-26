@@ -197,31 +197,31 @@
     <description></description>
     <display-name>mLogin</display-name>
     <servlet-name>mLogin</servlet-name>
-    <servlet-class>com.hitchride.mLogin</servlet-class>
+    <servlet-class>com.hitchride.m.mLogin</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>mLogin</servlet-name>
-    <url-pattern>/servlet/mLogin</url-pattern>
+    <url-pattern>/api/mLogin</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>mPostTransientRide</display-name>
     <servlet-name>mPostTransientRide</servlet-name>
-    <servlet-class>com.hitchride.mPostTransientRide</servlet-class>
+    <servlet-class>com.hitchride.m.mPostTransientRide</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>mPostTransientRide</servlet-name>
-    <url-pattern>/servlet/mPostTransientRide</url-pattern>
+    <url-pattern>/api/mPostTransientRide</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>mGetTransientRide</display-name>
     <servlet-name>mGetTransientRide</servlet-name>
-    <servlet-class>com.hitchride.mGetTransientRide</servlet-class>
+    <servlet-class>com.hitchride.m.mGetTransientRide</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>mGetTransientRide</servlet-name>
-    <url-pattern>/servlet/mGetTransientRide</url-pattern>
+    <url-pattern>/api/mGetTransientRide</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>

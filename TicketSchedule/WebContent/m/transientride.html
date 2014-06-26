@@ -165,7 +165,7 @@
 	<script src="js/foundation.min.js"></script>
 	<script>
 		function getTransientTide() {
-			$.get("../servlet/mGetTransientRide?trId="
+			$.get("../api/mGetTransientRide?trId="
 					+ location.hash.replace('#', ''), function(data) {
 				var result = JSON.parse(data);
 				if (result.status && result.status == "successful") {

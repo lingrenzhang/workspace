@@ -1,4 +1,4 @@
-package com.hitchride;
+package com.hitchride.m;
 
 /*
 mPostTransientRide API
