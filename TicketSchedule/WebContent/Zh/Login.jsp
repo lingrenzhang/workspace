@@ -151,6 +151,8 @@
 			</div>
 		</div>
 	</div>
+	<div>微信扫一扫，登录手机版<br><img src="../m/img/mQR.png"/></div>
+	
 	<input type="text" class="hidden" value="1"></input>
 </body>
 </html>
