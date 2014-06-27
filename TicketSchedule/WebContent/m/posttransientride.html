@@ -71,8 +71,12 @@
 						placeholder="地址" />
 					</label> <label>到达地点<input id="dest_input" type="text"
 						placeholder="地址" />
-					</label><div class="text-center"> <input type="text" id="date_input"/></div> <label>每人出的价格（元）<input
-						type="number" id="price_input" value="5">
+					</label>
+					<div class="text-center">
+						<input type="text" id="date_input" />
+					</div>
+					<label>每人出的价格（元）<input type="number" id="price_input"
+						value="5">
 					</label> <label>自驾<input type="checkbox" id="userType_input">
 					</label> <label>提供座位数<select id="seats_input">
 							<option value="1">1</option>
@@ -88,9 +92,7 @@
 						class="button small round">发布拼车</a>
 				</div>
 				<hr>
-				<br>
-				<br>
-				<br>
+				<br> <br> <br>
 				<div id="map_container"></div>
 			</section>
 		</div>
@@ -271,5 +273,15 @@
 					});
 		}
 	</script>
+	<div id="baidu_tongji" style="display: none">
+		<script type="text/javascript">
+			var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://"
+					: " http://");
+			document
+					.write(unescape("%3Cscript src='"
+							+ _bdhmProtocol
+							+ "hm.baidu.com/h.js%3F04d65d39238bfa4301b173d21ddcfeb7' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
 </body>
 </html>
