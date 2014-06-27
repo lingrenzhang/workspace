@@ -130,15 +130,15 @@
 							</div>
 						</div>
 						<br>
-						<div class="row">
+						<div class="row" id="price_label">
 							<div class="small-1 columns header text-center">
 								<i class="fi-yen"></i>
 							</div>
 							<div class="small-11 columns">
 								<span id="price"></span>元
 							</div>
+							<br>
 						</div>
-						<br>
 						<div class="row">
 							<div class="small-1 columns header text-center">
 								<i class="fi-torsos-all"></i>
@@ -197,10 +197,9 @@
 							$('#price')[0].innerHTML = result.price;
 							if (result.userType == true) {
 								userType = "TAXI";
-								$('#price')[0].innerHTML = "";
+								$('#price_label').addClass('hide');
 							}
 							$('#userType')[0].innerHTML = userType;
-							$('#price')[0].innerHTML = result.price;
 							$('#seat')[0].innerHTML = result.availSeats;
 						} else {
 							$('#ride_info').addClass('hide');
