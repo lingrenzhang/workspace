@@ -43,6 +43,10 @@
 			</div>
 			<div class="small-2 large-4 medium-3 columns">&nbsp;</div>
 		</div>
+		<hr>
+				<br>
+				<br>
+				<br>
 	</section>
 	<script src="js/vendor/jquery.js"></script>
 	<script src="js/foundation.min.js"></script>
@@ -51,9 +55,15 @@
 	</script>
 	<script type="text/javascript">
 		function login() {
+			if ($("#login").hasClass("disabled")) {
+				return;
+			}
+			
 			var user = $("#user_input")[0].value;
 			var passwd = $("#passwd_input")[0].value;
+
 			$("#login").addClass("disabled");
+			
 			$.post(
 							"../api/mLogin",
 							{

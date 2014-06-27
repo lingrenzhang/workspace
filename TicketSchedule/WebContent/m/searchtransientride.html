@@ -68,6 +68,11 @@
 							class="button small round">我要发布拼车</a>
 					</div>
 				</div>
+				<hr>
+				<div class="row" id="result">
+
+				</div>
+				<hr>
 			</section>
 		</div>
 	</div>
@@ -109,7 +114,7 @@
 										ride = ride + r.price + '元/座';
 									}
 									ride = ride + '</span></a></div>';
-									$('#main').append(ride);
+									$('#result').append(ride);
 								}
 							});
 
