@@ -78,6 +78,15 @@
 	<script src="js/vendor/jquery.js"></script>
 	<script src="js/foundation.min.js"></script>
 	<script>
+		function checkLogin() {
+			$.get('../api/mLoginChecker', function(data) {
+				var result = JSON.parse(data);
+				if (!(result.status && result.status == "successful")) {
+					window.location.assign(result.redirect);
+				}
+			});
+		}
+		checkLogin();
 		function getTransientRides() {
 			$
 					.get(
@@ -97,7 +106,8 @@
 									ride = ride
 											+ '<br><br><i class="fi-target"></i>';
 									ride = ride + r.destLoc._formatedAddr;
-									ride = ride + '<br><br><i class="fi-calendar"></i>"';
+									ride = ride
+											+ '<br><br><i class="fi-calendar"></i>"';
 									ride = ride + r.rideDate;
 									ride = ride
 											+ '<br><br><i class="fi-clock"></i>';

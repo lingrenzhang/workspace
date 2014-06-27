@@ -52,25 +52,36 @@
 		$(document).foundation();
 	</script>
 	<script type="text/javascript">
+		function checkLogin() {
+			$.get('../api/mLoginChecker', function(data) {
+				var result = JSON.parse(data);
+				if (result.status && result.status == "successful") {
+					window.location.assign(result.redirect);
+				}
+			});
+		}
+		checkLogin();
 		function login() {
 			if ($("#login").hasClass("disabled")) {
 				return;
 			}
-			
+
 			var user = $("#user_input")[0].value;
 			var passwd = $("#passwd_input")[0].value;
 
 			$("#login").addClass("disabled");
-			
-			$.post(
+
+			$
+					.post(
 							"../api/mLogin",
 							{
 								email : user,
 								password : passwd
 							},
 							function(data) {
-								var result=JSON.parse(data);
-								if (result.status && result.status == "successful") {
+								var result = JSON.parse(data);
+								if (result.status
+										&& result.status == "successful") {
 									window.location.assign(result.redirect);
 								} else {
 									$("#login").removeClass("disabled");

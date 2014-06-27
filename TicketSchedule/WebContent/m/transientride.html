@@ -166,33 +166,45 @@
 	<script src="js/vendor/jquery.js"></script>
 	<script src="js/foundation.min.js"></script>
 	<script>
-		function getTransientTide() {
-			$.get("../api/mGetTransientRide?trId="
-					+ location.hash.replace('#', ''), function(data) {
+		function checkLogin() {
+			$.get('../api/mLoginChecker', function(data) {
 				var result = JSON.parse(data);
-				if (result.status && result.status == "successful") {
-					$('#ride_info').removeClass('hide');
-					$('#owner_name')[0].innerHTML = result.owner.name;
-					$('#owner_pic')[0].src = '../UserProfile/'
-							+ result.owner.pic;
-					$('#owner_call')[0].href = 'tel:'+result.owner.cellPhone;
-					$('#owner_sms')[0].href = 'sms://'+result.owner.cellPhone;
-					$('#date')[0].innerHTML = result.date;
-					$('#time')[0].innerHTML = result.time;
-					$('#origAddr')[0].innerHTML = result.origLoc.addr;
-					$('#destAddr')[0].innerHTML = result.destLoc.addr;
-					var userType = "自驾";
-					if (result.userType == true) {
-						userType = "TAXI";
-					}
-					$('#userType')[0].innerHTML = userType;
-					$('#price')[0].innerHTML = result.price;
-					$('#seat')[0].innerHTML = result.availSeats;
-				} else {
-					$('#ride_info').addClass('hide');
-					$('#failed').removeClass('hide');
+				if (!(result.status && result.status == "successful")) {
+					window.location.assign(result.redirect);
 				}
 			});
+		}
+		checkLogin();
+		function getTransientTide() {
+			$.get("../api/mGetTransientRide?trId="
+					+ location.hash.replace('#', ''),
+					function(data) {
+						var result = JSON.parse(data);
+						if (result.status && result.status == "successful") {
+							$('#ride_info').removeClass('hide');
+							$('#owner_name')[0].innerHTML = result.owner.name;
+							$('#owner_pic')[0].src = '../UserProfile/'
+									+ result.owner.pic;
+							$('#owner_call')[0].href = 'tel:'
+									+ result.owner.cellPhone;
+							$('#owner_sms')[0].href = 'sms://'
+									+ result.owner.cellPhone;
+							$('#date')[0].innerHTML = result.date;
+							$('#time')[0].innerHTML = result.time;
+							$('#origAddr')[0].innerHTML = result.origLoc.addr;
+							$('#destAddr')[0].innerHTML = result.destLoc.addr;
+							var userType = "自驾";
+							if (result.userType == true) {
+								userType = "TAXI";
+							}
+							$('#userType')[0].innerHTML = userType;
+							$('#price')[0].innerHTML = result.price;
+							$('#seat')[0].innerHTML = result.availSeats;
+						} else {
+							$('#ride_info').addClass('hide');
+							$('#failed').removeClass('hide');
+						}
+					});
 
 		}
 		$(document).foundation();

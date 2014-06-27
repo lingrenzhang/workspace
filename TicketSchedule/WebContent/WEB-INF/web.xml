@@ -205,6 +205,16 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>mLoginChecker</display-name>
+    <servlet-name>mLoginChecker</servlet-name>
+    <servlet-class>com.hitchride.m.mLoginChecker</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>mLoginChecker</servlet-name>
+    <url-pattern>/api/mLoginChecker</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>mPostTransientRide</display-name>
     <servlet-name>mPostTransientRide</servlet-name>
     <servlet-class>com.hitchride.m.mPostTransientRide</servlet-class>

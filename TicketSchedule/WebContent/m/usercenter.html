@@ -76,6 +76,15 @@
 	<script src="js/foundation.min.js"></script>
 	<script>
 		$(document).foundation();
+		function checkLogin() {
+			$.get('../api/mLoginChecker', function(data) {
+				var result = JSON.parse(data);
+				if (!(result.status && result.status == "successful")) {
+					window.location.assign(result.redirect);
+				}
+			});
+		}
+		checkLogin();
 	</script>
 	<div id="baidu_tongji" style="display: none">
 		<script type="text/javascript">
