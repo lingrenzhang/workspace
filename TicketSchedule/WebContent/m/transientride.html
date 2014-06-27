@@ -194,8 +194,10 @@
 							$('#origAddr')[0].innerHTML = result.origLoc.addr;
 							$('#destAddr')[0].innerHTML = result.destLoc.addr;
 							var userType = "自驾";
+							$('#price')[0].innerHTML = result.price;
 							if (result.userType == true) {
 								userType = "TAXI";
+								$('#price')[0].innerHTML = "";
 							}
 							$('#userType')[0].innerHTML = userType;
 							$('#price')[0].innerHTML = result.price;

@@ -97,9 +97,10 @@
 					<div class="text-center">
 						<input type="text" id="date_input" />
 					</div>
-					<label> 每人出的价格（元） <input type="number" id="price_input"
-						value="5">
-					</label> <label> 自驾 <input type="checkbox" id="userType_input">
+					<label> 自驾 <input type="checkbox" id="userType_input"
+						onchange="userTypeChanged()">
+					</label> <label id="price_label" class="hide"> 每人出的价格（元） <input
+						type="number" id="price_input" value="5">
 					</label> <label> 提供座位数 <select id="seats_input">
 							<option value="1">1</option>
 							<option value="2">2</option>
@@ -129,6 +130,13 @@
 		
 	</script>
 	<script type="text/javascript">
+		function userTypeChanged() {
+			if ($('#userType_input')[0].checked) {
+				$('#price_label').removeClass('hide');
+			} else {
+				$('#price_label').addClass('hide');
+			}
+		}
 		function checkLogin() {
 			$.get('../api/mLoginChecker', function(data) {
 				var result = JSON.parse(data);
@@ -264,7 +272,7 @@
 				return;
 			}
 			var price = $('#price_input')[0].value;
-			var userType = !$('#userType_input')[0].value;
+			var userType = !$('#userType_input')[0].checked;
 			var seats = $('#seats_input')[0].value;
 
 			$("#post").addClass("disabled");
