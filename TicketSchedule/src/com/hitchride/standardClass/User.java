@@ -133,12 +133,12 @@ public class User implements RideListener,UserInfo{
 	{
 		StringBuilder result = new StringBuilder(300);
 		result.append("<div class=\"userpic\">");
-		result.append("<div class=\"username\">"+this._surename+this.get_name()+"</div>");
+		result.append("<div class=\"username\">"+ this.get_name()+"</div>");
 		result.append("<img src=\"/TicketSchedule/UserProfile/"+this.get_avatarID()+"\" alt=\"Profile Picture\"></img>");
 		result.append("<span class=\"vip\"></span>");
 		result.append("</div>");
 		result.append("<div id=\"user_info\">");
-		result.append("Welcome "+ this._surename + this.get_name());
+		result.append("Welcome " + this.get_name());
 		result.append("</div>");
 		if (this.get_uid()!=0)
 		{

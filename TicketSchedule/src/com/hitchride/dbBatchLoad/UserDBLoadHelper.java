@@ -63,7 +63,8 @@ public class UserDBLoadHelper {
 					{
 						String username= userRow[1].getContents().trim();
 						String name = userRow[2].getContents().trim();
-						String givenname = name.substring(1);
+						//String givenname = name.substring(1);
+						String givenname = name;
 						String surename = name.substring(0,1);
 						String password = userRow[3].getContents().trim();
 						String cellphone = userRow[4].getContents().trim();
