@@ -641,6 +641,15 @@ window.onscroll = function(){
  	</table>
 
  </div>
-
+	<div id="baidu_tongji" style="display: none">
+		<script type="text/javascript">
+			var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://"
+					: " http://");
+			document
+					.write(unescape("%3Cscript src='"
+							+ _bdhmProtocol
+							+ "hm.baidu.com/h.js%3F04d65d39238bfa4301b173d21ddcfeb7' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
 </body>
 </html>
