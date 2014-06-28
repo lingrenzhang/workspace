@@ -38,7 +38,7 @@ public class UserTbAccess {
 		
 		
 		
-		public void insertValue(String userName,int groupId, String password,String givenname, String surname,String address,int userLevel,String avatarID,String cellphone)
+		public void insertValue(String userName,int groupId, String password,String givenname, String surname,String address,int userLevel,String avatarID,String cellphone) throws Exception
 		{
 			if (userLevel==0)
 			{
@@ -66,8 +66,8 @@ public class UserTbAccess {
 			}
 			catch (SQLException e)
 			{
-                Error err=new Error("SQLException:"+e.getMessage());
-                throw err;
+                Exception ex=new Exception("SQLException:"+e.getMessage());
+                throw ex;
 				//System.err.println("SQLException:"+e.getMessage());
 			}
 		}

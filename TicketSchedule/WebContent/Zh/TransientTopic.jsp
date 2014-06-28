@@ -45,6 +45,10 @@
 var ttopic;
 var tride;
 
+//Control related
+var userid;
+var	isOwner;
+
 //Display Related
 var torigLat, torigLng, tdestLat, tdestLng;
 var tomarker,tdmarker;
@@ -203,6 +207,16 @@ function loadContent()
 	nparti = result.ttopic.nParticipant;
 	partiuid = result.ttopic.partiuid;
 	parti = result.ttopic.parti;
+	
+	userid=<%=user.get_uid()%>;
+	if (userid!=tride.userId)
+	{
+		isOwner=false;
+	}
+	else
+	{
+		isOwner=true;
+	}
 }
 
 function loadRide()
@@ -241,6 +255,8 @@ function loadRide()
 	topicstring =topicstring+"</div>";
 	
 	document.getElementById("topicbody").innerHTML=topicstring;	
+	
+	
 }
 
 function loadMiddle()
@@ -249,7 +265,11 @@ function loadMiddle()
 	middlestring = middlestring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"途经： "+"<br>";
 	for (i=0;i<nmp;i++)
 	{
-		middlestring= middlestring+ "<a href='javascript:deleteMiddlePoint("+i+")'><img src=\"/TicketSchedule/Picture/smallminus.jpg\" /></a>"+mp[i]._formatedAddr+"<br>";
+		if (isOwner)
+		{
+			middlestring= middlestring+ "<a href='javascript:deleteMiddlePoint("+i+")'><img src=\"/TicketSchedule/Picture/smallminus.jpg\" /></a>";
+		}
+		middlestring = middlestring + mp[i]._formatedAddr+"<br>";
 		mmarkers[i] = new BMap.Marker(new BMap.Point(mp[i]._lon,mp[i]._lat),{icon: imagee});
 		map.addOverlay(mmarkers[i]);
 	}
@@ -266,18 +286,10 @@ function loadMiddle()
 
 function loadParti()
 {
-	var userid=<%=user.get_uid()%>;
+	
 	var partistring="";
 	partistring= partistring+"";
-	var isOwner;
-	if (userid!=tride.userId)
-	{
-		isOwner=false;
-	}
-	else
-	{
-		isOwner=true;
-	}
+	
 	var userAlreadyExist = false;
 	
 	for (i=0;i<nparti;i++)
@@ -286,7 +298,10 @@ function loadParti()
 		{
 			userAlreadyExist = true;
 		}
-		partistring = partistring + "<div id=parti"+i+"><a href='javascript:deleteUser("+i+")' class=deleteParti><img src=\"/TicketSchedule/Picture/smallminus.jpg\"></img></a>";
+		if (isOwner || userAlreadyExist)
+		{
+			partistring = partistring + "<div id=parti"+i+"><a href='javascript:deleteUser("+i+")' class=deleteParti><img src=\"/TicketSchedule/Picture/smallminus.jpg\"></img></a>";
+		}
 		partistring = partistring + "<div class=\"userpic\">";
 		partistring = partistring + "<div class=\"username\">"+parti[i]._givenname+"</div>";
 		partistring = partistring + "<img src= \"/TicketSchedule/UserProfile/"+parti[i]._avatarID+"\" alt=\"Profile Picture\"></img>";

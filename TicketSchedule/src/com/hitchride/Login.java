@@ -87,11 +87,11 @@ public class Login extends HttpServlet {
 					{
 						if("Zh".equalsIgnoreCase(request.getParameter("language")))
 						{
-							response.sendRedirect("/TicketSchedule/Zh/UserCenter.jsp");
+							response.sendRedirect("/TicketSchedule/Zh/SearchTransientRide.jsp");
 						}
 						else
 						{
-							response.sendRedirect("/TicketSchedule/UserCenter.jsp");
+							response.sendRedirect("/TicketSchedule/SearchTransientRide.jsp");
 						}
 					}
 				}

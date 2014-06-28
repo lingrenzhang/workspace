@@ -70,8 +70,13 @@ public class Register extends HttpServlet {
 			if (rs.next()) {
 				response.sendRedirect("../Zh/register.jsp?err=existed_user");
 			} else {
-				userTb.insertValue(userName, groupId, password, givenname,
-						surname, address, 1, avatarID, cellphone);
+				try {
+					userTb.insertValue(userName, groupId, password, givenname,
+							surname, address, 1, avatarID, cellphone);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				int userid = userTb.getIDbyName(givenname);
 				User user = new User();
 
@@ -92,7 +97,7 @@ public class Register extends HttpServlet {
 				request.getSession().setMaxInactiveInterval(60 * 120);
 				response.sendRedirect("../Zh/UserCenter.jsp");
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -55,3 +55,8 @@ function formatDateSwitch(count)
 	}
 	
 }
+
+function inbuilding()
+{
+	alert("功能尚未开放");
+}

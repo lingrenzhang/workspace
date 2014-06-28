@@ -46,7 +46,12 @@ public class Welcome extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=utf-8");
 		UserTbAccess userDB=new UserTbAccess();
-		userDB.insertValue(request.getParameter("name"),1, request.getParameter("pwd"), "","","",1,"","13112341234");
+		try {
+			userDB.insertValue(request.getParameter("name"),1, request.getParameter("pwd"), "","","",1,"","13112341234");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		response.sendRedirect("../ShowUser.jsp");
 	}
 
