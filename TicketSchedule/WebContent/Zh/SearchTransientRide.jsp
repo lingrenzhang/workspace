@@ -514,7 +514,7 @@ function asPassenger()
 	document.getElementById("asDriver").setAttribute("class","");
 	document.getElementById("asPassenger").setAttribute("class","active");
 	document.getElementById("seats-content").style.display="none";
-	urserType = true;
+	userType = true;
 }
 
 </script>
