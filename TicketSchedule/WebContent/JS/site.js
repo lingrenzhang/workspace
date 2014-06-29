@@ -60,3 +60,8 @@ function inbuilding()
 {
 	alert("功能尚未开放");
 }
+
+function manualCheck()
+{
+	alert("请联系人事部门或登录微信群反馈问题。");
+}

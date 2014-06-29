@@ -239,4 +239,25 @@ public class TransientRideAccess {
 		}
 		return tride;
 	}
+	
+	
+	public static int deleteTransientRide(int trid)
+	{
+		int result = 0;
+		try
+		{
+			Statement sql;
+			getConnection();
+			 
+			sql=objConn.createStatement();
+			result = sql.executeUpdate("delete from transientRide where transientRideId="+trid);
+		}catch (java.lang.ClassNotFoundException e){
+			System.err.println("ClassNotFoundException:"+e.getMessage());
+		}
+		catch (SQLException e)
+		{
+			System.err.println("SQLException:"+e.getMessage());
+		}
+		return result;
+	}
 }

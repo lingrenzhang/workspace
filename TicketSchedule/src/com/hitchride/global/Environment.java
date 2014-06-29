@@ -18,6 +18,7 @@ public class Environment {
 			AllTopicRides.getTopicRides();
 			AllTopics.getTopics();
 			maxTranRideId = TransientRideAccess.getMaxTransientRideId();
+			
 	}
 	
 	public static Environment getEnv(){
@@ -29,4 +30,6 @@ public class Environment {
 		return env;
 		
 	}
+	
+
 }

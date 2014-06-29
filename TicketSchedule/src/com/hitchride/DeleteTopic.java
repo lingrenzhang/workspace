@@ -7,21 +7,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.hitchride.access.TransientRideAccess;
 import com.hitchride.access.TransientTopicAccess;
 import com.hitchride.global.AllPartRides;
 import com.hitchride.global.AllUsers;
+import com.hitchride.standardClass.GeoInfo;
+import com.hitchride.standardClass.TransientTopic;
 import com.hitchride.standardClass.User;
 
 /**
- * Servlet implementation class UpdateTParticipant
+ * Servlet implementation class DeleteTopic
  */
-public class UpdateTParticipant extends HttpServlet {
+public class DeleteTopic extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateTParticipant() {
+    public DeleteTopic() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,28 +35,30 @@ public class UpdateTParticipant extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		synchronized(this)
 		{
-			String method = request.getParameter("method");
-			if (method.equalsIgnoreCase("delete"))
+			String topicType = request.getParameter("topicType");
+			if (topicType.equalsIgnoreCase("transient"))
 			{
 				int trid = Integer.parseInt(request.getParameter("trId"));
 				int deleteId = Integer.parseInt(request.getParameter("deleteId"));
-				TransientTopicAccess.removeParti(trid, deleteId);
-				User user = (User) AllUsers.getUsers().getUser(deleteId);
-				user.deletepTrideById(trid);
-				response.setStatus(200);
-				response.getWriter().write("{status: OK}");
-			}
-			if (method.equalsIgnoreCase("insert"))
-			{
-				int trid = Integer.parseInt(request.getParameter("trId"));
-				int insertId = Integer.parseInt(request.getParameter("insertId"));
-				TransientTopicAccess.addParti(trid, insertId);
-				User user = (User) AllUsers.getUsers().getUser(insertId);
-				user.insertpTrideById(trid);
-				response.setStatus(200);
-				response.getWriter().write("{status: OK}");
-			}
+				TransientTopic tr = TransientTopicAccess.getTransientTopicById(trid);
+				for (int i=0;i<tr.nParticipant;i++)
+				{
+					tr.parti[i].deletepTrideById(trid);
+				}
+				User holder = (User) AllUsers.getUsers().getUser(deleteId);
+				holder.deletetTrideById(trid);
+				
+				
+				TransientTopicAccess.deleteTransientTopic(trid);
+				TransientRideAccess.deleteTransientRide(trid);
 			
+				response.setStatus(200);
+				response.getWriter().write("{status: OK}");
+			}
+			if (topicType.equalsIgnoreCase("normal"))
+			{
+				
+			}
 		}
 	}
 
@@ -62,7 +67,6 @@ public class UpdateTParticipant extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("UpdateTParti called");
 	}
 
 }

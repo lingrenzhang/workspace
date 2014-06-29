@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.hitchride.access.TransientRideAccess;
 import com.hitchride.access.UserTbAccess;
 import com.hitchride.global.AllPartRides;
 import com.hitchride.global.AllTopicRides;
@@ -18,6 +19,7 @@ import com.hitchride.standardClass.Message;
 import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.Topic;
+import com.hitchride.standardClass.TransientRide;
 import com.hitchride.standardClass.User;
 import com.hitchride.standardClass.UserProfile;
 import com.hitchride.util.QueryStringParser;
@@ -109,6 +111,25 @@ public class UserCenter extends HttpServlet {
 							Topic topic= AllTopics.getTopics().get_topic(ownerRide._recordId);
 						}
 					}
+					
+					user.refreshtTride();
+					for(Iterator<Integer> rideI = user.tTride.iterator();rideI.hasNext(); )
+					{
+						int rideId = rideI.next();
+						TransientRide ownerTRide = TransientRideAccess.getTransisentRideById(rideId);
+						if (ownerTRide!=null)
+						{
+							value.append("<a href=\"/TicketSchedule/Zh/TransientTopic.jsp?trId="+ownerTRide.transientRideId+"\">");
+							value.append("<div class=\"ride_wrapper\">");	
+							value.append(ownerTRide.getGeoHTML());
+							value.append(ownerTRide.getScheduleHTML());
+							value.append("</div></a>");
+						}
+						else
+						{
+							System.out.println("Owner transientRide " + rideId + " not found. Check DB integrity.");
+						}
+					}
 					value.append("</div>");
 					
 					
@@ -128,6 +149,25 @@ public class UserCenter extends HttpServlet {
 							value.append("</a><a href='/TicketSchedule/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>Manage</button></div></a>");
 							value.append("</div></a>");
 							Topic topic= AllTopics.getTopics().get_topic(parRide.get_assoOwnerRideId());
+						}
+					}
+					
+					user.refreshpTride();
+					for(Iterator<Integer> rideI = user.pTride.iterator();rideI.hasNext(); )
+					{
+						int rideId = rideI.next();
+						TransientRide ownerTRide = TransientRideAccess.getTransisentRideById(rideId);
+						if (ownerTRide!=null)
+						{
+							value.append("<a href=\"/TicketSchedule/Zh/TransientTopic.jsp?trId="+ownerTRide.transientRideId+"\">");
+							value.append("<div class=\"ride_wrapper\">");	
+							value.append(ownerTRide.getGeoHTML());
+							value.append(ownerTRide.getScheduleHTML());
+							value.append("</div></a>");
+						}
+						else
+						{
+							System.out.println("Owner transientRide " + rideId + " not found. Check DB integrity.");
 						}
 					}
 					value.append("</div>");

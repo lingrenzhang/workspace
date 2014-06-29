@@ -58,6 +58,7 @@
 <link rel="shortcut icon" href="/TicketSchedule/favicon.ico"
 	type="image/x-icon" />
 <script src="../JS/jquery-1.10.1.js"></script>
+<script src="../JS/site.js"></script>
 <script>
 	function refreshCode_login() {
 		document.getElementById("verifyPic_login").src = "/TicketSchedule/servlet/CheckCode";
@@ -112,7 +113,7 @@
 							</label>
 						</dt>
 						<dd>
-							<span class="getpassword" id="getpassword"><a href=""
+							<span class="getpassword" id="getpassword"><a href="javascript:manualCheck()"
 								stats="home_findpassword">忘记密码？</a></span>
 						</dd>
 					</dl>

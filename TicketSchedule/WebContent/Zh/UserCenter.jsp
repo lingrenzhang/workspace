@@ -195,7 +195,7 @@ function validateNewpwd()
 		   <div class="user_info" id="from">
 			<div class="userpic">
 				<div class="username"><%=(user.get_name()==null)?"guest":user.get_name() %></div>
-				<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
+				<img src=<%="/TicketSchedule/UserProfile/"+user.get_avatarID() %> alt="Profile Picture"></img>
 			</div>
 				<div class = "user_nav_wrapper">
 				  <ul class="nav nav-pills nav-justified nav-stacked" id="user_nav">
@@ -209,12 +209,9 @@ function validateNewpwd()
 </div>
 	<div id="baidu_tongji" style="display: none">
 		<script type="text/javascript">
-			var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://"
-					: " http://");
-			document
-					.write(unescape("%3Cscript src='"
-							+ _bdhmProtocol
-							+ "hm.baidu.com/h.js%3F04d65d39238bfa4301b173d21ddcfeb7' type='text/javascript'%3E%3C/script%3E"));
+			var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+			document.write(unescape("%3Cscript src='"+ _bdhmProtocol
+				+ "hm.baidu.com/h.js%3F04d65d39238bfa4301b173d21ddcfeb7' type='text/javascript'%3E%3C/script%3E"));
 		</script>
 	</div>
 </body>

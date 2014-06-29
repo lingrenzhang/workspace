@@ -157,3 +157,9 @@ font-size: 12px;
 	float: left;
 }
 
+#deleteTopic
+{
+	position: relative;
+	float: right;
+	margin-top: 3px;
+}

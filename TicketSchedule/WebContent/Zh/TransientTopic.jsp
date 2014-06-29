@@ -163,6 +163,10 @@ $(document).ready(function(){
 		refitb(basicbounds);
 	}
 	loadRide();
+	if(isOwner)
+	{
+		enableDelete();
+	}
 	loadMiddle();
 	loadParti();
 });
@@ -189,11 +193,11 @@ function refitb(bounds)
 }
 </script>
 
-
-
-
-
 <script>
+function enableDelete()
+{
+	document.getElementById("deleteTopic").innerHTML ="<a href='javascript:deleteTopic()'><img src='/TicketSchedule/Picture/deletes.png'></img></a>";
+}
 function loadContent()
 {
 	var trid = getURLPara("trId");
@@ -232,8 +236,6 @@ function loadRide()
 	topicstring = topicstring + "<img src= \"/TicketSchedule/UserProfile/"+tride.owner._avatarID+"\" alt=\"Profile Picture\"></img>";
 	topicstring = topicstring + "<span class=\"passenger\"></span></div>";
 	topicstring = topicstring + "<div class=\"inner_content\"><h5>";
-	//topicstring = topicstring + "<span class=\"inner\">"+"出发地："+trInfo.origLoc._addr+"<br>";
-	//topicstring = topicstring + "目的地："+trInfo.destLoc._addr+"</span></h4>";
 	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_start.png\"/>"+"  出发地："+tride.origLoc._addr+"<br>";
 	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"  目的地："+tride.destLoc._addr+"<br>";
 	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/clock_small.jpg\"/>"+" 出发时间："+tride.rideTime+"<br>";
@@ -255,8 +257,6 @@ function loadRide()
 	topicstring =topicstring+"</div>";
 	
 	document.getElementById("topicbody").innerHTML=topicstring;	
-	
-	
 }
 
 function loadMiddle()
@@ -321,6 +321,16 @@ function loadParti()
 </script>
 
 <script>
+function deleteTopic()
+{
+	alert("delete Topic");
+	var trid = getURLPara("trId");
+	var url = "/TicketSchedule/servlet/DeleteTopic?topicType=transient&trId="+trid;
+	url = url + "&deleteId="+ userid;
+	getJson(url);
+	window.location.href = "/TicketSchedule/Zh/SearchTransientRide.jsp";
+}
+
 function addMiddlePoint()
 {
 	for (i=0;i<nmp;i++)
@@ -464,10 +474,8 @@ function updateOk(result)
 	<div id="content_container">
 		<div id="content">
 			<div id="topicinfo">
-				<div id="topichead">行程信息</div>
+				<div id="topichead">行程信息<div id="deleteTopic"></div></div>
 				<div id="topicbody">
-				
-				
 
 				</div>
 				<div id="participants">
@@ -490,16 +498,14 @@ function updateOk(result)
 <div id="footer">
 </div>
 
+<div id="baidu_tongji" style="display: none">
+	<script type="text/javascript">
+		var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://"
+				: " http://");
+		document.write(unescape("%3Cscript src='"+ _bdhmProtocol
+		+ "hm.baidu.com/h.js%3F04d65d39238bfa4301b173d21ddcfeb7' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+</div>
 
-	<div id="baidu_tongji" style="display: none">
-		<script type="text/javascript">
-			var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://"
-					: " http://");
-			document
-					.write(unescape("%3Cscript src='"
-							+ _bdhmProtocol
-							+ "hm.baidu.com/h.js%3F04d65d39238bfa4301b173d21ddcfeb7' type='text/javascript'%3E%3C/script%3E"));
-		</script>
-	</div>
 </body>
 </html>

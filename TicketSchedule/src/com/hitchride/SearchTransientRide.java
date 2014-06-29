@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.hitchride.global.AllUsers;
 import com.hitchride.global.Environment;
 import com.hitchride.standardClass.GeoInfo;
 import com.hitchride.standardClass.TransientRide;
@@ -117,6 +118,7 @@ public class SearchTransientRide extends HttpServlet {
 			tranRide.insertToDB();
 			TransientTopic trantopic = new TransientTopic(tranRide.transientRideId);
 			trantopic.insertToDB();
+			tranRide.owner.inserttTrideById(tranRide.transientRideId);
 		
 			request.getSession().setAttribute("tranRide", tranRide);
 			response.setContentType("text/html; charset=UTF-8");
@@ -202,10 +204,10 @@ public class SearchTransientRide extends HttpServlet {
 			tranRide.totalSeats = 4;
 			tranRide.price = 123.4;
 					
-					
 			tranRide.insertToDB();
 			TransientTopic trantopic = new TransientTopic(tranRide.transientRideId);
 			trantopic.insertToDB();
+			tranRide.owner.inserttTrideById(tranRide.transientRideId);
 		
 			request.getSession().setAttribute("tranRide", tranRide);
 			//response.setContentType("text/html; charset=UTF-8");

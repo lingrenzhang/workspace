@@ -1,8 +1,12 @@
 package com.hitchride.standardClass;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import com.hitchride.access.PredefinedQuery;
+import com.hitchride.access.TransientRideAccess;
 
 
 //User passively updates i
@@ -18,6 +22,11 @@ public class User implements RideListener,UserInfo{
 	private String _emailAddress;
 	public String _cellphone;
 	
+	//Use self defined data structure later.
+	public List<Integer> pTride = new ArrayList<Integer>();
+	public List<Integer> tTride = new ArrayList<Integer>();
+	
+	//Transient Ride is traced by ID and accessed from DB directly.
 	public Vector<ParticipantRide> pRides= new Vector<ParticipantRide>();
 	public Vector<OwnerRideInfo> tRides= new Vector<OwnerRideInfo>();
 	public Vector<Message> message = new Vector<Message>(); //Load the message in memory. 
@@ -175,4 +184,70 @@ public class User implements RideListener,UserInfo{
 	}
 	
 	
+	//ID operation
+	public void refreshpTride()
+	{
+		for (Iterator<Integer> iTransient = this.pTride.iterator();iTransient.hasNext();)
+		{
+			Integer tid = iTransient.next();
+			TransientRide tr = TransientRideAccess.getTransisentRideById(tid);
+			java.util.Date d = new java.util.Date();
+			long current = d.getTime()+d.getTimezoneOffset()*60000;
+			long timestamp = tr.rideDate.getTime()+tr.rideTime.getTime();
+			if (current>timestamp)
+			{
+				iTransient.remove();
+			}
+		}
+	}
+	
+	public void deletepTrideById(int id)
+	{
+		for (Iterator<Integer> iTransient = this.pTride.iterator();iTransient.hasNext();)
+		{
+			if (iTransient.next() == id)
+			{
+				iTransient.remove();
+			}
+		}
+	}
+	
+	public void insertpTrideById(int id)
+	{
+	    deletepTrideById(id); //Remove duplicate id
+		this.pTride.add(id);
+	}
+	
+	public void refreshtTride()
+	{
+		for (Iterator<Integer> iTransient = this.tTride.iterator();iTransient.hasNext();)
+		{
+			Integer tid = iTransient.next();
+			TransientRide tr = TransientRideAccess.getTransisentRideById(tid);
+			java.util.Date d = new java.util.Date();
+			long current = d.getTime()+d.getTimezoneOffset()*60000;
+			long timestamp = tr.rideDate.getTime()+tr.rideTime.getTime();
+			if (current>timestamp)
+			{
+				iTransient.remove();
+			}
+		}
+	}
+	
+	public void deletetTrideById(int id)
+	{
+		for (Iterator<Integer> iTransient = this.tTride.iterator();iTransient.hasNext();)
+		{
+			if (iTransient.next() == id)
+			{
+				iTransient.remove();
+			}
+		}
+	}
+	
+	public void inserttTrideById(int id)
+	{
+	    deletetTrideById(id); //Remove duplicate id
+		this.tTride.add(id);
+	}
 }

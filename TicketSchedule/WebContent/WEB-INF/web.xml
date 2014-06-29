@@ -303,4 +303,14 @@
     <servlet-name>UpdateTMiddlePoint</servlet-name>
     <url-pattern>/servlet/UpdateTMiddlePoint</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteTopic</display-name>
+    <servlet-name>DeleteTopic</servlet-name>
+    <servlet-class>com.hitchride.DeleteTopic</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteTopic</servlet-name>
+    <url-pattern>/servlet/DeleteTopic</url-pattern>
+  </servlet-mapping>
 </web-app>

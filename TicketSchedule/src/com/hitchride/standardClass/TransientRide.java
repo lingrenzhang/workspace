@@ -7,6 +7,7 @@ import java.sql.Date;
 import com.hitchride.access.TopicRideAccess;
 import com.hitchride.access.TransientRideAccess;
 import com.hitchride.global.AllUsers;
+import com.hitchride.util.TimeFormatHelper;
 import com.mysql.jdbc.ResultSetImpl;
 
 //Typically load temporide directly. Not keeping persistent at memory.
@@ -128,4 +129,33 @@ public class TransientRide implements PersistentStorage{
 		return false;
 	}
 	
+    public String getGeoHTML()
+    {
+    	StringBuilder result = new StringBuilder();
+    	result.append("<div class=\"geo\"> From: ");
+    	result.append(origLoc.get_formatedAddr()+"<br>");
+    	result.append("To: "+destLoc.get_formatedAddr()+"</div>");
+    	return result.toString();
+    }
+    
+    public String getScheduleHTML()
+    {  
+    	StringBuilder result = new StringBuilder();
+    	result.append("<div class=\"schedule\"> ");
+    	
+    	result.append("Trip Date: ");
+		result.append(this.rideDate);
+		result.append("<br>");
+		
+		result.append("Trip Time: ");
+		result.append(this.rideTime);
+		result.append("<br>");
+		
+		result.append("Flex: ");
+		result.append(this.rideFlex);
+		result.append("<br>");
+
+    	result.append("</div>");
+    	return result.toString();
+    }
 }
