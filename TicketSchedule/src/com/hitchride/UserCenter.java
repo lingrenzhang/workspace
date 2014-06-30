@@ -204,7 +204,7 @@ public class UserCenter extends HttpServlet {
 				    value.append("<div class=\"panel panel-default\">");
 					value.append("<div class=\"panel-heading\">"+dic.MyProfile+"</div>");
 					value.append("<div class=\"panel-body\">");
-					value.append("<form action=\"/TicketSchedule/servlet/UserProfile\" method=post onSubmit=\"return validateNewpwd()\">");
+					value.append("<form action=\"/TicketSchedule/servlet/UserProfile\" accept-charset=\"utf-8\" method=post onSubmit=\"return validateNewpwd()\">");
 					value.append("<div class=propwrapper><span>"+dic.GivenName+"</span>"+"<input type=text class=\"userproperty\" name=givenname value='"+userP._givenname+"'></div>");
 					value.append("<div class=propwrapper><span>"+dic.SureName+"</span>"+"<input type=text class=\"userproperty\" name=surename value='"+userP._surename+"'></div>");
 					value.append("<div class=propwrapper><span>"+dic.Address+" </span>"+"<input type=text class=\"userproperty\" name=address value='"+userP._address+"'></div>");

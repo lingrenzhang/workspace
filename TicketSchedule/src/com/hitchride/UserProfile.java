@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hitchride.access.UserTbAccess;
+import com.hitchride.standardClass.User;
 
 /**
  * Servlet implementation class UserProfile
@@ -41,9 +42,9 @@ public class UserProfile extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String givenname = request.getParameter("givenname");
-		String surename = request.getParameter("surename");
-		String address = request.getParameter("address");
+		String givenname = new String(request.getParameter("givenname").getBytes("iso-8859-1"), "UTF-8");
+		String surename = new String(request.getParameter("surename").getBytes("iso-8859-1"), "UTF-8");
+		String address = new String(request.getParameter("address").getBytes("iso-8859-1"), "UTF-8");
 		String oldpwd =request.getParameter("oldpwd");
 		String newpwd =request.getParameter("newpwd");
 		
@@ -52,6 +53,9 @@ public class UserProfile extends HttpServlet {
 		{
 			
 			UserTbAccess.updateUserProfile(givenname, surename, address, uid);
+			User user = (User) request.getSession().getAttribute("user");
+			user.set_name(givenname);
+			user.set_surename(surename);
 			response.sendRedirect("/TicketSchedule/Zh/UserCenter.jsp");
 		}
 		else
@@ -59,6 +63,9 @@ public class UserProfile extends HttpServlet {
 			if (UserTbAccess.verifyPassword(uid, oldpwd))
 			{
 				UserTbAccess.updateUserProfile(givenname, surename, address,newpwd,uid);
+				User user = (User) request.getSession().getAttribute("user");
+				user.set_name(givenname);
+				user.set_surename(surename);
 				response.sendRedirect("/TicketSchedule/Zh/UserCenter.jsp");
 			}
 			else
