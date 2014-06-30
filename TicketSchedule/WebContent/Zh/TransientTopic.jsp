@@ -44,6 +44,7 @@
 //New Topic Related
 var ttopic;
 var tride;
+var isSuccess=false;
 
 //Control related
 var userid;
@@ -138,37 +139,45 @@ $(document).ready(function(){
 	map.addControl(new BMap.ScaleControl());
 	map.centerAndZoom(point,15);
 	
-	origLat=tride.origLoc._lat;
-	origLng=tride.origLoc._lon;
-	origAddr= tride.origLoc._formattedAddr;
-	destLat=tride.destLoc._lat;
-	destLng=tride.destLoc._lon;
-	destAddr= tride.destLoc._formattedAddr;
 	
-	basicbounds = new BMap.Bounds();
-	
-	if (origLat!="" && origLng!="" && origLat!="" &&origLng!="")
+	if (isSuccess)
 	{
-		var oLatlng = new BMap.Point(origLng,origLat);
-		var dLatlng = new BMap.Point(destLng,destLat);
+		origLat=tride.origLoc._lat;
+		origLng=tride.origLoc._lon;
+		origAddr= tride.origLoc._formattedAddr;
+		destLat=tride.destLoc._lat;
+		destLng=tride.destLoc._lon;
+		destAddr= tride.destLoc._formattedAddr;
 		
-		omarker = new BMap.Marker(oLatlng,{icon: images});
-		map.addOverlay(omarker);
-		   
-		dmarker = new BMap.Marker(dLatlng,{icon: imagee});
-		map.addOverlay(dmarker);
+		basicbounds = new BMap.Bounds();
 		
-		basicbounds.extend(oLatlng);
-		basicbounds.extend(dLatlng);
-		refitb(basicbounds);
+		if (origLat!="" && origLng!="" && origLat!="" &&origLng!="")
+		{
+			var oLatlng = new BMap.Point(origLng,origLat);
+			var dLatlng = new BMap.Point(destLng,destLat);
+			
+			omarker = new BMap.Marker(oLatlng,{icon: images});
+			map.addOverlay(omarker);
+			   
+			dmarker = new BMap.Marker(dLatlng,{icon: imagee});
+			map.addOverlay(dmarker);
+			
+			basicbounds.extend(oLatlng);
+			basicbounds.extend(dLatlng);
+			refitb(basicbounds);
+		}
+		loadRide();
+		if(isOwner)
+		{
+			enableDelete();
+		}
+		loadMiddle();
+		loadParti();
 	}
-	loadRide();
-	if(isOwner)
+	else
 	{
-		enableDelete();
+		alert("该行程已被删除,请重新检索");
 	}
-	loadMiddle();
-	loadParti();
 });
 
 		
@@ -204,22 +213,27 @@ function loadContent()
 	var queryURL = "/TicketSchedule/servlet/TransientRideCenter?trId="+trid;
 	
 	var result = JSON.parse(getJson(queryURL));
-	tride = result.tride;
-	ttopic = result.ttopic;
-	nmp = result.ttopic.nmiddlePoints;
-	mp = result.ttopic.middle;
-	nparti = result.ttopic.nParticipant;
-	partiuid = result.ttopic.partiuid;
-	parti = result.ttopic.parti;
-	
-	userid=<%=user.get_uid()%>;
-	if (userid!=tride.userId)
+	if (result.result == "OK")
 	{
-		isOwner=false;
-	}
-	else
-	{
-		isOwner=true;
+		isSuccess = true;
+		
+		tride = result.tride;
+		ttopic = result.ttopic;
+		nmp = result.ttopic.nmiddlePoints;
+		mp = result.ttopic.middle;
+		nparti = result.ttopic.nParticipant;
+		partiuid = result.ttopic.partiuid;
+		parti = result.ttopic.parti;
+		
+		userid=<%=user.get_uid()%>;
+		if (userid!=tride.userId)
+		{
+			isOwner=false;
+		}
+		else
+		{
+			isOwner=true;
+		}
 	}
 }
 
@@ -323,7 +337,7 @@ function loadParti()
 <script>
 function deleteTopic()
 {
-	alert("delete Topic");
+	alert("删除行程");
 	var trid = getURLPara("trId");
 	var url = "/TicketSchedule/servlet/DeleteTopic?topicType=transient&trId="+trid;
 	url = url + "&deleteId="+ userid;

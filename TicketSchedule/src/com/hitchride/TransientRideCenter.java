@@ -55,19 +55,28 @@ public class TransientRideCenter extends HttpServlet {
 			int trId = qsPar.getInt("trId");
 			TransientRide tride = TransientRideAccess.getTransisentRideById(trId);
 		    TransientTopic ttopic = TransientTopicAccess.getTransientTopicById(trId);
-		    //Runtime bug that sometimes tride is initilialized but ttopic is not.
-		    if (tride!=null && ttopic ==null ) 
-		    {
-		    	ttopic = new TransientTopic(trId);
-		    	ttopic.insertToDB();
-		    }
 		    
-		    JsonHelper jsonhelp = new JsonHelper();
-		    String trideJson = jsonhelp.toJson(tride);
-			String ttopicJson = jsonhelp.toJson(ttopic);
-			String result = "{\"tride\":"+trideJson+",\"ttopic\":"+ttopicJson+"}";
-			response.setContentType("text/html; charset=UTF-8");
-			response.getWriter().write(result);
+		    if (tride==null) //Tride is deleted while doing the query.
+		    {
+		    	//ttopic can not be null due to the foreign key constrain so not take special care.
+		    	response.getWriter().write("{\"result\": \"fail\"}");
+		    }
+		    else
+		    {
+			    //Runtime bug that sometimes tride is initilialized but ttopic is not.
+			    if (tride!=null && ttopic ==null ) 
+			    {
+			    	ttopic = new TransientTopic(trId);
+			    	ttopic.insertToDB();
+			    }
+			    
+			    JsonHelper jsonhelp = new JsonHelper();
+			    String trideJson = jsonhelp.toJson(tride);
+				String ttopicJson = jsonhelp.toJson(ttopic);
+				String result = "{\"tride\":"+trideJson+",\"ttopic\":"+ttopicJson+",\"result\": \"ok\"}";
+				response.setContentType("text/html; charset=UTF-8");
+				response.getWriter().write(result);
+		    }
 		}
 	}
 	
