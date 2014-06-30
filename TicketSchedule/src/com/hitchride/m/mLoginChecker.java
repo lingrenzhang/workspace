@@ -11,6 +11,7 @@ package com.hitchride.m;
  {
  "status": "successful|failed",
  "reason": String,
+ "uid": int,
  "redirect": target URL
  }
  */
@@ -50,6 +51,7 @@ public class mLoginChecker extends HttpServlet {
 	class mLoginCheckerJson {
 		String status = "failed";
 		String reason = "";
+		int uid = 0;
 		String redirect = "";
 	}
 
@@ -74,6 +76,7 @@ public class mLoginChecker extends HttpServlet {
 			json.redirect = "login.html";
 		} else {
 			json.redirect = "searchtransientride.html";
+			json.uid = user.get_uid();
 			json.status = "successful";
 		}
 		Gson gson = new Gson();

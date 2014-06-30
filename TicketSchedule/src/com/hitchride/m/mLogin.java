@@ -90,14 +90,7 @@ public class mLogin extends HttpServlet {
 					AllUsers.getUsers().addActiveUser(UID);
 
 					request.getSession().setMaxInactiveInterval(60 * 120);
-					String from = (String) session.getAttribute("fromLocation");
-					request.removeAttribute("fromLocation");
-					if (from != null) {
-						String queryString = (String) session
-								.getAttribute("queryString");
-						session.removeAttribute("queryString");
-					} else {
-					}
+
 					json.status = "successful";
 					json.redirect = "searchtransientride.html";
 				} else {

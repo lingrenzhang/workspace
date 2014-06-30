@@ -1,21 +1,16 @@
 package com.hitchride.m;
 
 /*
-mPostTransientRide API
+ mGetTransientRide API
 
-Method: GET
-Field: 
-trId: TransientRide ID
+ Method: GET
+ Field: 
+ trId: TransientRide ID
 
-Return: json
-Format:
-{
-"status": "successful|failed",
-"reason": String,
-"trId": TransientRide ID,
-"redirect": target URL
-}
-*/
+ Return: json
+ Format:
+ See Class mGetTransientRideJson for detail
+ */
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -48,111 +43,110 @@ import com.hitchride.util.QueryStringParser;
  */
 public class mGetTransientRide extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	class User{
-		int uid=0;
-		String name="";
-		String pic="";
-		String cellPhone="";
+
+	class mUser {
+		int uid = 0;
+		String name = "";
+		String pic = "";
+		String cellPhone = "";
 	}
-	
+
 	class Loc {
-		double lat=0.0;
-		double lon=0.0;
-		String addr="";
+		double lat = 0.0;
+		double lon = 0.0;
+		String addr = "";
 	}
-	
+
 	class mGetTransientRideJson {
 		String status = "failed";
 		String reason = "";
 		String redirect = "";
-		int trId=0;
-		User owner= new User();
-		Loc origLoc=new Loc();
-		Loc destLoc=new Loc();
-		int dist=0;
-		int dura=0;
-		String date="";
-		String time="";
-		String flexTime="";
-		boolean userType=false;
-		int totalSeats=0;
-		int availSeats=0;
-		double price=0;
-		Loc [] middle;
-		User [] parti;
+		int trId = 0;
+		mUser owner = new mUser();
+		Loc origLoc = new Loc();
+		Loc destLoc = new Loc();
+		int dist = 0;
+		int dura = 0;
+		String date = "";
+		String time = "";
+		String flexTime = "";
+		boolean userType = false;
+		int totalSeats = 0;
+		int availSeats = 0;
+		double price = 0;
+		Loc[] middle;
+		mUser[] parti;
 	}
 
-	
-	
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public mGetTransientRide() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public mGetTransientRide() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		mGetTransientRideJson json = new mGetTransientRideJson();
-		//boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
-		boolean islogin = true;
-		if (!islogin)
-		{
-			json.reason="not login";
-			json.redirect="login.html";
-		}
-		else{
-			int trId = Integer.parseInt( request.getParameter("trId"));
-			TransientRide tride = TransientRideAccess.getTransisentRideById(trId);
-		    TransientTopic ttopic = TransientTopicAccess.getTransientTopicById(trId);
-		    if (tride==null) {
-		    	json.reason="no such trId";
-		    } else {
-		    	json.trId = trId;
-		    	
-		    	json.owner.uid=tride.owner.get_uid();
-		    	json.owner.name=tride.owner.get_name();
-		    	json.owner.pic=tride.owner.get_avatarID();
-		    	json.owner.cellPhone=tride.owner._cellphone;
-		    	
-		    	json.origLoc.lat=tride.origLoc.get_lat();
-		    	json.origLoc.lon=tride.origLoc.get_lon();
-		    	json.origLoc.addr=tride.origLoc._addr;
-		    	
-		    	json.destLoc.lat=tride.destLoc.get_lat();
-		    	json.destLoc.lon=tride.destLoc.get_lon();
-		    	json.destLoc.addr=tride.destLoc._addr;
-		    	
-		    	json.dist=tride.dist;
-		    	json.dura=tride.dura;
-		    	
-		    	json.date=tride.rideDate.toString();
-		    	json.time=tride.rideTime.toString();
-		    	
-		    	json.flexTime=tride.rideFlex.toString();
-		    	json.userType=tride.userType;
-		    	json.totalSeats=tride.totalSeats;
-		    	json.availSeats=tride.availSeats;
-		    	json.price=tride.price;
-		    	
-		    	json.status="successful";
-		    }
+		User user = (User) request.getSession().getAttribute("user");
+		if (user == null) {
+			json.reason = "not login";
+			json.redirect = "login.html";
+		} else {
+			int trId = Integer.parseInt(request.getParameter("trId"));
+			TransientRide tride = TransientRideAccess
+					.getTransisentRideById(trId);
+			TransientTopic ttopic = TransientTopicAccess
+					.getTransientTopicById(trId);
+			if (tride == null) {
+				json.reason = "no such trId";
+			} else {
+				json.trId = trId;
+
+				json.owner.uid = tride.owner.get_uid();
+				json.owner.name = tride.owner.get_name();
+				json.owner.pic = tride.owner.get_avatarID();
+				json.owner.cellPhone = tride.owner._cellphone;
+
+				json.origLoc.lat = tride.origLoc.get_lat();
+				json.origLoc.lon = tride.origLoc.get_lon();
+				json.origLoc.addr = tride.origLoc._addr;
+
+				json.destLoc.lat = tride.destLoc.get_lat();
+				json.destLoc.lon = tride.destLoc.get_lon();
+				json.destLoc.addr = tride.destLoc._addr;
+
+				json.dist = tride.dist;
+				json.dura = tride.dura;
+
+				json.date = tride.rideDate.toString();
+				json.time = tride.rideTime.toString();
+
+				json.flexTime = tride.rideFlex.toString();
+				json.userType = tride.userType;
+				json.totalSeats = tride.totalSeats;
+				json.availSeats = tride.availSeats;
+				json.price = tride.price;
+
+				json.status = "successful";
+			}
 		}
 		Gson gson = new Gson();
 		response.setContentType("text/html; charset=UTF-8");
 		response.getWriter().write(gson.toJson(json));
 	}
-	
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
 	}
 }
