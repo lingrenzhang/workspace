@@ -8,16 +8,41 @@ import com.hitchride.global.AllUsers;
 public class TransientTopic implements PersistentStorage{
 
 	public int transientRideId;
+	private int ownerId = 0; //This one is not saved in db schema and can not be changed by client. 
 	public int nmiddlePoints=0;
 	public GeoInfo[] middle;
 	public int nParticipant=0;
 	public int[] partiuid;
 	public User[] parti;
 	
+	public int get_ownerId()
+	{
+		if (ownerId == 0)
+		{
+			System.out.println("ownerID not initalized.");
+		}
+		return this.ownerId;
+	}
+	
 	
 	public TransientTopic(int transientRideId)
 	{
 		this.transientRideId = transientRideId;
+		GeoInfo middle0 = new GeoInfo(0,0);
+		GeoInfo middle1 = new GeoInfo(0,0);
+		GeoInfo middle2 = new GeoInfo(0,0);
+		GeoInfo middle3 = new GeoInfo(0,0);
+		GeoInfo middle4 = new GeoInfo(0,0);
+		GeoInfo middle5 = new GeoInfo(0,0); //This one is just to reduce the side effect. 
+		middle = new GeoInfo[]{middle0,middle1,middle2,middle3,middle4,middle5};
+		partiuid = new int[]{0,0,0,0,0,0};
+		parti = new User[]{null,null,null,null,null,null};
+	}
+	
+	public TransientTopic(int transientRideId, int ownerId)
+	{
+		this.transientRideId = transientRideId;
+		this.ownerId = ownerId;
 		GeoInfo middle0 = new GeoInfo(0,0);
 		GeoInfo middle1 = new GeoInfo(0,0);
 		GeoInfo middle2 = new GeoInfo(0,0);

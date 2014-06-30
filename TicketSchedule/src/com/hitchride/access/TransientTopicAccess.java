@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.hitchride.global.AllUsers;
 import com.hitchride.global.SQLServerConf;
@@ -163,10 +165,54 @@ public class TransientTopicAccess {
 			System.err.println("SQLException:"+e.getMessage());
 		}
 		return ttopic;
-		
 	}
 	
+	
+	public static TransientTopic getTransientTopicById(int trid, int ownerId)
+	{
+		TransientTopic ttopic = new TransientTopic(trid,ownerId);
+		try
+		{
+			Statement sql;
+			getConnection();
+			 
+			sql=objConn.createStatement();
+		
+			ResultSetImpl rs= (ResultSetImpl) sql.executeQuery("select * from transientTopic where transientRideId="+trid);
+			if (rs.next())
+			{
+				ttopic.nmiddlePoints = rs.getInt("nmiddlePoints");
+				for(int i=1;i<=ttopic.nmiddlePoints;i++)
+				{
+					String addr = rs.getString("middle"+i+"Faddr");
+					double lat = rs.getDouble("middle"+i+"Lat");
+					double lng = rs.getDouble("middle"+i+"Lng");
+					GeoInfo geoinfo = new GeoInfo(addr,lat,lng);
+					ttopic.middle[i-1]=geoinfo;
+				}
+				ttopic.nParticipant = rs.getInt("nParticipant");
+				for (int i=1;i<=ttopic.nParticipant;i++)
+				{
+					ttopic.partiuid[i-1]=rs.getInt("partiuid"+i);
+					ttopic.parti[i-1]=(User) AllUsers.getUsers().getUser(ttopic.partiuid[i-1]);
+				}
+			}
+			else
+			{
+				return null;
+			}
+			
+		}catch (java.lang.ClassNotFoundException e){
+			System.err.println("ClassNotFoundException:"+e.getMessage());
+		}
+		catch (SQLException e)
+		{
+			System.err.println("SQLException:"+e.getMessage());
+		}
+		return ttopic;
+	}
 
+	
 	public static boolean removeParti(int trid,int uid)
 	{
 		boolean result=false;
@@ -356,11 +402,10 @@ public class TransientTopicAccess {
 	public static int deleteTransientTopic(int trid)
 	{
 		int result = 0;
+		Statement sql = null;
 		try
 		{
-			Statement sql;
 			getConnection();
-			 
 			sql=objConn.createStatement();
 			result = sql.executeUpdate("delete from transientTopic where transientRideId="+trid);
 		}catch (java.lang.ClassNotFoundException e){
@@ -371,5 +416,43 @@ public class TransientTopicAccess {
 			System.err.println("SQLException:"+e.getMessage());
 		}
 		return result;
+	}
+	
+	public static List<TransientTopic> initPartis()
+	{
+		List<TransientTopic> ttopics = new ArrayList<TransientTopic>();
+		java.util.Date current = new java.util.Date();
+		java.sql.Date cudate = new java.sql.Date(current.getTime());
+		
+		try
+		{
+			Statement sql;
+			getConnection();
+			 
+			sql=objConn.createStatement();
+		   
+			ResultSetImpl trrs= (ResultSetImpl) sql.executeQuery("select transientRideId,userId from transientRide where rideDate>="+cudate);
+			while (trrs.next())
+			{
+				int transientRideId = trrs.getInt("transientRideId");
+				int userId = trrs.getInt("userId");
+				TransientTopic  trantopic = getTransientTopicById(transientRideId,userId);
+				if (trantopic!= null)
+				{
+					ttopics.add(trantopic);
+				}
+				else
+				{
+					System.out.println("TransientTopic: "+ transientRideId +" not exist. Please check db integrity.");
+				}
+			}
+		}catch (java.lang.ClassNotFoundException e){
+			System.err.println("ClassNotFoundException:"+e.getMessage());
+		}
+		catch (SQLException e)
+		{
+			System.err.println("SQLException:"+e.getMessage());
+		}
+		return ttopics;
 	}
 }

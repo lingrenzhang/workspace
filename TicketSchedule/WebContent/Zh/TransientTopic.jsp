@@ -213,7 +213,7 @@ function loadContent()
 	var queryURL = "/TicketSchedule/servlet/TransientRideCenter?trId="+trid;
 	
 	var result = JSON.parse(getJson(queryURL));
-	if (result.result == "OK")
+	if (result.result == "ok")
 	{
 		isSuccess = true;
 		
