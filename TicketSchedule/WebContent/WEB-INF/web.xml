@@ -235,6 +235,16 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>mDelTransientRide</display-name>
+    <servlet-name>mDelTransientRide</servlet-name>
+    <servlet-class>com.hitchride.m.mDelTransientRide</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>mDelTransientRide</servlet-name>
+    <url-pattern>/api/mDelTransientRide</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>AuthCheck</display-name>
     <servlet-name>AuthCheck</servlet-name>
     <servlet-class>com.hitchride.AuthCheck</servlet-class>

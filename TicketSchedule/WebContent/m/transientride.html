@@ -156,6 +156,16 @@
 				<div class="text-center">
 					<a id="post" type="button" href="javascript:history.go(-1)"
 						class="button small round">返回</a>
+					<div id="del_btn" class="hide" style="display: inline">
+						<a data-reveal-id="delModal" type="button" href="#"
+							class="button alert small round">删除</a>
+					</div>
+					<div id="delModal" class="reveal-modal" data-reveal>
+						<h2>确定删除此临时拼车？</h2>
+							<a href="javascript:delTransientTide()" data-reveal-id="secondModal" class="button alert small round">删除</a>
+							<a href="javascript:$('a.close-reveal-modal').trigger('click')"class="button small round">取消</a>
+						<a class="close-reveal-modal">&#215;</a>
+					</div>
 				</div>
 				<hr>
 				<br> <br> <br>
@@ -166,11 +176,16 @@
 	<script src="js/vendor/jquery.js"></script>
 	<script src="js/foundation.min.js"></script>
 	<script>
+		var uid = null;
+		var trId = location.hash.replace('#', '');
 		function checkLogin() {
 			$.get('../api/mLoginChecker', function(data) {
 				var result = JSON.parse(data);
 				if (!(result.status && result.status == "successful")) {
 					window.location.assign(result.redirect);
+				} else {
+					uid = result.uid;
+					getTransientTide();
 				}
 			});
 		}
@@ -189,6 +204,10 @@
 									+ result.owner.cellPhone;
 							$('#owner_sms')[0].href = 'sms://'
 									+ result.owner.cellPhone;
+							if (result.owner.uid == uid) {
+								$('#del_btn').removeClass('hide');
+							}
+
 							$('#date')[0].innerHTML = result.date;
 							$('#time')[0].innerHTML = result.time;
 							$('#origAddr')[0].innerHTML = result.origLoc.addr;
@@ -209,7 +228,6 @@
 
 		}
 		$(document).foundation();
-		getTransientTide();
 	</script>
 	<div id="baidu_tongji" style="display: none">
 		<script type="text/javascript">
