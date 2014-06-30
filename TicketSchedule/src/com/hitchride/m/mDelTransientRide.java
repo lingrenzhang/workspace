@@ -103,6 +103,7 @@ public class mDelTransientRide extends HttpServlet {
 					TransientTopicAccess.deleteTransientTopic(trId);
 					TransientRideAccess.deleteTransientRide(trId);
 					json.status = "successful";
+					json.redirect = "searchtransientride.html";
 				} else {
 					json.reason = "not owner";
 				}
