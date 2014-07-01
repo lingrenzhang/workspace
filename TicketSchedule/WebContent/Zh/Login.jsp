@@ -23,7 +23,9 @@
 		Matcher matcherPhone = phonePat.matcher(userAgent);
 		Matcher matcherTable = tablePat.matcher(userAgent);
 		if (matcherPhone.find() || matcherTable.find()) {
-			return true;
+			//return true;
+			System.out.println(userAgent);
+			return false;
 		} else {
 			return false;
 		}
