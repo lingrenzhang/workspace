@@ -1,0 +1,23 @@
+Task list for Zhou Yu:
+1. Deploy run-time environment on aliyun
+    Run-time environment:
+    Use war package on Aliyun directly. 
+    Major step:
+      i.Apply a new machine on aliyun, search on web directly and use steps provided by aliyun.
+      ii.Use suggested environment (Ubuntu 12.04 64bit/nginx1.4+jdk1.7 + tomcat 7.0 + mysql 5.5 +vsftpd. 
+      iii.Deploy app
+      iv.Dump 2014.5.23 database.
+      v.Turn database configration
+
+2. Deploy development enviornment(for windows):
+   Suggested IDE: Eclipse Kepler Service Release 1 
+                          Build id:20130919-0819
+   Database: mysql5.5(download yourself)+ JDBC 5.1.22(already in support package)
+   Source control: 
+   (optional) Github for windows: The fall of disorder(2.2.0.0) 5d1b386        There is a known issue that requires specific .Net 4.x fix. Login related issue and let me know when hitting similiar issue.
+   (optional) TortoiseGit: Check details with LvZhouer directly.
+
+   I am looking for the past detailed document.
+   
+       
+ 
