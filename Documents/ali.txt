@@ -1,0 +1,11 @@
+115.29.111.179  root 7321801f
+
+VNC:234087
+MySQL:root rideshare
+FTP: www rideshare
+
+
+打开 /etc/mysql/my.cnf 文件，找到 bind-address = 127.0.0.1 修改为 bind-address = 0.0.0.0
+ 	
+
+GRANT ALL PRIVILEGES ON *.* TO 'myuser'@'%' IDENTIFIED BY 'mypassword' WITH GRANT OPTION; 

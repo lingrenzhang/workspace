@@ -1,5 +1,6 @@
 package com.hitchride.standardClass;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -97,10 +98,10 @@ public class User implements RideListener,UserInfo{
 	}
 	
 	public String get_surename() {
-		return _givenname;
+		return _surename;
 	}
 	public void set_surename(String surename) {
-		this._givenname = surename;
+		this._surename = surename;
 	}
 
 
@@ -147,12 +148,14 @@ public class User implements RideListener,UserInfo{
 		result.append("<span class=\"vip\"></span>");
 		result.append("</div>");
 		result.append("<div id=\"user_info\">");
-		result.append("Welcome " + this.get_name());
+	    //result.append("Welcome " + this.get_name());
+		result.append("欢迎" + this.get_name()+"!");
 		result.append("</div>");
 		if (this.get_uid()!=0)
 		{
 	        result.append("<div id=\"message_info\">");
-	        result.append("<a href=\"/TicketSchedule/UserCenter.jsp\">You have "+this.numofnewMessage + " new messages</a>");
+	        //result.append("<a href=\"/TicketSchedule/UserCenter.jsp\">You have "+this.numofnewMessage + " new messages</a>");
+	        result.append("<a href=\"/TicketSchedule/Zh/UserCenter.jsp\">你有"+this.numofnewMessage + "条新消息。</a>");
 	        result.append("</div>");
 		}
 		else
@@ -161,17 +164,19 @@ public class User implements RideListener,UserInfo{
 		     result.append("<a href=\"/TicketSchedule/Zh/Login.jsp\">Login please</a>");
 		     result.append("</div>");
 		}
-        result.append("<div id=\"user_level\">");
-        result.append("Level: "+ this.get_userLevel());
-        result.append("</div>");
+        //result.append("<div id=\"user_level\">");
+        //result.append("Level: "+ this.get_userLevel());
+        //result.append("用户级别: "+ this.get_userLevel());
+        //result.append("</div>");
         if (this.get_uid()!=0)
         {
 	        result.append("<div id=\"logout\">");
-	        result.append("<a href='/TicketSchedule/servlet/Logout?uid="+this.get_uid()+"'>Logout</a>");
+	        //result.append("<a href='/TicketSchedule/servlet/Logout?uid="+this.get_uid()+"'>Logout</a>");
+	        result.append("<a href='/TicketSchedule/servlet/Logout?uid="+this.get_uid()+"'>退出</a>");
 	        result.append("</div>");
         }
-
-		return result.toString();
+        
+        return result.toString();
 	}
 
 	@Override
