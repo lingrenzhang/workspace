@@ -1,0 +1,4 @@
+[updates] include all the schema changes since 2014/07, please follow yyyy-mm-dd_<update what>.sql filename format
+[dumps] include the db dumps which can quickly set up the dev db env.
+
+TODO: make a clean db schema dump only (can include static data, NO user data) file here, this is useful to set a clean env, especially for production.

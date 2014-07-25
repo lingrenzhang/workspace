@@ -21,7 +21,7 @@ public class TicketScheduleSchemaTb {
 		new DataColumnSchema("GroupID","INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY"),
 		new DataColumnSchema("GroupName","VARCHAR(50)"),
 		new DataColumnSchema("GroupAuthLevel","INT"),
-		new DataColumnSchema("AuthnicationCode","VARCHAR(20)")
+		new DataColumnSchema("AuthenticationCode","VARCHAR(20)")
 	};
 	
 	public static final DataColumnSchema[] UserTb={

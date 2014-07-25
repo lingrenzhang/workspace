@@ -217,7 +217,7 @@ CREATE TABLE `usergroup` (
   `GroupID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `GroupName` varchar(50) DEFAULT NULL,
   `GroupAuthLevel` int(11) DEFAULT NULL,
-  `AuthnicationCode` varchar(20) DEFAULT NULL,
+  `AuthenticationCode` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`GroupID`),
   UNIQUE KEY `GroupID` (`GroupID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;

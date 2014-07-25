@@ -35,7 +35,7 @@ public class UserGroupTbAccess {
 	
 	
 	
-	public void insertValue(String groupName,int groupAuthLevel, String authnicationCode)
+	public void insertValue(String groupName,int groupAuthLevel, String authenticationCode)
 	{
 		try
 		{
@@ -43,10 +43,10 @@ public class UserGroupTbAccess {
 			getConnection();
 			
 			sql=objConn.createStatement();
-			sql.execute("insert into UserGroupTb (groupName,groupAuthLevel,authnicationCode) values(\"" 
+			sql.execute("insert into UserGroupTb (groupName,groupAuthLevel,authenticationCode) values(\""
 					+ groupName + "\",\""
 					+ groupAuthLevel + "\",\""
-					+ authnicationCode + "\")");
+					+ authenticationCode + "\")");
 		}
 		catch (java.lang.ClassNotFoundException e){
 			System.err.println("ClassNotFoundException:"+e.getMessage());
@@ -69,7 +69,7 @@ public class UserGroupTbAccess {
 			getConnection();
 			
 			sql=objConn.createStatement();
-			ResultSetImpl rs = (ResultSetImpl) sql.executeQuery("select groupid from UserGroup where authnicationCode='"+authCode+"'");
+			ResultSetImpl rs = (ResultSetImpl) sql.executeQuery("select groupid from UserGroup where authenticationCode='"+authCode+"'");
 			if(rs.next())
 			{
 				result = rs.getInt(1);
