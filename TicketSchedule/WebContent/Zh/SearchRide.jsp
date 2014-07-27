@@ -62,13 +62,11 @@ $(document).ready(function(){
 	("/TicketSchedule/Picture/pin_start.png",
 	new BMap.Size(71, 71),{
 	anchor: new BMap.Size(8, 16),
-	//imageOffset: new google.maps.Point(0, 0)
 	});
 	var imagee = new BMap.Icon
 	("/TicketSchedule/Picture/pin_end.png",
 	new BMap.Size(71, 71),{
 	anchor: new BMap.Size(8, 16),
-	//imageOffset: new google.maps.Point(0, 0)
 	});
 	
 	//Search box realted
@@ -78,15 +76,7 @@ $(document).ready(function(){
 	var dest;
 	var omarker;
 	var dmarker;
-	/*
-	var mapOptions = {
-			  center: new google.maps.LatLng(37.397, -122.144),
-			  zoom: 8,
-			  mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
 
-	var map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
-	*/
 	//初始化地图
 	var geol;		
 	//var nowLat=31.270998;
@@ -155,46 +145,13 @@ $(document).ready(function(){
 		map.fitBounds(basicbounds);
 	}
 	
-	
-
-    //orig = document.getElementById('search_s');
 	searchBoxO = new BMap.Autocomplete(
 			{"input" : "search_s",
 			 "location" : map});
-    //dest = document.getElementById('search_e');
 	searchBoxD = new BMap.Autocomplete(
 			{"input" : "search_e",
 			 "location" : map});
 
-	/*
-	google.maps.event.addListener(searchBoxO, 'places_changed', function() {
-	  	  var places = searchBoxO.getPlaces();
-	  	  if (omarker!=null)
-	  	  {
-	      	omarker.setMap(null);
-	  	  }
-	  	  
-	  	  place = places[0];
-	      omarker = new google.maps.Marker({
-	            map: map,
-	            icon: images,
-	            title: place.name,
-	            position: place.geometry.location
-	          });
-	  	  
-		  document.getElementById("origLat").value=place.geometry.location.lat();
-		  document.getElementById("origLng").value=place.geometry.location.lng();
-		  origLat=place.geometry.location.lat();
-		  origLng=place.geometry.location.lng();
-		  destLat=document.getElementById("destLat").value;
-		  destLng=document.getElementById("destLng").value;
-		  if (destLat !="" && destLng!="")
-		  {
-			  refit();
-			  calculateDistances();
-		  }
-	});
-    */
 	searchBoxO.addEventListener("onconfirm",function(e){
 		var _value = e.item.value;
 		myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
@@ -204,7 +161,7 @@ $(document).ready(function(){
 				map.removeOverlay(omarker);
 			}
 			point = new BMap.Point(local.getResults().getPoi(0).point.lng,local.getResults().getPoi(0).point.lat);
-			omarker = new BMap.Marker(point);
+			omarker = new BMap.Marker(point,{icon: images});
 			map.centerAndZoom(point,18);
 			map.addOverlay(omarker);
 			document.getElementById("origLat").value=point.lat;
@@ -215,46 +172,17 @@ $(document).ready(function(){
 			destLng=document.getElementById("destLng").value;
 			if (destLat !="" && destLng!="")
 			{
-			  refit();
-			  //calculateDistances();
+				var oLatlng = new BMap.Point(origLng,origLat);
+				var dLatlng = new BMap.Point(destLng,destLat);
+				basicbounds= new BMap.Bounds(oLatlng,dLatlng);
+			  	refitb(basicbounds);
+			    calculateDistances();
 			}
-			
 		}
 		var local = new BMap.LocalSearch(map,{onSearchComplete : myFun});
 		local.search(myValue);
 	});
 
-	
-	/*
-	google.maps.event.addListener(searchBoxD, 'places_changed', function() {
-	   	  var places = searchBoxD.getPlaces();
-	   	  if (dmarker!=null)
-	  	  {
-	      	 dmarker.setMap(null);
-	  	  }
-			
-	      place = places[0];
-          dmarker = new google.maps.Marker({
-	            map: map,
-	            icon: imagee,
-	            title: place.name,
-	            position: place.geometry.location
-	          });
-	     
-		  document.getElementById("destLat").value=place.geometry.location.lat();
-		  document.getElementById("destLng").value=place.geometry.location.lng();
-		  destLat=place.geometry.location.lat();
-		  destLng=place.geometry.location.lng();
-		  origLat=document.getElementById("origLat").value;
-		  origLng=document.getElementById("origLng").value;
-		  
-		  if (origLat !="" && origLng!="")
-		  {
-			  refit();
-			  calculateDistances();
-		  }
-	});
-	*/
 	searchBoxD.addEventListener("onconfirm",function(e){
 		var _value = e.item.value;
 		myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
@@ -264,7 +192,7 @@ $(document).ready(function(){
 				map.removeOverlay(dmarker);
 			}
 			point = new BMap.Point(local.getResults().getPoi(0).point.lng,local.getResults().getPoi(0).point.lat);
-			dmarker = new BMap.Marker(point);
+			dmarker = new BMap.Marker(point,{icon: imagee});
 			map.centerAndZoom(point,18);
 			map.addOverlay(dmarker);
 			document.getElementById("destLat").value=point.lat;
@@ -275,8 +203,11 @@ $(document).ready(function(){
 			origLng=document.getElementById("origLng").value;
 			if (origLat !="" && origLng!="")
 			{
-			  refit();
-			  //calculateDistances();
+				var oLatlng = new BMap.Point(origLng,origLat);
+				var dLatlng = new BMap.Point(destLng,destLat);
+				basicbounds= new BMap.Bounds(oLatlng,dLatlng);
+			 	refitb(basicbounds);
+			    calculateDistances();
 			}
 			
 		}
@@ -284,31 +215,51 @@ $(document).ready(function(){
 		local.search(myValue);
 	});
 	
-	function refit()
-	  {
-		  var oLatlng = new BMap.Point(origLng,origLat);
-		  var dLatlng = new BMap.Point(destLng,destLat);
-		  basicbounds= new BMap.Bounds(oLatlng,dLatlng);
-		  var range = Math.max(basicbounds.toSpan().lat,basicbounds.toSpan().lng);
-		  var zoomNum = Math.floor(9-Math.log(range)/Math.log(2));
-		  map.setCenter(basicbounds.getCenter());
-		  map.setZoom(zoomNum);
-		  
-	  }
+	function refitb(bounds)
+	{
+		 var range = Math.max(bounds.toSpan().lat,bounds.toSpan().lng);
+		 var zoomNum = Math.floor(9-Math.log(range)/Math.log(2));
+		 map.setCenter(bounds.getCenter());
+		 map.setZoom(zoomNum);
+	}
 
 	function calculateDistances() {
-		var service = new google.maps.DistanceMatrixService();
-		var orig = new google.maps.LatLng(origLat,origLng);
-		var dest = new google.maps.LatLng(destLat,destLng);
-		service.getDistanceMatrix(
+		var dx, dy, dew;
+
+		var DEF_PI = 3.14159265359; // PI
+		var DEF_2PI= 6.28318530712; // 2*PI
+		var DEF_PI180= 0.01745329252; // PI/180.0
+		var DEF_R =6370693.5; // radius of earth
+
+		ew1 = origLng* DEF_PI180;
+		ns1 = origLat * DEF_PI180;
+		ew2 = destLng * DEF_PI180;
+		ns2 = destLat * DEF_PI180;
+
+		dew = ew1 - ew2;
+
+		if (dew > DEF_PI)
 		{
-		  origins: [orig],
-		  destinations: [dest],
-		  travelMode: google.maps.TravelMode.DRIVING,
-		  unitSystem: google.maps.UnitSystem.METRIC,
-		  avoidHighways: false,
-		  avoidTolls: false
-		 }, callback);
+			dew = DEF_2PI - dew;
+		}
+		else
+		{
+			if (dew < -DEF_PI)
+			{
+				dew = DEF_2PI + dew;
+			}
+		}
+		dx = DEF_R * Math.cos(ns1) * dew; // 东西方向长度(在纬度圈上的投影长度)
+		dy = DEF_R * (ns1 - ns2); // 南北方向长度(在经度圈上的投影长度)
+			
+		distance = Math.sqrt(dx * dx + dy * dy)*1.1;
+		duration = distance/12;
+		
+		document.getElementById("distance").setAttribute("value",distance);
+		document.getElementById("duration").setAttribute("value",duration);
+		    
+		var price = Math.floor(distance/1200);
+		//document.getElementById("price").setAttribute("value",price);
 	}
 		
 	function callback(response, status) {
@@ -462,7 +413,7 @@ window.onscroll = function(){
 </script>
 
 
-<title>Search Ride</title>
+<title>上下班拼车</title>
 </head>
 <body id="search_index">
 <div id="header_wrap">
@@ -516,8 +467,7 @@ window.onscroll = function(){
 						<input id="search_date" class="slim datepicker hasDatepicker" type="text" value="exp" name="date">
 					</div>
 					
-					<button class="btn btn-primary" type="submit">Search</button>
-
+					<button class="btn btn-primary" type="submit">查找</button>
 				
 				<%if (user.get_authLevel()>=32) {%>
 				    <div class="sup_method">

@@ -29,11 +29,11 @@ public class AllRides {
 	//All OwnerRideInfo reference can be directly accessed through RID
 	//public Hashtable<Integer,OwnerRideInfo> _availRides;  //All available rides. Represent by RID.
 	public Hashtable<Integer,RideInfo> _availRides;
-	private int _availRidesKey = 0;
+	private int _maxRidesKey = 0;
 
     private void initialFromNew(){
     	_availRides = RideInfoAccess.LoadAllRide();
-    	_availRidesKey = RideInfoAccess.getMaxRideId()+1;
+    	_maxRidesKey = RideInfoAccess.getMaxRideId();
     }
 	
 	private void initialFromOld() {
@@ -65,12 +65,20 @@ public class AllRides {
 		return this._availRides.get(key);
 	}
 	
-	public void inser_availride(RideInfo ride)
+	public void insert_availride(RideInfo ride)
 	{
-		this._availRidesKey++;
-		ride.recordId = _availRidesKey;
-		this._availRides.put(this._availRidesKey, ride);
-
+		if (ride.recordId==0 || ride.recordId<= this._maxRidesKey )
+		{
+			this._maxRidesKey++;
+			ride.recordId = _maxRidesKey;
+			this._availRides.put(this._maxRidesKey, ride);
+			System.out.println("Ride ID not initialized before inserting to hash table.");
+		}
+		else
+		{
+			this._availRides.put(this._maxRidesKey, ride);
+			this._maxRidesKey = ride.recordId;
+		}
 	}
 	
 	public void udpate_availride(RideInfo ride)

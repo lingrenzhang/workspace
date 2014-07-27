@@ -58,7 +58,7 @@ public class StatusService extends HttpServlet {
 				case 1:
 					if (ride.get_user()==null)  //When ride coming from search
 					{
-						AllRides.getRides().inser_availride(ride);
+						AllRides.getRides().insert_availride(ride);
 						//ride.set_user(fromU); (issue for GSON.Loop inside)
 						ride.userId=fromU.get_uid();
 						ride.insertToDB();

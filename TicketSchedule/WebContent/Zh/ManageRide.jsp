@@ -47,6 +47,23 @@
 var map;
 var origLat,origLng,destLat,destLng;
 var origAddr,destAddr;
+
+function asDriver()
+{
+	document.getElementById("asDriver").setAttribute("class","active");
+	document.getElementById("asPassenger").setAttribute("class","");
+	document.getElementById("seats-content").style.display="inline";
+	userType = false;
+}
+
+function asPassenger()
+{
+	document.getElementById("asDriver").setAttribute("class","");
+	document.getElementById("asPassenger").setAttribute("class","active");
+	document.getElementById("seats-content").style.display="none";
+	userType = true;
+}
+/*
 function asPassenger()
 {
 	document.getElementById("asPassenger").setAttribute("class", "active");
@@ -66,6 +83,7 @@ function asDriver()
 	$(".cost-visibility").fadeIn(1000);
 	$(".seats-visibility").fadeIn(1000);
 }
+*/
 
 function asTransient()
 {
@@ -984,7 +1002,27 @@ function refitb(bounds)
 				</div>
 			</div>
  	            <div class="panel" id="UserType">
-	                <div class="panel-heading">交易信息</div>
+ 	            <div class="panel-heading">交易信息</div>
+					<div class="panel-body">
+						<div class="tabbable tabs-top">
+							<ul class="nav nav-tabs">
+									<li class="" id="asDriver"><a href="javascript: asDriver()"><img src= "/TicketSchedule/Picture/car.jpg"></img>有车</a></li>
+									<li class="active" id="asPassenger"><a href="javascript: asPassenger()"><img src= "/TicketSchedule/Picture/nocar.jpg"></img>无车</a></li>
+							</ul>
+						</div>
+						<div id="bargin-content">
+							<div id="seats-content" style="display:none">
+								<img src= "/TicketSchedule/Picture/seats.jpg"></img>
+								<input type="text" id="seats" value="3"/>
+							</div>
+							<div id="price-content" >
+			 					<img src= "/TicketSchedule/Picture/yuansign.jpg"></img>
+								<input type="text" id="price" value="15"/>
+							</div>
+						</div>
+					</div>
+				</div>
+	            <!-- <div class="panel-heading">交易信息</div>
 					<div class="panel-body">
 		            	<div class="tabbable tabs-top">
 		  					<ul class="nav nav-tabs">
@@ -993,7 +1031,9 @@ function refitb(bounds)
 							</ul>
 						</div>
 	               		<input class="usertype hidden" type="text" name="userType" id="userType" value="driver">
-	                	<div class="bargin-info">
+	               		
+	               		
+	                	 <div class="bargin-info">
 		                    <div class="cost-visibility" style="display:"><label for="cost">希望每个乘客付多少钱？</label></div>
 			                <div class="cost-visibility" style="display:">
 			                     <span id="dollarsign">$</span> <input type="text" name="cost" id="cost" class="slim align_right" maxlength="6" value="0">
@@ -1021,8 +1061,8 @@ function refitb(bounds)
 	     	                </div>
 			              </div>
 					</div>	
-				</div> 
-			<span id="form_submit"><button type="submit" class="btn btn-primary">Create or Update Ride</button></span>          
+				</div> -->
+			<span id="form_submit"><button type="submit" class="btn btn-primary">创建或更新行程</button></span>          
             <input type="text" class="hidden" id="origLat" name="origLat" value=""></input>
             <input type="text" class="hidden" id="origLng" name="origLng" value=""></input>
             <input type="text" class="hidden" id="destLat" name="destLat" value=""></input>
@@ -1032,13 +1072,13 @@ function refitb(bounds)
             <input type="text" class="hidden" id="isPost" name="isPost" value="true"></input>
             <input type="text" class="hidden" id="dayofweek" name="dayofweek" value="0"></input>
             <input type="text" class="hidden" id="rid" name="rid" value="0"></input>
-
 			</form>
 		</div>
 		<div id="post-map-canvas">
 		</div>
 	</div>
 </div>
+
 <input type="text" class="hidden" id="IsLogin" value='<%=(IsLogin == null) ? "false" : IsLogin%>'></input>
 	<div id="baidu_tongji" style="display: none">
 		<script type="text/javascript">

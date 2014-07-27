@@ -253,7 +253,7 @@ public class ManageRide extends HttpServlet {
 			
 			if (myRide.recordId==0)
 			{
-				AllRides.getRides().inser_availride(myRide);
+				AllRides.getRides().insert_availride(myRide);
 				myRide.insertToDB();
 			}
 			else

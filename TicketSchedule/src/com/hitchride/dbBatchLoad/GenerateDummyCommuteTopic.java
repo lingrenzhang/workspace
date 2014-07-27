@@ -1,4 +1,4 @@
-//Use google geoapi to generate dummy commute RideInfo and TopicRide
+//Use google/baidu Geoapi to generate dummy commute RideInfo and TopicRide
 package com.hitchride.dbBatchLoad;
 
 import java.io.IOException;
@@ -9,6 +9,10 @@ import org.json.JSONException;
 import com.hitchride.access.RideInfoAccess;
 import com.hitchride.access.TopicRideAccess;
 import com.hitchride.access.TopicTbAccess;
+import com.hitchride.global.AllRides;
+import com.hitchride.global.AllTopicRides;
+import com.hitchride.global.AllTopics;
+import com.hitchride.global.AllUsers;
 import com.hitchride.standardClass.GeoInfo;
 import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.RideInfo;
@@ -21,7 +25,7 @@ public class GenerateDummyCommuteTopic {
 	double _topleftlat,_topleftlng;
 	double _bottomrightlat,_bottomrightlng;
 	int _numberofUser=1000;
-	int _numberofRides=1000;
+	int _numberofRides=500;
 	int _rideLengthRange = 10000;
 	int _scaleFactor=2; //rideLengthRange/2 - rideLenthRange*2
 	GeoUtil geoUtil;
@@ -65,20 +69,26 @@ public class GenerateDummyCommuteTopic {
 			    ride.availSeats = rnd.nextInt(4);
 			    ride.totalSeats = 4;
 			    ride.price = r/2000;
+			    
 			    RideInfoAccess.insertRideInfo(ride);
 			    int rid = RideInfoAccess.getMaxRideId();
 			    ride.recordId = rid;
+			    AllRides.getRides().insert_availride(ride); //This will initialize data just inserted.
+			    
 			    OwnerRideInfo topicRide= new OwnerRideInfo(ride);
 			    TopicRideAccess.insertTopicRide(topicRide);
+			    AllTopicRides.getTopicRides().insert_TopicRide(topicRide);
+			    
 			    Topic topic = new Topic(topicRide._recordId);
 			    TopicTbAccess.insertTopic(topic);
+			    AllTopics.getTopics().insert_topic(topic);
 			}
 			catch (JSONException e)
 			{
 				System.out.println(e.getMessage());
 			}
 			try {
-				Thread.sleep(200);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -88,11 +98,16 @@ public class GenerateDummyCommuteTopic {
 	}
 	
 	public static void main(String[] args) throws IOException 
-	{   //Bayarea
+	{   
+		AllUsers.getUsers();
+		AllRides.getRides();
+		AllTopicRides.getTopicRides();
+		AllTopics.getTopics();
+		//Bayarea
 		//GenerateDummyCommuteTopic genDummy = new GenerateDummyCommuteTopic(37.511,-122.211,37.211,-121.911);
 		//Shanghai
 		GenerateDummyCommuteTopic genDummy = new GenerateDummyCommuteTopic(31.35,121.3,31.1,121.8);
-		genDummy.generateDummyRide(1);
+		genDummy.generateDummyRide(10);
 	}
 	
 	private double greatCircleDistance(double lat1, double lon1, double lat2, double lon2){

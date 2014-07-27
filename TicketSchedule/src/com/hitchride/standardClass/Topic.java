@@ -7,7 +7,6 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
-import com.hitchride.access.TopicRideAccess;
 import com.hitchride.access.TopicTbAccess;
 import com.hitchride.global.AllPartRides;
 import com.hitchride.global.AllTopicRides;
@@ -42,7 +41,7 @@ public class Topic implements PersistentStorage{
 		    	_requestPride = new ArrayList<ParticipantRide>();
 				ownerRide = AllTopicRides.getTopicRides()._topicRides.get(rid);
 				this._topicId=rid;
-				UserInfo ownerInfo = AllUsers.getUsers().getUser(ownerRide._rideInfo.username);
+				UserInfo ownerInfo = AllUsers.getUsers().getUser(ownerRide._rideInfo.get_username());
 				owner =(User) ownerInfo;
 						
 

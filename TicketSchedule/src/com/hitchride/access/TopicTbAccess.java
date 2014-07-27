@@ -112,7 +112,6 @@ public class TopicTbAccess {
 					+ parRideIds.toString() +"\",\""
 					+ reqparRideIds.toString() +"\",\""
 					+ messages.toString() +"\")");
-
 		}
 		catch (java.lang.ClassNotFoundException e){
 			System.err.println("ClassNotFoundException:"+e.getMessage());

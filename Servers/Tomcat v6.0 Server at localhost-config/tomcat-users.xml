@@ -15,16 +15,24 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --><tomcat-users>
+
 <!--
   NOTE:  The sample user and role entries below are wrapped in a comment
   and thus are ignored when reading this file. Do not forget to remove
   <!.. ..> that surrounds them.
 -->
-<!--
-  <role rolename="tomcat"/>
-  <role rolename="role1"/>
-  <user username="tomcat" password="tomcat" roles="tomcat"/>
-  <user username="both" password="tomcat" roles="tomcat,role1"/>
-  <user username="role1" password="tomcat" roles="role1"/>
--->
+
+	<role rolename="tomcat"/>
+  
+	<role rolename="role1"/>
+  
+	<role rolename="manager-gui"/>
+	<user password="tomcat" roles="tomcat" username="tomcat"/>
+  
+	<user password="tomcat" roles="tomcat,role1" username="both"/>
+  
+	<user password="tomcat" roles="role1" username="role1"/>
+
+
+	<user password="rideshare" roles="manager-gui" username="rideshare"/>
 </tomcat-users>
