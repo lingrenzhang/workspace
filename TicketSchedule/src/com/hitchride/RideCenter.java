@@ -118,7 +118,7 @@ public class RideCenter extends HttpServlet {
 		RideInfo ride = (RideInfo) request.getSession().getAttribute("actRide");
 		if (ride==null)
 		{
-			response.sendRedirect("/TicketSchedule/ManageRide.jsp");
+			response.sendRedirect("/TicketSchedule/Zh/ManageRide.jsp");
 		}
 		else
 		{
