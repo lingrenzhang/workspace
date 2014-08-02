@@ -1,47 +1,47 @@
 
 	* General (login, info update, etc)
 	* 
-		* landing page url: can we change it to 5udache.com?
+		1 landing page url: can we change it to 5udache.com?
 
 	* 
-		* picture size limits
-		* default picture
-		* password update
-		* how to let user report error
-		* email notification
-		* short msg notification
+		2 picture size limits
+		3 default picture
+		4 password update
+		5 how to let user report error
+		6 email notification
+		7 short msg notification
 
 	* Transient ride
 	* 
-		* available seats not initialized when postTransientRide
-		* landing page for successfully added rides, then return to the default landing page
-		* Use hover to provide comment that help user know details
-		* map resize issue (middle point could possibly outside given boundary) ???
-		* shouldn't let user select times earlier than current time
-		* user should be able to cancel the cancel action (maybe fat finger)
-		* taxi, probably don't specify providing cars and money, just the number of seats left
-		* day click should pop up selection panel when clicking on the text field
-		* when delete the day string, then click on the calendar logo, bug happens!
-		* when searching with no result, should pop up some notification
-		* the plus digress point should be on the right side of the text field?
-		* auto-delete the rides before today?
+		8 available seats not initialized when postTransientRide
+		9 landing page for successfully added rides, then return to the default landing page
+		10 Use hover to provide comment that help user know details
+		11 map resize issue (middle point could possibly outside given boundary) ???
+		12 shouldn't let user select times earlier than current time
+		13 user should be able to cancel the cancel action (maybe fat finger)
+		14 taxi, probably don't specify providing cars and money, just the number of seats left
+		15 day click should pop up selection panel when clicking on the text field
+		16 when delete the day string, then click on the calendar logo, bug happens!
+		17 when searching with no result, should pop up some notification
+		18 the plus digress point should be on the right side of the text field?
+		19 auto-delete the rides before today?
 
 	* Manage Ride
 	* 
-		* can't be blank! (or just get rid of anything that says under development?)
-		* user center and manage ride should have instant updates
-		* discussion center for commute?
+		20 can't be blank! (or just get rid of anything that says under development?)
+		21 user center and manage ride should have instant updates
+		22 discussion center for commute?
 
 	* Mobile
 	* 
-		* Name of the app... need to be consistent with the web version (5udache?)
-		* search for ride?? no input boxes
-		* the menu button sometimes don't work, dont respond when click (for example, don't respond when login on the landing page)
-		* landing page too congested, need to get rid of sthg, like the date/time (suggested by kevin)
+		23 Name of the app... need to be consistent with the web version (5udache?)
+		24 search for ride?? no input boxes
+		25 the menu button sometimes don't work, dont respond when click (for example, don't respond when login on the landing page)
+		26 landing page too congested, need to get rid of sthg, like the date/time (suggested by kevin)
 
 	* other
 	* 
-		* generate a random (small) database to play around with (for testing/debug and such)
-		* zhouyu, fresh thoughts?
+		27 generate a random (small) database to play around with (for testing/debug and such)
+		28 zhouyu, fresh thoughts?
 
 
