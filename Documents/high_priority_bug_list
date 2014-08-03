@@ -1,20 +1,21 @@
 
 	* General (login, info update, etc)
 	* 
-		* landing page url: can we change it to 5udache.com? (high)
-		* forget password  (high) 
-		* email notification (high)
+		* landing page url: can we change it to 5udache.com? (high) (5 hrs) jj
+		* forget password, email notification  (high) (21 hrs) bw
 
 	* Transient ride
 	* 
-		* available seats not initialized when postTransientRide (high)
-		* landing page for successfully added rides, cancel the cancel action (high)
-		* Use hover to provide comment that help user know details (high)
+		* available seats not initialized when postTransientRide (high) (2 hrs) jj (mobile change correspondingly)
+		* landing page for successfully added rides, cancel the cancel action (high) (2 hrs) jj
+		* Use hover to provide comment that help user know details (high) (1 hrs) jj
 		* time field issue(shouldn't let user select times earlier than current time, day click should pop up selection panel when clicking on the text field, when delete the day string, then click on the calendar logo, bug happens! ) (high)
-		* taxi, probably don't specify providing cars and money, just the number of seats left, change the money to distance  (high)
-		* when searching with no result, should pop up some notification + notification of searching (high)
+		* (13 hrs) jj
+		* taxi, probably don't specify providing cars and money, just the number of seats left, change the money to distance  (high) (1 hr) (mobile change correspondingly) jj
+		* when searching with no result, should pop up some notification (high) jj (2 hrs)
+		* notification of searching (high) lzr
 
-	* Mobile 
+	* Mobile (1 week)
 		* Name of the app... need to be consistent with the web version (5udache?) (high)
 		* search for ride?? no input boxes (time logic) (high) 
 		* the menu button sometimes don't work, dont respond when click (for example, don't respond when login on the landing page) (high)
