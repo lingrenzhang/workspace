@@ -388,7 +388,7 @@ function refitb(bounds)
 		{
 			topicstring = topicstring + "<div class=\"passenger_box\"><p>";
 			topicstring = topicstring +"<span><img src='/TicketSchedule/Picture/nocar.jpg'/><br><span>";
-			topicstring = topicstring + trInfo.owner._givenname+"<br> <strong>不提供车</strong></p></div>";
+			topicstring = topicstring + "<strong>不提供车<br>预计"+trInfo.totalSeats+"人</strong></p></div>";
 		}
 		else{
 			topicstring = topicstring + "<div class=\"price_box\"><div class=\"seats\">";
@@ -613,6 +613,10 @@ function asPassenger()
 										</div>
 										<div id="price-content" >
 			 								<img src= "/TicketSchedule/Picture/yuansign.jpg"></img>
+											<input type="text" id="price" value="15"/>
+										</div>
+										<div id="distance-content" >
+			 								<img src= "/TicketSchedule/Picture/dissign.png" title="估算距离"></img>
 											<input type="text" id="price" value="15"/>
 										</div>
 									</div>

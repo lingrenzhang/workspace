@@ -17,6 +17,7 @@ function getJson(url)
     {// code for IE6, IE5
       xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
     }
+    
     var re = /\?/;
     if (re.test(url))
     {

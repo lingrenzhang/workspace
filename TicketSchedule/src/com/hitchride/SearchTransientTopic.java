@@ -63,7 +63,6 @@ public class SearchTransientTopic extends HttpServlet {
 					//System.out.println(topicsJson);
 					response.setContentType("text/html; charset=UTF-8");
 					response.getWriter().write(tridesJson);
-				
 				}
 				catch(Exception e)
 				{

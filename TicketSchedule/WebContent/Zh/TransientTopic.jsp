@@ -205,7 +205,7 @@ function refitb(bounds)
 <script>
 function enableDelete()
 {
-	document.getElementById("deleteTopic").innerHTML ="<a href='javascript:deleteTopic()'><img src='/TicketSchedule/Picture/deletes.png'></img></a>";
+	document.getElementById("deleteTopic").innerHTML ="<a href='javascript:deleteTopic()'><img src='/TicketSchedule/Picture/deletes.png' title=\"删除该讨论\"></img></a>";
 }
 function loadContent()
 {
@@ -261,7 +261,7 @@ function loadRide()
 	{
 		topicstring = topicstring + "<div class=\"passenger_box\"><p>";
 		topicstring = topicstring +"<span><img src='/TicketSchedule/Picture/nocar.jpg'/><br><span>";
-		topicstring = topicstring + tride.owner._givenname+"<br> <strong>不提供车</strong></p></div>";
+		topicstring = topicstring + "<strong>不提供车<br>预计"+tride.totalSeats+"人</strong></p></div>";
 	}
 	else{
 		topicstring = topicstring + "<div class=\"price_box\"><div class=\"seats\">";
@@ -281,7 +281,7 @@ function loadMiddle()
 	{
 		if (isOwner)
 		{
-			middlestring= middlestring+ "<a href='javascript:deleteMiddlePoint("+i+")'><img src=\"/TicketSchedule/Picture/smallminus.jpg\" /></a>";
+			middlestring= middlestring+ "<a href='javascript:deleteMiddlePoint("+i+")'><img src=\"/TicketSchedule/Picture/smallminus.jpg\" title=\"取消该途经点\"/></a>";
 		}
 		middlestring = middlestring + mp[i]._formatedAddr+"<br>";
 		mmarkers[i] = new BMap.Marker(new BMap.Point(mp[i]._lon,mp[i]._lat),{icon: imagee});
@@ -289,7 +289,7 @@ function loadMiddle()
 	}
 	if(i!=4) //Backbone support 5. Use 4 for display now.
 	{
-		middlestring = middlestring + "<a href='javascript:addMiddlePoint("+i+")'><img src=\"/TicketSchedule/Picture/smallplus.jpg\" /></a> <input id=addMiddle></input>";
+		middlestring = middlestring + "<input id=addMiddle></input><a href='javascript:addMiddlePoint("+i+")'><img src=\"/TicketSchedule/Picture/smallplus.jpg\" title=\"添加途经点\"/></a> ";
 	}
 	document.getElementById("middlepoint").innerHTML=middlestring;
 	if (i!=4)

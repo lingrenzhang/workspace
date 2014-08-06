@@ -1,14 +1,19 @@
 package com.hitchride.global;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
 
 import com.hitchride.access.TopicRideAccess;
 import com.hitchride.standardClass.OwnerRideInfo;
-import com.hitchride.standardClass.Topic;
 
 public class AllTopicRides {
 	private static AllTopicRides allTopicRides;
+	//All OwnerRideInfo reference can be directly accessed through RID
+	public Hashtable<Integer,OwnerRideInfo> _topicRides;
+	
 	private AllTopicRides(){
 			_topicRides = new Hashtable<Integer,OwnerRideInfo>();
 			initialFromNew();
@@ -23,9 +28,6 @@ public class AllTopicRides {
 		return allTopicRides;
 	}
 
-	//All OwnerRideInfo reference can be directly accessed through RID
-	public Hashtable<Integer,OwnerRideInfo> _topicRides;
-
     private void initialFromNew(){
     	_topicRides = TopicRideAccess.LoadAllOwnerRide();
     	//Link rides to user
@@ -39,7 +41,6 @@ public class AllTopicRides {
     		System.out.println("OwnerRide: "+ rid +" relation registered");
     	}
     }
-
     
 	public void insert_TopicRide(OwnerRideInfo tRide) {
 		this._topicRides.put(tRide._recordId,tRide);

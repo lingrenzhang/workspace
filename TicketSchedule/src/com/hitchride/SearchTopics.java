@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -19,8 +20,11 @@ import org.json.JSONObject;
 
 import com.hitchride.calc.NewScoreCalculator;
 import com.hitchride.global.AllRides;
+import com.hitchride.global.AllTopicRides;
+import com.hitchride.global.AllTopics;
 import com.hitchride.global.Environment;
 import com.hitchride.standardClass.GeoInfo;
+import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Schedule;
 import com.hitchride.standardClass.Topic;
@@ -53,8 +57,14 @@ public class SearchTopics extends HttpServlet {
 			RideInfo actRide = (RideInfo) request.getSession().getAttribute("actRide");
 			if (actRide == null)
 			{
-				System.out.println("ActRide to search not initialized, check the logic please.");
-				response.getWriter().write("{}");
+				System.out.println("ActRide to search not initialized, showing all ride in DB.");
+				
+				List<Topic> resultList = AllTopics.getTopics().getTopicRideAsList();
+				JsonHelper jsonhelp = new JsonHelper();
+				String topicsJson =jsonhelp.toJson(resultList);
+				//response.getWriter().write("{}");
+				response.setContentType("text/html; charset=UTF-8");
+				response.getWriter().write(topicsJson);
 			}
 			else
 			{
@@ -67,6 +77,7 @@ public class SearchTopics extends HttpServlet {
 				JsonHelper jsonhelp = new JsonHelper();
 				String topicsJson = jsonhelp.toJson(resultList);
 				//System.out.println(topicsJson);
+				response.setContentType("text/html; charset=UTF-8");
 				response.getWriter().write(topicsJson);
 			}
 		}	

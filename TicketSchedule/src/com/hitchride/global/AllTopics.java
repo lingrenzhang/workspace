@@ -1,8 +1,12 @@
 package com.hitchride.global;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.List;
 
 import com.hitchride.access.TopicTbAccess;
+import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.Topic;
 
 public class AllTopics {
@@ -40,4 +44,15 @@ public class AllTopics {
 	}
 	
 	
+	//Not good for runtime. Think of proper second index and small unit of API later.
+	public List<Topic> getTopicRideAsList() 
+	{
+		List<Topic> result=new ArrayList<Topic>();
+		Enumeration<Topic> topicElement = this._topics.elements();
+		while (topicElement.hasMoreElements())
+		{
+			result.add(topicElement.nextElement());
+		}
+		return result;
+	}
 }
