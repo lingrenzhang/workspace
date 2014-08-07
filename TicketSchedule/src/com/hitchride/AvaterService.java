@@ -75,8 +75,8 @@ public class AvaterService extends HttpServlet {
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 		String rootDir = request.getSession().getServletContext().getRealPath("");
-		int last_slash = rootDir.lastIndexOf("/");
-		int last_sec_slash = rootDir.lastIndexOf("/", last_slash - 1);
+		int last_slash = rootDir.lastIndexOf("/"); // use "\\" for windows os
+		int last_sec_slash = rootDir.lastIndexOf("/", last_slash - 1); // use "\\" for windows os
 		String realDir = rootDir.substring(0, last_sec_slash); // Tomcat Root
 
 		String basePath = request.getScheme() + "://"

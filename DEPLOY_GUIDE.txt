@@ -8,3 +8,6 @@
 3. For war pkg deployment directly
 (1) Create the new folder <CATALINA_HOME>/pics
 (2) Create a file 'TicketSchedule#pics.xml' under <CATALINA_HOME>/conf/Catalina/localhost, Content is: <Context docBase="/Library/Tomcat/pics" path="/TicketSchedule/pics"/>
+    NOTE: please use your env docBase, here "/Library/Tomcat" is my localhost env <CATALINA_HOME>
+
+Tips: if you use windows os, please update AvaterService.java(line 78, line 79) and Register.java(line 73, line 74) to use "\\" instead of "/", this bug will be fixed sooner
