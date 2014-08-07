@@ -247,7 +247,7 @@ function loadRide()
 	
 	topicstring = topicstring + "<div class=\"userpic\">";
 	topicstring = topicstring + "<div class=\"username\">"+tride.owner._givenname+"</div>";
-	topicstring = topicstring + "<img src= \"/TicketSchedule/UserProfile/"+tride.owner._avatarID+"\" alt=\"Profile Picture\"></img>";
+	topicstring = topicstring + "<img src= \""+tride.owner.get_head_portrait_path()+"\" alt=\"Profile Picture\"></img>";
 	topicstring = topicstring + "<span class=\"passenger\"></span></div>";
 	topicstring = topicstring + "<div class=\"inner_content\"><h5>";
 	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_start.png\"/>"+"  出发地："+tride.origLoc._addr+"<br>";

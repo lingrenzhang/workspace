@@ -194,7 +194,7 @@
 				  <a href = "/TicketSchedule/UserCenter.jsp">
 					<div class="userpic">
 							<div class="username"><%=user.get_name() %></div>
-							<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
+							<img src=<%= user.get_head_portrait_path() %> alt="Profile Picture"></img>
 							<span class="passenger"></span>
 					</div>
 				</a>
@@ -271,7 +271,7 @@
 	        <div class="entry">
 				<div class="userpic">
 					<div class="username"><%=topicInfo.owner.get_name()%></div>
-					<img src=<%="/TicketSchedule/UserProfile/"+topicInfo.owner.get_avatarID() %> alt="Profile Picture"></img>
+					<img src=<%= topicInfo.owner.get_head_portrait_path() %> alt="Profile Picture"></img>
 					<span class="passenger"></span>
 				</div>
 				<%=topicInfo.displayOnWebRideCenter() %>

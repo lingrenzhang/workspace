@@ -153,7 +153,7 @@
 		   <div class="user_info" id="from">
 			<div class="userpic">
 				<div class="username"><%=user.get_name() %></div>
-				<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
+				<img src=<%= user.get_head_portrait_path() %> alt="Profile Picture"></img>
 			</div>
 				<div class = "user_nav_wrapper">
 				  <ul class="nav nav-pills nav-justified nav-stacked" id="user_nav">

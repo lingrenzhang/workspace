@@ -1,6 +1,9 @@
 package com.hitchride;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -63,8 +66,15 @@ public class Register extends HttpServlet {
 		String avatarID = request.getParameter("avatarID"); // Not required
 															// field
 		String cellphone = request.getParameter("cellphone");
-		if (avatarID == null)
-			avatarID = "default.jpg";
+		if (avatarID == "")
+			avatarID = null;
+
+		String rootDir = request.getSession().getServletContext().getRealPath("");
+		int last_slash = rootDir.lastIndexOf("/");
+		int last_sec_slash = rootDir.lastIndexOf("/", last_slash - 1);
+		String realDir = rootDir.substring(0, last_sec_slash); // should be Tomcat Root
+		String picDirPath = realDir + "/pics/tmp";
+
 		ResultSet rs = userTb.selectByName(userName, false);
 		try {
 			if (rs.next()) {
@@ -73,6 +83,11 @@ public class Register extends HttpServlet {
 				try {
 					userTb.insertValue(userName, groupId, password, givenname,
 							surname, address, 1, avatarID, cellphone);
+					if(!(avatarID == null)){
+						Path source = Paths.get(picDirPath + "/" + avatarID);
+					    Path target = Paths.get(picDirPath.substring(0, picDirPath.lastIndexOf("/")) + "/" + avatarID);
+					    Files.move(source, target);
+					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

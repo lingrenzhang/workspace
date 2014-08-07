@@ -139,12 +139,20 @@ public class User implements RideListener,UserInfo{
 		
 	}
 	
+	public String get_head_portrait_path(){
+		if(this._avatarID == null){
+			return "/TicketSchedule/UserProfile/default.jpg";
+		}else{
+			return "/TicketSchedule/pics/" + this._avatarID;
+		}
+	}
+
 	public String getUserWrapper()
 	{
 		StringBuilder result = new StringBuilder(300);
 		result.append("<div class=\"userpic\">");
 		result.append("<div class=\"username\">"+ this.get_name()+"</div>");
-		result.append("<img src=\"/TicketSchedule/UserProfile/"+this.get_avatarID()+"\" alt=\"Profile Picture\"></img>");
+		result.append("<img src=\""+this.get_head_portrait_path()+"\" alt=\"Profile Picture\"></img>");
 		result.append("<span class=\"vip\"></span>");
 		result.append("</div>");
 		result.append("<div id=\"user_info\">");
