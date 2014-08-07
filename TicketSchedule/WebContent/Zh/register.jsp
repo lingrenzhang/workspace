@@ -21,12 +21,38 @@ String err = request.getParameter("err")==null?"": request.getParameter("err");
 <script src="/TicketSchedule/JS/ajaxFileUpload.js"></script>
 
 <script>
+(function ($){
+	$.formField = function (ele_id, err_msg) {
+		this.err_msg = err_msg;
+		this.validate = function (){
+			var ele = $('#' + ele_id);
+			alert(ele.val());
+			if(ele.val() == ""){
+				return false;
+			}
+			return true;
+		};
+	};
+})(jQuery);
+
+var requiredFields = [new $.formField('emailAddress', 'email address can not be blank'),
+                      new $.formField('password', 'password can not be blank'),
+                      new $.formField('repassword', 'password confirmation can not be blank'),
+                      new $.formField('givenname', 'givenname can not be blank'),
+                      new $.formField('surname', 'surname can not be blank'),
+                      new $.formField('cellphone', 'cellphone can not be blank')];
+
 function showpic(value){
-	
 	document.getElementById("pic").innerHTML="<img src="+value+ "alt='Image Hosting' border='0'>";
 }
 
 function validForm(){
+//	for(var i = 0; i < requiredFields.length; i++){
+//		if(!requiredFields[i].validate()){
+//			alert(requiredFields[i].err_msg);
+//			return false
+//		}
+//	}
 	if ((document.getElementById("password").value != document.getElementById("repassword").value)
 		|| (document.getElementById("password").value =="")
 		|| (document.getElementById("emailAddress").value == "")
@@ -306,7 +332,7 @@ function _uploadAvatarCancel() {
 							</div>
 							<div id="divAvatarInfo">
 								<div id="divImgAvatar">
-									<img id="imgAvatarView" alt="Avatar" style="display: none;" />
+									<img id="imgAvatarView" alt="Avatar" src="/TicketSchedule/UserProfile/default.jpg" />
 								</div>
 								<!--  
 				        <div id="divUploadTxt">

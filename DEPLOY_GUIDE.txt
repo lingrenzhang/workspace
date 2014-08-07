@@ -1,0 +1,10 @@
+2014/08/07 Joey
+1. Run the sql updates sqls/updates/2014-08-01_update_userTb_avatarID.sql
+
+2. For Eclipse + Tomcat: 
+(1) Create the new folder /Users/zhouy18/workspace/lingrenzhang/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/pics, NOTE: please use your eclipse tomcat virtual root instead.
+(2) Look your server.xml, update the <Context docBase="/Users/zhouy18/workspace/lingrenzhang/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/pics" path="/TicketSchedule/pics"/> to match your docBase
+
+3. For war pkg deployment directly
+(1) Create the new folder <CATALINA_HOME>/pics
+(2) Create a file 'TicketSchedule#pics.xml' under <CATALINA_HOME>/conf/Catalina/localhost, Content is: <Context docBase="/Library/Tomcat/pics" path="/TicketSchedule/pics"/>

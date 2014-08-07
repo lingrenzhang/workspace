@@ -306,7 +306,7 @@ window.onscroll = function(){
 		
 		topicstring = topicstring + "<div class=\"userpic\">";
 		topicstring = topicstring + "<div class=\"username\">"+topicInfo.owner._givenname+"</div>";
-		topicstring = topicstring + "<img src= \"/TicketSchedule/UserProfile/"+topicInfo.owner._avatarID+"\" alt=\"Profile Picture\"></img>";
+		topicstring = topicstring + "<img src= \""+topicInfo.owner.get_head_portrait_path() +"\" alt=\"Profile Picture\"></img>";
 		topicstring = topicstring + "<span class=\"passenger\"></span></div>";
 		topicstring = topicstring + "<div class=\"inner_content\"><h3>";
 		topicstring = topicstring + "<span class=\"inner\">"+topicInfo.ownerRide._rideInfo.origLoc._addr;

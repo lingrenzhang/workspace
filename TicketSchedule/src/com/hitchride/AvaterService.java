@@ -1,23 +1,22 @@
 package com.hitchride;
 
 import java.io.IOException;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.lang.Math;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
+import org.apache.commons.fileupload.FileUploadBase.FileUploadIOException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
@@ -44,7 +43,7 @@ public class AvaterService extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("image/JPEG");
 		response.setHeader("Pragma", "No-Cache");
-	         //清除该页输出缓存，设置该页无缓存 
+			//清除该页输出缓存，设置该页无缓存
 			/*
 	            context.Response.Buffer = true;
 	            context.Response.ExpiresAbsolute = System.DateTime.Now.AddMilliseconds(0);
@@ -65,39 +64,50 @@ public class AvaterService extends HttpServlet {
 	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * return 200 if everything is ok
+	 * return 400 if plain text is uploaded or file type doesn't belong to image
+	 * return 501 if file size limitation exceeds
+	 * return 500 if any other exception raised
+	 * TODO: Now we rely on the client(browser) passed file extension name to check whether the uploaded file is a image
+	 *       Should use more robust way(e.g. check upload file content head chars) to avoid client hacker
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		response.setContentType("text/html");   
+		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
-		String realDir = request.getSession().getServletContext().getRealPath("");
-		System.out.print("Picdir is" + realDir);
-		String contextpath = request.getContextPath();
+		String rootDir = request.getSession().getServletContext().getRealPath("");
+		int last_slash = rootDir.lastIndexOf("/");
+		int last_sec_slash = rootDir.lastIndexOf("/", last_slash - 1);
+		String realDir = rootDir.substring(0, last_sec_slash); // Tomcat Root
+
 		String basePath = request.getScheme() + "://"
 		+ request.getServerName() + ":" + request.getServerPort()
-		+ contextpath + "/";
-	
+		+ request.getContextPath();
+
 		try {
-			String filePath = "UserProfile";
-			String realPath = realDir+"/"+filePath;
+			String filePath = "/pics/tmp"; // put the customer uploaded image into temp folder first.
+			String realPath = realDir + filePath;
+
 			//Create path if not exist
 			File dir = new File(realPath);
 			if(!dir.isDirectory())
 			    dir.mkdir();
-	
-			if(ServletFileUpload.isMultipartContent(request)){
+
+			if(ServletFileUpload.isMultipartContent(request)){ // otherwise it is plain text content
 			    DiskFileItemFactory dff = new DiskFileItemFactory();
 			    dff.setRepository(dir);
 			    dff.setSizeThreshold(1024000);
+
 			    ServletFileUpload sfu = new ServletFileUpload(dff);
+			    sfu.setFileSizeMax(1024000); // upload file size limitation is 1MB
 			    FileItemIterator fii = null;
 			    fii = sfu.getItemIterator(request);
+
 			    String title = "";   //Picture Title
 			    String url = "";    //Picture Path
 			    String fileName = "";
 				String state="SUCCESS";
 				String realFileName="";
-	
+
 	            String msg = "";
 	            String result = "1";
 	            String ww = "170";
@@ -118,17 +128,15 @@ public class AvaterService extends HttpServlet {
 			        FileItemStream fis = fii.next();
 			        try{
 			            if(!fis.isFormField() && fis.getName().length()>0){
-			                fileName = fis.getName();
-			                fileName = fileName.toLowerCase();
-							Pattern reg=Pattern.compile("[.]jpg|png|jpeg|gif$");
-							Matcher matcher=reg.matcher(fileName);
-							if(!matcher.find()) {
-								state = "Illegal format！";
-								response.getWriter().print("{\"msg\": \"Illegal file format.\"}");
-								break;
-							}
-							realFileName = new Date().getTime()+fileName.substring(fileName.lastIndexOf("."),fileName.length());
-			                url = realPath+"/"+realFileName;
+			                fileName = fis.getName().toLowerCase();
+			                String fileType = this.getServletContext().getMimeType(fileName);
+			                if(fileType == null || !fileType.startsWith("image")){
+			                	response.setStatus(400);
+			                	response.getWriter().print("{\"msg\": \"Illegal file format.\"}");
+			                	return;
+			                }
+							realFileName = new Date().getTime() + "_" + Math.round(Math.random() * 100000000) + fileName.substring(fileName.lastIndexOf("."));
+			                url = realPath + "/" + realFileName;
 	
 			                BufferedInputStream in = new BufferedInputStream(fis.openStream());//Get input stream
 			                FileOutputStream a = new FileOutputStream(new File(url));
@@ -136,7 +144,6 @@ public class AvaterService extends HttpServlet {
 			                Streams.copy(in, output, true);//Write to target upload folder
 			            }else{
 			                String fname = fis.getFieldName();
-	
 			                if(fname.indexOf("pictitle")!=-1){
 			                    BufferedInputStream in = new BufferedInputStream(fis.openStream());
 			                    byte c [] = new byte[10];
@@ -147,15 +154,31 @@ public class AvaterService extends HttpServlet {
 			                    }
 			                }
 			            }
+			        }catch(FileUploadIOException e){
+			        	if(e.getCause().getClass().getSimpleName() == "FileSizeLimitExceededException"){
+			        		response.setStatus(501);
+			        		response.getWriter().print("{msg: \"upload file is too large. Limit to 1Mb.\"}");
+			        	}else{
+			        		System.err.println(e.getMessage());
+			        		e.printStackTrace();
+			        		response.setStatus(500);
+			        		response.getWriter().print("{msg: \"Please upload a img file with size limitation 1MB, or leave it blank}");
+			        	}
+			        	return;
 			        }catch(Exception e){
-			            e.printStackTrace();
+			        	System.err.println(e.getMessage());
+			        	e.printStackTrace();
+			        	response.setStatus(500);
+			        	response.getWriter().print("{msg: \"Please upload a img file with size limitation 1MB, or leave it blank}");
+			        	return;
 			        }
 			    }
+
 			    response.setStatus(200);
 			    String retxt="";
 			    if (!realFileName.equalsIgnoreCase(""))
 			    {
-				    msg= basePath+filePath+"/"+realFileName;
+				    msg = basePath + filePath + "/" + realFileName;
 				    //String retxt ="{src:'"+basePath+filePath+"/"+realFileName+"',status:success}";
 				    retxt="{ \"result\":" + result + ",\"size\":" + size + 
 				    ",\"msg\":\"" + msg + "\",\"avatarID\":\"" + realFileName +
@@ -170,11 +193,15 @@ public class AvaterService extends HttpServlet {
 			}
 			else
 			{
-				response.setStatus(501);
-				response.getWriter().print("{msg: \"Input file too large. Limit to 1Mb.\"}");
+				response.setStatus(400);
+				response.getWriter().print("{msg: \"Please upload a image file.\"}");
+				return;
 			}
 		}catch(Exception ee) {
+			System.err.println(ee.getMessage());
 			ee.printStackTrace();
+			response.setStatus(500);
+			response.getWriter().print("{msg: \"Please upload a img file with size limitation 1MB, or leave it blank}");
 		}
 	}
 }

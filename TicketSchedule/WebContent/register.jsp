@@ -300,7 +300,7 @@ function _uploadAvatarCancel() {
 				    </div>
 				    <div id="divAvatarInfo">
 				        <div id="divImgAvatar">
-				            <img id="imgAvatarView" alt="Avatar" style="display: none;" />
+				            <img id="imgAvatarView" alt="Avatar" src="/TicketSchedule/UserProfile/default.jpg" />
 				        </div>
 				        <!--  
 				        <div id="divUploadTxt">

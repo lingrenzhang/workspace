@@ -135,7 +135,7 @@ public class Topic implements PersistentStorage{
 		}
 		result.append("<div class=\"userpic\">");
 		result.append("<div class=\"username\">"+this.owner.get_name()+"</div>");
-		result.append("<img src= \"/TicketSchedule/UserProfile/"+this.owner.get_avatarID()+"\" alt=\"Profile Picture\"></img>");
+		result.append("<img src= \""+this.owner.get_head_portrait_path()+"\" alt=\"Profile Picture\"></img>");
 		result.append("<span class=\"passenger\"></span></div>");
 		result.append("<div class=\"inner_content\"><h3>");
 		result.append("<span class=\"inner\">"+this.ownerRide._rideInfo.origLoc._addr);
