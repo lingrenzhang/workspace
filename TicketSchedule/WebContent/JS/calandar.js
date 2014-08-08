@@ -67,16 +67,21 @@ function select_Date(value)
 	
 	var origMonth= selectDate.getMonth();
 	var origYear= selectDate.getFullYear();
+	var origDate= selectDate.getDate();
 	selectDate.setMonth(displayDate.getMonth());
 	selectDate.setFullYear(displayDate.getFullYear());
-	var origDate= selectDate.getDate();
 	selectDate.setDate(value);
 	if (selectDate<currentDate)
 	{
 		alert("该日已过期，请重新选择");
+		selectDate.setMonth(origMonth);
+		selectDate.setFullYear(origYear);
 		selectDate.setDate(origDate);
 		list[value-1].className="ui-state-default";
-		list[origDate-1].className="ui-state-default ui-state-active";
+		if (origMonth==displayDate.getMonth()&&origYear==displayDate.getFullYear())
+		{
+			list[origDate-1].className="ui-state-default ui-state-active";
+		}
 	}
 	document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
 	
@@ -160,11 +165,18 @@ function displayCalender(year,month)
 	}
 }
 
+window.onresize = function(e){
+	var datepicker=$("#ui-datepicker-div");
+	var mapcanvas=$("#map-canvas");
+	datepicker.css({"display":"none"});
+	mapcanvas.css({"display":""});
+};
+
 window.onclick = function(e){
 	var datepicker=$("#ui-datepicker-div");
 	var mapcanvas=$("#map-canvas");
 	var left = parseFloat(datepicker.css("left"));
-	var right = left + parseFloat(datepicker.css("width"));
+	var right = left + parseFloat(datepicker.css("width"))+25; 
 	var top = parseFloat(datepicker.css("top"))-30;
 	var down = top+parseFloat(datepicker.css("height"))+30;
 	
@@ -194,7 +206,7 @@ function initCalandar(url,countentId)
 	selectDate= new Date();
 	displayDate= new Date();
 	
-	$(".datetime_icon").click(function(){
+	$(".datetime").click(function(){
 	    //Data picker related
 		var mapcanvas=$("#map-canvas");
 		mapcanvas.fadeToggle();
@@ -202,6 +214,7 @@ function initCalandar(url,countentId)
 	    var search= $("#"+countentId).offset();
 	    var datepicker=$("#ui-datepicker-div");
 	    datepicker.css({"left" : search.left,"top" : search.top+35});
+	    datepicker.fadeToggle();
 	    var sdate=document.getElementById(countentId).value;
 	    var dtArr=sdate.split("/");
 	    selectDate.setDate(dtArr[1]);
@@ -216,7 +229,7 @@ function initCalandar(url,countentId)
 		document.getElementById("picker-Year").innerHTML=displayDate.getFullYear();
 		displayCalender(displayDate.getFullYear(),displayDate.getMonth());
 	    
-		datepicker.fadeToggle();
+		
 		});
 
 		$(".ui-state-default").click(function(){

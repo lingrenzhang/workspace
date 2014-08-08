@@ -567,8 +567,8 @@ function asPassenger()
 						<input id="duration" name="duration" value="<%=tranRide==null?"":tranRide.dura%>"></input>
 					</div>
 					<div class="text_input datetime">
-						<label class="datetime_icon" for="search_date"></label>
-						<input id="search_date" class="slim datepicker hasDatepicker" type="text" value="exp" name="date">
+						<label class="datetime_icon"></label>
+						<input id="search_date" class="slim datepicker hasDatepicker" type="text" value="exp" name="date" readonly="readonly">
 					</div>
 					<button class="btn btn-primary" type="submit" onclick="search()">查找</button>
 				</div>
