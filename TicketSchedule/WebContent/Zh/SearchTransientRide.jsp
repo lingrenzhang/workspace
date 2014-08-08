@@ -48,7 +48,6 @@
 -->
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=Mto5Y3Pq2fgwkY2Kt9n60bWl"></script>
 <script type="text/javascript">
-
 var isLogin=<%=IsLogin%>;
 //New Topic Related
 var origLat,origLng,destLat,destLng;
@@ -78,7 +77,8 @@ anchor: new BMap.Size(8, 16),
 });
 
 $(document).ready(function(){
-	initCalandar();
+
+	initCalandar("ui-datepicker-div","search_date");
 	document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
 	date=document.getElementById("search_date").value;
 	document.getElementById("headline").innerHTML="今日出发：<span>"+ new Date().toDateString() +"</span>";
@@ -542,7 +542,7 @@ function asPassenger()
 		</div>
 	</div>
 	<div id="user_info_wrap">
-		<%=user.getUserWrapper() %>
+		<%=user.getUserWrapper()%>
 	</div>
 </div>
 <div id="content_wrapper">
@@ -667,48 +667,7 @@ function asPassenger()
 
 <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"
  style="position: absolute; z-index:1;display:none;">
- 	<div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all">
-		<a class="ui-datepicker-prev ui-corner-all" onclick="prevMonth()" title="Prev">
-			<span class="ui-icon ui-icon-circle-triangle-e">Prev</span>
-		</a>
- 		<a class="ui-datepicker-next ui-corner-all" onclick="nextMonth()" title="Next">
- 			<span class="ui-icon ui-icon-circle-triangle-w">Next</span>
- 		</a>
- 		<div class="ui-datepicker-title">
- 			<span class="ui-datepicker-month" id="picker-Month"></span>
- 			&nbsp;
- 			<span class="ui-datepicker-year" id="picker-Year"></span>
- 		</div>
- 	</div>
- 	<table class="ui-datepicker-calendar" id="ui-datepicker-calendar">
- 		<thead>
- 			<tr>
- 				<th class="ui-datepicker-week-end">
- 					<span title="Sunday">Su</span>
- 				</th>
- 				<th>
- 					<span title="Monday">Mo</span>
- 				</th>
- 				<th>
- 					<span title="Tuesday">Tu</span>
- 				</th>
- 				<th>
- 					<span title="Wednesday">We</span>
- 				</th>
- 				<th>
- 					<span title="Thursday">Th</span>
- 				</th>
- 				<th>
- 					<span title="Friday">Fr</span>
- 				</th>
- 				<th class="ui-datepicker-week-end">
- 					<span title="Saturday">Sa</span>
- 				</th>
- 			</tr>
- 		</thead>
- 		<tbody>
- 		</tbody>
- 	</table>
+ 	
  </div>
 <a class="hidden" id ="topAnchor" href="#"></a> 
 <!--  

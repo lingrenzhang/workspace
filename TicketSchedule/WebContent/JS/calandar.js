@@ -2,7 +2,55 @@ var currentDate;
 var selectDate;
 var displayDate;
 
-function selet_Date(value)
+function getCalander(widgetId)
+{
+	document.getElementById(widgetId).innerHTML=
+	"<div class='ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all'>"+
+	"<a class='ui-datepicker-prev ui-corner-all' onclick='prevMonth()' title='Prev'>"+
+	"	<span class='ui-icon ui-icon-circle-triangle-e'>Prev</span>"+
+	"</a>"+
+	"	<a class='ui-datepicker-next ui-corner-all' onclick='nextMonth()' title='Next'>"+
+	"		<span class='ui-icon ui-icon-circle-triangle-w'>Next</span>"+
+	"	</a>"+
+	"	<div class='ui-datepicker-title'>"+
+	"		<span class='ui-datepicker-month' id='picker-Month'></span>"+
+	"		&nbsp;"+
+	"		<span class='ui-datepicker-year' id='picker-Year'></span>"+
+	"	</div>"+
+	"</div>"+
+	"<table class='ui-datepicker-calendar' id='ui-datepicker-calendar'>"+
+	"	<thead>"+
+	"		<tr>"+
+	"			<th class='ui-datepicker-week-end'>"+
+	"				<span title='Sunday'>Su</span>"+
+	"			</th>"+
+	"			<th>"+
+	"				<span title='Monday'>Mo</span>"+
+	"			</th>"+
+	"			<th>"+
+	"				<span title='Tuesday'>Tu</span>"+
+	"			</th>"+
+	"			<th>"+
+	"				<span title='Wednesday'>We</span>"+
+	"			</th>"+
+	"			<th>"+
+	"				<span title='Thursday'>Th</span>"+
+	"			</th>"+
+	"			<th>"+
+	"				<span title='Friday'>Fr</span>"+
+	"			</th>"+
+	"			<th class='ui-datepicker-week-end'>"+
+	"				<span title='Saturday'>Sa</span>"+
+	"			</th>"+
+	"		</tr>"+
+	"	</thead>"+
+	"	<tbody>"+
+	"	</tbody>"+
+	"</table>";
+}
+
+
+function select_Date(value)
 {
 	var list=$(".ui-state-default");
 	for (var i=0;i<list.length;i++)
@@ -17,9 +65,19 @@ function selet_Date(value)
 		}
 	}
 	
+	var origMonth= selectDate.getMonth();
+	var origYear= selectDate.getFullYear();
 	selectDate.setMonth(displayDate.getMonth());
 	selectDate.setFullYear(displayDate.getFullYear());
+	var origDate= selectDate.getDate();
 	selectDate.setDate(value);
+	if (selectDate<currentDate)
+	{
+		alert("该日已过期，请重新选择");
+		selectDate.setDate(origDate);
+		list[value-1].className="ui-state-default";
+		list[origDate-1].className="ui-state-default ui-state-active";
+	}
 	document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
 	
 };
@@ -64,7 +122,7 @@ function displayCalender(year,month)
 		{
 			link.className="ui-state-default ui-state-active";
 		}
-		link.href="javascript:selet_Date("+countday+")";
+		link.href="javascript:select_Date("+countday+")";
 		link.innerHTML=countday;
 		tbodynode.rows[0].cells[i].appendChild(link);
 	}
@@ -94,7 +152,7 @@ function displayCalender(year,month)
 				}
 			}
 			link.innerHTML=countday;
-			link.href="javascript:selet_Date("+countday+")";
+			link.href="javascript:select_Date("+countday+")";
 			
 			tbodynode.rows[week].cells[i].appendChild(link);
 		}
@@ -129,8 +187,9 @@ function prevMonth()
 	displayCalender(displayDate.getFullYear(),displayDate.getMonth()-1);
 }
 
-function initCalandar(url)
+function initCalandar(url,countentId)
 {
+	getCalander(url);
 	currentDate = new Date();
 	selectDate= new Date();
 	displayDate= new Date();
@@ -140,10 +199,10 @@ function initCalandar(url)
 		var mapcanvas=$("#map-canvas");
 		mapcanvas.fadeToggle();
 		
-	    var search= $("#search_date").offset();
+	    var search= $("#"+countentId).offset();
 	    var datepicker=$("#ui-datepicker-div");
 	    datepicker.css({"left" : search.left,"top" : search.top+35});
-	    var sdate=document.getElementById("search_date").value;
+	    var sdate=document.getElementById(countentId).value;
 	    var dtArr=sdate.split("/");
 	    selectDate.setDate(dtArr[1]);
 	    selectDate.setMonth(dtArr[0]-1);
@@ -158,17 +217,14 @@ function initCalandar(url)
 		displayCalender(displayDate.getFullYear(),displayDate.getMonth());
 	    
 		datepicker.fadeToggle();
-
 		});
 
 		$(".ui-state-default").click(function(){
-			
 			this.className="ui-state-default ui-state-active";
 			selectDate.setMonth(displayDate.getMonth());
 			selectDate.setYear(displayDate.getYear());
 			selectDate.setDate(this.innerHtml);
-			document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
-			
+			document.getElementById(countentId).value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
 		});
 
 		$("#commute_day").click(function(){

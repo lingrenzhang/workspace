@@ -70,8 +70,8 @@ public class Register extends HttpServlet {
 			avatarID = null;
 
 		String rootDir = request.getSession().getServletContext().getRealPath("");
-		int last_slash = rootDir.lastIndexOf("/");
-		int last_sec_slash = rootDir.lastIndexOf("/", last_slash - 1);
+		int last_slash = rootDir.lastIndexOf("\\");
+		int last_sec_slash = rootDir.lastIndexOf("\\", last_slash - 1);
 		String realDir = rootDir.substring(0, last_sec_slash); // should be Tomcat Root
 		String picDirPath = realDir + "/pics/tmp";
 
