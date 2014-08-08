@@ -365,6 +365,15 @@ function refitb(bounds)
 <script>
 	function listResults(results){
 		var num = results.length;
+		if (num==0)
+		{
+			document.getElementById("searchResultMessage").innerHTML ="<h2><a href=\"javascript:onPublishValidate()\">本日尚未有临时拼车信息发布</a></h2>";
+		}
+		else
+		{
+			document.getElementById("searchResultMessage").innerHTML ="<h2><a href=\"javascript:onPublishValidate()\">没有找到你要的临时拼车信息?	</a></h2>";
+		}
+		
 		var resultString="";
 		
 		for (var i=0;i<num;i++)
@@ -465,9 +474,8 @@ function publishRide()
 		queryURL = queryURL+"&price="+document.getElementById("price").value;
 		queryURL = queryURL+"&seats="+document.getElementById("seats").value;
 		
-		
 		var tranid = getJson(queryURL);
-		window.location.href = "/TicketSchedule/Zh/TransientTopic.jsp?trId="+tranid;
+		window.location.href = "/TicketSchedule/Zh/TransientTopic.jsp?trId="+tranid+"&onCreate=true";
 	}
 	else
 	{
@@ -580,11 +588,8 @@ function asPassenger()
 					</div>
 						<div id="action">
 						<div class="item postride">
-							<h2>
-								<a href="">没有找到你要的临时拼车信息?						
-								</a>
-							</h2>
-							<p>补充更多临时拼车信息并发布，其他人可以找到并加入你!							
+							<div id="searchResultMessage"></div>
+							<p>点击链接并在右下角补充更多信息后发布，其他人可以找到并加入你!							
 							</p>
 							<button id="createTopic" type="submit" class="button post" onclick="publishRide()">发布临时拼车</button>
 						</div>

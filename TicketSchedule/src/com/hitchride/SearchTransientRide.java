@@ -212,7 +212,7 @@ public class SearchTransientRide extends HttpServlet {
 			request.getSession().setAttribute("tranRide", tranRide);
 			//response.setContentType("text/html; charset=UTF-8");
 			 
-			RequestDispatcher rd = request.getRequestDispatcher("../Zh/SearchTransientTopic.jsp?trId="+tranRide.transientRideId);
+			RequestDispatcher rd = request.getRequestDispatcher("../Zh/SearchTransientTopic.jsp?trId="+tranRide.transientRideId+"&onCreate=true");
 			rd.forward(request, response);
 		}
 	}

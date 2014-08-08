@@ -205,7 +205,14 @@ function refitb(bounds)
 <script>
 function enableDelete()
 {
-	document.getElementById("deleteTopic").innerHTML ="<a href='javascript:deleteTopic()'><img src='/TicketSchedule/Picture/deletes.png' title=\"删除该讨论\"></img></a>";
+	if (getURLPara("onCreate"))
+	{
+		document.getElementById("topichead").innerHTML="行程创建成功";
+	}
+	else
+	{
+		document.getElementById("deleteTopic").innerHTML ="<a href='javascript:deleteTopic()'><img src='/TicketSchedule/Picture/deletes.png' title=\"删除该讨论\"></img></a>";
+	}
 }
 function loadContent()
 {
@@ -337,7 +344,7 @@ function loadParti()
 <script>
 function deleteTopic()
 {
-	alert("删除行程");
+	alert("行程被删除，如有需要请重新发布");
 	var trid = getURLPara("trId");
 	var url = "/TicketSchedule/servlet/DeleteTopic?topicType=transient&trId="+trid;
 	url = url + "&deleteId="+ userid;
