@@ -244,8 +244,6 @@ $(document).ready(function(){
 		local.search(myValue);
 	});
 	
-	
-
 	//Rough distance here
 	function calculateDistances() {
 
@@ -277,15 +275,15 @@ $(document).ready(function(){
 		dx = DEF_R * Math.cos(ns1) * dew; // 东西方向长度(在纬度圈上的投影长度)
 		dy = DEF_R * (ns1 - ns2); // 南北方向长度(在经度圈上的投影长度)
 			
-		distance = Math.sqrt(dx * dx + dy * dy)*1.1;
-		duration = distance/12;
-
+		distance = Math.floor(Math.sqrt(dx * dx + dy * dy)*1.1/1000);
+		duration = distance/30; //Will use better algorithm if necessary
 		
 		document.getElementById("distance").setAttribute("value",distance);
 		document.getElementById("duration").setAttribute("value",duration);
-		    
-		var price = Math.floor(distance/1200);
+		   
+		var price = distance;
 		document.getElementById("price").setAttribute("value",price);
+	
 	}
 		
 	search();
@@ -312,7 +310,7 @@ function search()
 	destAddr = document.getElementById("search_e").value;
 	destLat = document.getElementById("destLat").value;
 	destLng = document.getElementById("destLng").value;
-	distance = document.getElementById("distance").value;
+	distance = document.getElementById("distance").value*1000;
 	duration = document.getElementById("duration").value;
 	date = document.getElementById("search_date").value;
 	var queryURL = "/TicketSchedule/servlet/SearchTransientTopic";
@@ -397,12 +395,12 @@ function refitb(bounds)
 		{
 			topicstring = topicstring + "<div class=\"passenger_box\"><p>";
 			topicstring = topicstring +"<span><img src='/TicketSchedule/Picture/nocar.jpg'/><br><span>";
-			topicstring = topicstring + "<strong>不提供车<br>预计"+trInfo.totalSeats+"人</strong></p></div>";
+			topicstring = topicstring + "<strong>不提供车<br>找"+trInfo.totalSeats+"人拼车</strong></p></div>";
 		}
 		else{
 			topicstring = topicstring + "<div class=\"price_box\"><div class=\"seats\">";
 			topicstring = topicstring +"<img src='/TicketSchedule/Picture/seats.jpg'/><span class='count'>"+trInfo.totalSeats+"</span></div>";
-			topicstring = topicstring +"<p><b>"+trInfo.price + "</b> / 座</p></div>";
+			topicstring = topicstring +"<p>每座<b>"+trInfo.price + "</b>元</p></div>";
 		}
 		
 		topicstring = topicstring + "<div class=\"userpic\">";
@@ -513,7 +511,7 @@ function asDriver()
 {
 	document.getElementById("asDriver").setAttribute("class","active");
 	document.getElementById("asPassenger").setAttribute("class","");
-	document.getElementById("seats-content").style.display="inline";
+	document.getElementById("price-content").style.display="inline";
 	userType = false;
 }
 
@@ -521,7 +519,7 @@ function asPassenger()
 {
 	document.getElementById("asDriver").setAttribute("class","");
 	document.getElementById("asPassenger").setAttribute("class","active");
-	document.getElementById("seats-content").style.display="none";
+	document.getElementById("price-content").style.display="none";
 	userType = true;
 }
 
@@ -554,7 +552,7 @@ function asPassenger()
 	</div>
 </div>
 <div id="content_wrapper">
-	<div id="content_container">
+	<div id="content_container"> 
 		<div id="content">
 			<div id="head">
 				<div class="search">
@@ -571,7 +569,6 @@ function asPassenger()
 						<input id="origLng" name="origLng" value=""></input>
 						<input id="destLat" name="destLat" value=""></input>
 						<input id="destLng" name="destLng" value=""></input>
-						<input id="distance" name="distance" value="<%=tranRide==null?"":tranRide.dist%>"></input>
 						<input id="duration" name="duration" value="<%=tranRide==null?"":tranRide.dura%>"></input>
 					</div>
 					<div class="text_input datetime">
@@ -612,17 +609,17 @@ function asPassenger()
 										</ul>
 									</div>
 									<div id="bargin-content">
-										<div id="seats-content" style="display:none">
-											<img src= "/TicketSchedule/Picture/seats.jpg"></img>
+										<div id="seats-content">
+											<img src= "/TicketSchedule/Picture/seats.jpg" title="提供座位数"></img>
 											<input type="text" id="seats" value="3"/>
 										</div>
-										<div id="price-content" >
-			 								<img src= "/TicketSchedule/Picture/yuansign.jpg"></img>
+										<div id="price-content" style="display:none">
+			 								<img src= "/TicketSchedule/Picture/yuansign.jpg" title="对搭车者要价"></img>
 											<input type="text" id="price" value="15"/>
 										</div>
 										<div id="distance-content" >
-			 								<img src= "/TicketSchedule/Picture/dissign.png" title="估算距离"></img>
-											<input type="text" id="price" value="15"/>
+			 								<img src= "/TicketSchedule/Picture/dissign.png" title="大约距离"></img>
+											<input type="text" id="distance" value="<%=tranRide==null?"":tranRide.dist%>" readonly="readonly" />
 										</div>
 									</div>
 									<div id="schedule-info">

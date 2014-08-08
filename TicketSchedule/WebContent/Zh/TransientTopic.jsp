@@ -268,12 +268,12 @@ function loadRide()
 	{
 		topicstring = topicstring + "<div class=\"passenger_box\"><p>";
 		topicstring = topicstring +"<span><img src='/TicketSchedule/Picture/nocar.jpg'/><br><span>";
-		topicstring = topicstring + "<strong>不提供车<br>预计"+tride.totalSeats+"人</strong></p></div>";
+		topicstring = topicstring + "<strong>不提供车<br>找"+tride.totalSeats+"人拼车</strong></p></div>";
 	}
 	else{
 		topicstring = topicstring + "<div class=\"price_box\"><div class=\"seats\">";
 		topicstring = topicstring +"<img src='/TicketSchedule/Picture/seats.jpg'/><span class='count'>"+tride.totalSeats+"</span></div>";
-		topicstring = topicstring +"<p><b>"+tride.price + "</b> / 座</p></div>";
+		topicstring = topicstring +"<p>每 座<b>"+tride.price + "</b>元</p></div>";
 	}
 	topicstring =topicstring+"</div>";
 	

@@ -159,11 +159,12 @@ select
 	width: 50px;
 }
 
-#price 
+#price,#distance
 {
 	margin-top:10px;
 	width: 50px;
 }
+
 
 #ride_time_hour
 {
