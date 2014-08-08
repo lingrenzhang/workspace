@@ -398,7 +398,7 @@ function refitb(bounds)
 		
 		topicstring = topicstring + "<div class=\"userpic\">";
 		topicstring = topicstring + "<div class=\"username\">"+trInfo.owner._givenname+"</div>";
-		topicstring = topicstring + "<img src= \"/TicketSchedule/UserProfile/"+trInfo.owner._avatarID+"\" alt=\"Profile Picture\"></img>";
+		topicstring = topicstring + "<img src= \"/TicketSchedule/pics/"+trInfo.owner._avatarID+"\" alt=\"Profile Picture\"></img>";
 		topicstring = topicstring + "<span class=\"passenger\"></span></div>";
 		topicstring = topicstring + "<div class=\"inner_content\"><h4>";
 		//topicstring = topicstring + "<span class=\"inner\">"+"出发地："+trInfo.origLoc._addr+"<br>";
