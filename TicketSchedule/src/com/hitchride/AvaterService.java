@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.lang.Math;
 import java.util.Date;
+import java.util.Properties;
 
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
@@ -75,11 +76,21 @@ public class AvaterService extends HttpServlet {
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 		String rootDir = request.getSession().getServletContext().getRealPath("");
-		System.out.println(rootDir);
-		int last_slash = rootDir.lastIndexOf("\\");
-		int last_sec_slash = rootDir.lastIndexOf("\\", last_slash - 1);
-		System.out.println(last_slash);
-		System.out.println(last_sec_slash);
+		
+		//This part only for development environment. Can fix code in runtime environment if required.
+		Properties props=System.getProperties(); 
+        String osname =  props.getProperty("os.name");
+        int last_sec_slash;
+        if (osname.toUpperCase().contains("WIN"))
+        {
+        	int last_slash = rootDir.lastIndexOf("\\");
+    		last_sec_slash = rootDir.lastIndexOf("\\", last_slash - 1);
+        }
+        else
+        {
+        	int last_slash = rootDir.lastIndexOf("/"); // use "\\" for windows os
+    		last_sec_slash = rootDir.lastIndexOf("/", last_slash - 1);  // use "\\" for windows os
+        }
 		String realDir = rootDir.substring(0, last_sec_slash); // Tomcat Root
 
 		String basePath = request.getScheme() + "://"

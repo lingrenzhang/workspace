@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -70,8 +71,23 @@ public class Register extends HttpServlet {
 			avatarID = null;
 
 		String rootDir = request.getSession().getServletContext().getRealPath("");
-		int last_slash = rootDir.lastIndexOf("\\");
-		int last_sec_slash = rootDir.lastIndexOf("\\", last_slash - 1);
+
+		//This part only for development environment. Can fix code in runtime environment if required.
+		Properties props=System.getProperties(); 
+        String osname =  props.getProperty("os.name");
+        System.out.println("Operation System is: "+osname);
+        int last_sec_slash;
+        if (osname.toUpperCase().contains("WIN"))
+        {
+        	int last_slash = rootDir.lastIndexOf("\\");
+    		last_sec_slash = rootDir.lastIndexOf("\\", last_slash - 1);
+        }
+        else
+        {
+        	int last_slash = rootDir.lastIndexOf("/"); // use "\\" for windows os
+    		last_sec_slash = rootDir.lastIndexOf("/", last_slash - 1);  // use "\\" for windows os
+        }
+		
 		String realDir = rootDir.substring(0, last_sec_slash); // should be Tomcat Root
 		String picDirPath = realDir + "/pics/tmp";
 
