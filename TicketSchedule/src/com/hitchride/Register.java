@@ -15,8 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.hitchride.access.UserTbAccess;
+import com.hitchride.emailTemplate.RegisterTemplate;
 import com.hitchride.global.AllUsers;
 import com.hitchride.standardClass.User;
+import com.hitchride.util.SendMail;
 
 /**
  * Servlet implementation class Register
@@ -104,6 +106,9 @@ public class Register extends HttpServlet {
 					    Path target = Paths.get(picDirPath.substring(0, picDirPath.lastIndexOf("/")) + "/" + avatarID);
 					    Files.move(source, target);
 					}
+					RegisterTemplate t = new RegisterTemplate();
+					SendMail s = new SendMail(t, userName);
+					s.send();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

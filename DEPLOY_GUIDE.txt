@@ -13,3 +13,7 @@
 Tips: if you use windows os, please update AvaterService.java(line 78, line 79) and Register.java(line 73, line 74) to use "\\" instead of "/", this bug will be fixed sooner.   This issue is sloved in code update: 74e1191b16b8a19a08afb81ade74a13ad4369e8b @Sean
 
 You may manually copy all file in /TicketSchedule/UserProfile to /TicketSchedule/pics for backward compatibility and for persistent storage.
+
+
+2014/08/09 Joey
+1. Copy the mail.jar to your Tomcat lib folder, DO NOT copy to the workspace's project lib folder, otherwise it doesn't work.
