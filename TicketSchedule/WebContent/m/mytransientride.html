@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable = no" />
-<title>无忧搭车 | 寻找临时拼车</title>
+<title>无忧搭车 | 我的临时拼车</title>
 <link rel="stylesheet" href="css/foundation.css" />
 <link rel="stylesheet" href="foundation-icons/foundation-icons.css" />
 <link rel="stylesheet" href="css/main.css" />
@@ -28,9 +28,9 @@
 					<section class="top-bar-section">
 						<ul class="right">
 							<li class="divider"></li>
-							<li class=""><a href="mytransientride.html" class="">用户中心</a></li>
+							<li class="active"><a href="javascript:void()" class="">用户中心</a></li>
 							<li class="divider"></li>
-							<li class="active"><a href="javascript:void()">搜索临时拼车</a></li>
+							<li class=""><a href="searchtransientride.html">搜索临时拼车</a></li>
 						</ul>
 					</section>
 				</nav>
@@ -40,19 +40,19 @@
 					<a class="left-off-canvas-toggle menu-icon"><span></span></a>
 				</section>
 				<section class="middle tab-bar-section">
-					<h1 class="title" id="title">今日临时拼车</h1>
+					<h1 class="title" id="title">我的临时拼车</h1>
 				</section>
 			</nav>
 			<aside class="left-off-canvas-menu">
 				<ul class="off-canvas-list">
 					<li><label class="first">无忧搭车</label></li>
-					<li><a href="javascript:void()" class="active"><i
+					<li><a href="searchtransientride.html" class="active"><i
 							class="fi-magnifying-glass"></i>&nbsp;搜索临时拼车</a></li>
 				</ul>
 				<hr>
 				<ul class="off-canvas-list">
 					<li><label class="first"><i class="fi-home"></i>&nbsp;用户中心</label></li>
-					<li><a href="mytransientride.html" class=""><i
+					<li><a href="javascript:void()" class=""><i
 							class="fi-comments"></i>&nbsp;我的临时拼车</a></li>
 					<li><a href="javascript:alert('开发中')" class=""><i
 							class="fi-mail"></i>&nbsp;我的消息</a></li>
@@ -70,20 +70,9 @@
 					<br>
 					<div class="text-center">
 						<a id="post" type="button" href="posttransientride.html"
-							class="button small round">发布临时拼车</a> <a id="select_date"
-							type="button" data-reveal-id="selModal" href="#"
-							class="button small round">选择其他日期</a>
-					</div>
-					<div id="selModal" class="reveal-modal" data-reveal>
-						<h2>选择日期</h2>
-						<hr>
-						<div class="text-center">
-							<input type="text" id="date_input" />
-						</div>
-						<hr>
-						<a href="javascript:selDate()" class="button small round">确定</a> <a
-							href="javascript:$('a.close-reveal-modal').trigger('click')"
-							class="button small round">取消</a> <a class="close-reveal-modal">&#215;</a>
+							class="button small round">发布临时拼车</a> <a type="button"
+							data-reveal-id="selModal" href="searchtransientride.html"
+							class="button small round">搜索临时拼车</a>
 					</div>
 				</div>
 				<hr>
@@ -104,58 +93,35 @@
 			});
 		}
 		checkLogin();
-		
-		var ct = new Date();
-		ct.setUTCHours(ct.getUTCHours() + 1);
 
-		if (location.hash.replace('#', '')=='') {
-			location.hash = ct.dateFormat('m/d/Y');
-			$('#title')[0].innerHTML=ct.dateFormat('m/d/Y')+'拼车';
-		} else {
-			$('#title')[0].innerHTML=location.hash.replace('#', '')+'拼车';
-		}
-		$('#date_input').datetimepicker({
-			lang : 'ch',
-			inline : true,
-			format : 'm/d/Y',
-			timepicker:false,
-			value : ct.dateFormat('m/d/Y'),
-			minDate : '-1970/01/01',
-			// today is minimum date
-			step : 5,
-			onGenerate : function(ct) {
-				console.log(ct);
-			}
-		});
-		
-		function getTransientRides(date) {
-			$('#result')[0].innerHTML='<div class="text-center">搜索中...</div>';
-			
+		function getMyTransientRides() {
+			$('#result')[0].innerHTML = '<div class="text-center">载入中...</div>';
+
 			$
 					.get(
-							'../servlet/SearchTransientTopic?date='+date,
+							'../api/mMyTransientRide',
 							function(data) {
-								var result = JSON.parse(data);
-								$('#result')[0].innerHTML='';
+								var result = JSON.parse(data).tRides;
+								$('#result')[0].innerHTML = '';
 								for (index = 0; index < result.length; ++index) {
 									var r = result[index];
 									var ride = "";
 									ride = '<div class="row panel"><div class="small-3 columns header text-center"><div class="th"> <img src="../UserProfile/';
-					ride = ride + r.owner._avatarID;
+					ride = ride + r.owner.pic;
 					ride = ride + '" /></div><div class="row text-center"><i class="fi-torso"></i>';
-									ride = ride + r.owner._givenname;
+									ride = ride + r.owner.name;
 									ride = ride
-											+ '</div></div><a href="transientride.html#'+r.transientRideId+'"><div class="small-7 columns ride-info "><i class="fi-home"></i>';
-									ride = ride + r.origLoc._formatedAddr;
+											+ '</div></div><a href="transientride.html#'+r.trId+'"><div class="small-7 columns ride-info "><i class="fi-home"></i>';
+									ride = ride + r.origLoc.addr;
 									ride = ride
 											+ '<br><br><i class="fi-target"></i>';
-									ride = ride + r.destLoc._formatedAddr;
+									ride = ride + r.destLoc.addr;
 									ride = ride
 											+ '<br><br><i class="fi-calendar"></i>"';
-									ride = ride + r.rideDate;
+									ride = ride + r.date;
 									ride = ride
 											+ '<br><br><i class="fi-clock"></i>';
-									ride = ride + r.rideTime;
+									ride = ride + r.time;
 									ride = ride
 											+ '</div><span class="label small-2 columns ride-avail bottom">空座：';
 									ride = ride + r.totalSeats;
@@ -171,22 +137,14 @@
 								if (result.length <= 0) {
 									$('#result')
 											.append(
-													'<div class="text-center">很抱歉，没有找到拼车:(<br>请尝试别的日期或者发布拼车</div>');
+													'<div class="text-center">你还没有加入任何临时拼车<br>你可以发布拼车或者加入拼车</div>');
 								}
 							});
 
 		}
-		function selDate() {
-			$('a.close-reveal-modal').trigger('click');
-			location.hash = $('#date_input')[0].value;
-			$('#title')[0].innerHTML=$('#date_input')[0].value+'临时拼车';
-			getTransientRides($('#date_input')[0].value);
-		}
-		
+
 		$(document).foundation();
-		getTransientRides(location.hash.replace('#', ''));
-		
-		
+		getMyTransientRides();
 	</script>
 	<div id="baidu_tongji" style="display: none">
 		<script type="text/javascript">
