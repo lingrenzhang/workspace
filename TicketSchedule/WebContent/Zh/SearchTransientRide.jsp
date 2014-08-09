@@ -38,6 +38,7 @@
 <link rel="shortcut icon" href="/TicketSchedule/favicon.ico" type="image/x-icon" /> 
 
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
+<script src="/TicketSchedule/JS/jquery.blockUI.js"></script>
 <script src="/TicketSchedule/JS/site.js"></script>
 <script src="/TicketSchedule/JS/calandar.js"></script>
 <script src="/TicketSchedule/bootstrap/js/bootstrap.js"></script>
@@ -320,7 +321,9 @@ function search()
 	queryURL = queryURL+"&date="+date;
 	document.getElementById("headline").innerHTML="<span>出发日："+date+"</span>";
     //var results = JSON.parse(getJson(queryURL));
+    $.blockUI({ message: '<h1><img src="../Picture/busy1.gif" /> 搜索中...</h1>' });
     $.get(queryURL,function(data,status){
+    	$.unblockUI();
     	document.getElementById("searchResultMessage").innerHTML="检索结束";
     	results=JSON.parse(data);
     	listResults(results);
