@@ -440,7 +440,7 @@ function publishRide()
 		queryURL = queryURL+"&origLat="+origLat;
 		queryURL = queryURL+"&origLng="+origLng;
 		
-		if (document.getElementById("search_e").value!="") //Weird bug when integrating baidu api with the input box.
+		if (document.getElementById("search_e").value!="") //Weird bug when integrating baidu api with the  box.
 		{
 		queryURL = queryURL+"&e="+document.getElementById("search_e").value; 
 		}
@@ -573,7 +573,7 @@ function asPassenger()
 					</div>
 					<div class="text_input datetime">
 						<label class="datetime_icon"></label>
-						<input id="search_date" class="slim datepicker hasDatepicker" type="text" value="exp" name="date" readonly="readonly">
+						<input id="search_date" class="slim datepicker hasDatepicker" type="text" value="exp" name="date" readonly="readonly" style="cursor:pointer">
 					</div>
 					<button class="btn btn-primary" type="submit" onclick="search()">查找</button>
 				</div>
