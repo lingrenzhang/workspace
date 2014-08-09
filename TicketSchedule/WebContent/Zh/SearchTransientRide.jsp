@@ -319,36 +319,44 @@ function search()
 	queryURL = queryURL+"&distance="+distance+"&duration"+duration;
 	queryURL = queryURL+"&date="+date;
 	document.getElementById("headline").innerHTML="<span>出发日："+date+"</span>";
-    var results = JSON.parse(getJson(queryURL));
-    listResults(results);
-    $(".entry").hover(function(){
-		torigLat = $(this)[0].getAttribute("origLat");
-		torigLng = $(this)[0].getAttribute("origLng");
-		tdestLat = $(this)[0].getAttribute("destLat");
-		tdestLng = $(this)[0].getAttribute("destLng");
-		var rank = $(this)[0].getAttribute("rank");
-		var toLatlng = new BMap.Point(torigLng,torigLat);
-		var tdLatlng = new BMap.Point(tdestLng,tdestLat);
+    //var results = JSON.parse(getJson(queryURL));
+    $.get(queryURL,function(data,status){
+    	document.getElementById("searchResultMessage").innerHTML="检索结束";
+    	results=JSON.parse(data);
+    	listResults(results);
+    	
+    	$(".entry").hover(function(){
+    		torigLat = $(this)[0].getAttribute("origLat");
+    		torigLng = $(this)[0].getAttribute("origLng");
+    		tdestLat = $(this)[0].getAttribute("destLat");
+    		tdestLng = $(this)[0].getAttribute("destLng");
+    		var rank = $(this)[0].getAttribute("rank");
+    		var toLatlng = new BMap.Point(torigLng,torigLat);
+    		var tdLatlng = new BMap.Point(tdestLng,tdestLat);
 
-		if (tomarker!=null)
-		{
-			map.removeOverlay(tomarker);
-		}
-		if (tdmarker!=null)
-		{
-			map.removeOverlay(tdmarker);
-		}
-		
-		tomarker = new BMap.Marker(toLatlng,{icon: images});
-		tdmarker = new BMap.Marker(tdLatlng,{icon: imagee});
-		
-	 	var bounds = new BMap.Bounds(basicbounds.getSouthWest(),basicbounds.getNorthEast());
-	    bounds.extend(toLatlng);
-		bounds.extend(tdLatlng);
-		refitb(bounds);
-		map.addOverlay(tomarker);
-		map.addOverlay(tdmarker);
-	});
+    		if (tomarker!=null)
+    		{
+    			map.removeOverlay(tomarker);
+    		}
+    		if (tdmarker!=null)
+    		{
+    			map.removeOverlay(tdmarker);
+    		}
+    		
+    		tomarker = new BMap.Marker(toLatlng,{icon: images});
+    		tdmarker = new BMap.Marker(tdLatlng,{icon: imagee});
+    		
+    	 	var bounds = new BMap.Bounds(basicbounds.getSouthWest(),basicbounds.getNorthEast());
+    	    bounds.extend(toLatlng);
+    		bounds.extend(tdLatlng);
+    		refitb(bounds);
+    		map.addOverlay(tomarker);
+    		map.addOverlay(tdmarker);
+    	});
+
+    });
+    
+   document.getElementById("searchResultMessage").innerHTML="<h2>检索中</h2>";
 }
 
 function refitb(bounds)
