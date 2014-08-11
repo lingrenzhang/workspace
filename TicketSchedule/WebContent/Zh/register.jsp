@@ -307,7 +307,7 @@ function _uploadAvatarCancel() {
 								<label class="register-label"> 授权码 </label>
 							</dt>
 							<dd>
-								<input type="text" class="optional" placeholder="abcdefgi"
+								<input type="text" class="optional" placeholder="abcdefghi"
 									name="authcode" id="authcode" maxlength="10" autocomplete="off">
 								<p>9位授权码</p>
 							</dd>

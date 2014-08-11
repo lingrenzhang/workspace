@@ -292,10 +292,11 @@ bottom: 2px;
 right: 2px;
 }
 
-#user_info
+#user_name
 {
 	margin-top:20px
 }
+
 #user_level
 {
 	vertical-align: bottom;
@@ -419,4 +420,10 @@ opacity: 0.7;
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled]{
 	color: #ffffff;
 	background-color: #00cc6d;
+}
+
+
+.userinfo
+{
+	padding : 2px 0 2px 0;
 }

@@ -12,8 +12,8 @@
     {
     	 user = new User(); //Prevent null pointer error.
 		 user.set_authLevel(1);
-		 user.set_name("guest");
-		 user.set_emailAddress("guest");
+		 user.set_name("na");
+		 user.set_emailAddress("na");
 		 user.set_avatarID("default.jpg");
 		 user.set_userLevel(0);
     }
@@ -44,21 +44,32 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/TicketSchedule/bootstrap/js/bootstrap.js"></script>
     <script src="/TicketSchedule/JS/site.js"></script>
+    
+<script language="JavaScript"> //disable browser backward
+	javascript:window.history.forward(1);
+</script>
  <script>
+    if ("<%=user.get_name()%>"=="na")
+    {
+    	window.location.href="/TicketSchedule/Zh/Login.jsp";
+   	}
+    
  	var newmessage = <%=user.numofnewMessage%>;
  	var content = '<%=request.getParameter("content")%>';
  	var msg = '<%=request.getParameter("msg")%>';
+ 	var uid = '<%=user.get_uid()%>';
  	function getTopics()
  	{
  		document.getElementById("user_nav").innerHTML = 	
- 			"<ul class=\"nav nav-pills nav-justified nav-stacked\" id=\"user_nav\">"
-  		 	+	 "<li class=\"active\"><a href=\"javascript:getTopics()\">我的行程</a></li>"
-	  		+	 "<li><a href=\"javascript:getMessages()\">"
-	  		+    	"<span class=\"badge pull-right\">"+newmessage
+ 			"<ul class='nav nav-pills nav-justified nav-stacked' id='user_nav'>"
+  		 	+	 "<li class='active'><a href='javascript:getTopics()'>我的行程</a></li>"
+	  		+	 "<li><a href='javascript:getMessages()'>"
+	  		+    	"<span class='badge pull-right'>"+newmessage
 	  		+		"</span>"
 	  		+    "我的消息</a></li>"
-	  		+	 "<li><a href=\"javascript:getHistory()\">历史记录</a></li>"
-			+	 "<li><a href=\"javascript:getProfile()\">个人信息</a></li>"
+	  		+	 "<li><a href='javascript:getHistory()'>历史记录</a></li>"
+			+	 "<li><a href='javascript:getProfile()'>个人信息</a></li>"
+			+	 "<li><a href='/TicketSchedule/servlet/Logout?uid='"+uid+"'>退出系统</a></li>"
 			+"</ul>";
 			
 		var content = getJson("/TicketSchedule/servlet/UserCenter?content=topics&language=Zh");
@@ -69,14 +80,15 @@
  	function getMessages()
  	{
  		document.getElementById("user_nav").innerHTML = 	
- 			"<ul class=\"nav nav-pills nav-justified nav-stacked\" id=\"user_nav\">"
-  		 	+	 "<li><a href=\"javascript:getTopics()\">我的行程</a></li>"
-	  		+	 "<li class=\"active\"><a href=\"javascript:getMessages()\">"
-	  		+    	"<span class=\"badge pull-right active\">"+"0"
+ 			"<ul class='nav nav-pills nav-justified nav-stacked' id='user_nav'>"
+  		 	+	 "<li><a href='javascript:getTopics()'>我的行程</a></li>"
+	  		+	 "<li class='active'><a href='javascript:getMessages()'>"
+	  		+    	"<span class='badge pull-right active'>"+"0"
 	  		+		"</span>"
 	  		+    "我的消息</a></li>"
-	  		+	 "<li><a href=\"javascript:getHistory()\">历史记录</a></li>"
-			+	 "<li><a href=\"javascript:getProfile()\">个人信息</a></li>"
+	  		+	 "<li><a href='javascript:getHistory()'>历史记录</a></li>"
+			+	 "<li><a href='javascript:getProfile()'>个人信息</a></li>"
+			+	 "<li><a href='/TicketSchedule/servlet/Logout?uid='"+uid+"'>退出系统</a></li>"
 			+"</ul>";
  		var content = getJson("/TicketSchedule/servlet/UserCenter?content=messages&language=Zh");		
 	    
@@ -87,28 +99,30 @@
  	function getHistory()
  	{
  		document.getElementById("user_nav").innerHTML = 	
- 			"<ul class=\"nav nav-pills nav-justified nav-stacked\" id=\"user_nav\">"
-  		 	+	 "<li><a href=\"javascript:getTopics()\">我的行程</a></li>"
-	  		+	 "<li><a href=\"javascript:getMessages()\">"
-	  		+    	"<span class=\"badge pull-right\">"+newmessage
+ 			"<ul class='nav nav-pills nav-justified nav-stacked' id='user_nav'>"
+  		 	+	 "<li><a href='javascript:getTopics()'>我的行程</a></li>"
+	  		+	 "<li><a href='javascript:getMessages()'>"
+	  		+    	"<span class='badge pull-right'>"+newmessage
 	  		+		"</span>"
 	  		+    "我的消息</a></li>"
-	  		+	 "<li class=\"active\"><a href=\"javascript:getHistory()\">历史记录</a></li>"
-			+	 "<li><a href=\"javascript:getProfile()\">个人信息</a></li>"
+	  		+	 "<li class='active'><a href='javascript:getHistory()'>历史记录</a></li>"
+			+	 "<li><a href='javascript:getProfile()'>个人信息</a></li>"
+			+	 "<li><a href='/TicketSchedule/servlet/Logout?uid='"+uid+"'>退出系统</a></li>"
 			+"</ul>";
  		alert("功能开发中...");
  	}
  	function getProfile()
  	{
  		document.getElementById("user_nav").innerHTML = 	
- 			"<ul class=\"nav nav-pills nav-justified nav-stacked\" id=\"user_nav\">"
-  		 	+	 "<li><a href=\"javascript:getTopics()\">我的行程</a></li>"
-	  		+	 "<li><a href=\"javascript:getMessages()\">"
-	  		+    	"<span class=\"badge pull-right\">"+newmessage
+ 			"<ul class='nav nav-pills nav-justified nav-stacked' id='user_nav'>"
+  		 	+	 "<li><a href='javascript:getTopics()'>我的行程</a></li>"
+	  		+	 "<li><a href='javascript:getMessages()'>"
+	  		+    	"<span class='badge pull-right'>"+newmessage
 	  		+		"</span>"
 	  		+    "我的消息</a></li>"
-	  		+	 "<li><a href=\"javascript:getHistory()\">历史记录</a></li>"
-			+	 "<li class=\"active\"><a href=\"javascript:getProfile()\">个人信息</a></li>"
+	  		+	 "<li><a href='javascript:getHistory()'>历史记录</a></li>"
+			+	 "<li class='active'><a href='javascript:getProfile()'>个人信息</a></li>"
+			+	 "<li><a href='/TicketSchedule/servlet/Logout?uid='"+uid+"'>退出系统</a></li>"
 			+"</ul>";
  		var content = getJson("/TicketSchedule/servlet/UserCenter?content=profile&language=Zh");		
 		document.getElementById("innerContent").innerHTML = content;

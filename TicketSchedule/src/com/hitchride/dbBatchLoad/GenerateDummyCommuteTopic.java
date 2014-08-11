@@ -24,7 +24,7 @@ public class GenerateDummyCommuteTopic {
 
 	double _topleftlat,_topleftlng;
 	double _bottomrightlat,_bottomrightlng;
-	int _numberofUser=1000;
+	int _numberofUser=270;
 	int _numberofRides=500;
 	int _rideLengthRange = 10000;
 	int _scaleFactor=2; //rideLengthRange/2 - rideLenthRange*2

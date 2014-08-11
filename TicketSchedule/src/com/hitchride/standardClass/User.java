@@ -150,26 +150,27 @@ public class User implements RideListener,UserInfo{
 	public String getUserWrapper()
 	{
 		StringBuilder result = new StringBuilder(300);
-		result.append("<div class=\"userpic\">");
-		result.append("<div class=\"username\">"+ this.get_name()+"</div>");
-		result.append("<img src=\""+this.get_head_portrait_path()+"\" alt=\"Profile Picture\"></img>");
-		result.append("<span class=\"vip\"></span>");
+		result.append("<div class='userpic'>");
+		result.append("<div class='username'>"+ this.get_name()+"</div>");
+		result.append("<img src='"+this.get_head_portrait_path()+"' alt='Profile Picture'></img>");
+		result.append("<span class='vip'></span>");
 		result.append("</div>");
-		result.append("<div id=\"user_info\">");
+		result.append("<div class='userinfo' id='user_name'>");
 	    //result.append("Welcome " + this.get_name());
 		result.append("欢迎" + this.get_name()+"!");
 		result.append("</div>");
 		if (this.get_uid()!=0)
 		{
-	        result.append("<div id=\"message_info\">");
+	        result.append("<div class='userinfo' id='message_info'>");
 	        //result.append("<a href=\"/TicketSchedule/UserCenter.jsp\">You have "+this.numofnewMessage + " new messages</a>");
-	        result.append("<a href=\"/TicketSchedule/Zh/UserCenter.jsp\">你有"+this.numofnewMessage + "条新消息。</a>");
+	        result.append("<a href='/TicketSchedule/Zh/UserCenter.jsp'>你有"+this.numofnewMessage + "条新消息。</a>");
 	        result.append("</div>");
 		}
 		else
 		{
-			 result.append("<div id=\"login\">");
-		     result.append("<a href=\"/TicketSchedule/Zh/Login.jsp\">Login please</a>");
+			 result.append("<div class='userinfo' id='login'>");
+		     //result.append("<a href=\"/TicketSchedule/Zh/Login.jsp\">Login please</a>");
+		     result.append("<a href=\"/TicketSchedule/Zh/Login.jsp\">请登录</a>");
 		     result.append("</div>");
 		}
         //result.append("<div id=\"user_level\">");
@@ -178,7 +179,7 @@ public class User implements RideListener,UserInfo{
         //result.append("</div>");
         if (this.get_uid()!=0)
         {
-	        result.append("<div id=\"logout\">");
+	        result.append("<div class='userinfo' id='logout'>");
 	        //result.append("<a href='/TicketSchedule/servlet/Logout?uid="+this.get_uid()+"'>Logout</a>");
 	        result.append("<a href='/TicketSchedule/servlet/Logout?uid="+this.get_uid()+"'>退出</a>");
 	        result.append("</div>");
