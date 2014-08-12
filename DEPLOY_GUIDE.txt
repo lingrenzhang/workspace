@@ -17,3 +17,6 @@ You may manually copy all file in /TicketSchedule/UserProfile to /TicketSchedule
 
 2014/08/09 Joey
 1. Copy the mail.jar to your Tomcat lib folder, DO NOT copy to the workspace's project lib folder, otherwise it doesn't work.
+
+2014/08/12 Joey
+1. http://blog.csdn.net/tpkey/article/details/18550039, Sean please try this solution for nginx request getServerName issue.

@@ -26,7 +26,6 @@ String err = request.getParameter("err")==null?"": request.getParameter("err");
 		this.err_msg = err_msg;
 		this.validate = function (){
 			var ele = $('#' + ele_id);
-			alert(ele.val());
 			if(ele.val() == ""){
 				return false;
 			}
@@ -97,6 +96,7 @@ var __avatar_x = 0;
 var __avatar_y = 0;
 var __avatar_w = 0;
 var __avatar_h = 0;
+var ready_for_upload = false;
 
 $(document).ready(function(){
 	$("#divBG").resizable().children().not("#divCuter").remove();
@@ -116,7 +116,15 @@ $(document).ready(function(){
 		left: gbOS.left + 63 });   
 });
 
+function _prepare_for_upload() {
+  ready_for_upload = true;
+}
+
 function _uploadImg() {
+    if(!ready_for_upload){
+        return;
+    }
+    ready_for_upload = false // workround for the Chrome v36 upload file issue, see www.redmine.org/issues/17151
     $.ajaxFileUpload({
         url: __avatar_handlerUrl,
         secureuri: false,
@@ -319,7 +327,7 @@ function _uploadAvatarCancel() {
 							</dt>
 							<dd>
 								<input type="file" id="avatarFile" name="avatarFile"
-									onchange="_uploadImg();">
+									onclick="_prepare_for_upload();" onchange="_uploadImg();">
 							</dd>
 
 						</dl>
