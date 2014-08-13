@@ -40,7 +40,7 @@ public class RideCenter extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		{
-		boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
+		    boolean islogin = (request.getSession().getAttribute("IsLogin")!=null)? true:false;
 			if (!islogin)
 			{
 				request.getSession().setAttribute("fromLocation", "/TicketSchedule/servlet/RideCenter");

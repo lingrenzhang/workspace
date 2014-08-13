@@ -228,22 +228,19 @@ function initCalandar(url,countentId)
 		document.getElementById("picker-Month").innerHTML=mon;
 		document.getElementById("picker-Year").innerHTML=displayDate.getFullYear();
 		displayCalender(displayDate.getFullYear(),displayDate.getMonth());
-	    
-		
-		});
+	});
 
-		$(".ui-state-default").click(function(){
-			this.className="ui-state-default ui-state-active";
-			selectDate.setMonth(displayDate.getMonth());
-			selectDate.setYear(displayDate.getYear());
-			selectDate.setDate(this.innerHtml);
-			document.getElementById(countentId).value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
-		});
+	$(".ui-state-default").click(function(){
+		this.className="ui-state-default ui-state-active";
+		selectDate.setMonth(displayDate.getMonth());
+		selectDate.setYear(displayDate.getYear());
+		selectDate.setDate(this.innerHtml);
+		document.getElementById(countentId).value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
+	});
 
-		$("#commute_day").click(function(){
-			$(this).className=$(this).className + " active";
-		});
-	
+	$("#commute_day").click(function(){
+		$(this).className=$(this).className + " active";
+	});
 }	
 	
 	

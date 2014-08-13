@@ -18,9 +18,7 @@
     MatchScore score = new MatchScore();
     if (!isOwnerMode) //Refresh matchScore
     {
-
     	MatchScore score1 = new MatchScore();
-       
     }
 %>
 

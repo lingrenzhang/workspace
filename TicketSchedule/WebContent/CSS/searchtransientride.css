@@ -135,13 +135,6 @@ margin-top: 20px;
 	top: 25px;
 }
 
-.ride_list .entry .inner_content h4
-{
-font-size: 13px;
-color: #666;
-font-weight: 500;
-}
-
 select 
 {
 	width: 80px;
@@ -191,18 +184,6 @@ select
 	-webkit-border-radius: 0 0 4px 4px;
 	-moz-border-radius: 0 0 4px 4px;
 	border-radius: 0 0 4px 4px;
-}
-
-.panel {
-position:absolute;
-margin-top: 320px;
-width:320px;
-background-color: #fff;
-border: 1px solid;
-border-color: #ABBDB9;
-border-radius: 4px;
--webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.05);
-box-shadow: 0 1px 1px rgba(0,0,0,0.05);
 }
 
 .panel-body {

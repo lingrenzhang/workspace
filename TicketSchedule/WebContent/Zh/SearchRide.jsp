@@ -39,6 +39,7 @@
 <link rel="shortcut icon" href="/TicketSchedule/favicon.ico" type="image/x-icon" /> 
 
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
+<script src="/TicketSchedule/JS/jquery.blockUI.js"></script>
 <script src="/TicketSchedule/JS/site.js"></script>
 <script src="/TicketSchedule/JS/calandar.js"></script>
 <script src="/TicketSchedule/bootstrap/js/bootstrap.js"></script>
@@ -49,10 +50,12 @@
  -->
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=Mto5Y3Pq2fgwkY2Kt9n60bWl"></script>
 <script type="text/javascript">
+
+
 $(document).ready(function(){
-	initCalandar();
+	initCalandar("ui-datepicker-div","search_date");
 	document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
-	document.getElementById("headline").innerHTML="Departing<em>Today</em><span> - "+ new Date().toDateString() +"</span>";
+	document.getElementById("headline").innerHTML="今日行程：<span> - "+ new Date().toDateString() +"</span>";
 
 	//Display Related
 	var torigLat, torigLng, tdestLat, tdestLng;
@@ -271,40 +274,49 @@ $(document).ready(function(){
 	   }
 	}
 	  
+ 
+	//var results = JSON.parse(getJson("/TicketSchedule/servlet/SearchTopics"));
+	$.blockUI({ message: '<h1><img src="../Picture/busy1.gif" /></h1>' });
+	var queryURL = "/TicketSchedule/servlet/SearchTopics";
+	$.get(queryURL,function(data,status){
+		$.unblockUI();
+		document.getElementById("searchResultMessage").innerHTML="<h2>检索完成</h2>";
+		var results=JSON.parse(data);
+    	listResults(results);
+    	$(".entry").hover(function(){
+    		torigLat = $(this)[0].getAttribute("origLat");
+    		torigLng = $(this)[0].getAttribute("origLng");
+    		tdestLat = $(this)[0].getAttribute("destLat");
+    		tdestLng = $(this)[0].getAttribute("destLng");
+    		var rank = $(this)[0].getAttribute("rank");
+    		
+    		
+    		var toLatlng = new BMap.Point(torigLng,torigLat);
+    		var tdLatlng = new BMap.Point(tdestLng,tdestLat);
 
-	var results = JSON.parse(getJson("/TicketSchedule/servlet/SearchTopics"));
-	listResults(results);
-	$(".entry").hover(function(){
-		torigLat = $(this)[0].getAttribute("origLat");
-		torigLng = $(this)[0].getAttribute("origLng");
-		tdestLat = $(this)[0].getAttribute("destLat");
-		tdestLng = $(this)[0].getAttribute("destLng");
-		var rank = $(this)[0].getAttribute("rank");
-		var toLatlng = new google.maps.LatLng(torigLat,torigLng);
-		var tdLatlng = new google.maps.LatLng(tdestLat,tdestLng);
+    		if (tomarker!=null)
+    		{
+    			map.removeOverlay(tomarker);
+    		}
+    		if (tdmarker!=null)
+    		{
+    			map.removeOverlay(tdmarker);
+    		}
+    		
+    		tomarker = new BMap.Marker(toLatlng,{icon: images});
+    		tdmarker = new BMap.Marker(tdLatlng,{icon: imagee});
+    		
+    	 	var bounds = new BMap.Bounds(basicbounds.getSouthWest(),basicbounds.getNorthEast());
+    	    bounds.extend(toLatlng);
+    		bounds.extend(tdLatlng);
+    		refitb(bounds);
+    		map.addOverlay(tomarker);
+    		map.addOverlay(tdmarker);
 
-		tomarker = new google.maps.Marker({
-		      map: map,
-		      icon: images,
-		      position: toLatlng
-		 });
-		tdmarker = new google.maps.Marker({
-            map: map,
-            icon: imagee,
-            position: tdLatlng
- 		});
-	 	var bounds = new google.maps.LatLngBounds();
-	    bounds.extend(toLatlng);
-		bounds.extend(tdLatlng);
-		bounds.union(basicbounds);
-		map.fitBounds(bounds);
-		loadSchedule(results[rank]);
-	},
-	function(){
-		tomarker.setMap(null);
-		tdmarker.setMap(null);
-		map.fitBounds(basicbounds);
+    		loadSchedule(results[rank]);
+    	});
 	});
+	document.getElementById("searchResultMessage").innerHTML="<h2>检索中</h2>";
 	
 });
 
@@ -325,6 +337,15 @@ window.onscroll = function(){
 <script>
 	function listResults(results){
 		var num = results.length;
+		if (num==0)
+		{
+			document.getElementById("searchResultMessage").innerHTML ="<h2><a href=''>本日尚无行程发布</a></h2>";
+		}
+		else
+		{
+			document.getElementById("searchResultMessage").innerHTML ="<h2><a href=''>没有找到你要的上下班拼车信息?	</a></h2>";
+		}
+		
 		var resultString="";
 		
 		for (var i=0;i<num;i++)
@@ -337,7 +358,7 @@ window.onscroll = function(){
 	function getTopic(topicInfo,rank)
 	{
 		var topicstring="";
-		topicstring = topicstring + "<a href=\"./RideCenter?topicId="+topicInfo._topicId +"&type=commute\">";
+		topicstring = topicstring + "<a href='/TicketSchedule/servlet/RideCenter?topicId="+topicInfo._topicId +"&type=commute'>";
 		topicstring = topicstring + "<div class=\"entry\" origLat="+topicInfo.ownerRide._rideInfo.origLoc._lat+" ";
 		topicstring = topicstring + "origLng=" +  topicInfo.ownerRide._rideInfo.origLoc._lon+" ";
 		topicstring = topicstring + "destLat=" +  topicInfo.ownerRide._rideInfo.destLoc._lat+" ";
@@ -347,26 +368,29 @@ window.onscroll = function(){
 		if (topicInfo.ownerRide._rideInfo.userType)
 		{
 			topicstring = topicstring + "<div class=\"passenger_box\"><p>";
-			topicstring = topicstring +"<span class=\"icon\"></span>";
-			topicstring = topicstring + topicInfo.owner._givenname+" is a <strong>passenger</strong></p></div>";
+			topicstring = topicstring +"<span><img src='/TicketSchedule/Picture/nocar.jpg'/><br><span>";
+			topicstring = topicstring + "<strong>不提供车<br>找"+topicInfo.ownerRide._rideInfo.totalSeats+"人同行</strong></p></div>";
 		}
 		else{
 			topicstring = topicstring + "<div class=\"price_box\"><div class=\"seats\">";
-			topicstring = topicstring +"<span class=\"count\">"+topicInfo.ownerRide._rideInfo.totalSeats+"</span></div>";
-			topicstring = topicstring +"<p><b>"+topicInfo.ownerRide._rideInfo.price + "</b> / seat</p></div>";
+			topicstring = topicstring +"<img src='/TicketSchedule/Picture/seats.jpg'/><span class='count'>"+topicInfo.ownerRide._rideInfo.totalSeats+"</span></div>";
+			topicstring = topicstring +"<p>每座<b>"+topicInfo.ownerRide._rideInfo.price + "</b>元</p></div>";
 		}
 		
-		topicstring = topicstring + "<div class=\"userpic\">";
-		topicstring = topicstring + "<div class=\"username\">"+topicInfo.owner._givenname+"</div>";
-		topicstring = topicstring + "<img src= \""+topicInfo.owner.get_head_portrait_path()+"\" alt=\"Profile Picture\"></img>";
-		topicstring = topicstring + "<span class=\"passenger\"></span></div>";
-		topicstring = topicstring + "<div class=\"inner_content\"><h3>";
-		topicstring = topicstring + "<span class=\"inner\">"+topicInfo.ownerRide._rideInfo.origLoc._addr;
-		topicstring = topicstring + "<span class=\"trip_type round_trip\"></span>";
-		topicstring = topicstring + topicInfo.ownerRide._rideInfo.destLoc._addr+"</span></h3><h4>";
-		topicstring = topicstring + "From: "+topicInfo.ownerRide._rideInfo.origLoc._formatedAddr;
-		topicstring = topicstring + "To: "+topicInfo.ownerRide._rideInfo.destLoc._formatedAddr;
-		topicstring = topicstring + "</h4></div></div></a>";
+		topicstring = topicstring + "<div class='userpic'>";
+		topicstring = topicstring + "<div class='username'>"+topicInfo.owner._givenname+"</div>";
+		topicstring = topicstring + "<img src= '/TicketSchedule/pics/"+topicInfo.owner._avatarID+"' alt='Profile Picture'></img>";
+		topicstring = topicstring + "<span class='passenger'></span></div>";
+		topicstring = topicstring + "<div class='inner_content'><h5>";
+		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_start.png\"/>"+"  出发地："+topicInfo.ownerRide._rideInfo.origLoc._addr+"<br>";
+		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"  目的地："+topicInfo.ownerRide._rideInfo.destLoc._addr+"<br>";
+		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/clock_small.jpg\"/>"+" 出发时间："+topicInfo.ownerRide._rideInfo.schedule.cftime[0];
+		if (topicInfo.ownerRide._rideInfo.schedule._isRoundTrip){
+			topicstring = topicstring + "&nbsp&nbsp&nbsp&nbsp返回时间："+topicInfo.ownerRide._rideInfo.schedule.cbtime[0];
+		}
+		
+		
+		topicstring = topicstring + "</h5></div></div></a>";
 		return topicstring;
 	};
 	
@@ -463,8 +487,8 @@ window.onscroll = function(){
 						<input id="duration" name="duration" value="<%=actRide==null?"":actRide.dura%>"></input>
 					</div>
 					<div class="text_input datetime">
-						<label class="datetime_icon" for="search_date"></label>
-						<input id="search_date" class="slim datepicker hasDatepicker" type="text" value="exp" name="date">
+						<label class="datetime_icon"></label>
+						<input id="search_date" class="slim datepicker hasDatepicker" type="text" value="exp" name="date" readonly="readonly" style="cursor:pointer">
 					</div>
 					
 					<button class="btn btn-primary" type="submit">查找</button>
@@ -506,17 +530,13 @@ window.onscroll = function(){
 			<div id="results">
 				<div class="ride_list">
 					<h3 id="headline" class="headline first"></h3>
-					</h3>
 					<div id="ride_content">
 					</div>
 					
 					<div id="action">
 						<div class="item postride">
-							<h2>
-								<a href="">没有找到你要的拼车信息?						
-								</a>
-							</h2>
-							<p>根据你的拼车信息创建讨论组，其他人可以检索并加入你!							
+							<div id="searchResultMessage"></div>				
+							<p>根据你的行程信息创建讨论组，其他人可以检索并加入你!							
 							</p>
 							<form method="post" action="/TicketSchedule/servlet/RideCenter">	
 								<button id="createTopic" type="submit" class="button post">创建讨论组</button>
@@ -532,7 +552,9 @@ window.onscroll = function(){
 					<div class="floatwrap" id="floatwrap">
 				 		<div id="map-canvas">
 						</div>
-						<div id="schedule-info">
+						<div class="panel" id="additional-info">
+							<div id="schedule-info">
+							</div>
 						</div>
 					</div>
 				</div>
@@ -544,62 +566,19 @@ window.onscroll = function(){
 <div id="footer">
 </div>
 
-
 <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"
  style="position: absolute; z-index:1;display:none;">
- 	<div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all">
-		<a class="ui-datepicker-prev ui-corner-all" onclick="prevMonth()" title="Prev">
-			<span class="ui-icon ui-icon-circle-triangle-w">Prev</span>
-		</a>
- 		<a class="ui-datepicker-next ui-corner-all" onclick="nextMonth()" title="Next">
- 			<span class="ui-icon ui-icon-circle-triangle-w">Next</span>
- 		</a>
- 		<div class="ui-datepicker-title">
- 			<span class="ui-datepicker-month" id="picker-Month"></span>
- 			&nbsp;
- 			<span class="ui-datepicker-year" id="picker-Year"></span>
- 		</div>
- 	</div>
- 	<table class="ui-datepicker-calendar" id="ui-datepicker-calendar">
- 		<thead>
- 			<tr>
- 				<th class="ui-datepicker-week-end">
- 					<span title="Sunday">Su</span>
- 				</th>
- 				<th>
- 					<span title="Monday">Mo</span>
- 				</th>
- 				<th>
- 					<span title="Tuesday">Tu</span>
- 				</th>
- 				<th>
- 					<span title="Wednesday">We</span>
- 				</th>
- 				<th>
- 					<span title="Thursday">Th</span>
- 				</th>
- 				<th>
- 					<span title="Friday">Fr</span>
- 				</th>
- 				<th class="ui-datepicker-week-end">
- 					<span title="Saturday">Sa</span>
- 				</th>
- 			</tr>
- 		</thead>
- 		<tbody>
- 		</tbody>
- 	</table>
-
- </div>
-	<div id="baidu_tongji" style="display: none">
-		<script type="text/javascript">
-			var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://"
+</div>
+	
+<div id="baidu_tongji" style="display: none">
+	<script type="text/javascript">
+		var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://"
 					: " http://");
-			document
-					.write(unescape("%3Cscript src='"
+		document.write(unescape("%3Cscript src='"
 							+ _bdhmProtocol
 							+ "hm.baidu.com/h.js%3F04d65d39238bfa4301b173d21ddcfeb7' type='text/javascript'%3E%3C/script%3E"));
-		</script>
-	</div>
+	</script>
+</div>
+
 </body>
 </html>

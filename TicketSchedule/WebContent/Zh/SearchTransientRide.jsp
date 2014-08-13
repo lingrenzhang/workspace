@@ -68,13 +68,11 @@ var images = new BMap.Icon
 ("/TicketSchedule/Picture/pin_start.png",
 new BMap.Size(71, 71),{
 anchor: new BMap.Size(8, 16),
-//imageOffset: new google.maps.Point(0, 0)
 });
 var imagee = new BMap.Icon
 ("/TicketSchedule/Picture/pin_end.png",
 new BMap.Size(71, 71),{
 anchor: new BMap.Size(8, 16),
-//imageOffset: new google.maps.Point(0, 0)
 });
 
 $(document).ready(function(){
@@ -173,11 +171,9 @@ $(document).ready(function(){
 		refitb(basicbounds);
 	}
 	
-   //orig = document.getElementById('search_s');
 	searchBoxO = new BMap.Autocomplete(
 			{"input" : "search_s",
 			 "location" : map});
-    //dest = document.getElementById('search_e');
 	searchBoxD = new BMap.Autocomplete(
 			{"input" : "search_e",
 			 "location" : map});
@@ -239,7 +235,6 @@ $(document).ready(function(){
 			 	refitb(basicbounds);
 			    calculateDistances();
 			}
-			
 		}
 		var local = new BMap.LocalSearch(map,{onSearchComplete : myFun});
 		local.search(myValue);
@@ -284,9 +279,9 @@ $(document).ready(function(){
 		   
 		var price = distance;
 		document.getElementById("price").setAttribute("value",price);
-	
 	}
-		
+	
+	
 	search();
 });
 
@@ -321,10 +316,10 @@ function search()
 	queryURL = queryURL+"&date="+date;
 	document.getElementById("headline").innerHTML="<span>出发日："+date+"</span>";
     //var results = JSON.parse(getJson(queryURL));
-    $.blockUI({ message: '<h1><img src="../Picture/busy1.gif" /> 搜索中...</h1>' });
+    $.blockUI({ message: '<h1><img src="../Picture/busy1.gif" /></h1>' });
     $.get(queryURL,function(data,status){
     	$.unblockUI();
-    	document.getElementById("searchResultMessage").innerHTML="检索结束";
+    	document.getElementById("searchResultMessage").innerHTML="<h2>检索结束</h2>";
     	results=JSON.parse(data);
     	listResults(results);
     	
@@ -418,13 +413,13 @@ function refitb(bounds)
 		topicstring = topicstring + "<div class=\"username\">"+trInfo.owner._givenname+"</div>";
 		topicstring = topicstring + "<img src= \"/TicketSchedule/pics/"+trInfo.owner._avatarID+"\" alt=\"Profile Picture\"></img>";
 		topicstring = topicstring + "<span class=\"passenger\"></span></div>";
-		topicstring = topicstring + "<div class=\"inner_content\"><h4>";
+		topicstring = topicstring + "<div class=\"inner_content\"><h5>";
 		//topicstring = topicstring + "<span class=\"inner\">"+"出发地："+trInfo.origLoc._addr+"<br>";
 		//topicstring = topicstring + "目的地："+trInfo.destLoc._addr+"</span></h4>";
 		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_start.png\"/>"+"  出发地："+trInfo.origLoc._addr+"<br>";
 		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"  目的地："+trInfo.destLoc._addr+"<br>";
 		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/clock_small.jpg\"/>"+" 出发时间："+trInfo.rideTime+"<br>";
-		topicstring = topicstring + "</div></div></a>";
+		topicstring = topicstring + "</h5></div></div></a>";
 		return topicstring;
 	};
 </script>
@@ -510,13 +505,6 @@ function onPublishValidate()
 	return true;
 }
 
-
-
-function initCurrentTime()
-{
-	var myDate= new Date();
-	document.getElementById();
-}
 
 function asDriver()
 {
