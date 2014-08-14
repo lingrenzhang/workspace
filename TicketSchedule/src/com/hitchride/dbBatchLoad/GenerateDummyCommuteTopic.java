@@ -18,6 +18,7 @@ import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Schedule;
 import com.hitchride.standardClass.Topic;
+import com.hitchride.util.GeoUtil;
 
 public class GenerateDummyCommuteTopic {
 	static double radtodistance = 6371*1000/180*Math.PI;

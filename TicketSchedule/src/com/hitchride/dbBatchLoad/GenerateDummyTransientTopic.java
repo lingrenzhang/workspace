@@ -12,6 +12,7 @@ import com.hitchride.access.TransientRideAccess;
 import com.hitchride.standardClass.GeoInfo;
 import com.hitchride.standardClass.TransientRide;
 import com.hitchride.standardClass.TransientTopic;
+import com.hitchride.util.GeoUtil;
 import com.hitchride.util.TimeFormatHelper;
 
 public class GenerateDummyTransientTopic {

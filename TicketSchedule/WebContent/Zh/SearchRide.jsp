@@ -129,8 +129,8 @@ $(document).ready(function(){
 	
 	if (origLat!="" && origLng!="" && origLat!="" &&origLng!="")
 	{
-		var oLatlng = new BMap.Point(origLat,origLng);
-		var dLatlng = new Bmap.Point(destLat,destLng);
+		var oLatlng = new BMap.Point(origLng,origLat);
+		var dLatlng = new BMap.Point(destLng,destLat);
 		
 		omarker = new BMap.Marker(oLatlng);
 		map.addOverlay(omarker);
@@ -145,7 +145,7 @@ $(document).ready(function(){
 		
 		basicbounds.extend(oLatlng);
 		basicbounds.extend(dLatlng);
-		map.fitBounds(basicbounds);
+		refitb(basicbounds);
 	}
 	
 	searchBoxO = new BMap.Autocomplete(

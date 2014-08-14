@@ -1,7 +1,10 @@
 package com.hitchride.calc;
-import com.hitchride.dbBatchLoad.GeoUtil;
+import com.hitchride.standardClass.GeoInfo;
+import com.hitchride.util.DistanceHelper;
+import com.hitchride.util.GeoUtil;
 import com.hitchride.access.CarpoolTbAccess;
 import com.hitchride.calc.rideInfoParameters;
+import com.hitchride.global.SystemConfig;
 
 import java.io.IOException;
 import java.sql.*;
@@ -9,6 +12,7 @@ import java.util.*;
 
 import org.json.*;
 
+@Deprecated
 public class ScoreCalculator {
 	private int timeToInt(Time time){
 		// TODO: what's the best way to add/subtract java.sql.time?
@@ -43,21 +47,21 @@ public class ScoreCalculator {
 		return R*c;
 	}
 	
-	private double getDistance(double lat1, double lon1, double lat2, double lon2, boolean drivingDist) {
-		if(drivingDist){
-			GeoUtil geoUtilObj = new GeoUtil(lat1, lon1, lat2, lon2);
-			try {
-				geoUtilObj.getDisDua();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return geoUtilObj.distance;
+	private double getDistance(GeoInfo origLoc, GeoInfo destLoc, boolean drivingDist) {
+		DistanceHelper distCompute = null;
+		if (drivingDist && SystemConfig.geoApiSet == 0 )
+		{
+			distCompute = new DistanceHelper(origLoc,destLoc,1);
 		}
-		return greatCircleDistance(lat1, lon1, lat2, lon2);
+		if (drivingDist && SystemConfig.geoApiSet == 1)
+		{
+			distCompute = new DistanceHelper(origLoc,destLoc,2);
+		}
+		if (!drivingDist || distCompute == null){
+			distCompute = new DistanceHelper(origLoc,destLoc,0);
+		}
+		distCompute.computeResult();
+		return distCompute.getDistance();
 	}
 	
 	private double destScoreByCoordinates(
@@ -67,26 +71,22 @@ public class ScoreCalculator {
 	) {
 		// same for single trip and round trips, but have to consider who is driver and who is passenger
 		double score = 0; // avoid negative scores
-		double origLat1 = myArgs.origLat;
-		double origLon1 = myArgs.origLon;
-		double destLat1 = myArgs.destLat;
-		double destLon1 = myArgs.destLon;
+		GeoInfo origLoc1 = new GeoInfo(myArgs.origLat,myArgs.origLon);
+		GeoInfo destLoc1 = new GeoInfo(myArgs.destLat,myArgs.destLon);
 		boolean userType1 = myArgs.userType;
 
-		double origLat2 = rsParamObj.origLat;
-		double origLon2 = rsParamObj.origLon;
-		double destLat2 = rsParamObj.destLat;
-		double destLon2 = rsParamObj.destLon;
+		GeoInfo origLoc2 = new GeoInfo(rsParamObj.origLat,rsParamObj.origLon);
+		GeoInfo destLoc2 = new GeoInfo(rsParamObj.destLat,rsParamObj.destLon);
 		boolean userType2 = rsParamObj.userType;
 
 		// dist1 = driving distance for user 1 by himself
 		// pickUpDist1 = total driving distance for user 1 if user 1 has to pick up user 2
-		double dist1 = getDistance(origLat1, origLon1, destLat1, destLon1, drivingDist);
-		double dist2 = getDistance(origLat2, origLon2, destLat2, destLon2, drivingDist);
-		double pickUpDist1 = getDistance(origLat1, origLon1, origLat2, origLon2, drivingDist)
-				   + dist2 + getDistance(destLat2, destLon2, destLat1, destLon1, drivingDist);
-		double pickUpDist2 = getDistance(origLat2, origLon2, origLat1, origLon1, drivingDist)
-				   + dist1 + getDistance(destLat1, destLon1, destLat2, destLon2, drivingDist);
+		double dist1 = getDistance(origLoc1,destLoc1, drivingDist);
+		double dist2 = getDistance(origLoc2, destLoc2, drivingDist);
+		double pickUpDist1 = getDistance(origLoc1, origLoc2, drivingDist)
+				   + dist2 + getDistance(destLoc2, destLoc1, drivingDist);
+		double pickUpDist2 = getDistance(origLoc2,origLoc1, drivingDist)
+				   + dist1 + getDistance(destLoc1, destLoc2,drivingDist);
 				
 		// define score to be 1-detour distance/smaller of the driver distance and passenger distance		
 		double minDist = Math.max(Math.min(dist1, dist2), 1);

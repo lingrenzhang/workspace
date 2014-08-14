@@ -14,6 +14,7 @@ import com.hitchride.standardClass.ParticipantRide;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Schedule;
 import com.hitchride.standardClass.User;
+import com.hitchride.util.DistanceHelper;
 import com.hitchride.util.JsonHelper;
 import com.hitchride.util.QueryStringParser;
 import com.hitchride.util.TimeFormatHelper;
@@ -230,22 +231,11 @@ public class ManageRide extends HttpServlet {
 			catch(Exception e)
 			{
 				System.out.println("Distance and duration not initilized on client site.");
-				System.out.println("Caculating from server");
-				//Caculate by coordinate. Not very stable.
-				//getURL = "http://maps.googleapis.com/maps/api/distancematrix/json?origins="
-				//	+origLat+","+origLon+"&destinations="+destLat+","+destLon+"&sensor=false"; 
-				String getURL = "http://maps.googleapis.com/maps/api/distancematrix/json?origins="
-							+myRide.origLoc._addr+"&destinations="+myRide.destLoc._addr+"&sensor=false";  
-				String jsonoutput=jsonquery(getURL);
-				JSONObject json;
-				try {
-					json = new JSONObject(jsonoutput);
-				    JSONArray elements = json.getJSONArray("rows").getJSONObject(0).getJSONArray("elements");
-				    dura = elements.getJSONObject(0).getJSONObject("duration").getInt("value");
-				    dist = elements.getJSONObject(0).getJSONObject("distance").getInt("value");
-				} catch (JSONException e1) {
-					e1.printStackTrace();
-				}
+				System.out.println("Caculating from server. user simple result now");
+				DistanceHelper distancehelper = new DistanceHelper(myRide.origLoc,myRide.destLoc,0);
+				distancehelper.computeResult();
+				dist = distancehelper.getDistance();
+				dura = distancehelper.getDuration();
 			}
 			myRide.dura=dura;
 			myRide.dist=dist;

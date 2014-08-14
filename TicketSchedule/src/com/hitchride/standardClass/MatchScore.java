@@ -1,11 +1,10 @@
 package com.hitchride.standardClass;
 
-import java.io.IOException;
 import java.util.Random;
 
-import org.json.JSONException;
+import com.hitchride.global.SystemConfig;
+import com.hitchride.util.DistanceHelper;
 
-import com.hitchride.dbBatchLoad.GeoUtil;
 
 public class MatchScore implements Matching {
 
@@ -36,35 +35,21 @@ public class MatchScore implements Matching {
 		//TODO: calculate scheduleingMatching and BargingMatching
 	}
 	
-	private double greatCircleDistance(double lat1, double lon1, double lat2, double lon2){
-		double dLat_rad = (lat2-lat1)/180*Math.PI; // convert deg to rad
-		double dLon_rad = (lon2-lon1)/180*Math.PI;
-		double lat1_rad = lat1/180*Math.PI;
-		double lat2_rad = lat2/180*Math.PI;
-		double a = Math.sin(dLat_rad/2) * Math.sin(dLat_rad/2) +
-		        Math.sin(dLon_rad/2) * Math.sin(dLon_rad/2) * Math.cos(lat1_rad) * Math.cos(lat2_rad); 
-		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-		//double R = 6371; // km
-		//double R = 6371/1.6; // mile
-		double R = 6371*1000; // meters
-		return R*c;
-	}
-	
-	private double getDistance(double lat1, double lon1, double lat2, double lon2, boolean drivingDist) {
-		if(drivingDist){
-			GeoUtil geoUtilObj = new GeoUtil(lat1, lon1, lat2, lon2);
-			try {
-				geoUtilObj.getDisDua();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return geoUtilObj.distance;
+	private double getDistance(GeoInfo origLoc,GeoInfo destLoc, boolean drivingDist) {
+		DistanceHelper distCompute = null;
+		if (drivingDist && SystemConfig.geoApiSet == 0 )
+		{
+			distCompute = new DistanceHelper(origLoc,destLoc,1);
 		}
-		return greatCircleDistance(lat1, lon1, lat2, lon2);
+		if (drivingDist && SystemConfig.geoApiSet == 1)
+		{
+			distCompute = new DistanceHelper(origLoc,destLoc,2);
+		}
+		if (!drivingDist || distCompute == null){
+			distCompute = new DistanceHelper(origLoc,destLoc,0);
+		}
+		distCompute.computeResult();
+		return distCompute.getDistance();
 	}
 	
 	private double destScoreByCoordinates(
@@ -74,28 +59,30 @@ public class MatchScore implements Matching {
 	) 
 	{
 		// same for single trip and round trips, but have to consider who is driver and who is passenger
-		double origLat1 = ownerRide._rideInfo.origLoc.get_lat();
-		double origLon1 = ownerRide._rideInfo.origLoc.get_lon();
-		double destLat1 = ownerRide._rideInfo.destLoc.get_lat();
-		double destLon1 = ownerRide._rideInfo.destLoc.get_lon();
+		GeoInfo origLoc1 = ownerRide._rideInfo.origLoc;
+		GeoInfo destLoc1 = ownerRide._rideInfo.destLoc;
 		//boolean userType1 = myArgs.userType;
 
-		double origLat2 = partRide._rideInfo.origLoc.get_lat();
-		double origLon2 = partRide._rideInfo.origLoc.get_lon();
-		double destLat2 = partRide._rideInfo.destLoc.get_lat();
-		double destLon2 = partRide._rideInfo.destLoc.get_lon();
+		GeoInfo origLoc2 = partRide._rideInfo.origLoc;
+		GeoInfo destLoc2 = partRide._rideInfo.destLoc;
 		//boolean userType2 = rsParamObj.userType;
 
 		// dist1 = driving distance for user 1 by himself
 		// detourDist1 = total detour distance if user 1 is picking up user 2
 		// detourDist1 == detourDist2 if drivingDist==false
-		double dist1 = getDistance(origLat1, origLon1, destLat1, destLon1, drivingDist);
-		double dist2 = getDistance(origLat2, origLon2, destLat2, destLon2, drivingDist);
-		double detourDist1 = getDistance(origLat1, origLon1, origLat2, origLon2, drivingDist)
-				   + getDistance(destLat2, destLon2, destLat1, destLon1, drivingDist);
-		double detourDist2 = getDistance(origLat2, origLon2, origLat1, origLon1, drivingDist)
-				   + getDistance(destLat1, destLon1, destLat2, destLon2, drivingDist);
-				
+		double dist1 = getDistance(origLoc1,destLoc1, drivingDist);
+		double dist2 = getDistance(origLoc2, destLoc2, drivingDist);
+		double detourDist1 = getDistance(origLoc1, origLoc2, drivingDist)
+				   + getDistance(destLoc2, destLoc1, drivingDist);
+		double detourDist2 = getDistance(origLoc2,origLoc1, drivingDist)
+				   + getDistance(destLoc1, destLoc2,drivingDist);
+
+		// dist1 = driving distance for user 1 by himself
+		// detourDist1 = total detour distance if user 1 is picking up user 2
+		// detourDist1 == detourDist2 if drivingDist==false
+		
+		
+		
 		// define score to be 1-detour distance/smaller of the driver distance and passenger distance		
 		double minDist = Math.max(Math.min(dist1, dist2), 1); // avoid divide-by-zeros 
 		double score = Math.max(0, 1-Math.min(detourDist1, detourDist2)/minDist);

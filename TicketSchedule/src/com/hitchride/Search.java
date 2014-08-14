@@ -8,6 +8,7 @@ import java.net.URL;
 import java.sql.Date;
 
 
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +24,7 @@ import com.hitchride.global.Environment;
 import com.hitchride.standardClass.GeoInfo;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Schedule;
+import com.hitchride.util.DistanceHelper;
 import com.hitchride.util.QueryStringParser;
 import com.hitchride.util.TimeFormatHelper;
 /**
@@ -151,23 +153,11 @@ public class Search extends HttpServlet {
 				catch(Exception e)
 				{
 					System.out.println("Distance and duration not initilized on client site.");
-					System.out.println("Caculating from server");
-					//Caculate by coordinate. Not very stable.
-					//getURL = "http://maps.googleapis.com/maps/api/distancematrix/json?origins="
-					//	+origLat+","+origLon+"&destinations="+destLat+","+destLon+"&sensor=false"; 
-					String getURL = "http://maps.googleapis.com/maps/api/distancematrix/json?origins="
-								+actRide.origLoc._addr+"&destinations="+actRide.destLoc._addr+"&sensor=false";  
-					String jsonoutput=jsonquery(getURL);
-					JSONObject json;
-					try {
-						json = new JSONObject(jsonoutput);
-					    JSONArray elements = json.getJSONArray("rows").getJSONObject(0).getJSONArray("elements");
-					    dura = elements.getJSONObject(0).getJSONObject("duration").getInt("value");
-					    dist = elements.getJSONObject(0).getJSONObject("distance").getInt("value");
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					System.out.println("Caculating from server. user simple result now");
+					DistanceHelper distancehelper = new DistanceHelper(actRide.origLoc,actRide.destLoc,0);
+					distancehelper.computeResult();
+					dist = distancehelper.getDistance();
+					dura = distancehelper.getDuration();
 				}
 				actRide.dura=dura;
 				actRide.dist=dist;
@@ -187,7 +177,7 @@ public class Search extends HttpServlet {
 			request.setAttribute("orig", actRide.origLoc.get_formatedAddr());
 			request.setAttribute("dest", actRide.destLoc.get_formatedAddr());
 			
-			RequestDispatcher rd = request.getRequestDispatcher("../SearchRide.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/TicketSchedule/Zh/SearchRide.jsp");
 			rd.forward(request, response);
 		}	
 	}
@@ -208,7 +198,7 @@ public class Search extends HttpServlet {
 			request.setAttribute("orig", myRide.origLoc._addr);
 			request.setAttribute("dest", myRide.destLoc._addr);
 			
-			RequestDispatcher rd = request.getRequestDispatcher("../SearchRide.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/TicketSchedule/Zh/SearchRide.jsp");
 			rd.forward(request, response);
 	}
 	
