@@ -89,7 +89,7 @@ function asTransient()
 {
 	document.getElementById("asTransient").setAttribute("class", "active");
 	document.getElementById("asCommute").setAttribute("class", "");
-	document.getElementById("commuteType").setAttribute("value", "Transient");
+	document.getElementById("commuteType").setAttribute("value", "transient");
 	$("#there_repeating").fadeOut(1000,function(){
 		$("#multipostwrapper").fadeIn(1000);
 		});
@@ -101,7 +101,7 @@ function asCommute()
 	{
 		document.getElementById("asCommute").setAttribute("class", "active");
 		document.getElementById("asTransient").setAttribute("class", "");
-		document.getElementById("commuteType").setAttribute("value", "Commute");
+		document.getElementById("commuteType").setAttribute("value", "commute");
 		$("#multipostwrapper").fadeOut(1000,function(){
 				$("#there_repeating").fadeIn(1000);
 		});

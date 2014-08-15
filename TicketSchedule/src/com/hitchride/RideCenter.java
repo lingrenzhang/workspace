@@ -49,6 +49,15 @@ public class RideCenter extends HttpServlet {
 				response.sendRedirect("/TicketSchedule/Login.jsp");
 			}
 			else{
+				
+				RideInfo ride = (RideInfo) request.getSession().getAttribute("actRide");
+				if (ride==null)
+				{
+					response.sendRedirect("/TicketSchedule/Zh/ManageRide.jsp");
+				}
+				
+				
+				
 				QueryStringParser qsPar = new QueryStringParser(request.getQueryString());
 				int topicId = qsPar.getInt("topicId");
 			    Topic topic = AllTopics.getTopics().get_topic(topicId);
@@ -79,7 +88,6 @@ public class RideCenter extends HttpServlet {
 				    }
 				    if (!alreadyPart)
 				    {
-				    	RideInfo ride = (RideInfo) request.getSession().getAttribute("actRide");
 				    	ParticipantRide pride = new ParticipantRide(ride);
 				    	pride.set_status(0);
 					    request.setAttribute("participantRide", pride);
@@ -91,7 +99,7 @@ public class RideCenter extends HttpServlet {
 			    	
 			    }
 			    
-				RequestDispatcher rd = request.getRequestDispatcher("/RideCenter.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/Zh/RideCenter.jsp");
 				rd.forward(request, response);
 			}
 		}

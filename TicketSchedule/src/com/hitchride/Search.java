@@ -177,7 +177,7 @@ public class Search extends HttpServlet {
 			request.setAttribute("orig", actRide.origLoc.get_formatedAddr());
 			request.setAttribute("dest", actRide.destLoc.get_formatedAddr());
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/TicketSchedule/Zh/SearchRide.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/Zh/SearchRide.jsp");
 			rd.forward(request, response);
 		}	
 	}

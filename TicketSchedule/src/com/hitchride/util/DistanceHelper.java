@@ -85,7 +85,8 @@ public class DistanceHelper {
 	    	case 1:
 	    		//TODO : computeDisDuabyBaidu();
 	    		System.out.println("Not implement computeDisDuabyBaidu()");
-	    		//break;
+	    		greatCircleDistance();
+	    		break;
 	    	case 2:
 				try {
 					computeDisDuabyGoogle();

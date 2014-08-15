@@ -265,18 +265,9 @@ $(document).ready(function(){
 		//document.getElementById("price").setAttribute("value",price);
 	}
 		
-	function callback(response, status) {
-	  if (status != google.maps.DistanceMatrixStatus.OK) {
-	    alert('Error was: ' + status);
-	   } else {
-		    document.getElementById("distance").value =response.rows[0].elements[0].distance.value;
-		    document.getElementById("duration").value =response.rows[0].elements[0].duration.value;
-	   }
-	}
-	  
  
 	//var results = JSON.parse(getJson("/TicketSchedule/servlet/SearchTopics"));
-	$.blockUI({ message: '<h1><img src="../Picture/busy1.gif" /></h1>' });
+	$.blockUI({ message: '<h1><img src="/TicketSchedule/Picture/busy1.gif" /></h1>' });
 	var queryURL = "/TicketSchedule/servlet/SearchTopics";
 	$.get(queryURL,function(data,status){
 		$.unblockUI();
@@ -469,13 +460,13 @@ window.onscroll = function(){
 					<div class="text_input">
 						<label class="pin start" for="search_s"></label>
 						<input id="search_s" class="input_text" type="text" 
-							placeholder="Starting from..." name="s" alt="search_start" 
+							placeholder=<%=(actRide ==null) ? "Starting from..." : actRide.origLoc._addr%> name="s" alt="search_start" 
 							autocomplete="off" value=<%=(actRide ==null) ? "" : actRide.origLoc._addr%>/>
 					</div>
 					<div class="text_input">
 						<label class="pin end" for="search_e"></label>
 						<input id="search_e" class="input_text" type="text" 
-						placeholder="Going to..." name="e" alt="search_end" 
+						placeholder=<%=(actRide ==null) ? "Going to..." : actRide.destLoc._addr%> name="e" alt="search_end" 
 						autocomplete="off" value=<%=(actRide ==null) ? "" : actRide.destLoc._addr%>/>
 					</div>
 					<div class="geo_internal" style="display:none">

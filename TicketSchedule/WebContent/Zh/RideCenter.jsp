@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <%@ page import="com.hitchride.standardClass.Topic"%>
@@ -166,8 +166,8 @@
 
 </script>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>RideCenter</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>行程讨论</title>
 
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/ridecenter.css" type="text/css" rel="stylesheet">
@@ -190,7 +190,7 @@
 		    <%if (!isOwnerMode) 
 	    	{%>
 				<div class="user_info" id="from">
-				  <a href = "/TicketSchedule/UserCenter.jsp">
+				  <a href = "/TicketSchedule/Zh/UserCenter.jsp">
 					<div class="userpic">
 							<div class="username"><%=user.get_name() %></div>
 							<img src=<%=user.get_head_portrait_path() %> alt="Profile Picture"></img>
@@ -266,7 +266,7 @@
 		</div>
 
 		<div class="discussion_timeline_wrapper">
-		    <%= isOwnerMode? "<a href=\"/TicketSchedule/UserCenter.jsp\">" : " "  %>
+		    <%= isOwnerMode? "<a href=\"/TicketSchedule/Zh/UserCenter.jsp\">" : " "  %>
 	        <div class="entry">
 				<div class="userpic">
 					<div class="username"><%=topicInfo.owner.get_name()%></div>
@@ -364,7 +364,7 @@
 	    	    </table>
 	    	</div>
 	    	<div class="bargain_wrapper">
-	    		BarginInfo
+	    		BarginInfo Test
 	    	</div>
 	    </div>
 

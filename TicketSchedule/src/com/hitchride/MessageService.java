@@ -52,7 +52,7 @@ public class MessageService extends HttpServlet {
 			{
 				int fromId = Integer.parseInt(request.getParameter("fromId"));
 				int toId = Integer.parseInt(request.getParameter("toId"));
-				String messageContent = request.getParameter("comment");
+				String messageContent = new String(request.getParameter("comment").getBytes("iso-8859-1"), "UTF-8");
 				User from = (User) AllUsers.getUsers().getUser(fromId);
 				User to = (User) AllUsers.getUsers().getUser(toId);
 				Message message = new Message(messageContent,from,to,topic);

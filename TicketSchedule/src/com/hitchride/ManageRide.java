@@ -72,8 +72,9 @@ public class ManageRide extends HttpServlet {
 		{
 			Double origLat = Double.parseDouble(request.getParameter("origLat"));
 			Double origLon = Double.parseDouble(request.getParameter("origLng"));
-		    String origAddr = request.getParameter("s");
-		    origAddr = origAddr.replaceAll(" ","" );
+		    String origAddr = new String(request.getParameter("s").getBytes(
+					"iso-8859-1"), "UTF-8");
+		    //origAddr = origAddr.replaceAll(" ","" );
 		    orig = new GeoInfo(origAddr,origLat,origLon);
 			request.setAttribute("orig", origAddr);
 		}
@@ -111,8 +112,9 @@ public class ManageRide extends HttpServlet {
 		{
 			Double destLat = Double.parseDouble(request.getParameter("destLat"));
 			Double destLon = Double.parseDouble(request.getParameter("destLng"));
-		    String destAddr = request.getParameter("e");
-		    destAddr = destAddr.replaceAll(" ","" );
+		    String destAddr = new String(request.getParameter("e").getBytes(
+					"iso-8859-1"), "UTF-8");
+		    //destAddr = destAddr.replaceAll(" ","" );
 		    request.setAttribute("dest", destAddr);
 		    dest = new GeoInfo(destAddr,destLat,destLon);
 		}

@@ -57,7 +57,7 @@ public class UserCenter extends HttpServlet {
 				}
 				else
 				{	
-				request.getSession().setAttribute("fromLocation", "/TicketSchedule/UserCenter.jsp");
+				request.getSession().setAttribute("fromLocation", "/TicketSchedule/Zh/UserCenter.jsp");
 				request.getSession().setAttribute("queryString", request.getQueryString());
 				request.getSession().setMaxInactiveInterval(60*120);
 				response.sendRedirect("/TicketSchedule/Login.jsp");
@@ -146,7 +146,7 @@ public class UserCenter extends HttpServlet {
 							value.append("<div class=\"ride_wrapper\">");	
 							value.append(parRide._rideInfo.getGeoHTML());
 							value.append(parRide._rideInfo.getScheduleHTML());
-							value.append("</a><a href='/TicketSchedule/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>Manage</button></div></a>");
+							value.append("</a><a href='/TicketSchedule/Zh/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>Manage</button></div></a>");
 							value.append("</div></a>");
 							Topic topic= AllTopics.getTopics().get_topic(parRide.get_assoOwnerRideId());
 						}
@@ -186,8 +186,8 @@ public class UserCenter extends HttpServlet {
 							value.append("<a href=\"/TicketSchedule/servlet/Search?rid="+parRide._pid+"\">");
 							value.append(parRide._rideInfo.getGeoHTML());
 							value.append(parRide._rideInfo.getScheduleHTML());
-							value.append("</a><a href='/TicketSchedule/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>Manage</button></div></a>");
-							value.append("<a href='/TicketSchedule/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>Delete</button></div></a>");
+							value.append("</a><a href='/TicketSchedule/Zh/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>Manage</button></div></a>");
+							value.append("<a href='/TicketSchedule/Zh/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>Delete</button></div></a>");
 							value.append("</div>");
 						}
 					}
