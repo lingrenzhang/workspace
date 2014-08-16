@@ -89,8 +89,19 @@
 					</label> <label> 到达地点 <input id="dest_input" type="text"
 						placeholder="地址" />
 					</label>
-					<div class="text-center">
-						<input type="text" id="date_input" />
+					<label> 日期时间 <br>
+					<input type="text" id="date_input_display" data-reveal-id="selDTModal" />
+							</label>
+					<div id="selDTModal" class="reveal-modal" data-reveal>
+						<h2>选择日期时间</h2>
+						<hr>
+						<div class="text-center">
+							<input type="text" id="date_input" readonly="true" />
+						</div>
+						<hr>
+						<a href="javascript:$('#date_input_display')[0].value=$('#date_input')[0].value;$('a.close-reveal-modal').trigger('click')" class="button small round success">确定</a> <a
+							href="javascript:$('#date_input')[0].value=$('#date_input_display')[0].value;$('a.close-reveal-modal').trigger('click')"
+							class="button small round">取消</a> <a class="close-reveal-modal">&#215;</a>
 					</div>
 					<label> 自驾 <input type="checkbox" id="userType_input"
 						onchange="userTypeChanged()">
@@ -160,7 +171,8 @@
 				console.log(ct);
 			}
 		});
-
+		$('#date_input_display')[0].value=ct.dateFormat('m/d/Y H:i');
+		$('#date_input_display')[0].setAttribute('readonly',true);
 		var map = new BMap.Map("map_container");
 		map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
 
@@ -312,6 +324,7 @@
 						alert("error");
 					});
 		}
+		
 	</script>
 	<div id="baidu_tongji" style="display: none">
 		<script type="text/javascript">
