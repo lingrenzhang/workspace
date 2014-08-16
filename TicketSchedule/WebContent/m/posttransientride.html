@@ -112,7 +112,7 @@
 					</label> <label>提供座位数
 						<h3>
 							<a
-								href="javascript:$('#seats_input')[0].innerHTML=parseInt($('#seats_input')[0].innerHTML)-1" style="padding-left: 5px;padding-right: 5px"><i
+								href="javascript:$('#seats_input')[0].innerHTML=parseInt($('#seats_input')[0].innerHTML)>1?parseInt($('#seats_input')[0].innerHTML)-1:1" style="padding-left: 5px;padding-right: 5px"><i
 								class="fi-minus"></i></a> <span id="seats_input"  style="padding-left: 5px;padding-right: 5px">3</span> <a
 								href="javascript:$('#seats_input')[0].innerHTML=parseInt($('#seats_input')[0].innerHTML)+1"  style="padding-left: 5px;padding-right: 5px"><i
 								class="fi-plus"></i></a>
