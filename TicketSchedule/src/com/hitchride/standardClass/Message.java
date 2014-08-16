@@ -21,6 +21,8 @@ public class Message implements MessageInfo,PersistentStorage{
 	public OwnerRideInfo _ownerRide;
 	public boolean _isSystemMessage;
 	
+	private int topicType; //0 for commute 1 for transient.
+	
 	
 	public Message()
 	{
@@ -57,9 +59,10 @@ public class Message implements MessageInfo,PersistentStorage{
 	}
 	
 	
-	//System generated message
+	//System generated message for commute
 	public Message(int fstatus,int astatus, UserInfo from, UserInfo to,Topic topic)
 	{
+		this.topicType = 0;
 		this._messageId = GlobalCount.getGCount().messageCount+1;
 		GlobalCount.getGCount().messageCount = this._messageId;
 		this._from = from;
@@ -117,6 +120,37 @@ public class Message implements MessageInfo,PersistentStorage{
 	}
 	
 
+	//System generated message for transient ride
+	public Message(UserInfo from, UserInfo to, int actiontype, TransientRide tride, String info)
+	{
+		this.topicType=1;
+		this._messageId = GlobalCount.getGCount().messageCount+1;
+		GlobalCount.getGCount().messageCount = this._messageId;
+		this._from = from;
+		this._to = to;
+	  
+		switch (actiontype)
+		{
+			case 0: //加入行程
+		      this._messageContent = "用户" + from.get_name() + "加入了您从"+tride.origLoc.get_formatedAddr() +"到"+tride.destLoc.get_formatedAddr()+"的行程";
+		      break;
+			case 1: //退出行程
+			  this._messageContent = "用户" + from.get_name() + "退出了您从"+tride.origLoc.get_formatedAddr() +"到"+tride.destLoc.get_formatedAddr()+"的行程";
+			  break;
+			case 2: //添加中间点
+			  this._messageContent = "用户" + from.get_name() + "在您从"+tride.origLoc.get_formatedAddr() +"到"+tride.destLoc.get_formatedAddr()+"的行程中添加了途经点:"+ info;
+			  break;
+			case 3: //删除中间点
+			  this._messageContent = "用户" + from.get_name() + "在您从"+tride.origLoc.get_formatedAddr() +"到"+tride.destLoc.get_formatedAddr()+"的行程中删除了途经点:" +info;
+			  break;
+		}
+		
+		Date date = new Date();
+		this._generateDate = date;
+		this._isSystemMessage= true;
+	}
+	
+	
 	public String getHTMLMessageforJS()
 	{
 		StringBuilder result = new StringBuilder();
@@ -224,8 +258,11 @@ public class Message implements MessageInfo,PersistentStorage{
     public void sendMessage()
     {
 		DummyData.getDummyEnv().insert_message(this); //Should be message unique ID.
-		Topic topic = AllTopics.getTopics().get_topic(this._topicID);
-		topic.messages.add(this);
+		if (this.topicType==0)
+		{
+			Topic topic = AllTopics.getTopics().get_topic(this._topicID);
+			topic.messages.add(this);
+		}
 		User to =  (User) _to;
 		to.message.add(this);
 		to.numofnewMessage++;

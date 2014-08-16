@@ -391,10 +391,10 @@ function refitb(bounds)
 	{
 		var topicstring="";
 		topicstring = topicstring + "<a href=\"./TransientTopic.jsp?trId="+trInfo.transientRideId +"\">";
-		topicstring = topicstring + "<div class=\"entry\" origLat="+trInfo.origLoc._lat+" ";
-		topicstring = topicstring + "origLng=" +  trInfo.origLoc._lon+" ";
-		topicstring = topicstring + "destLat=" +  trInfo.destLoc._lat+" ";
-		topicstring = topicstring + "destLng=" +  trInfo.destLoc._lon+" ";
+		topicstring = topicstring + "<div class=\"entry\" origLat="+trInfo.origLoc_lat+" ";
+		topicstring = topicstring + "origLng=" +  trInfo.origLoc_lon+" ";
+		topicstring = topicstring + "destLat=" +  trInfo.destLoc_lat+" ";
+		topicstring = topicstring + "destLng=" +  trInfo.destLoc_lon+" ";
 		topicstring = topicstring + "rank=" +  rank +">";
 		
 		if (trInfo.userType)
@@ -410,14 +410,14 @@ function refitb(bounds)
 		}
 		
 		topicstring = topicstring + "<div class=\"userpic\">";
-		topicstring = topicstring + "<div class=\"username\">"+trInfo.owner._givenname+"</div>";
-		topicstring = topicstring + "<img src= \"/TicketSchedule/pics/"+trInfo.owner._avatarID+"\" alt=\"Profile Picture\"></img>";
+		topicstring = topicstring + "<div class=\"username\">"+trInfo.owner_givenname+"</div>";
+		topicstring = topicstring + "<img src= \"/TicketSchedule/pics/"+trInfo.owner_avatarID+"\" alt=\"Profile Picture\"></img>";
 		topicstring = topicstring + "<span class=\"passenger\"></span></div>";
 		topicstring = topicstring + "<div class=\"inner_content\"><h5>";
 		//topicstring = topicstring + "<span class=\"inner\">"+"出发地："+trInfo.origLoc._addr+"<br>";
 		//topicstring = topicstring + "目的地："+trInfo.destLoc._addr+"</span></h4>";
-		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_start.png\"/>"+"  出发地："+trInfo.origLoc._addr+"<br>";
-		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"  目的地："+trInfo.destLoc._addr+"<br>";
+		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_start.png\"/>"+"  出发地："+trInfo.origLoc_addr+"<br>";
+		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"  目的地："+trInfo.destLoc_addr+"<br>";
 		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/clock_small.jpg\"/>"+" 出发时间："+trInfo.rideTime+"<br>";
 		topicstring = topicstring + "</h5></div></div></a>";
 		return topicstring;

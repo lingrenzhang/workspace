@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -28,6 +29,9 @@ import com.hitchride.standardClass.OwnerRideInfo;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Schedule;
 import com.hitchride.standardClass.Topic;
+import com.hitchride.standardClass.TransientRide;
+import com.hitchride.util.GsonWrapperForTopic;
+import com.hitchride.util.GsonWrapperForTransientRide;
 import com.hitchride.util.JsonHelper;
 import com.hitchride.util.QueryStringParser;
 import com.hitchride.util.TimeFormatHelper;
@@ -60,8 +64,15 @@ public class SearchTopics extends HttpServlet {
 				System.out.println("ActRide to search not initialized, showing all ride in DB.");
 				
 				List<Topic> resultList = AllTopics.getTopics().getTopicRideAsList();
+				
+				List<GsonWrapperForTopic> rlist = new ArrayList<GsonWrapperForTopic>();
+				for(Iterator<Topic> itr = resultList.iterator();itr.hasNext();)
+				{
+					GsonWrapperForTopic gtr = new GsonWrapperForTopic(itr.next());
+					rlist.add(gtr);
+				}
 				JsonHelper jsonhelp = new JsonHelper();
-				String topicsJson =jsonhelp.toJson(resultList);
+				String topicsJson = jsonhelp.toJson(rlist);
 				//response.getWriter().write("{}");
 				response.setContentType("text/html; charset=UTF-8");
 				response.getWriter().write(topicsJson);
@@ -74,8 +85,14 @@ public class SearchTopics extends HttpServlet {
 				NewScoreCalculator sc = new NewScoreCalculator();
 				resultList=sc.filterByCoordinates(actRide, 20);
 				
+				List<GsonWrapperForTopic> rlist = new ArrayList<GsonWrapperForTopic>();
+				for(Iterator<Topic> itr = resultList.iterator();itr.hasNext();)
+				{
+					GsonWrapperForTopic gtr = new GsonWrapperForTopic(itr.next());
+					rlist.add(gtr);
+				}
 				JsonHelper jsonhelp = new JsonHelper();
-				String topicsJson = jsonhelp.toJson(resultList);
+				String topicsJson = jsonhelp.toJson(rlist);
 				//System.out.println(topicsJson);
 				response.setContentType("text/html; charset=UTF-8");
 				response.getWriter().write(topicsJson);

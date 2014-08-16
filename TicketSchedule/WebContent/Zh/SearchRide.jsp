@@ -350,34 +350,34 @@ window.onscroll = function(){
 	{
 		var topicstring="";
 		topicstring = topicstring + "<a href='/TicketSchedule/servlet/RideCenter?topicId="+topicInfo._topicId +"&type=commute'>";
-		topicstring = topicstring + "<div class=\"entry\" origLat="+topicInfo.ownerRide._rideInfo.origLoc._lat+" ";
-		topicstring = topicstring + "origLng=" +  topicInfo.ownerRide._rideInfo.origLoc._lon+" ";
-		topicstring = topicstring + "destLat=" +  topicInfo.ownerRide._rideInfo.destLoc._lat+" ";
-		topicstring = topicstring + "destLng=" +  topicInfo.ownerRide._rideInfo.destLoc._lon+" ";
+		topicstring = topicstring + "<div class=\"entry\" origLat="+topicInfo.origLoc_lat+" ";
+		topicstring = topicstring + "origLng=" +  topicInfo.origLoc_lon+" ";
+		topicstring = topicstring + "destLat=" +  topicInfo.destLoc_lat+" ";
+		topicstring = topicstring + "destLng=" +  topicInfo.destLoc_lon+" ";
 		topicstring = topicstring + "rank=" +  rank +">";
 		
-		if (topicInfo.ownerRide._rideInfo.userType)
+		if (topicInfo.rideInfo_userType)
 		{
 			topicstring = topicstring + "<div class=\"passenger_box\"><p>";
 			topicstring = topicstring +"<span><img src='/TicketSchedule/Picture/nocar.jpg'/><br><span>";
-			topicstring = topicstring + "<strong>不提供车<br>找"+topicInfo.ownerRide._rideInfo.totalSeats+"人同行</strong></p></div>";
+			topicstring = topicstring + "<strong>不提供车<br>找"+topicInfo.rideInfo_totalSeats+"人同行</strong></p></div>";
 		}
 		else{
 			topicstring = topicstring + "<div class=\"price_box\"><div class=\"seats\">";
-			topicstring = topicstring +"<img src='/TicketSchedule/Picture/seats.jpg'/><span class='count'>"+topicInfo.ownerRide._rideInfo.totalSeats+"</span></div>";
-			topicstring = topicstring +"<p>每座<b>"+topicInfo.ownerRide._rideInfo.price + "</b>元</p></div>";
+			topicstring = topicstring +"<img src='/TicketSchedule/Picture/seats.jpg'/><span class='count'>"+topicInfo.rideInfo_totalSeats+"</span></div>";
+			topicstring = topicstring +"<p>每座<b>"+topicInfo.rideInfo_price + "</b>元</p></div>";
 		}
 		
 		topicstring = topicstring + "<div class='userpic'>";
-		topicstring = topicstring + "<div class='username'>"+topicInfo.owner._givenname+"</div>";
-		topicstring = topicstring + "<img src= '/TicketSchedule/pics/"+topicInfo.owner._avatarID+"' alt='Profile Picture'></img>";
+		topicstring = topicstring + "<div class='username'>"+topicInfo.owner_givenname+"</div>";
+		topicstring = topicstring + "<img src= '/TicketSchedule/pics/"+topicInfo.owner_avatarID+"' alt='Profile Picture'></img>";
 		topicstring = topicstring + "<span class='passenger'></span></div>";
 		topicstring = topicstring + "<div class='inner_content'><h5>";
-		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_start.png\"/>"+"  出发地："+topicInfo.ownerRide._rideInfo.origLoc._addr+"<br>";
-		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"  目的地："+topicInfo.ownerRide._rideInfo.destLoc._addr+"<br>";
-		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/clock_small.jpg\"/>"+" 出发时间："+topicInfo.ownerRide._rideInfo.schedule.cftime[0];
-		if (topicInfo.ownerRide._rideInfo.schedule._isRoundTrip){
-			topicstring = topicstring + "&nbsp&nbsp&nbsp&nbsp返回时间："+topicInfo.ownerRide._rideInfo.schedule.cbtime[0];
+		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_start.png\"/>"+"  出发地："+topicInfo.origLoc_addr+"<br>";
+		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"  目的地："+topicInfo.destLoc_addr+"<br>";
+		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/clock_small.jpg\"/>"+" 出发时间："+topicInfo.schedule.cftime[0];
+		if (topicInfo.schedule._isRoundTrip){
+			topicstring = topicstring + "&nbsp&nbsp&nbsp&nbsp返回时间："+topicInfo.schedule.cbtime[0];
 		}
 		
 		
@@ -388,7 +388,7 @@ window.onscroll = function(){
 	function loadSchedule(topicInfo)
 	{
 		var schedule = "";
-		var ridesche = topicInfo.ownerRide._rideInfo.schedule;
+		var ridesche = topicInfo.schedule;
 		if (ridesche._isCommute)
 		{
 			for (var i=0;i<7;i++)

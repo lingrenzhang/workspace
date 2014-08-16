@@ -49,15 +49,6 @@ public class RideCenter extends HttpServlet {
 				response.sendRedirect("/TicketSchedule/Login.jsp");
 			}
 			else{
-				
-				RideInfo ride = (RideInfo) request.getSession().getAttribute("actRide");
-				if (ride==null)
-				{
-					response.sendRedirect("/TicketSchedule/Zh/ManageRide.jsp");
-				}
-				
-				
-				
 				QueryStringParser qsPar = new QueryStringParser(request.getQueryString());
 				int topicId = qsPar.getInt("topicId");
 			    Topic topic = AllTopics.getTopics().get_topic(topicId);
@@ -65,42 +56,50 @@ public class RideCenter extends HttpServlet {
 			    User user = (User) request.getSession().getAttribute("user");
 			    Boolean isOwnerMode = (user.get_uid() == topic.ownerRide._rideInfo.get_user().get_uid());
 			    request.setAttribute("isOwnerMode", isOwnerMode);
-			    
-			    if (!isOwnerMode)
-			    {
-				    Boolean alreadyPart = false;
-				    for(Iterator<ParticipantRide> prI = topic.parRides.iterator(); prI.hasNext();)
+				
+				RideInfo ride = (RideInfo) request.getSession().getAttribute("actRide");
+				if (ride==null && !isOwnerMode )
+				{
+					response.sendRedirect("/TicketSchedule/Zh/ManageRide.jsp");
+				}
+				else
+				{
+				    if (!isOwnerMode)
 				    {
-				    	    ParticipantRide pride=prI.next();
-				    		if (pride._rideInfo.get_user().get_uid()==user.get_uid())
-				    		{
-				    			alreadyPart = true;
-				    		}
-	
+					    Boolean alreadyPart = false;
+					    for(Iterator<ParticipantRide> prI = topic.parRides.iterator(); prI.hasNext();)
+					    {
+					    	    ParticipantRide pride=prI.next();
+					    		if (pride._rideInfo.get_user().get_uid()==user.get_uid())
+					    		{
+					    			alreadyPart = true;
+					    		}
+		
+					    }
+					    for(Iterator<ParticipantRide> prI = topic._requestPride.iterator(); prI.hasNext();)
+					    {
+					    	    ParticipantRide pride=prI.next();
+					    		if (pride._rideInfo.get_user().get_uid()==user.get_uid())
+					    		{
+					    			alreadyPart = true;
+					    		}
+					    }
+					    if (!alreadyPart)
+					    {
+					    	ParticipantRide pride = new ParticipantRide(ride);
+					    	pride.set_status(0);
+						    request.setAttribute("participantRide", pride);
+					    }
+					    request.setAttribute("alreadyPart", alreadyPart);
 				    }
-				    for(Iterator<ParticipantRide> prI = topic._requestPride.iterator(); prI.hasNext();)
+				    else
 				    {
-				    	    ParticipantRide pride=prI.next();
-				    		if (pride._rideInfo.get_user().get_uid()==user.get_uid())
-				    		{
-				    			alreadyPart = true;
-				    		}
+				    	
 				    }
-				    if (!alreadyPart)
-				    {
-				    	ParticipantRide pride = new ParticipantRide(ride);
-				    	pride.set_status(0);
-					    request.setAttribute("participantRide", pride);
-				    }
-				    request.setAttribute("alreadyPart", alreadyPart);
-			    }
-			    else
-			    {
-			    	
-			    }
-			    
-				RequestDispatcher rd = request.getRequestDispatcher("/Zh/RideCenter.jsp");
-				rd.forward(request, response);
+				    
+					RequestDispatcher rd = request.getRequestDispatcher("/Zh/RideCenter.jsp");
+					rd.forward(request, response);
+				}
 			}
 		}
 

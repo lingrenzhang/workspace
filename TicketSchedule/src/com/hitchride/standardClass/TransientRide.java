@@ -91,6 +91,14 @@ public class TransientRide implements PersistentStorage{
   		
   	}
   	
+  	public User getOwner()
+  	{
+  		if (owner==null)
+  		{
+  			this.owner = (User) AllUsers.getUsers().getUser(this.userId);
+  		}
+  		return owner;
+  	}
   	
 	@Override
 	public void insertToDB() {

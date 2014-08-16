@@ -57,7 +57,6 @@ public class MessageService extends HttpServlet {
 				User to = (User) AllUsers.getUsers().getUser(toId);
 				Message message = new Message(messageContent,from,to,topic);
 				message.sendMessage();
-	
 			}
 			response.sendRedirect("/TicketSchedule/servlet/RideCenter?topicId="+topic.get_topicId()+"&type=commute");
 		}

@@ -21,6 +21,7 @@ import com.hitchride.standardClass.Topic;
 import com.hitchride.standardClass.TransientRide;
 import com.hitchride.standardClass.TransientTopic;
 import com.hitchride.standardClass.User;
+import com.hitchride.util.GsonWrapperForTransientRide;
 import com.hitchride.util.JsonHelper;
 import com.hitchride.util.QueryStringParser;
 
@@ -71,7 +72,8 @@ public class TransientRideCenter extends HttpServlet {
 			    }
 			    
 			    JsonHelper jsonhelp = new JsonHelper();
-			    String trideJson = jsonhelp.toJson(tride);
+			    GsonWrapperForTransientRide gtride = new GsonWrapperForTransientRide(tride);
+			    String trideJson = jsonhelp.toJson(gtride);
 				String ttopicJson = jsonhelp.toJson(ttopic);
 				String result = "{\"tride\":"+trideJson+",\"ttopic\":"+ttopicJson+",\"result\": \"ok\"}";
 				response.setContentType("text/html; charset=UTF-8");

@@ -7,6 +7,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -26,6 +28,7 @@ import com.hitchride.standardClass.GeoInfo;
 import com.hitchride.standardClass.RideInfo;
 import com.hitchride.standardClass.Schedule;
 import com.hitchride.standardClass.TransientRide;
+import com.hitchride.util.GsonWrapperForTransientRide;
 import com.hitchride.util.JsonHelper;
 import com.hitchride.util.QueryStringParser;
 import com.hitchride.util.TimeFormatHelper;
@@ -58,8 +61,15 @@ public class SearchTransientTopic extends HttpServlet {
 					Date sdate = TimeFormatHelper.setDate(date);
 					List<TransientRide> resultList = TransientRideAccess.listTransisentRideByGroupId(1, sdate);
 					
+					List<GsonWrapperForTransientRide> rlist = new ArrayList<GsonWrapperForTransientRide>();
+					for(Iterator<TransientRide> itr = resultList.iterator();itr.hasNext();)
+					{
+						GsonWrapperForTransientRide gtr = new GsonWrapperForTransientRide(itr.next());
+						rlist.add(gtr);
+					}
+					
 					JsonHelper jsonhelp = new JsonHelper();
-					String tridesJson = jsonhelp.toJson(resultList);
+					String tridesJson = jsonhelp.toJson(rlist);
 					//System.out.println(topicsJson);
 					response.setContentType("text/html; charset=UTF-8");
 					response.getWriter().write(tridesJson);
@@ -78,8 +88,14 @@ public class SearchTransientTopic extends HttpServlet {
 				Date date = new Date(dateh.getTime());
 				List<TransientRide> resultList = TransientRideAccess.listTransisentRideByGroupId(1, date);
 				
+				List<GsonWrapperForTransientRide> rlist = new ArrayList<GsonWrapperForTransientRide>();
+				for(Iterator<TransientRide> itr = resultList.iterator();itr.hasNext();)
+				{
+					GsonWrapperForTransientRide gtr = new GsonWrapperForTransientRide(itr.next());
+					rlist.add(gtr);
+				}
 				JsonHelper jsonhelp = new JsonHelper();
-				String tridesJson = jsonhelp.toJson(resultList);
+				String tridesJson = jsonhelp.toJson(rlist);
 				//System.out.println(topicsJson);
 				response.setContentType("text/html; charset=UTF-8");
 				response.getWriter().write(tridesJson);

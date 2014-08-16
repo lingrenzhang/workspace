@@ -7,8 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.hitchride.access.TransientRideAccess;
 import com.hitchride.access.TransientTopicAccess;
+import com.hitchride.global.AllUsers;
 import com.hitchride.standardClass.GeoInfo;
+import com.hitchride.standardClass.Message;
+import com.hitchride.standardClass.TransientRide;
+import com.hitchride.standardClass.User;
 
 /**
  * Servlet implementation class UpdateTMiddlePoint
@@ -36,6 +41,7 @@ public class UpdateTMiddlePoint extends HttpServlet {
 				int trid = Integer.parseInt(request.getParameter("trId"));
 				int deleteId = Integer.parseInt(request.getParameter("deleteId"));
 				TransientTopicAccess.removeMiddleP(trid, deleteId);
+				
 				response.setStatus(200);
 				response.getWriter().write("{status: OK}");
 			}
@@ -47,6 +53,7 @@ public class UpdateTMiddlePoint extends HttpServlet {
 				Double mLng = Double.parseDouble(request.getParameter("mLng"));
 				GeoInfo middleP = new GeoInfo(mAddr,mLat,mLng);
 				TransientTopicAccess.addMiddleP(trid, middleP);
+				
 				response.setStatus(200);
 				response.getWriter().write("{status: OK}");
 			}

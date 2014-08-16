@@ -142,12 +142,12 @@ $(document).ready(function(){
 	
 	if (isSuccess)
 	{
-		origLat=tride.origLoc._lat;
-		origLng=tride.origLoc._lon;
-		origAddr= tride.origLoc._formattedAddr;
-		destLat=tride.destLoc._lat;
-		destLng=tride.destLoc._lon;
-		destAddr= tride.destLoc._formattedAddr;
+		origLat=tride.origLoc_lat;
+		origLng=tride.origLoc_lon;
+		origAddr= tride.origLoc_addr;
+		destLat=tride.destLoc_lat;
+		destLng=tride.destLoc_lon;
+		destAddr= tride.destLoc_addr;
 		
 		basicbounds = new BMap.Bounds();
 		
@@ -247,20 +247,20 @@ function loadContent()
 function loadRide()
 {
 	var topicstring="";
-	topicstring = topicstring + "<div class=\"entry\" origLat="+tride.origLoc._lat+" ";
-	topicstring = topicstring + "origLng=" +  tride.origLoc._lon+" ";
-	topicstring = topicstring + "destLat=" +  tride.destLoc._lat+" ";
-	topicstring = topicstring + "destLng=" +  tride.destLoc._lon+" "+">";
+	topicstring = topicstring + "<div class=\"entry\" origLat="+tride.origLoc_lat+" ";
+	topicstring = topicstring + "origLng=" +  tride.origLoc_lon+" ";
+	topicstring = topicstring + "destLat=" +  tride.destLoc_lat+" ";
+	topicstring = topicstring + "destLng=" +  tride.destLoc_lon+" "+">";
 	
 	topicstring = topicstring + "<div class=\"userpic\">";
-	topicstring = topicstring + "<div class=\"username\">"+tride.owner._givenname+"</div>";
-	topicstring = topicstring + "<img src= \"/TicketSchedule/pics/"+tride.owner._avatarID+"\" alt=\"Profile Picture\"></img>";
+	topicstring = topicstring + "<div class=\"username\">"+tride.owner_givenname+"</div>";
+	topicstring = topicstring + "<img src= \"/TicketSchedule/pics/"+tride.owner_avatarID+"\" alt=\"Profile Picture\"></img>";
 	topicstring = topicstring + "<span class=\"passenger\"></span></div>";
 	topicstring = topicstring + "<div class=\"inner_content\"><h5>";
-	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_start.png\"/>"+"  出发地："+tride.origLoc._addr+"<br>";
-	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"  目的地："+tride.destLoc._addr+"<br>";
+	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_start.png\"/>"+"  出发地："+tride.origLoc_addr+"<br>";
+	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"  目的地："+tride.destLoc_addr+"<br>";
 	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/clock_small.jpg\"/>"+" 出发时间："+tride.rideTime+"<br>";
-	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/mobileicon.jpg\"/>"+" 联系方式："+tride.owner._cellphone+"<br>";
+	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/mobileicon.jpg\"/>"+" 联系方式："+tride.owner_cellphone+"<br>";
 	topicstring = topicstring + "<div id=middlepoint></div>";
 	topicstring = topicstring + "</h5></div>";
 	
@@ -325,7 +325,7 @@ function loadParti()
 		}
 		partistring = partistring + "<div class=\"userpic\">";
 		partistring = partistring + "<div class=\"username\">"+parti[i]._givenname+"</div>";
-		partistring = partistring + "<img src= \"/TicketSchedule/UserProfile/"+parti[i]._avatarID+"\" alt=\"Profile Picture\"></img>";
+		partistring = partistring + "<img src= \"/TicketSchedule/pics/"+parti[i]._avatarID+"\" alt=\"Profile Picture\"></img>";
 		partistring = partistring + "<span class=\"passenger\"></span></div></div>";
 	}
 	
@@ -334,7 +334,7 @@ function loadParti()
 		partistring = partistring + "<div id=parti"+i+"><a href='javascript:addUser("+i+")' class=deleteParti><img src=\"/TicketSchedule/Picture/smallplus.jpg\"></img></a>";
 		partistring = partistring + "<div class=\"userpic\">";
 		partistring = partistring + "<div class=\"username\">"+'<%=user.get_name()%>'+"</div>";
-		partistring = partistring + "<img src= \"/TicketSchedule/UserProfile/"+'<%=user.get_avatarID()%>'+"\" alt=\"Profile Picture\"></img>";
+		partistring = partistring + "<img src= \"/TicketSchedule/pics/"+'<%=user.get_avatarID()%>'+"\" alt=\"Profile Picture\"></img>";
 		partistring = partistring + "<span class=\"passenger\"></span></div></div>";
 	}
 	document.getElementById("participants").innerHTML=partistring;
@@ -477,10 +477,10 @@ function updateOk(result)
 			<div class="navbar navbar-default">
 				<ul class="nav navbar-nav">
 				  <li><a href="/TicketSchedule/Zh/UserCenter.jsp">用户中心</a></li>
-				  <!--<li><a href="/TicketSchedule/Zh/ManageRide.jsp">行程管理</a></li> 
-			  	  <li><a href="/TicketSchedule/Zh/SearchRide.jsp">上下班拼车</a></li>-->
-			  	  <li><a href="javascript:inbuilding()">行程管理</a></li> 
-			      <li><a href="javascript:inbuilding()">上下班拼车</a></li>
+				  <li><a href="/TicketSchedule/Zh/ManageRide.jsp">行程管理</a></li> 
+			  	  <li><a href="/TicketSchedule/Zh/SearchRide.jsp">上下班拼车</a></li>
+			  	  <!--<li><a href="javascript:inbuilding()">行程管理</a></li> 
+			      <li><a href="javascript:inbuilding()">上下班拼车</a></li>-->
 			      <li class="active"><a href="/TicketSchedule/Zh/SearchTransientRide.jsp">临时拼车</a></li>
 			    </ul>
 			 </div>

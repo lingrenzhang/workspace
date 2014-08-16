@@ -7,9 +7,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.hitchride.access.TransientRideAccess;
 import com.hitchride.access.TransientTopicAccess;
 import com.hitchride.global.AllPartRides;
 import com.hitchride.global.AllUsers;
+import com.hitchride.standardClass.Message;
+import com.hitchride.standardClass.TransientRide;
 import com.hitchride.standardClass.User;
 
 /**
@@ -40,6 +43,12 @@ public class UpdateTParticipant extends HttpServlet {
 				TransientTopicAccess.removeParti(trid, deleteId);
 				User user = (User) AllUsers.getUsers().getUser(deleteId);
 				user.deletepTrideById(trid);
+				
+				TransientRide tride = TransientRideAccess.getTransisentRideById(trid);
+				User touser = (User) AllUsers.getUsers().getUser(tride.userId);
+				Message message = new Message(user,touser,1,tride,"");
+				message.sendMessage();
+				
 				response.setStatus(200);
 				response.getWriter().write("{status: OK}");
 			}
@@ -50,6 +59,12 @@ public class UpdateTParticipant extends HttpServlet {
 				TransientTopicAccess.addParti(trid, insertId);
 				User user = (User) AllUsers.getUsers().getUser(insertId);
 				user.insertpTrideById(trid);
+				
+				TransientRide tride = TransientRideAccess.getTransisentRideById(trid);
+				User touser = (User) AllUsers.getUsers().getUser(tride.userId);
+				Message message = new Message(user,touser,0,tride,"");
+				message.sendMessage();
+				
 				response.setStatus(200);
 				response.getWriter().write("{status: OK}");
 			}
