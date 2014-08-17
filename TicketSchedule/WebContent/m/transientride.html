@@ -154,7 +154,7 @@
 				<div class="text-center">
 					<a id="return" type="button" href="javascript:history.go(-1)"
 						class="button small round">返回</a>
-					<div id="del_btn" class="hide" style="display: inline">
+					<div id="del_btn" style="display:none">
 						<a id="del" data-reveal-id="delModal" type="button" href="#"
 							class="button alert small round">删除</a>
 					</div>
@@ -203,7 +203,7 @@
 							$('#owner_sms')[0].href = 'sms://'
 									+ result.owner.cellPhone;
 							if (result.owner.uid == uid) {
-								$('#del_btn').removeClass('hide');
+								$('#del_btn').css('display','inline')
 							}
 
 							$('#date')[0].innerHTML = result.date;
