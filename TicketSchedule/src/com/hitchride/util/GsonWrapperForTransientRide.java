@@ -6,6 +6,7 @@ import com.hitchride.standardClass.TransientRide;
 
 public class GsonWrapperForTransientRide {
     public int transientRideId;
+    public int userId;
     public double origLoc_lat;
     public double origLoc_lon;
     public String origLoc_addr;
@@ -22,6 +23,7 @@ public class GsonWrapperForTransientRide {
     
     public GsonWrapperForTransientRide(TransientRide tr)
     {
+    	this.userId = tr.userId;
     	this.transientRideId =tr.transientRideId;
     	this.origLoc_lat = tr.origLoc.get_lat();
     	this.origLoc_lon = tr.origLoc.get_lon();

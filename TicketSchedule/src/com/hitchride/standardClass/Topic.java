@@ -116,7 +116,7 @@ public class Topic implements PersistentStorage{
 	public String getHTML()
 	{
 		StringBuilder result = new StringBuilder(2000);
-		result.append("<a href=\"./RideCenter?topicId="+this._topicId +"&type=commute\">");
+		result.append("<a href=\"/TicketSchedule/CommuteTopicCenter?topicId="+this._topicId +"&type=commute\">");
 		result.append("<div class=\"entry\" origLat="+this.ownerRide._rideInfo.origLoc.get_lat()+" ");
 		result.append("origLng=" +  this.ownerRide._rideInfo.origLoc.get_lon()+" ");
 		result.append("destLat=" +  this.ownerRide._rideInfo.destLoc.get_lat()+" ");

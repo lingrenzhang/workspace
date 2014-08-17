@@ -349,8 +349,8 @@ window.onscroll = function(){
 	function getTopic(topicInfo,rank)
 	{
 		var topicstring="";
-		topicstring = topicstring + "<a href='/TicketSchedule/servlet/RideCenter?topicId="+topicInfo._topicId +"&type=commute'>";
-		topicstring = topicstring + "<div class=\"entry\" origLat="+topicInfo.origLoc_lat+" ";
+		topicstring = topicstring + "<a href='/TicketSchedule/CommuteTopicCenter?topicId="+topicInfo._topicId +"&type=commute&language=Zh'>";
+		topicstring = topicstring + "<div class='entry' origLat="+topicInfo.origLoc_lat+" ";
 		topicstring = topicstring + "origLng=" +  topicInfo.origLoc_lon+" ";
 		topicstring = topicstring + "destLat=" +  topicInfo.destLoc_lat+" ";
 		topicstring = topicstring + "destLng=" +  topicInfo.destLoc_lon+" ";
@@ -358,7 +358,7 @@ window.onscroll = function(){
 		
 		if (topicInfo.rideInfo_userType)
 		{
-			topicstring = topicstring + "<div class=\"passenger_box\"><p>";
+			topicstring = topicstring + "<div class='passenger_box'><p>";
 			topicstring = topicstring +"<span><img src='/TicketSchedule/Picture/nocar.jpg'/><br><span>";
 			topicstring = topicstring + "<strong>不提供车<br>找"+topicInfo.rideInfo_totalSeats+"人同行</strong></p></div>";
 		}
@@ -529,7 +529,7 @@ window.onscroll = function(){
 							<div id="searchResultMessage"></div>				
 							<p>根据你的行程信息创建讨论组，其他人可以检索并加入你!							
 							</p>
-							<form method="post" action="/TicketSchedule/servlet/RideCenter">	
+							<form method="post" action="/TicketSchedule/CommuteTopicCenter">	
 								<button id="createTopic" type="submit" class="button post">创建讨论组</button>
 							</form>
 						</div>

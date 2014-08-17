@@ -285,7 +285,7 @@ window.onscroll = function(){
 	function getTopic(topicInfo,rank)
 	{
 		var topicstring="";
-		topicstring = topicstring + "<a href=\"./RideCenter?topicId="+topicInfo._topicId +"&type=commute\">";
+		topicstring = topicstring + "<a href='/TicketSchedule/CommuteRideCenter?topicId="+topicInfo._topicId +"&type=commute&language=En'>";
 		topicstring = topicstring + "<div class=\"entry\" origLat="+topicInfo.ownerRide._rideInfo.origLoc._lat+" ";
 		topicstring = topicstring + "origLng=" +  topicInfo.ownerRide._rideInfo.origLoc._lon+" ";
 		topicstring = topicstring + "destLat=" +  topicInfo.ownerRide._rideInfo.destLoc._lat+" ";
@@ -467,7 +467,7 @@ window.onscroll = function(){
 							</h2>
 							<p>Create a topic about your travel plan so other people could find you!							
 							</p>
-							<form method="post" action="/TicketSchedule/servlet/RideCenter">	
+							<form method="post" action="/TicketSchedule/CommuteTopicCenter">	
 								<button id="createTopic" type="submit" class="button post">Create a Topic</button>
 							</form>
 						</div>

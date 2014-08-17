@@ -25,16 +25,6 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>ShowUser</display-name>
-    <servlet-name>ShowUser</servlet-name>
-    <servlet-class>com.hitchride.ShowUser</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ShowUser</servlet-name>
-    <url-pattern>/servlet/ShowUser</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
     <display-name>googleMapSupporting</display-name>
     <servlet-name>googleMapSupporting</servlet-name>
     <servlet-class>com.hitchride.googleMapSupporting</servlet-class>
@@ -67,7 +57,7 @@
     <description></description>
     <display-name>Search</display-name>
     <servlet-name>Search</servlet-name>
-    <servlet-class>com.hitchride.Search</servlet-class>
+    <servlet-class>com.hitchride.servlet.commuteride.SearchCommute</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Search</servlet-name>
@@ -77,7 +67,7 @@
     <description></description>
     <display-name>CheckCode</display-name>
     <servlet-name>CheckCode</servlet-name>
-    <servlet-class>com.hitchride.CheckCode</servlet-class>
+    <servlet-class>com.hitchride.servlet.user.CheckCode</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CheckCode</servlet-name>
@@ -87,7 +77,7 @@
     <description></description>
     <display-name>Login</display-name>
     <servlet-name>Login</servlet-name>
-    <servlet-class>com.hitchride.Login</servlet-class>
+    <servlet-class>com.hitchride.servlet.user.Login</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
@@ -97,17 +87,17 @@
     <description></description>
     <display-name>RideCenter</display-name>
     <servlet-name>RideCenter</servlet-name>
-    <servlet-class>com.hitchride.RideCenter</servlet-class>
+    <servlet-class>com.hitchride.servlet.commuteride.CommuteTopicCenter</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>RideCenter</servlet-name>
-    <url-pattern>/servlet/RideCenter</url-pattern>
+    <url-pattern>/CommuteTopicCenter</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>Register</display-name>
     <servlet-name>Register</servlet-name>
-    <servlet-class>com.hitchride.Register</servlet-class>
+    <servlet-class>com.hitchride.servlet.user.Register</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Register</servlet-name>
@@ -117,7 +107,7 @@
     <description></description>
     <display-name>AvaterService</display-name>
     <servlet-name>AvaterService</servlet-name>
-    <servlet-class>com.hitchride.AvaterService</servlet-class>
+    <servlet-class>com.hitchride.servlet.user.AvaterService</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AvaterService</servlet-name>
@@ -127,7 +117,7 @@
     <description></description>
     <display-name>UpdateParticipant</display-name>
     <servlet-name>UpdateParticipant</servlet-name>
-    <servlet-class>com.hitchride.UpdateParticipant</servlet-class>
+    <servlet-class>com.hitchride.servlet.commuteride.UpdateParticipant</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>UpdateParticipant</servlet-name>
@@ -137,7 +127,7 @@
     <description></description>
     <display-name>MessageService</display-name>
     <servlet-name>MessageService</servlet-name>
-    <servlet-class>com.hitchride.MessageService</servlet-class>
+    <servlet-class>com.hitchride.servlet.MessageService</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>MessageService</servlet-name>
@@ -147,7 +137,7 @@
     <description></description>
     <display-name>StatusService</display-name>
     <servlet-name>StatusService</servlet-name>
-    <servlet-class>com.hitchride.StatusService</servlet-class>
+    <servlet-class>com.hitchride.servlet.commuteride.BarginStatusService</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>StatusService</servlet-name>
@@ -157,7 +147,7 @@
     <description></description>
     <display-name>UserCenter</display-name>
     <servlet-name>UserCenter</servlet-name>
-    <servlet-class>com.hitchride.UserCenter</servlet-class>
+    <servlet-class>com.hitchride.servlet.UserCenter</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>UserCenter</servlet-name>
@@ -167,7 +157,7 @@
     <description></description>
     <display-name>UserProfile</display-name>
     <servlet-name>UserProfile</servlet-name>
-    <servlet-class>com.hitchride.UserProfile</servlet-class>
+    <servlet-class>com.hitchride.servlet.user.UserProfile</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>UserProfile</servlet-name>
@@ -177,7 +167,7 @@
     <description></description>
     <display-name>ManageRide</display-name>
     <servlet-name>ManageRide</servlet-name>
-    <servlet-class>com.hitchride.ManageRide</servlet-class>
+    <servlet-class>com.hitchride.servlet.ManageRide</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ManageRide</servlet-name>
@@ -187,7 +177,7 @@
     <description></description>
     <display-name>SearchTopics</display-name>
     <servlet-name>SearchTopics</servlet-name>
-    <servlet-class>com.hitchride.SearchTopics</servlet-class>
+    <servlet-class>com.hitchride.servlet.commuteride.SearchCommuteTopics</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>SearchTopics</servlet-name>
@@ -257,7 +247,7 @@
     <description></description>
     <display-name>AuthCheck</display-name>
     <servlet-name>AuthCheck</servlet-name>
-    <servlet-class>com.hitchride.AuthCheck</servlet-class>
+    <servlet-class>com.hitchride.servlet.user.AuthCheck</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AuthCheck</servlet-name>
@@ -267,7 +257,7 @@
     <description></description>
     <display-name>SearchTransientRide</display-name>
     <servlet-name>SearchTransientRide</servlet-name>
-    <servlet-class>com.hitchride.SearchTransientRide</servlet-class>
+    <servlet-class>com.hitchride.servlet.transientride.SearchTransientRide</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>SearchTransientRide</servlet-name>
@@ -277,7 +267,7 @@
     <description></description>
     <display-name>SearchTransientTopic</display-name>
     <servlet-name>SearchTransientTopic</servlet-name>
-    <servlet-class>com.hitchride.SearchTransientTopic</servlet-class>
+    <servlet-class>com.hitchride.servlet.transientride.SearchTransientTopic</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>SearchTransientTopic</servlet-name>
@@ -287,7 +277,7 @@
     <description></description>
     <display-name>TransientRideCenter</display-name>
     <servlet-name>TransientRideCenter</servlet-name>
-    <servlet-class>com.hitchride.TransientRideCenter</servlet-class>
+    <servlet-class>com.hitchride.servlet.transientride.TransientRideCenter</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>TransientRideCenter</servlet-name>
@@ -297,7 +287,7 @@
     <description></description>
     <display-name>UpdateTParticipant</display-name>
     <servlet-name>UpdateTParticipant</servlet-name>
-    <servlet-class>com.hitchride.UpdateTParticipant</servlet-class>
+    <servlet-class>com.hitchride.servlet.transientride.UpdateTParticipant</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>UpdateTParticipant</servlet-name>
@@ -307,7 +297,7 @@
     <description></description>
     <display-name>Logout</display-name>
     <servlet-name>Logout</servlet-name>
-    <servlet-class>com.hitchride.Logout</servlet-class>
+    <servlet-class>com.hitchride.servlet.user.Logout</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Logout</servlet-name>
@@ -317,7 +307,7 @@
     <description></description>
     <display-name>UpdateTMiddlePoint</display-name>
     <servlet-name>UpdateTMiddlePoint</servlet-name>
-    <servlet-class>com.hitchride.UpdateTMiddlePoint</servlet-class>
+    <servlet-class>com.hitchride.servlet.transient.UpdateTMiddlePoint</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>UpdateTMiddlePoint</servlet-name>
@@ -327,7 +317,7 @@
     <description></description>
     <display-name>DeleteTopic</display-name>
     <servlet-name>DeleteTopic</servlet-name>
-    <servlet-class>com.hitchride.DeleteTopic</servlet-class>
+    <servlet-class>com.hitchride.servlet.commuteride.DeleteCommuteTopic</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>DeleteTopic</servlet-name>

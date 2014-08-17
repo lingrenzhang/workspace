@@ -16,7 +16,7 @@
       body { height: 100%; margin: 0; padding: 0 }
       #map-canvas { height: 100% }
     </style>
-<script src="../JS/jquery-1.10.1.js">
+<script src="/TicketSchedule/JS/jquery-1.10.1.js">
 </script>
 <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
