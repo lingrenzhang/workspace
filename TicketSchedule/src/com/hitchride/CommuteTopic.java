@@ -7,7 +7,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
-import com.hitchride.database.access.TopicTbAccess;
+import com.hitchride.database.access.CommuteTopicAccess;
 import com.hitchride.environ.AllPartRides;
 import com.hitchride.environ.AllTopicRides;
 import com.hitchride.environ.AllUsers;
@@ -25,20 +25,20 @@ public class CommuteTopic implements IPersistentStorage{
 	public User owner;
 	//public List<Participant> participants;
 	public CommuteOwnerRide ownerRide;
-	public List<CommuteParticipantRide> parRides;
-	public List<CommuteParticipantRide> _requestPride;
+	public List<CommutePartiRide> parRides;
+	public List<CommutePartiRide> _requestPride;
 	public List<Message> messages = new ArrayList<Message>();;      
 
     public CommuteTopic(){
     	//Used when load from DB.
-    	parRides = new ArrayList<CommuteParticipantRide>();
-    	_requestPride = new ArrayList<CommuteParticipantRide>();
+    	parRides = new ArrayList<CommutePartiRide>();
+    	_requestPride = new ArrayList<CommutePartiRide>();
     	
     }
 	public CommuteTopic(int rid) {
 		try {
-				parRides = new ArrayList<CommuteParticipantRide>();
-		    	_requestPride = new ArrayList<CommuteParticipantRide>();
+				parRides = new ArrayList<CommutePartiRide>();
+		    	_requestPride = new ArrayList<CommutePartiRide>();
 				ownerRide = AllTopicRides.getTopicRides()._topicRides.get(rid);
 				this._topicId=rid;
 				IUserInfo ownerInfo = AllUsers.getUsers().getUser(ownerRide._rideInfo.get_username());
@@ -50,7 +50,7 @@ public class CommuteTopic implements IPersistentStorage{
 				while (e.hasMoreElements())
 				{
 					Integer key = e.nextElement();
-					CommuteParticipantRide pRide = AllPartRides.getPartRides().get_participantRide(key);
+					CommutePartiRide pRide = AllPartRides.getPartRides().get_participantRide(key);
 					if (pRide.get_assoOwnerRideId()==ownerRide._rideInfo.recordId)
 					{
 						if (pRide.get_status()==1)
@@ -90,10 +90,10 @@ public class CommuteTopic implements IPersistentStorage{
 		this._topicId = _topicId;
 	}
 	
-	public CommuteParticipantRide getpRideByuserId(int userId)
+	public CommutePartiRide getpRideByuserId(int userId)
 	{
-		CommuteParticipantRide result;
-		for (Iterator<CommuteParticipantRide> pRideI = _requestPride.iterator(); pRideI.hasNext();)
+		CommutePartiRide result;
+		for (Iterator<CommutePartiRide> pRideI = _requestPride.iterator(); pRideI.hasNext();)
 		{
 			result = pRideI.next();
 			if (result.get_userId() == userId)
@@ -101,7 +101,7 @@ public class CommuteTopic implements IPersistentStorage{
 				return result;
 			}
 		}
-		for (Iterator<CommuteParticipantRide> pRideI = parRides.iterator(); pRideI.hasNext();)
+		for (Iterator<CommutePartiRide> pRideI = parRides.iterator(); pRideI.hasNext();)
 		{
 			result = pRideI.next();
 			if (result.get_userId() == userId)
@@ -163,11 +163,11 @@ public class CommuteTopic implements IPersistentStorage{
 	
 	public void updateDB()
 	{
-		int rows = TopicTbAccess.updateTopic(this);
+		int rows = CommuteTopicAccess.updateTopic(this);
 		if (rows == 0)
 		{
 			System.out.println("Update failed for topic: "+ this._topicId + " attempting insert.");
-			rows = TopicTbAccess.insertTopic(this);
+			rows = CommuteTopicAccess.insertTopic(this);
 			if (rows== 0)
 			{
 				System.out.println("Insert also failed for topic: "+this._topicId + " Please check DB integrity.");
@@ -177,11 +177,11 @@ public class CommuteTopic implements IPersistentStorage{
 	
 	@Override
 	public void insertToDB() {
-		int rows = TopicTbAccess.insertTopic(this);
+		int rows = CommuteTopicAccess.insertTopic(this);
 		if (rows == 0)
 		{
 			System.out.println("Insert failed for topic: "+ this._topicId + " attempting update.");
-			rows = TopicTbAccess.updateTopic(this);
+			rows = CommuteTopicAccess.updateTopic(this);
 			if (rows== 0)
 			{
 				System.out.println("Update also failed for topic: "+this._topicId + " Please check DB integrity.");

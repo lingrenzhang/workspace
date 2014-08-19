@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 import com.hitchride.MatchScore;
 import com.hitchride.Message;
-import com.hitchride.database.access.MessageTbAccess;
+import com.hitchride.database.access.MessageAccess;
 
 
 public class DummyData {
@@ -21,7 +21,7 @@ public class DummyData {
 	
 
 	private void initializeMessage() {
-		_dummyMessage = MessageTbAccess.LoadAllMessage();
+		_dummyMessage = MessageAccess.LoadAllMessage();
 	}
 
 	

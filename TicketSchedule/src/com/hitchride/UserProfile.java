@@ -2,7 +2,7 @@ package com.hitchride;
 
 import java.util.Date;
 
-import com.hitchride.database.access.UserTbAccess;
+import com.hitchride.database.access.UserAccess;
 
 public class UserProfile implements IPersistentStorage {
 	private int _uid;
@@ -38,7 +38,7 @@ public class UserProfile implements IPersistentStorage {
 		
 	public void updateDB()
 	{
-		int rows = UserTbAccess.updateUserProfile(this);
+		int rows = UserAccess.updateUserProfile(this);
 		if (rows==0)
 		{
 			System.out.println("Update failed for user: "+ this.get_uid() + ". Check DB integrity please.");
@@ -47,7 +47,7 @@ public class UserProfile implements IPersistentStorage {
 		
 	@Override
 	public void insertToDB() {
-		int rows = UserTbAccess.insertUser(this);
+		int rows = UserAccess.insertUser(this);
 		if (rows==0)
 		{
 			System.out.println("Insert failed for user: "+ this.get_uid() + ". Check DB integrity please.");

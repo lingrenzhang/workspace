@@ -6,7 +6,7 @@ import java.util.Hashtable;
 
 import com.hitchride.CommuteRide;
 import com.hitchride.database.access.CarpoolTbAccess;
-import com.hitchride.database.access.RideInfoAccess;
+import com.hitchride.database.access.CommuteRideAccess;
 
 
 public class AllRides {
@@ -32,8 +32,8 @@ public class AllRides {
 	private int _maxRidesKey = 0;
 
     private void initialFromNew(){
-    	_availRides = RideInfoAccess.LoadAllRide();
-    	_maxRidesKey = RideInfoAccess.getMaxRideId();
+    	_availRides = CommuteRideAccess.LoadAllRide();
+    	_maxRidesKey = CommuteRideAccess.getMaxRideId();
     }
 	
 	private void initialFromOld() {

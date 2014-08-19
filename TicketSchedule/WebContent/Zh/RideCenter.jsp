@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <%@ page import="com.hitchride.CommuteTopic"%>
-<%@ page import="com.hitchride.CommuteParticipantRide"%>
+<%@ page import="com.hitchride.CommutePartiRide"%>
 <%@ page import="com.hitchride.Message"%>
 <%@ page import="com.hitchride.User"%>
 <%@ page import="com.hitchride.MatchScore"%>
@@ -189,7 +189,7 @@
 		<div class="user_wrapper">
 		    <%
 		    	if (!isOwnerMode) 
-		    	    	{
+		    		    	    	{
 		    %>
 				<div class="user_info" id="from">
 				  <a href = "/TicketSchedule/Zh/UserCenter.jsp">
@@ -207,7 +207,7 @@
 					</div>
 					<%
 						}else{ 
-									CommuteParticipantRide pRide = topicInfo.getpRideByuserId(user.get_uid());
+												CommutePartiRide pRide = topicInfo.getpRideByuserId(user.get_uid());
 					%>
 					<%=pRide.get_status_user_control()%>
 					<%
@@ -224,11 +224,11 @@
 				}
 			%>
 			<%
-				List<CommuteParticipantRide> parRides= topicInfo._requestPride; 
-				   for (Iterator<CommuteParticipantRide> parRideI = parRides.iterator(); parRideI.hasNext();) 
-				   {
-					   CommuteParticipantRide parRide = parRideI.next();
-					   if (parRide.get_userId()!=user.get_uid()){
+				List<CommutePartiRide> parRides= topicInfo._requestPride; 
+					   for (Iterator<CommutePartiRide> parRideI = parRides.iterator(); parRideI.hasNext();) 
+					   {
+						   CommutePartiRide parRide = parRideI.next();
+						   if (parRide.get_userId()!=user.get_uid()){
 			%> 
 				<div class="user_info" id="to">
 					<div class="userpic">
@@ -247,14 +247,14 @@
 				</div>
 			<%
 				}
-				   }
+					   }
 			%>
 			<%
 				parRides= topicInfo.parRides; 
-				   for (Iterator<CommuteParticipantRide> parRideI = parRides.iterator(); parRideI.hasNext();) 
-				   {
-					   CommuteParticipantRide parRide = parRideI.next();
-					   if (parRide.get_userId()!=user.get_uid()){
+					   for (Iterator<CommutePartiRide> parRideI = parRides.iterator(); parRideI.hasNext();) 
+					   {
+						   CommutePartiRide parRide = parRideI.next();
+						   if (parRide.get_userId()!=user.get_uid()){
 			%> 
 				<div class="user_info" id="to">
 					<div class="userpic">

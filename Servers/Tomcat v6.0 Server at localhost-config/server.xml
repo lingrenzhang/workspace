@@ -131,6 +131,8 @@
                prefix="localhost_access_log." suffix=".txt" pattern="common" resolveHosts="false"/>
         -->
 
+      
+      <Context docBase="D:\\Documents\\GitHub\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\pics" path="/TicketSchedule/pics"/>
       <Context docBase="TicketSchedule" path="/TicketSchedule" reloadable="true" source="org.eclipse.jst.jee.server:TicketSchedule"/></Host>
     </Engine>
   </Service>

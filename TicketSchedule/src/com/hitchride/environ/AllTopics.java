@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.hitchride.CommuteOwnerRide;
 import com.hitchride.CommuteTopic;
-import com.hitchride.database.access.TopicTbAccess;
+import com.hitchride.database.access.CommuteTopicAccess;
 
 public class AllTopics {
 	private static AllTopics allTopics;
@@ -27,7 +27,7 @@ public class AllTopics {
 	public Hashtable<Integer,CommuteTopic> _topics;
 	
 	private void initialTopics() {
-		_topics = TopicTbAccess.LoadAllTopic();
+		_topics = CommuteTopicAccess.LoadAllTopic();
 	}
 	
 	public CommuteTopic get_topic(int key) {

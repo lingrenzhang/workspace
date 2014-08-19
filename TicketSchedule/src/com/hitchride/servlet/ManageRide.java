@@ -8,7 +8,7 @@ import java.net.URL;
 import java.sql.Time;
 
 import com.hitchride.GeoInfo;
-import com.hitchride.CommuteParticipantRide;
+import com.hitchride.CommutePartiRide;
 import com.hitchride.CommuteRide;
 import com.hitchride.Schedule;
 import com.hitchride.User;
@@ -256,7 +256,7 @@ public class ManageRide extends HttpServlet {
 			
 			if (AllPartRides.getPartRides().get_participantRide(myRide.recordId)==null)
 			{
-				CommuteParticipantRide pride = new CommuteParticipantRide(myRide);
+				CommutePartiRide pride = new CommutePartiRide(myRide);
 				pride.set_status(0);
 				pride.set_assoOwnerRideId(-1);
 				user.pRides.add(pride);

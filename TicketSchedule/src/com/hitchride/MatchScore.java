@@ -30,7 +30,7 @@ public class MatchScore implements IMatching {
 	}	
 	@Override
 	public void ComputeMatching(CommuteOwnerRide ownerRide,
-			CommuteParticipantRide partRide) {
+			CommutePartiRide partRide) {
 		this._LocationMatching = (int) (destScoreByCoordinates(ownerRide, partRide, false)*100.0);
 		//TODO: calculate scheduleingMatching and BargingMatching
 	}
@@ -54,7 +54,7 @@ public class MatchScore implements IMatching {
 	
 	private double destScoreByCoordinates(
 			CommuteOwnerRide ownerRide, 
-			CommuteParticipantRide partRide, 
+			CommutePartiRide partRide, 
 			boolean drivingDist // if false, calculate great circle distance only; if true, use google API to get driving distance
 	) 
 	{

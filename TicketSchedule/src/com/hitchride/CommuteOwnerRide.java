@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import com.hitchride.database.access.TopicRideAccess;
+import com.hitchride.database.access.CommuteOwnerRideAccess;
 import com.hitchride.environ.AllUsers;
 
 
@@ -91,11 +91,11 @@ public class CommuteOwnerRide implements IPersistentStorage,IRideStatusChange{
 		
 	public void updateDB()
 	{
-		int rows = TopicRideAccess.updateTopicRide(this);
+		int rows = CommuteOwnerRideAccess.updateTopicRide(this);
 		if (rows == 0)
 		{
 			System.out.println("Update failed for topicride: "+this._recordId + " attempting insert.");
-			rows = TopicRideAccess.insertTopicRide(this);
+			rows = CommuteOwnerRideAccess.insertTopicRide(this);
 			if (rows== 0)
 			{
 				System.out.println("Insert also failed for topicride: "+this._recordId + " Please check DB integrity.");
@@ -105,11 +105,11 @@ public class CommuteOwnerRide implements IPersistentStorage,IRideStatusChange{
 	
 	@Override
 	public void insertToDB() {
-		int rows = TopicRideAccess.insertTopicRide(this);
+		int rows = CommuteOwnerRideAccess.insertTopicRide(this);
 		if (rows == 0)
 		{
 			System.out.println("Insert failed for topicride: "+ this._recordId + " attempting update.");
-			rows = TopicRideAccess.updateTopicRide(this);
+			rows = CommuteOwnerRideAccess.updateTopicRide(this);
 			if (rows== 0)
 			{
 				System.out.println("Update also failed for topicride: "+this._recordId + " Please check DB integrity.");

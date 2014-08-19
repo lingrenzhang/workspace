@@ -3,7 +3,7 @@ package com.hitchride;
 import java.sql.Timestamp;
 import java.util.Date;
 
-import com.hitchride.database.access.MessageTbAccess;
+import com.hitchride.database.access.MessageAccess;
 import com.hitchride.environ.AllTopics;
 import com.hitchride.environ.AllUsers;
 import com.hitchride.environ.DummyData;
@@ -280,7 +280,7 @@ public class Message implements IMessageInfo,IPersistentStorage{
 	
 	@Override
 	public void insertToDB() {
-		MessageTbAccess.insertMessage(this);
+		MessageAccess.insertMessage(this);
 		this._isSaved =true;
 		this._lastCp = new Date();
 	}

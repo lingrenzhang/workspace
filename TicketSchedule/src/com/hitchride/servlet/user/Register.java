@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.hitchride.User;
-import com.hitchride.database.access.UserTbAccess;
+import com.hitchride.database.access.UserAccess;
 import com.hitchride.emailTemplate.RegisterTemplate;
 import com.hitchride.environ.AllUsers;
 import com.hitchride.util.SendMail;
@@ -50,7 +50,7 @@ public class Register extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		UserTbAccess userTb = new UserTbAccess();
+		UserAccess userTb = new UserAccess();
 		String userName = new String(request.getParameter("emailAddress")
 				.getBytes("iso-8859-1"), "UTF-8");
 		int groupId = Integer.parseInt(request.getParameter("groupID"));

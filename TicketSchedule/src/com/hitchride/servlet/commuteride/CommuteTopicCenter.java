@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hitchride.Message;
 import com.hitchride.CommuteOwnerRide;
-import com.hitchride.CommuteParticipantRide;
+import com.hitchride.CommutePartiRide;
 import com.hitchride.CommuteRide;
 import com.hitchride.CommuteTopic;
 import com.hitchride.User;
@@ -67,18 +67,18 @@ public class CommuteTopicCenter extends HttpServlet {
 				    if (!isOwnerMode)
 				    {
 					    Boolean alreadyPart = false;
-					    for(Iterator<CommuteParticipantRide> prI = topic.parRides.iterator(); prI.hasNext();)
+					    for(Iterator<CommutePartiRide> prI = topic.parRides.iterator(); prI.hasNext();)
 					    {
-					    	    CommuteParticipantRide pride=prI.next();
+					    	    CommutePartiRide pride=prI.next();
 					    		if (pride._rideInfo.get_user().get_uid()==user.get_uid())
 					    		{
 					    			alreadyPart = true;
 					    		}
 		
 					    }
-					    for(Iterator<CommuteParticipantRide> prI = topic._requestPride.iterator(); prI.hasNext();)
+					    for(Iterator<CommutePartiRide> prI = topic._requestPride.iterator(); prI.hasNext();)
 					    {
-					    	    CommuteParticipantRide pride=prI.next();
+					    	    CommutePartiRide pride=prI.next();
 					    		if (pride._rideInfo.get_user().get_uid()==user.get_uid())
 					    		{
 					    			alreadyPart = true;
@@ -86,7 +86,7 @@ public class CommuteTopicCenter extends HttpServlet {
 					    }
 					    if (!alreadyPart)
 					    {
-					    	CommuteParticipantRide pride = new CommuteParticipantRide(ride);
+					    	CommutePartiRide pride = new CommutePartiRide(ride);
 					    	pride.set_status(0);
 						    request.setAttribute("participantRide", pride);
 					    }
@@ -131,7 +131,7 @@ public class CommuteTopicCenter extends HttpServlet {
 		{
 			CommuteOwnerRide ownRide = new CommuteOwnerRide(ride);
 			ride.get_user().tRides.add(ownRide);
-			CommuteParticipantRide pRide = AllPartRides.getPartRides().get_participantRide(ride.recordId);
+			CommutePartiRide pRide = AllPartRides.getPartRides().get_participantRide(ride.recordId);
 			ride.get_user().pRides.remove(pRide);
 			pRide.delete();
 			

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hitchride.Message;
-import com.hitchride.CommuteParticipantRide;
+import com.hitchride.CommutePartiRide;
 import com.hitchride.CommuteRide;
 import com.hitchride.CommuteTopic;
 import com.hitchride.User;
@@ -51,7 +51,7 @@ public class BarginStatusService extends HttpServlet {
 			User toU = (User) AllUsers.getUsers().getUser(toUser);
 			
 			int status = 10*fromSta + toSta;
-			CommuteParticipantRide pride=null; //Sync DB status to persistent storage instantly. 
+			CommutePartiRide pride=null; //Sync DB status to persistent storage instantly. 
 			                            //Check details when encounter resource limitation.
 			switch (status)
 			{
@@ -62,7 +62,7 @@ public class BarginStatusService extends HttpServlet {
 						//ride.set_user(fromU); (issue for GSON.Loop inside)
 						ride.userId=fromU.get_uid();
 						ride.insertToDB();
-						pride = new CommuteParticipantRide(ride);
+						pride = new CommutePartiRide(ride);
 						AllPartRides.getPartRides().insert_pride(pride);
 						//pride._rideInfo.set_user((User) fromU); (issue for GSON. Loop inside)
 						fromU.pRides.add(pride);
@@ -79,9 +79,9 @@ public class BarginStatusService extends HttpServlet {
 					pride.updateDB();
 			    	break;
 				case 10:
-					for (Iterator<CommuteParticipantRide> prideI=topic._requestPride.iterator(); prideI.hasNext();)
+					for (Iterator<CommutePartiRide> prideI=topic._requestPride.iterator(); prideI.hasNext();)
 					{
-					    CommuteParticipantRide pridet = prideI.next();
+					    CommutePartiRide pridet = prideI.next();
 					    if (pridet.get_userId() == toU.get_uid()){
 					    	pride = pridet;
 					    }
@@ -93,9 +93,9 @@ public class BarginStatusService extends HttpServlet {
 					pride.updateDB();
 					break;
 				case 12:
-					for (Iterator<CommuteParticipantRide> prideI=topic._requestPride.iterator(); prideI.hasNext();)
+					for (Iterator<CommutePartiRide> prideI=topic._requestPride.iterator(); prideI.hasNext();)
 					{
-					    CommuteParticipantRide pridet = prideI.next();
+					    CommutePartiRide pridet = prideI.next();
 					    if (pridet.get_userId() == toU.get_uid()){
 					    	pride = pridet;
 					    }
@@ -107,9 +107,9 @@ public class BarginStatusService extends HttpServlet {
 					pride.updateDB();
 					break;
 				case 13:
-					for (Iterator<CommuteParticipantRide> prideI=topic._requestPride.iterator(); prideI.hasNext();)
+					for (Iterator<CommutePartiRide> prideI=topic._requestPride.iterator(); prideI.hasNext();)
 					{
-					    CommuteParticipantRide pridet = prideI.next();
+					    CommutePartiRide pridet = prideI.next();
 					    if (pridet.get_userId() == toU.get_uid()){
 					    	pride = pridet;
 					    }
@@ -120,9 +120,9 @@ public class BarginStatusService extends HttpServlet {
 					pride.updateDB();
 					break;
 				case 20:
-					for (Iterator<CommuteParticipantRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
+					for (Iterator<CommutePartiRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
 					{
-					    CommuteParticipantRide pridet = prideI.next();
+					    CommutePartiRide pridet = prideI.next();
 					    if (pridet.get_userId() == fromU.get_uid() ||pridet.get_userId() == toU.get_uid()){
 					    	pride = pridet;
 					    }
@@ -133,9 +133,9 @@ public class BarginStatusService extends HttpServlet {
 					pride.updateDB();
 					break;
 				case 21:
-					for (Iterator<CommuteParticipantRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
+					for (Iterator<CommutePartiRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
 					{
-					    CommuteParticipantRide pridet = prideI.next();
+					    CommutePartiRide pridet = prideI.next();
 					    if (pridet.get_userId() == fromU.get_uid()){
 					    	pride = pridet;
 					    }
@@ -146,9 +146,9 @@ public class BarginStatusService extends HttpServlet {
 					pride.updateDB();
 					break;
 				case 23:
-					for (Iterator<CommuteParticipantRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
+					for (Iterator<CommutePartiRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
 					{
-					    CommuteParticipantRide pridet = prideI.next();
+					    CommutePartiRide pridet = prideI.next();
 					    if (pridet.get_userId() == toU.get_uid()){
 					    	pride = pridet;
 					    }
@@ -157,9 +157,9 @@ public class BarginStatusService extends HttpServlet {
 					pride.updateDB();
 					break;
 				case 30:
-					for (Iterator<CommuteParticipantRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
+					for (Iterator<CommutePartiRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
 					{
-					    CommuteParticipantRide pridet = prideI.next();
+					    CommutePartiRide pridet = prideI.next();
 					    if (pridet.get_userId() == fromU.get_uid()){
 					    	pride = pridet;
 					    }
@@ -170,9 +170,9 @@ public class BarginStatusService extends HttpServlet {
 					pride.updateDB();
 					break;
 				case 32:
-					for (Iterator<CommuteParticipantRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
+					for (Iterator<CommutePartiRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
 					{
-					    CommuteParticipantRide pridet = prideI.next();
+					    CommutePartiRide pridet = prideI.next();
 					    if (pridet.get_userId() == fromU.get_uid()){
 					    	pride = pridet;
 					    }
@@ -181,9 +181,9 @@ public class BarginStatusService extends HttpServlet {
 					pride.updateDB();
 					break;
 				case 34:
-					for (Iterator<CommuteParticipantRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
+					for (Iterator<CommutePartiRide> prideI=topic.parRides.iterator(); prideI.hasNext();)
 					{
-					    CommuteParticipantRide pridet = prideI.next();
+					    CommutePartiRide pridet = prideI.next();
 					    if (pridet.get_userId() == fromU.get_uid()){
 					    	pride = pridet;
 					    }

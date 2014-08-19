@@ -7,7 +7,7 @@ import java.util.Hashtable;
 
 import com.hitchride.User;
 import com.hitchride.IUserInfo;
-import com.hitchride.database.access.UserTbAccess;
+import com.hitchride.database.access.UserAccess;
 
 public class AllUsers {
 	private static AllUsers allUsers;
@@ -36,7 +36,7 @@ public class AllUsers {
 	public int _nactuser;
 
 	private void initialAllUser() {
-		UserTbAccess utb = new UserTbAccess();
+		UserAccess utb = new UserAccess();
 		System.out.println("_users initializing: Loaded from DB.");
 		int i=0;
 		try {

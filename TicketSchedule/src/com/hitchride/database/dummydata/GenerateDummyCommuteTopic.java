@@ -11,9 +11,9 @@ import com.hitchride.CommuteOwnerRide;
 import com.hitchride.CommuteRide;
 import com.hitchride.Schedule;
 import com.hitchride.CommuteTopic;
-import com.hitchride.database.access.RideInfoAccess;
-import com.hitchride.database.access.TopicRideAccess;
-import com.hitchride.database.access.TopicTbAccess;
+import com.hitchride.database.access.CommuteRideAccess;
+import com.hitchride.database.access.CommuteOwnerRideAccess;
+import com.hitchride.database.access.CommuteTopicAccess;
 import com.hitchride.environ.AllRides;
 import com.hitchride.environ.AllTopicRides;
 import com.hitchride.environ.AllTopics;
@@ -71,17 +71,17 @@ public class GenerateDummyCommuteTopic {
 			    ride.totalSeats = 4;
 			    ride.price = r/2000;
 			    
-			    RideInfoAccess.insertRideInfo(ride);
-			    int rid = RideInfoAccess.getMaxRideId();
+			    CommuteRideAccess.insertRideInfo(ride);
+			    int rid = CommuteRideAccess.getMaxRideId();
 			    ride.recordId = rid;
 			    AllRides.getRides().insert_availride(ride); //This will initialize data just inserted.
 			    
 			    CommuteOwnerRide topicRide= new CommuteOwnerRide(ride);
-			    TopicRideAccess.insertTopicRide(topicRide);
+			    CommuteOwnerRideAccess.insertTopicRide(topicRide);
 			    AllTopicRides.getTopicRides().insert_TopicRide(topicRide);
 			    
 			    CommuteTopic topic = new CommuteTopic(topicRide._recordId);
-			    TopicTbAccess.insertTopic(topic);
+			    CommuteTopicAccess.insertTopic(topic);
 			    AllTopics.getTopics().insert_topic(topic);
 			}
 			catch (JSONException e)

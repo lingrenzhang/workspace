@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Date;
 
-import com.hitchride.database.access.TopicRideAccess;
+import com.hitchride.database.access.CommuteOwnerRideAccess;
 import com.hitchride.database.access.TransientRideAccess;
 import com.hitchride.environ.AllUsers;
 import com.hitchride.util.TimeFormatHelper;

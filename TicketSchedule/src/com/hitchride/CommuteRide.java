@@ -5,8 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 
-import com.hitchride.database.access.RideInfoAccess;
-import com.hitchride.database.access.TopicTbAccess;
+import com.hitchride.database.access.CommuteRideAccess;
+import com.hitchride.database.access.CommuteTopicAccess;
 import com.hitchride.environ.AllUsers;
 import com.hitchride.util.TimeFormatHelper;
 
@@ -211,11 +211,11 @@ public class CommuteRide implements IPersistentStorage{
   	public void updateDB()
   	{
   		
-  		int rows = RideInfoAccess.updateRideInfo(this);
+  		int rows = CommuteRideAccess.updateRideInfo(this);
   		if (rows==0)
   		{
  			System.out.println("Update failed for rideinfo: "+ this.recordId + " attempting insert.");
-  			rows = RideInfoAccess.insertRideInfo(this);
+  			rows = CommuteRideAccess.insertRideInfo(this);
   			if (rows==0)
   			{
   	  			System.out.println("Insert also failed for rideinfo: "+ this.recordId + " Check DB integrity.");
@@ -225,11 +225,11 @@ public class CommuteRide implements IPersistentStorage{
   	
   	@Override
   	public void insertToDB() {
-  		int rows  = RideInfoAccess.insertRideInfo(this);
+  		int rows  = CommuteRideAccess.insertRideInfo(this);
   		if (rows==0)
   		{
   			System.out.println("Insert failed for rideinfo: "+ this.recordId + " attempting update.");
-  			rows = RideInfoAccess.updateRideInfo(this);
+  			rows = CommuteRideAccess.updateRideInfo(this);
   			if (rows==0)
   			{
   				System.out.println("Update also failed for rideinfo: "+ this.recordId + " Check DB integrity.");

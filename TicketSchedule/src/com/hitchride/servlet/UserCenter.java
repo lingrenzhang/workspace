@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hitchride.Message;
 import com.hitchride.CommuteOwnerRide;
-import com.hitchride.CommuteParticipantRide;
+import com.hitchride.CommutePartiRide;
 import com.hitchride.CommuteTopic;
 import com.hitchride.TransientRide;
 import com.hitchride.User;
 import com.hitchride.UserProfile;
 import com.hitchride.database.access.TransientRideAccess;
-import com.hitchride.database.access.UserTbAccess;
+import com.hitchride.database.access.UserAccess;
 import com.hitchride.environ.AllPartRides;
 import com.hitchride.environ.AllTopicRides;
 import com.hitchride.environ.AllTopics;
@@ -136,9 +136,9 @@ public class UserCenter extends HttpServlet {
 				    value.append("<div class=\"panel panel-default\">");
 					value.append("<div class=\"panel-heading\">"+dic.Participate+"</div>");
 					value.append("<div class=\"panel-body\">");
-					for(Iterator<CommuteParticipantRide> prideI = user.pRides.iterator();prideI.hasNext(); )
+					for(Iterator<CommutePartiRide> prideI = user.pRides.iterator();prideI.hasNext(); )
 					{
-						CommuteParticipantRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next()._pid);
+						CommutePartiRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next()._pid);
 						if (parRide.get_status()!=0)
 						{
 							
@@ -176,9 +176,9 @@ public class UserCenter extends HttpServlet {
 				    value.append("<div class=\"panel panel-default\">");
 					value.append("<div class=\"panel-heading\">"+dic.FreeRide+"</div>");
 					value.append("<div class=\"panel-body\">");
-					for(Iterator<CommuteParticipantRide> prideI = user.pRides.iterator();prideI.hasNext(); )
+					for(Iterator<CommutePartiRide> prideI = user.pRides.iterator();prideI.hasNext(); )
 					{
-						CommuteParticipantRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next()._pid);
+						CommutePartiRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next()._pid);
 						if (parRide.get_status()==0)
 						{
 							
@@ -199,7 +199,7 @@ public class UserCenter extends HttpServlet {
 				
 				if (content.equalsIgnoreCase("profile"))
 				{
-					UserProfile userP = UserTbAccess.loadUserProfile(user.get_uid());
+					UserProfile userP = UserAccess.loadUserProfile(user.get_uid());
 					StringBuilder value = new StringBuilder();
 				    value.append("<div class=\"panel panel-default\">");
 					value.append("<div class=\"panel-heading\">"+dic.MyProfile+"</div>");

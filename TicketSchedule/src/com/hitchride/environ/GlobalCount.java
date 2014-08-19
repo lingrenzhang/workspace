@@ -1,11 +1,11 @@
 package com.hitchride.environ;
-import com.hitchride.database.access.MessageTbAccess;
+import com.hitchride.database.access.MessageAccess;
 
 
 public class GlobalCount {
 	private static GlobalCount gCount;
 	private GlobalCount(){
-          messageCount = MessageTbAccess.getMaxMessageId();
+          messageCount = MessageAccess.getMaxMessageId();
 	}
 	
 	public static GlobalCount getGCount(){

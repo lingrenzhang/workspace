@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.hitchride.User;
-import com.hitchride.database.access.UserTbAccess;
+import com.hitchride.database.access.UserAccess;
 import com.hitchride.environ.AllUsers;
 import com.hitchride.environ.Environment;
 
@@ -74,7 +74,7 @@ public class mLogin extends HttpServlet {
 		HttpSession session;
 		session = request.getSession();
 		String UserName = request.getParameter("email");
-		UserTbAccess userTb = new UserTbAccess();
+		UserAccess userTb = new UserAccess();
 		ResultSet rs = userTb.selectByName(UserName, false);
 
 		try {

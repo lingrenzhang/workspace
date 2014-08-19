@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.hitchride.CommuteOwnerRide;
-import com.hitchride.CommuteParticipantRide;
+import com.hitchride.CommutePartiRide;
 import com.hitchride.CommuteRide;
 import com.hitchride.CommuteTopic;
 import com.hitchride.TransientRide;

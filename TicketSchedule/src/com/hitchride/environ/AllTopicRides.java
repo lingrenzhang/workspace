@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.hitchride.CommuteOwnerRide;
-import com.hitchride.database.access.TopicRideAccess;
+import com.hitchride.database.access.CommuteOwnerRideAccess;
 
 public class AllTopicRides {
 	private static AllTopicRides allTopicRides;
@@ -29,7 +29,7 @@ public class AllTopicRides {
 	}
 
     private void initialFromNew(){
-    	_topicRides = TopicRideAccess.LoadAllOwnerRide();
+    	_topicRides = CommuteOwnerRideAccess.LoadAllOwnerRide();
     	//Link rides to user
     	Enumeration<Integer> e = _topicRides.keys();
     	while (e.hasMoreElements())

@@ -9,7 +9,7 @@ package com.hitchride.database.dummydata;
 //4th line is CellPhone
 
 import com.hitchride.User;
-import com.hitchride.database.access.UserTbAccess;
+import com.hitchride.database.access.UserAccess;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -69,7 +69,7 @@ public class UserDBLoadHelper {
 						String password = userRow[3].getContents().trim();
 						String cellphone = userRow[4].getContents().trim();
 						System.out.print("User "+(j-3) +" inserted: ");
-						UserTbAccess userTb = new UserTbAccess();
+						UserAccess userTb = new UserAccess();
 						System.out.println(givenname);
 						try
 						{

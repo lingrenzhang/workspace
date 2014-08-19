@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hitchride.database.access.UserGroupTbAccess;
+import com.hitchride.database.access.UserGroupAccess;
 import com.hitchride.util.QueryStringParser;
 
 /**
@@ -30,7 +30,7 @@ public class AuthCheck extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		QueryStringParser qsp =  new QueryStringParser(request.getQueryString());
 		String authCode=qsp.getString("authCode");
-		int groupId = UserGroupTbAccess.checkAuth(authCode);
+		int groupId = UserGroupAccess.checkAuth(authCode);
 		{
 			if (groupId==-1) 
 			{

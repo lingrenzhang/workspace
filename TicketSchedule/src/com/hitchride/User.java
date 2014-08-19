@@ -27,7 +27,7 @@ public class User implements IRideListener,IUserInfo{
 	public List<Integer> tTride = new ArrayList<Integer>();
 	
 	//Transient Ride is traced by ID and accessed from DB directly.
-	public Vector<CommuteParticipantRide> pRides= new Vector<CommuteParticipantRide>();
+	public Vector<CommutePartiRide> pRides= new Vector<CommutePartiRide>();
 	public Vector<CommuteOwnerRide> tRides= new Vector<CommuteOwnerRide>();
 	public Vector<Message> message = new Vector<Message>(); //Load the message in memory. 
 	//Switch to message unique ID when persistent storage involved.

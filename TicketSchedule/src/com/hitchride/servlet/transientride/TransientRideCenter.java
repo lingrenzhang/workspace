@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hitchride.CommuteOwnerRide;
-import com.hitchride.CommuteParticipantRide;
+import com.hitchride.CommutePartiRide;
 import com.hitchride.CommuteRide;
 import com.hitchride.CommuteTopic;
 import com.hitchride.TransientRide;
@@ -96,7 +96,7 @@ public class TransientRideCenter extends HttpServlet {
 		{
 			CommuteOwnerRide ownRide = new CommuteOwnerRide(ride);
 			ride.get_user().tRides.add(ownRide);
-			CommuteParticipantRide pRide = AllPartRides.getPartRides().get_participantRide(ride.recordId);
+			CommutePartiRide pRide = AllPartRides.getPartRides().get_participantRide(ride.recordId);
 			ride.get_user().pRides.remove(pRide);
 			pRide.delete();
 			

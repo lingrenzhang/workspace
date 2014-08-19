@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hitchride.User;
-import com.hitchride.database.access.UserTbAccess;
+import com.hitchride.database.access.UserAccess;
 
 /**
  * Servlet implementation class UserProfile
@@ -34,7 +34,7 @@ public class UserProfile extends HttpServlet {
 		String oldpwd =request.getParameter("oldpwd");
 		String newpwd =request.getParameter("newpwd");
 		int uid = Integer.parseInt(request.getParameter("uid"));
-		UserTbAccess.updateUserProfile(givenname, surename, address, uid);
+		UserAccess.updateUserProfile(givenname, surename, address, uid);
 		response.sendRedirect("/TicketSchedule/UserCenter.jsp");
 	}
 
@@ -52,7 +52,7 @@ public class UserProfile extends HttpServlet {
 		if (newpwd.equals("")|| newpwd.equals("null"))
 		{
 			
-			UserTbAccess.updateUserProfile(givenname, surename, address, uid);
+			UserAccess.updateUserProfile(givenname, surename, address, uid);
 			User user = (User) request.getSession().getAttribute("user");
 			user.set_name(givenname);
 			user.set_surename(surename);
@@ -60,9 +60,9 @@ public class UserProfile extends HttpServlet {
 		}
 		else
 		{
-			if (UserTbAccess.verifyPassword(uid, oldpwd))
+			if (UserAccess.verifyPassword(uid, oldpwd))
 			{
-				UserTbAccess.updateUserProfile(givenname, surename, address,newpwd,uid);
+				UserAccess.updateUserProfile(givenname, surename, address,newpwd,uid);
 				User user = (User) request.getSession().getAttribute("user");
 				user.set_name(givenname);
 				user.set_surename(surename);

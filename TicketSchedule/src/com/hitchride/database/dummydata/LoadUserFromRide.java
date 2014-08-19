@@ -5,14 +5,14 @@ import java.sql.SQLException;
 import java.util.Random;
 
 import com.hitchride.database.access.CarpoolTbAccess;
-import com.hitchride.database.access.UserTbAccess;
+import com.hitchride.database.access.UserAccess;
 
 //Generate sample userDB from Carpool DB for development purpose.
 public class LoadUserFromRide {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException
 	{
 		Random rnd = new Random();
-		UserTbAccess utb= new UserTbAccess();
+		UserAccess utb= new UserAccess();
 		ResultSet rs = CarpoolTbAccess.rideInitialLoad();
 		while (rs.next())
 		{

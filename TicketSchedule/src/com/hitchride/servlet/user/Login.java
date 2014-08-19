@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.hitchride.User;
-import com.hitchride.database.access.UserTbAccess;
+import com.hitchride.database.access.UserAccess;
 import com.hitchride.environ.AllUsers;
 import com.hitchride.environ.Environment;
 
@@ -51,7 +51,7 @@ public class Login extends HttpServlet {
 		session = request.getSession();
 		String UserName = request.getParameter("email"); 
 		
-		UserTbAccess userTb=new UserTbAccess();
+		UserAccess userTb=new UserAccess();
 		ResultSet rs = userTb.selectByName(UserName,false);
 
 		try {
