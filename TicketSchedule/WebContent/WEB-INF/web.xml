@@ -37,7 +37,7 @@
     <description></description>
     <display-name>LoadPosition</display-name>
     <servlet-name>LoadPosition</servlet-name>
-    <servlet-class>com.hitchride.LoadPosition</servlet-class>
+    <servlet-class>com.hitchride.servlet.manage.LoadPosition</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>LoadPosition</servlet-name>
@@ -47,7 +47,7 @@
     <description></description>
     <display-name>InsertGeo</display-name>
     <servlet-name>InsertGeo</servlet-name>
-    <servlet-class>com.hitchride.InsertGeo</servlet-class>
+    <servlet-class>com.hitchride.servlet.manage.InsertGeo</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>InsertGeo</servlet-name>

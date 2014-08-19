@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hitchride.global.AllPartRides;
+import com.hitchride.environ.AllPartRides;
 
 /**
  * Servlet implementation class UpdateParticipant

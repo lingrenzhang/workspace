@@ -8,7 +8,7 @@
 <%@ page import="com.hitchride.calc.*" %>
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
-<%@ page import="com.hitchride.standardClass.User" %>
+<%@ page import="com.hitchride.User" %>
 <%
 	List<rideInfoParameters> results = (List<rideInfoParameters>) request.getAttribute("results");
 	if (results==null)

@@ -6,9 +6,9 @@
 
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
-<%@ page import="com.hitchride.standardClass.User" %>
-<%@ page import="com.hitchride.standardClass.Topic" %>
-<%@ page import="com.hitchride.standardClass.TransientRide" %>
+<%@ page import="com.hitchride.User" %>
+<%@ page import="com.hitchride.CommuteTopic" %>
+<%@ page import="com.hitchride.TransientRide" %>
 <%
 	boolean commute = true;
 %>

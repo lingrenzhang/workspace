@@ -9,6 +9,8 @@ import java.sql.Date;
 
 
 
+
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,11 +21,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.hitchride.global.AllRides;
-import com.hitchride.global.Environment;
-import com.hitchride.standardClass.GeoInfo;
-import com.hitchride.standardClass.RideInfo;
-import com.hitchride.standardClass.Schedule;
+import com.hitchride.GeoInfo;
+import com.hitchride.CommuteRide;
+import com.hitchride.Schedule;
+import com.hitchride.environ.AllRides;
+import com.hitchride.environ.Environment;
 import com.hitchride.util.DistanceHelper;
 import com.hitchride.util.QueryStringParser;
 import com.hitchride.util.TimeFormatHelper;
@@ -47,7 +49,7 @@ public class SearchCommute extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Environment.getEnv();
 		{
-			RideInfo actRide = null;
+			CommuteRide actRide = null;
 			if (request.getQueryString()!=null)
 			{
 				QueryStringParser qsp = new QueryStringParser(request.getQueryString());
@@ -61,12 +63,12 @@ public class SearchCommute extends HttpServlet {
 			
 			if (request.getParameter("s") == null || request.getParameter("e") == null)
 			{
-				actRide = (RideInfo) request.getSession().getAttribute("actRide");
+				actRide = (CommuteRide) request.getSession().getAttribute("actRide");
 			}
 			
 			if (actRide ==null)
 			{ 
-				actRide = new RideInfo();
+				actRide = new CommuteRide();
 				actRide.userType = true;
 				
 				GeoInfo orig=null;
@@ -187,7 +189,7 @@ public class SearchCommute extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//rideInfoParameters myArgs = new rideInfoParameters();
-			RideInfo myRide = (RideInfo) request.getSession().getAttribute("actRide");
+			CommuteRide myRide = (CommuteRide) request.getSession().getAttribute("actRide");
 		/*
 			List<Topic> resultList = new ArrayList<Topic>();
 			NewScoreCalculator sc = new NewScoreCalculator();

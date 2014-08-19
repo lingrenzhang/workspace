@@ -3,8 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
-<%@ page import="com.hitchride.standardClass.User"%>
-<%@ page import="com.hitchride.standardClass.Message"%>
+<%@ page import="com.hitchride.User"%>
+<%@ page import="com.hitchride.Message"%>
 <%@ page import="java.util.Iterator"%>
 <%
     User user = (User) request.getSession().getAttribute("user");

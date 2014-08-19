@@ -16,7 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.hitchride.standardClass.GeoInfo;
+import com.hitchride.GeoInfo;
 
 public class DistanceHelper {
 	private int computeMode=0; //0 for rough compute; 1 for baidu api; 2 for google api

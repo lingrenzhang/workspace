@@ -6,14 +6,13 @@
 
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
-<%@ page import="com.hitchride.standardClass.User" %>
-<%@ page import="com.hitchride.standardClass.Topic" %>
-<%@ page import="com.hitchride.standardClass.RideInfo" %>
+<%@ page import="com.hitchride.User" %>
+<%@ page import="com.hitchride.CommuteTopic" %>
+<%@ page import="com.hitchride.CommuteRide" %>
 <%
 	boolean commute = true;
 %>
-<% 
-    
+<%
 	String IsLogin =(String) request.getSession().getAttribute("IsLogin");
 	User user;
 	if (IsLogin!= null)
@@ -29,7 +28,7 @@
 		 user.set_avatarID("default.jpg");
 		 user.set_userLevel(0);
 	}
-	RideInfo actRide = (RideInfo) request.getSession().getAttribute("actRide");
+	CommuteRide actRide = (CommuteRide) request.getSession().getAttribute("actRide");
 %>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">

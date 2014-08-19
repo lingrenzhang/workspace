@@ -7,13 +7,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Time;
 
-import com.hitchride.global.AllPartRides;
-import com.hitchride.global.AllRides;
-import com.hitchride.standardClass.GeoInfo;
-import com.hitchride.standardClass.ParticipantRide;
-import com.hitchride.standardClass.RideInfo;
-import com.hitchride.standardClass.Schedule;
-import com.hitchride.standardClass.User;
+import com.hitchride.GeoInfo;
+import com.hitchride.CommuteParticipantRide;
+import com.hitchride.CommuteRide;
+import com.hitchride.Schedule;
+import com.hitchride.User;
+import com.hitchride.environ.AllPartRides;
+import com.hitchride.environ.AllRides;
 import com.hitchride.util.DistanceHelper;
 import com.hitchride.util.JsonHelper;
 import com.hitchride.util.QueryStringParser;
@@ -48,7 +48,7 @@ public class ManageRide extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		QueryStringParser qs = new QueryStringParser(request.getQueryString());
 		int rid = qs.getInt("rid");
-		RideInfo ride = AllRides.getRides().getRide(rid);
+		CommuteRide ride = AllRides.getRides().getRide(rid);
 		JsonHelper jh = new JsonHelper();
 		String rideJson = jh.toJson(ride);
 		System.out.println(rideJson);
@@ -60,10 +60,10 @@ public class ManageRide extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int recordId = Integer.parseInt(request.getParameter("rid"));
-		RideInfo myRide = AllRides.getRides().getRide(recordId);
+		CommuteRide myRide = AllRides.getRides().getRide(recordId);
 		if (myRide==null)
 		{
-			myRide = new RideInfo();
+			myRide = new CommuteRide();
 		}
 		
 		//*********************************Geo Related***********************
@@ -256,7 +256,7 @@ public class ManageRide extends HttpServlet {
 			
 			if (AllPartRides.getPartRides().get_participantRide(myRide.recordId)==null)
 			{
-				ParticipantRide pride = new ParticipantRide(myRide);
+				CommuteParticipantRide pride = new CommuteParticipantRide(myRide);
 				pride.set_status(0);
 				pride.set_assoOwnerRideId(-1);
 				user.pRides.add(pride);

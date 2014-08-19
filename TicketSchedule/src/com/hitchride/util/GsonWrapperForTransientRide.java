@@ -2,7 +2,7 @@ package com.hitchride.util;
 
 import java.sql.Time;
 
-import com.hitchride.standardClass.TransientRide;
+import com.hitchride.TransientRide;
 
 public class GsonWrapperForTransientRide {
     public int transientRideId;

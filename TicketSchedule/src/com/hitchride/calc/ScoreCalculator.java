@@ -1,10 +1,10 @@
 package com.hitchride.calc;
-import com.hitchride.standardClass.GeoInfo;
+import com.hitchride.GeoInfo;
 import com.hitchride.util.DistanceHelper;
 import com.hitchride.util.GeoUtil;
-import com.hitchride.access.CarpoolTbAccess;
 import com.hitchride.calc.rideInfoParameters;
-import com.hitchride.global.SystemConfig;
+import com.hitchride.database.access.CarpoolTbAccess;
+import com.hitchride.environ.SystemConfig;
 
 import java.io.IOException;
 import java.sql.*;

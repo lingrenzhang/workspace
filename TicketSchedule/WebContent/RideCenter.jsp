@@ -2,15 +2,15 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<%@ page import="com.hitchride.standardClass.Topic"%>
-<%@ page import="com.hitchride.standardClass.ParticipantRide"%>
-<%@ page import="com.hitchride.standardClass.Message"%>
-<%@ page import="com.hitchride.standardClass.User"%>
-<%@ page import="com.hitchride.standardClass.MatchScore"%>
+<%@ page import="com.hitchride.CommuteTopic"%>
+<%@ page import="com.hitchride.CommuteParticipantRide"%>
+<%@ page import="com.hitchride.Message"%>
+<%@ page import="com.hitchride.User"%>
+<%@ page import="com.hitchride.MatchScore"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Iterator"%>
 <%
-    Topic topicInfo = (Topic) request.getSession().getAttribute("topic");
+	CommuteTopic topicInfo = (CommuteTopic) request.getSession().getAttribute("topic");
     Boolean isOwnerMode = (Boolean) request.getAttribute("isOwnerMode");
     Boolean alreadyPart = (Boolean) request.getAttribute("alreadyPart");
     User user = (User) request.getSession().getAttribute("user");
@@ -32,8 +32,8 @@
     var toUser;
 	if (isOwnerMode==false)
 	{
-		isalreadyPart= <%=alreadyPart %>;
-		fromUser = <%=user.get_uid()  %>;
+		isalreadyPart= <%=alreadyPart%>;
+		fromUser = <%=user.get_uid()%>;
 		toUser = <%=topicInfo.ownerRide._rideInfo.get_user().get_uid()%>;
 	}
 	else
@@ -188,63 +188,75 @@
 	<div id="content_wrapper">
 
 		<div class="user_wrapper">
-		    <%if (!isOwnerMode) 
-	    	{%>
+		    <%
+		    	if (!isOwnerMode) 
+		    	    	{
+		    %>
 				<div class="user_info" id="from">
 				  <a href = "/TicketSchedule/UserCenter.jsp">
 					<div class="userpic">
-							<div class="username"><%=user.get_name() %></div>
-							<img src=<%= user.get_head_portrait_path() %> alt="Profile Picture"></img>
+							<div class="username"><%=user.get_name()%></div>
+							<img src=<%=user.get_head_portrait_path()%> alt="Profile Picture"></img>
 							<span class="passenger"></span>
 					</div>
 				</a>
-					<%if (!alreadyPart){%>
+					<%
+						if (!alreadyPart){
+					%>
 					<div class="user_operation" id="user_operation">
 						<button type=button onclick="join()">Join</button>
 					</div>
-					<%}else{ 
-						ParticipantRide pRide = topicInfo.getpRideByuserId(user.get_uid());
+					<%
+						}else{ 
+									CommuteParticipantRide pRide = topicInfo.getpRideByuserId(user.get_uid());
 					%>
-					<%= pRide.get_status_user_control() %>
-					<%} %>
+					<%=pRide.get_status_user_control()%>
+					<%
+						}
+					%>
 					<div class="user_match">
-						<div class="match_Loc" style="width : <%=score.getLocationMatching() %>px "></div>
-						<div class="match_Sch" style="width : <%=score.getSchedulingMatching() %>px "></div>
-						<div class="match_Bar" style="width : <%=score.getBarginMatching() %>px "></div>
+						<div class="match_Loc" style="width : <%=score.getLocationMatching()%>px "></div>
+						<div class="match_Sch" style="width : <%=score.getSchedulingMatching()%>px "></div>
+						<div class="match_Bar" style="width : <%=score.getBarginMatching()%>px "></div>
 					</div>
 				</div>
 
-			<%}%>
-			<% List<ParticipantRide> parRides= topicInfo._requestPride; 
-			   for (Iterator<ParticipantRide> parRideI = parRides.iterator(); parRideI.hasNext();) 
-			   {
-				   ParticipantRide parRide = parRideI.next();
-				   if (parRide.get_userId()!=user.get_uid()){
-			 %> 
+			<%
+				}
+			%>
+			<%
+				List<CommuteParticipantRide> parRides= topicInfo._requestPride; 
+				   for (Iterator<CommuteParticipantRide> parRideI = parRides.iterator(); parRideI.hasNext();) 
+				   {
+					   CommuteParticipantRide parRide = parRideI.next();
+					   if (parRide.get_userId()!=user.get_uid()){
+			%> 
 				<div class="user_info" id="to">
 					<div class="userpic">
-						<div class="username"><%=parRide.get_username() %></div>
-						<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg" %> alt="Profile Picture"></img>
+						<div class="username"><%=parRide.get_username()%></div>
+						<img src=<%="/TicketSchedule/UserProfile/"+"default.jpg"%> alt="Profile Picture"></img>
 						<span class="passenger"></span>
 					</div>
 					<div class="user_status">
-						<%= (isOwnerMode)? parRide.get_status_owner_control() : parRide.get_status_message() %>
+						<%=(isOwnerMode)? parRide.get_status_owner_control() : parRide.get_status_message()%>
 					</div>
 					<div class="user_match">
-						<div class="match_Loc" style="width : <%=parRide.get_Match().getLocationMatching() %>px "></div>
-						<div class="match_Sch" style="width : <%=parRide.get_Match().getSchedulingMatching() %>px "></div>
-						<div class="match_Bar" style="width : <%=parRide.get_Match().getBarginMatching() %>px "></div>
+						<div class="match_Loc" style="width : <%=parRide.get_Match().getLocationMatching()%>px "></div>
+						<div class="match_Sch" style="width : <%=parRide.get_Match().getSchedulingMatching()%>px "></div>
+						<div class="match_Bar" style="width : <%=parRide.get_Match().getBarginMatching()%>px "></div>
 					</div>
 				</div>
-			<%		}
-			   }
+			<%
+				}
+				   }
 			%>
-			<% parRides= topicInfo.parRides; 
-			   for (Iterator<ParticipantRide> parRideI = parRides.iterator(); parRideI.hasNext();) 
-			   {
-				   ParticipantRide parRide = parRideI.next();
-				   if (parRide.get_userId()!=user.get_uid()){
-			 %> 
+			<%
+				parRides= topicInfo.parRides; 
+				   for (Iterator<CommuteParticipantRide> parRideI = parRides.iterator(); parRideI.hasNext();) 
+				   {
+					   CommuteParticipantRide parRide = parRideI.next();
+					   if (parRide.get_userId()!=user.get_uid()){
+			%> 
 				<div class="user_info" id="to">
 					<div class="userpic">
 						<div class="username"><%=parRide.get_username() %></div>

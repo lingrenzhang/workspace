@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hitchride.global.AllUsers;
+import com.hitchride.environ.AllUsers;
 
 /**
  * Servlet implementation class Logout

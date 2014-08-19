@@ -7,13 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hitchride.access.TransientRideAccess;
-import com.hitchride.access.TransientTopicAccess;
-import com.hitchride.global.AllPartRides;
-import com.hitchride.global.AllUsers;
-import com.hitchride.standardClass.Message;
-import com.hitchride.standardClass.TransientRide;
-import com.hitchride.standardClass.User;
+import com.hitchride.Message;
+import com.hitchride.TransientRide;
+import com.hitchride.User;
+import com.hitchride.database.access.TransientRideAccess;
+import com.hitchride.database.access.TransientTopicAccess;
+import com.hitchride.environ.AllPartRides;
+import com.hitchride.environ.AllUsers;
 
 /**
  * Servlet implementation class UpdateTParticipant

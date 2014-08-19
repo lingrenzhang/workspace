@@ -9,18 +9,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hitchride.access.TransientRideAccess;
-import com.hitchride.access.TransientTopicAccess;
-import com.hitchride.global.AllPartRides;
-import com.hitchride.global.AllTopicRides;
-import com.hitchride.global.AllTopics;
-import com.hitchride.standardClass.OwnerRideInfo;
-import com.hitchride.standardClass.ParticipantRide;
-import com.hitchride.standardClass.RideInfo;
-import com.hitchride.standardClass.Topic;
-import com.hitchride.standardClass.TransientRide;
-import com.hitchride.standardClass.TransientTopic;
-import com.hitchride.standardClass.User;
+import com.hitchride.CommuteOwnerRide;
+import com.hitchride.CommuteParticipantRide;
+import com.hitchride.CommuteRide;
+import com.hitchride.CommuteTopic;
+import com.hitchride.TransientRide;
+import com.hitchride.TransientTopic;
+import com.hitchride.User;
+import com.hitchride.database.access.TransientRideAccess;
+import com.hitchride.database.access.TransientTopicAccess;
+import com.hitchride.environ.AllPartRides;
+import com.hitchride.environ.AllTopicRides;
+import com.hitchride.environ.AllTopics;
 import com.hitchride.util.GsonWrapperForTransientRide;
 import com.hitchride.util.JsonHelper;
 import com.hitchride.util.QueryStringParser;
@@ -87,16 +87,16 @@ public class TransientRideCenter extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RideInfo ride = (RideInfo) request.getSession().getAttribute("actRide");
+		CommuteRide ride = (CommuteRide) request.getSession().getAttribute("actRide");
 		if (ride==null)
 		{
 			response.sendRedirect("/TicketSchedule/ManageRide.jsp");
 		}
 		else
 		{
-			OwnerRideInfo ownRide = new OwnerRideInfo(ride);
+			CommuteOwnerRide ownRide = new CommuteOwnerRide(ride);
 			ride.get_user().tRides.add(ownRide);
-			ParticipantRide pRide = AllPartRides.getPartRides().get_participantRide(ride.recordId);
+			CommuteParticipantRide pRide = AllPartRides.getPartRides().get_participantRide(ride.recordId);
 			ride.get_user().pRides.remove(pRide);
 			pRide.delete();
 			
@@ -104,7 +104,7 @@ public class TransientRideCenter extends HttpServlet {
 			
 			AllTopicRides.getTopicRides().insert_TopicRide(ownRide);
 			ownRide.insertToDB();
-			Topic topic= new Topic();
+			CommuteTopic topic= new CommuteTopic();
 			topic.ownerRide=ownRide;
 			topic.set_topicId(ride.recordId);
 			topic.owner=ride.get_user();

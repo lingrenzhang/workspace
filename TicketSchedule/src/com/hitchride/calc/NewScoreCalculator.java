@@ -1,11 +1,11 @@
 package com.hitchride.calc;
-import com.hitchride.global.AllTopicRides;
-import com.hitchride.global.AllTopics;
-import com.hitchride.global.SystemConfig;
-import com.hitchride.standardClass.GeoInfo;
-import com.hitchride.standardClass.OwnerRideInfo;
-import com.hitchride.standardClass.RideInfo;
-import com.hitchride.standardClass.Topic;
+import com.hitchride.GeoInfo;
+import com.hitchride.CommuteOwnerRide;
+import com.hitchride.CommuteRide;
+import com.hitchride.CommuteTopic;
+import com.hitchride.environ.AllTopicRides;
+import com.hitchride.environ.AllTopics;
+import com.hitchride.environ.SystemConfig;
 import com.hitchride.util.DistanceHelper;
 import com.hitchride.util.GeoUtil;
 import com.hitchride.calc.rideInfoParameters;
@@ -74,8 +74,8 @@ public class NewScoreCalculator {
 	}
 	
 	private double timeScore(
-			RideInfo myRide,
-			OwnerRideInfo ownerRide 
+			CommuteRide myRide,
+			CommuteOwnerRide ownerRide 
 	) {
 		// TODO: also consider backTime for roundtrips
 		// TODO: think of a non-boolean function
@@ -108,8 +108,8 @@ public class NewScoreCalculator {
 	}
 	
 	private double destScoreByCoordinates(
-			RideInfo myRide,
-			OwnerRideInfo ownerRide, 
+			CommuteRide myRide,
+			CommuteOwnerRide ownerRide, 
 			boolean drivingDist // if false, calculate great circle distance only; if true, use google API to get driving distance
 	) {
 		// same for single trip and round trips, but have to consider who is driver and who is passenger
@@ -137,11 +137,11 @@ public class NewScoreCalculator {
 		return score;
 	}
 	
-	public List<Topic> filterByCoordinates(RideInfo myRide, int numRecords){
+	public List<CommuteTopic> filterByCoordinates(CommuteRide myRide, int numRecords){
 		// find the top few matching records (and return recordID's) based on coordinates.
 		Enumeration<Integer> topicE = AllTopicRides.getTopicRides()._topicRides.keys();
 		while(topicE.hasMoreElements()){
-			OwnerRideInfo topicRide = AllTopicRides.getTopicRides().getRide(topicE.nextElement());
+			CommuteOwnerRide topicRide = AllTopicRides.getTopicRides().getRide(topicE.nextElement());
 			double score = destScoreByCoordinates(myRide, topicRide, false);
 			insertResult(score,topicRide._recordId);
 		}
@@ -153,12 +153,12 @@ public class NewScoreCalculator {
 	}
 	
 	// filter by coordinates first, then sort the filtered results by driving distance
-	public List<Topic> sortByDrivingDistance(RideInfo myRide, int sortNum){
-		List<Topic> sortResults = new ArrayList<Topic>();
+	public List<CommuteTopic> sortByDrivingDistance(CommuteRide myRide, int sortNum){
+		List<CommuteTopic> sortResults = new ArrayList<CommuteTopic>();
 		sortNum = Math.min(sortNum,_scoreResults.size());
 		for(int index = 0; index < sortNum; index++){
 			ScoreResult scoreResult = _scoreResults.get(index);
-			OwnerRideInfo ownerRide = AllTopicRides.getTopicRides().getRide(scoreResult._topicId);
+			CommuteOwnerRide ownerRide = AllTopicRides.getTopicRides().getRide(scoreResult._topicId);
 			if (ownerRide!=null)
 			{	
 				double destMultiplier = destScoreByCoordinates(myRide, ownerRide, true);
@@ -174,7 +174,7 @@ public class NewScoreCalculator {
 		
 		for(int index = 0; index < _scoreResults.size(); index++){
 			ScoreResult scoreResult = _scoreResults.get(index);
-			Topic topicRide =  AllTopics.getTopics().get_topic(scoreResult._topicId);
+			CommuteTopic topicRide =  AllTopics.getTopics().get_topic(scoreResult._topicId);
 			if (topicRide!=null)
 			{
 				sortResults.add(topicRide);	

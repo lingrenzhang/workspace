@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hitchride.access.UserGroupTbAccess;
+import com.hitchride.database.access.UserGroupTbAccess;
 import com.hitchride.util.QueryStringParser;
 
 /**

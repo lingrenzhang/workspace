@@ -8,20 +8,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hitchride.access.TransientRideAccess;
-import com.hitchride.access.UserTbAccess;
-import com.hitchride.global.AllPartRides;
-import com.hitchride.global.AllTopicRides;
-import com.hitchride.global.AllTopics;
-import com.hitchride.global.Environment;
+import com.hitchride.Message;
+import com.hitchride.CommuteOwnerRide;
+import com.hitchride.CommuteParticipantRide;
+import com.hitchride.CommuteTopic;
+import com.hitchride.TransientRide;
+import com.hitchride.User;
+import com.hitchride.UserProfile;
+import com.hitchride.database.access.TransientRideAccess;
+import com.hitchride.database.access.UserTbAccess;
+import com.hitchride.environ.AllPartRides;
+import com.hitchride.environ.AllTopicRides;
+import com.hitchride.environ.AllTopics;
+import com.hitchride.environ.Environment;
 import com.hitchride.language.Dictionary;
-import com.hitchride.standardClass.Message;
-import com.hitchride.standardClass.OwnerRideInfo;
-import com.hitchride.standardClass.ParticipantRide;
-import com.hitchride.standardClass.Topic;
-import com.hitchride.standardClass.TransientRide;
-import com.hitchride.standardClass.User;
-import com.hitchride.standardClass.UserProfile;
 import com.hitchride.util.QueryStringParser;
 
 
@@ -98,9 +98,9 @@ public class UserCenter extends HttpServlet {
 				    value.append("<div class=\"panel panel-default\">");
 					value.append("<div class=\"panel-heading\">"+dic.MyTopic+"</div>");
 					value.append("<div class=\"panel-body\">");
-					for(Iterator<OwnerRideInfo> rideI = user.tRides.iterator();rideI.hasNext(); )
+					for(Iterator<CommuteOwnerRide> rideI = user.tRides.iterator();rideI.hasNext(); )
 					{
-						OwnerRideInfo ownerRide = AllTopicRides.getTopicRides().getRide(rideI.next()._recordId);
+						CommuteOwnerRide ownerRide = AllTopicRides.getTopicRides().getRide(rideI.next()._recordId);
 						if (ownerRide!=null)
 						{
 							value.append("<a href=\"/TicketSchedule/CommuteTopicCenter?topicId="+ownerRide._recordId+"\">");
@@ -108,7 +108,7 @@ public class UserCenter extends HttpServlet {
 							value.append(ownerRide.getGeoHTML());
 							value.append(ownerRide.getScheduleHTML());
 							value.append("</div></a>");
-							Topic topic= AllTopics.getTopics().get_topic(ownerRide._recordId);
+							CommuteTopic topic= AllTopics.getTopics().get_topic(ownerRide._recordId);
 						}
 					}
 					
@@ -136,9 +136,9 @@ public class UserCenter extends HttpServlet {
 				    value.append("<div class=\"panel panel-default\">");
 					value.append("<div class=\"panel-heading\">"+dic.Participate+"</div>");
 					value.append("<div class=\"panel-body\">");
-					for(Iterator<ParticipantRide> prideI = user.pRides.iterator();prideI.hasNext(); )
+					for(Iterator<CommuteParticipantRide> prideI = user.pRides.iterator();prideI.hasNext(); )
 					{
-						ParticipantRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next()._pid);
+						CommuteParticipantRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next()._pid);
 						if (parRide.get_status()!=0)
 						{
 							
@@ -148,7 +148,7 @@ public class UserCenter extends HttpServlet {
 							value.append(parRide._rideInfo.getScheduleHTML());
 							value.append("</a><a href='/TicketSchedule/Zh/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>Manage</button></div></a>");
 							value.append("</div></a>");
-							Topic topic= AllTopics.getTopics().get_topic(parRide.get_assoOwnerRideId());
+							CommuteTopic topic= AllTopics.getTopics().get_topic(parRide.get_assoOwnerRideId());
 						}
 					}
 					
@@ -176,9 +176,9 @@ public class UserCenter extends HttpServlet {
 				    value.append("<div class=\"panel panel-default\">");
 					value.append("<div class=\"panel-heading\">"+dic.FreeRide+"</div>");
 					value.append("<div class=\"panel-body\">");
-					for(Iterator<ParticipantRide> prideI = user.pRides.iterator();prideI.hasNext(); )
+					for(Iterator<CommuteParticipantRide> prideI = user.pRides.iterator();prideI.hasNext(); )
 					{
-						ParticipantRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next()._pid);
+						CommuteParticipantRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next()._pid);
 						if (parRide.get_status()==0)
 						{
 							

@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.hitchride.access.UserTbAccess;
+import com.hitchride.User;
+import com.hitchride.database.access.UserTbAccess;
 import com.hitchride.emailTemplate.RegisterTemplate;
-import com.hitchride.global.AllUsers;
-import com.hitchride.standardClass.User;
+import com.hitchride.environ.AllUsers;
 import com.hitchride.util.SendMail;
 
 /**

@@ -28,10 +28,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
-import com.hitchride.access.UserTbAccess;
-import com.hitchride.global.AllUsers;
-import com.hitchride.global.Environment;
-import com.hitchride.standardClass.User;
+import com.hitchride.User;
+import com.hitchride.database.access.UserTbAccess;
+import com.hitchride.environ.AllUsers;
+import com.hitchride.environ.Environment;
 
 /**
  * Servlet implementation class Login

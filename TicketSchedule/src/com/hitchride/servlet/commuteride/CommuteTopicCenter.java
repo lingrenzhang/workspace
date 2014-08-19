@@ -9,16 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hitchride.global.AllPartRides;
-import com.hitchride.global.AllTopicRides;
-import com.hitchride.global.AllTopics;
-import com.hitchride.global.AllUsers;
-import com.hitchride.standardClass.Message;
-import com.hitchride.standardClass.OwnerRideInfo;
-import com.hitchride.standardClass.ParticipantRide;
-import com.hitchride.standardClass.RideInfo;
-import com.hitchride.standardClass.Topic;
-import com.hitchride.standardClass.User;
+import com.hitchride.Message;
+import com.hitchride.CommuteOwnerRide;
+import com.hitchride.CommuteParticipantRide;
+import com.hitchride.CommuteRide;
+import com.hitchride.CommuteTopic;
+import com.hitchride.User;
+import com.hitchride.environ.AllPartRides;
+import com.hitchride.environ.AllTopicRides;
+import com.hitchride.environ.AllTopics;
+import com.hitchride.environ.AllUsers;
 import com.hitchride.util.QueryStringParser;
 
 /**
@@ -51,13 +51,13 @@ public class CommuteTopicCenter extends HttpServlet {
 			else{
 				QueryStringParser qsPar = new QueryStringParser(request.getQueryString());
 				int topicId = qsPar.getInt("topicId");
-			    Topic topic = AllTopics.getTopics().get_topic(topicId);
+			    CommuteTopic topic = AllTopics.getTopics().get_topic(topicId);
 			    request.getSession().setAttribute("topic",topic);
 			    User user = (User) request.getSession().getAttribute("user");
 			    Boolean isOwnerMode = (user.get_uid() == topic.ownerRide._rideInfo.get_user().get_uid());
 			    request.setAttribute("isOwnerMode", isOwnerMode);
 				
-				RideInfo ride = (RideInfo) request.getSession().getAttribute("actRide");
+				CommuteRide ride = (CommuteRide) request.getSession().getAttribute("actRide");
 				if (ride==null && !isOwnerMode )
 				{
 					response.sendRedirect("/TicketSchedule/Zh/ManageRide.jsp");
@@ -67,18 +67,18 @@ public class CommuteTopicCenter extends HttpServlet {
 				    if (!isOwnerMode)
 				    {
 					    Boolean alreadyPart = false;
-					    for(Iterator<ParticipantRide> prI = topic.parRides.iterator(); prI.hasNext();)
+					    for(Iterator<CommuteParticipantRide> prI = topic.parRides.iterator(); prI.hasNext();)
 					    {
-					    	    ParticipantRide pride=prI.next();
+					    	    CommuteParticipantRide pride=prI.next();
 					    		if (pride._rideInfo.get_user().get_uid()==user.get_uid())
 					    		{
 					    			alreadyPart = true;
 					    		}
 		
 					    }
-					    for(Iterator<ParticipantRide> prI = topic._requestPride.iterator(); prI.hasNext();)
+					    for(Iterator<CommuteParticipantRide> prI = topic._requestPride.iterator(); prI.hasNext();)
 					    {
-					    	    ParticipantRide pride=prI.next();
+					    	    CommuteParticipantRide pride=prI.next();
 					    		if (pride._rideInfo.get_user().get_uid()==user.get_uid())
 					    		{
 					    			alreadyPart = true;
@@ -86,7 +86,7 @@ public class CommuteTopicCenter extends HttpServlet {
 					    }
 					    if (!alreadyPart)
 					    {
-					    	ParticipantRide pride = new ParticipantRide(ride);
+					    	CommuteParticipantRide pride = new CommuteParticipantRide(ride);
 					    	pride.set_status(0);
 						    request.setAttribute("participantRide", pride);
 					    }
@@ -122,16 +122,16 @@ public class CommuteTopicCenter extends HttpServlet {
 
 		response.sendRedirect("/TicketSchedule/servlet/Search");
 		*/
-		RideInfo ride = (RideInfo) request.getSession().getAttribute("actRide");
+		CommuteRide ride = (CommuteRide) request.getSession().getAttribute("actRide");
 		if (ride==null)
 		{
 			response.sendRedirect("/TicketSchedule/Zh/ManageRide.jsp");
 		}
 		else
 		{
-			OwnerRideInfo ownRide = new OwnerRideInfo(ride);
+			CommuteOwnerRide ownRide = new CommuteOwnerRide(ride);
 			ride.get_user().tRides.add(ownRide);
-			ParticipantRide pRide = AllPartRides.getPartRides().get_participantRide(ride.recordId);
+			CommuteParticipantRide pRide = AllPartRides.getPartRides().get_participantRide(ride.recordId);
 			ride.get_user().pRides.remove(pRide);
 			pRide.delete();
 			
@@ -139,7 +139,7 @@ public class CommuteTopicCenter extends HttpServlet {
 			
 			AllTopicRides.getTopicRides().insert_TopicRide(ownRide);
 			ownRide.insertToDB();
-			Topic topic= new Topic();
+			CommuteTopic topic= new CommuteTopic();
 			topic.ownerRide=ownRide;
 			topic.set_topicId(ride.recordId);
 			topic.owner=ride.get_user();

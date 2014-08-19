@@ -19,17 +19,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.hitchride.GeoInfo;
+import com.hitchride.CommuteOwnerRide;
+import com.hitchride.CommuteRide;
+import com.hitchride.Schedule;
+import com.hitchride.CommuteTopic;
+import com.hitchride.TransientRide;
 import com.hitchride.calc.NewScoreCalculator;
-import com.hitchride.global.AllRides;
-import com.hitchride.global.AllTopicRides;
-import com.hitchride.global.AllTopics;
-import com.hitchride.global.Environment;
-import com.hitchride.standardClass.GeoInfo;
-import com.hitchride.standardClass.OwnerRideInfo;
-import com.hitchride.standardClass.RideInfo;
-import com.hitchride.standardClass.Schedule;
-import com.hitchride.standardClass.Topic;
-import com.hitchride.standardClass.TransientRide;
+import com.hitchride.environ.AllRides;
+import com.hitchride.environ.AllTopicRides;
+import com.hitchride.environ.AllTopics;
+import com.hitchride.environ.Environment;
 import com.hitchride.util.GsonWrapperForTopic;
 import com.hitchride.util.GsonWrapperForTransientRide;
 import com.hitchride.util.JsonHelper;
@@ -58,15 +58,15 @@ public class SearchCommuteTopics extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Environment.getEnv();
 		{
-			RideInfo actRide = (RideInfo) request.getSession().getAttribute("actRide");
+			CommuteRide actRide = (CommuteRide) request.getSession().getAttribute("actRide");
 			if (actRide == null)
 			{
 				System.out.println("ActRide to search not initialized, showing all ride in DB.");
 				
-				List<Topic> resultList = AllTopics.getTopics().getTopicRideAsList();
+				List<CommuteTopic> resultList = AllTopics.getTopics().getTopicRideAsList();
 				
 				List<GsonWrapperForTopic> rlist = new ArrayList<GsonWrapperForTopic>();
-				for(Iterator<Topic> itr = resultList.iterator();itr.hasNext();)
+				for(Iterator<CommuteTopic> itr = resultList.iterator();itr.hasNext();)
 				{
 					GsonWrapperForTopic gtr = new GsonWrapperForTopic(itr.next());
 					rlist.add(gtr);
@@ -81,12 +81,12 @@ public class SearchCommuteTopics extends HttpServlet {
 			{
 				request.getSession().setAttribute("actRide", actRide);
 				
-				List<Topic> resultList = new ArrayList<Topic>();
+				List<CommuteTopic> resultList = new ArrayList<CommuteTopic>();
 				NewScoreCalculator sc = new NewScoreCalculator();
 				resultList=sc.filterByCoordinates(actRide, 20);
 				
 				List<GsonWrapperForTopic> rlist = new ArrayList<GsonWrapperForTopic>();
-				for(Iterator<Topic> itr = resultList.iterator();itr.hasNext();)
+				for(Iterator<CommuteTopic> itr = resultList.iterator();itr.hasNext();)
 				{
 					GsonWrapperForTopic gtr = new GsonWrapperForTopic(itr.next());
 					rlist.add(gtr);

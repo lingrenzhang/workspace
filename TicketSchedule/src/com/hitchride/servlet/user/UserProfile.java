@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hitchride.access.UserTbAccess;
-import com.hitchride.standardClass.User;
+import com.hitchride.User;
+import com.hitchride.database.access.UserTbAccess;
 
 /**
  * Servlet implementation class UserProfile

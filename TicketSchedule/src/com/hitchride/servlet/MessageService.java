@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hitchride.global.AllTopics;
-import com.hitchride.global.AllUsers;
-import com.hitchride.standardClass.Message;
-import com.hitchride.standardClass.Topic;
-import com.hitchride.standardClass.User;
+import com.hitchride.Message;
+import com.hitchride.CommuteTopic;
+import com.hitchride.User;
+import com.hitchride.environ.AllTopics;
+import com.hitchride.environ.AllUsers;
 
 /**
  * Servlet implementation class MessageService
@@ -43,7 +43,7 @@ public class MessageService extends HttpServlet {
 			String method = request.getParameter("method");
 			int topicId = Integer.parseInt(request.getParameter("topicId"));
 			//OwnerRideInfo ownRide = (OwnerRideInfo) AllRides.getRides().getOwnerRide(rideId);
-			Topic topic = AllTopics.getTopics().get_topic(topicId);
+			CommuteTopic topic = AllTopics.getTopics().get_topic(topicId);
 			if (method.equalsIgnoreCase("delete"))
 			{
 				//Should be message unique ID finally.

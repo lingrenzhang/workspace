@@ -46,11 +46,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.hitchride.global.Environment;
-import com.hitchride.standardClass.GeoInfo;
-import com.hitchride.standardClass.TransientRide;
-import com.hitchride.standardClass.TransientTopic;
-import com.hitchride.standardClass.User;
+import com.hitchride.GeoInfo;
+import com.hitchride.TransientRide;
+import com.hitchride.TransientTopic;
+import com.hitchride.User;
+import com.hitchride.environ.Environment;
 import com.hitchride.util.TimeFormatHelper;
 
 /**

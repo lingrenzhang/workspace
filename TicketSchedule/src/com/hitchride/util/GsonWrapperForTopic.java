@@ -1,7 +1,7 @@
 package com.hitchride.util;
 
-import com.hitchride.standardClass.Schedule;
-import com.hitchride.standardClass.Topic;
+import com.hitchride.Schedule;
+import com.hitchride.CommuteTopic;
 
 public class GsonWrapperForTopic {
 	public int _topicId;
@@ -18,7 +18,7 @@ public class GsonWrapperForTopic {
     public String owner_avatarID;
     public Schedule schedule;  //The class only has data structure. Use it for simplicity.
  
-    public GsonWrapperForTopic(Topic t){
+    public GsonWrapperForTopic(CommuteTopic t){
     	this._topicId = t.get_topicId();
     	this.origLoc_lat = t.ownerRide._rideInfo.origLoc.get_lat();
     	this.origLoc_lon = t.ownerRide._rideInfo.origLoc.get_lon();

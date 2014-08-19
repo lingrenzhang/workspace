@@ -12,9 +12,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.hitchride.global.AllRides;
-import com.hitchride.standardClass.GeoInfo;
-import com.hitchride.standardClass.RideInfo;
+import com.hitchride.GeoInfo;
+import com.hitchride.CommuteRide;
+import com.hitchride.environ.AllRides;
 public class JsonHelper {
 	public GsonBuilder gson; 
 	public Gson gjson;
@@ -58,7 +58,7 @@ public class JsonHelper {
 	{
 		Time time = new Time(12*3600000);
 		Gson g = new Gson();
-		RideInfo i = AllRides.getRides().getRide(10);
+		CommuteRide i = AllRides.getRides().getRide(10);
 		GeoInfo geo = i.destLoc;
 		
 		System.out.println(time.toString());
