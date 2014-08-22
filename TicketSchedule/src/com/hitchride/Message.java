@@ -126,11 +126,23 @@ public class Message implements IMessageInfo,IPersistentStorage{
 		this.topicType=1;
 		this._messageId = GlobalCount.getGCount().messageCount+1;
 		GlobalCount.getGCount().messageCount = this._messageId;
+		if (from==null) //Use system admin
+		{
+			this._from = AllUsers.getUsers().getUser(1);
+		}
+		else
+		{
 		this._from = from;
+		}
 		this._to = to;
 	  
+		
+		
 		switch (actiontype)
 		{
+		    case -1:
+		    	this._messageContent = "您的从"+tride.origLoc.get_formatedAddr()+"到"+tride.destLoc.get_formatedAddr()+"的行程已创建";
+		    	break;
 			case 0: //加入行程
 		      this._messageContent = "用户" + from.get_name() + "加入了您从"+tride.origLoc.get_formatedAddr() +"到"+tride.destLoc.get_formatedAddr()+"的行程";
 		      break;
@@ -143,6 +155,7 @@ public class Message implements IMessageInfo,IPersistentStorage{
 			case 3: //删除中间点
 			  this._messageContent = "用户" + from.get_name() + "在您从"+tride.origLoc.get_formatedAddr() +"到"+tride.destLoc.get_formatedAddr()+"的行程中删除了途经点:" +info;
 			  break;
+			
 		}
 		
 		Date date = new Date();

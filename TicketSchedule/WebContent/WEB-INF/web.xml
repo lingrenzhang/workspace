@@ -255,13 +255,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>SearchTransientRide</display-name>
-    <servlet-name>SearchTransientRide</servlet-name>
-    <servlet-class>com.hitchride.servlet.transientride.SearchTransientRide</servlet-class>
+    <display-name>PublishTransientTopic</display-name>
+    <servlet-name>PublishTransientTopic</servlet-name>
+    <servlet-class>com.hitchride.servlet.transientride.PublishTransientTopic</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>SearchTransientRide</servlet-name>
-    <url-pattern>/servlet/SearchTransientRide</url-pattern>
+    <servlet-name>PublishTransientTopic</servlet-name>
+    <url-pattern>/servlet/PublishTransientTopic</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>

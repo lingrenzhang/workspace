@@ -1,6 +1,7 @@
 var currentDate;
 var selectDate;
 var displayDate;
+var replaceWidgetId; //map-canvas
 
 function getCalander(widgetId)
 {
@@ -82,6 +83,13 @@ function select_Date(value)
 		{
 			list[origDate-1].className="ui-state-default ui-state-active";
 		}
+	}
+	else
+	{
+		var datepicker=$("#ui-datepicker-div");
+		var mapcanvas=$("#"+replaceWidgetId);
+		datepicker.css({"display":"none"});
+		mapcanvas.css({"display":""});
 	}
 	document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
 	
@@ -167,14 +175,14 @@ function displayCalender(year,month)
 
 window.onresize = function(e){
 	var datepicker=$("#ui-datepicker-div");
-	var mapcanvas=$("#map-canvas");
+	var mapcanvas=$("#"+replaceWidgetId);
 	datepicker.css({"display":"none"});
 	mapcanvas.css({"display":""});
 };
 
 window.onclick = function(e){
 	var datepicker=$("#ui-datepicker-div");
-	var mapcanvas=$("#map-canvas");
+	var mapcanvas=$("#"+replaceWidgetId);
 	var left = parseFloat(datepicker.css("left"));
 	var right = left + parseFloat(datepicker.css("width"))+25; 
 	var top = parseFloat(datepicker.css("top"))-30;
@@ -199,8 +207,9 @@ function prevMonth()
 	displayCalender(displayDate.getFullYear(),displayDate.getMonth()-1);
 }
 
-function initCalandar(url,countentId)
+function initCalandar(url,countentId,replaceWidget)
 {
+	replaceWidgetId=replaceWidget;
 	getCalander(url);
 	currentDate = new Date();
 	selectDate= new Date();
@@ -208,7 +217,7 @@ function initCalandar(url,countentId)
 	
 	$(".datetime").click(function(){
 	    //Data picker related
-		var mapcanvas=$("#map-canvas");
+		var mapcanvas=$("#"+replaceWidgetId);
 		mapcanvas.fadeToggle();
 		
 	    var search= $("#"+countentId).offset();

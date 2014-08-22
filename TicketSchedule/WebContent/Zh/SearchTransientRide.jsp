@@ -77,7 +77,7 @@ anchor: new BMap.Size(8, 16),
 
 $(document).ready(function(){
 
-	initCalandar("ui-datepicker-div","search_date");
+	initCalandar("ui-datepicker-div","search_date","map-canvas");
 	document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
 	date=document.getElementById("search_date").value;
 	document.getElementById("headline").innerHTML="今日出发：<span>"+ new Date().toDateString() +"</span>";
@@ -434,7 +434,7 @@ function publishRide()
 	}
 	if (onPublishValidate())
 	{
-		var queryURL = "/TicketSchedule/servlet/SearchTransientRide";
+		var queryURL = "/TicketSchedule/servlet/PublishTransientTopic";
 		if (document.getElementById("search_s").value!="") //Weird bug when integrating baidu api with the input box.
 		{
 			queryURL = queryURL+"?s="+document.getElementById("search_s").value; 
@@ -469,6 +469,8 @@ function publishRide()
 		else
 		{
 			time_hour=  Number(document.getElementById("ride_time_hour").value)+Number(12);
+			if (time_hour>=24)
+				time_hour =time_hour-24;
 		}
 		var time_minute = document.getElementById("ride_time_minute").value;
 		
@@ -499,10 +501,47 @@ function onPublishValidate()
 	if (document.getElementById("additional-info").getAttribute("class")=="panel hidden")
 	{
 		document.getElementById("additional-info").setAttribute("class","panel");
+		setDefaultTime();
 		return false;
 	}
 	//More input validation here
 	return true;
+}
+
+function setDefaultTime()
+{
+	var ctime = new Date();
+	var hour = ctime.getHours();
+	var minutes = ctime.getMinutes();
+	var mu = Math.floor(minutes/10)+4;
+	if (mu>=6)
+	{ 
+	  mu = mu-6;
+	  hour = hour+1;
+	}
+	document.getElementById("ride_time_minute").selectedIndex = mu;
+	if (hour>=12)
+	{
+		hour=hour - 12;
+		if (hour!=12)
+		{
+			document.getElementById("ride_time_ap").value="PM";
+			document.getElementById("ride_time_hour").value=hour;
+		}
+		else
+		{
+			//Next day
+			document.getElementById("ride_time_ap").value="AM";
+			document.getElementById("ride_time_hour").value= 0 ;
+		}
+	}
+	else
+	{
+		document.getElementById("ride_time_hour").value=hour;
+	}
+	
+	
+	
 }
 
 
@@ -537,9 +576,9 @@ function asPassenger()
 		<div class="navbar navbar-default">
 			<ul class="nav navbar-nav">
 			  <li><a href="/TicketSchedule/Zh/UserCenter.jsp">用户中心</a></li>
-			  <li><a href="/TicketSchedule/Zh/ManageRide.jsp">行程管理</a></li> 
+			  <li><a href="/TicketSchedule/Zh/ManageRide.jsp">管理行程</a></li> 
 			  <li><a href="/TicketSchedule/Zh/SearchRide.jsp">上下班拼车</a></li>
-			  <!--<li><a href="javascript:inbuilding()">行程管理</a></li> 
+			  <!--<li><a href="javascript:inbuilding()">管理行程</a></li> 
 			  <li><a href="javascript:inbuilding()">上下班拼车</a></li>-->
 		      <li class="active"><a href="#">临时拼车</a></li>
 		    </ul>
@@ -628,9 +667,10 @@ function asPassenger()
 											<option value="PM">下午</option>
 										</select>
 										<select name="ride_time_hour" id="ride_time_hour" class="slim">
-							                  <option value="1">1</option>	
+							                  <option value="0">0</option>	
+							                  <option value="1">1</option>
 							                  <option value="2">2</option>
-							                  <option value="3">3</option>
+							                  <option value="3">4</option>
 							                  <option value="4">4</option>
 							                  <option value="5">5</option>
 							                  <option value="6">6</option>
@@ -639,7 +679,6 @@ function asPassenger()
 							                  <option value="9">9</option>
 							                  <option value="10">10</option>
 							                  <option value="11">11</option>
-							                  <option value="12">12</option>
 		    				            </select>点
 										<select name="ride_time_minute" id="ride_time_minute" class="slim">
 							                  <option value="00">00</option>	

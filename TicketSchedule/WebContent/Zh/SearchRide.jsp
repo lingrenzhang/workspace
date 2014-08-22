@@ -53,7 +53,7 @@
 
 
 $(document).ready(function(){
-	initCalandar("ui-datepicker-div","search_date");
+	initCalandar("ui-datepicker-div","search_date","map-canvas");
 	document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
 	document.getElementById("headline").innerHTML="今日行程：<span> - "+ new Date().toDateString() +"</span>";
 
@@ -441,7 +441,7 @@ window.onscroll = function(){
 		<div class="navbar navbar-default">
 			<ul class="nav navbar-nav">
 			  <li><a href="/TicketSchedule/Zh/UserCenter.jsp">用户中心</a></li>
-			  <li><a href="/TicketSchedule/Zh/ManageRide.jsp">行程管理</a></li>
+			  <li><a href="/TicketSchedule/Zh/ManageRide.jsp">管理行程</a></li>
 		      <li class="active"><a href="#">上下班拼车</a></li>
 		      <li><a href="/TicketSchedule/Zh/SearchTransientRide.jsp">临时拼车</a></li>
 		    </ul>

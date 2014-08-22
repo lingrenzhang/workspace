@@ -12,6 +12,7 @@ import com.hitchride.environ.AllPartRides;
 import com.hitchride.environ.AllTopicRides;
 import com.hitchride.environ.AllUsers;
 import com.hitchride.environ.DummyData;
+import com.hitchride.util.JsonHelper;
 //This class is to represent the standard format of dataStructure for Message Box.
 //Shield the front end from direct access to DB. Using runtime object for performance increase
 //and de-couple physical persistent record with runtime server.  
@@ -20,7 +21,7 @@ import com.hitchride.environ.DummyData;
 //Has relation to both carpoolTb and messageTb in terms of persistent storage. Easier the table relation in mySQL.
 //Not sure the detailed mySQL multi-table relationship supporting level.
 //Think about more complicate use like trigger, cascade, etc later when necessary. 
-public class CommuteTopic implements IPersistentStorage{
+public class CommuteTopic implements IPersistentStorage,ISerializetoJson{
 	private int _topicId; 	//Same as owner ID
 	public User owner;
 	//public List<Participant> participants;
@@ -214,5 +215,12 @@ public class CommuteTopic implements IPersistentStorage{
 	public boolean storageMode() {
 		// Instant storage mode now.
 		return false;
+	}
+	
+
+	@Override
+	public String getJson() {
+		//Use GSON for function use now. Hard code here to avoid other issue.
+		return null;
 	}
 }
