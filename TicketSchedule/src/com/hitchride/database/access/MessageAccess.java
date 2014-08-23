@@ -157,6 +157,45 @@ public class MessageAccess {
 	}
 	
 	
+	public static Hashtable<Integer,Message> LoadMessageFrom(Timestamp starttime ){
+		Hashtable<Integer,Message> allMessages = new Hashtable<Integer,Message>(5000);
+		try {
+			Statement sql;
+			getConnection();
+			
+			sql=objConn.createStatement();
+			ResultSet messagers = sql.executeQuery("select * from message where timestamp>='"+starttime+"'");
+			while (messagers.next())
+			{
+				Message message = new Message();
+				try {
+					message._messageId = messagers.getInt("MessageId");
+					message._from = (User) AllUsers.getUsers().getUser(messagers.getInt("fromUser"));
+					message._to = (User) AllUsers.getUsers().getUser(messagers.getInt("toUser"));
+					message._topicID = messagers.getInt("topicID");
+					message._messageContent = messagers.getString("messageContent");
+					message._TimeStamp = messagers.getTimestamp("timestamp");
+					Date date = new Date();
+					date.setTime(message._TimeStamp.getTime());
+					message._generateDate = date;
+					message._isSystemMessage = messagers.getBoolean("isSystemMessage");
+				} catch (SQLException e) {
+					System.out.println("Not able to load Message: " + message._messageId);
+					e.printStackTrace();
+				}
+				allMessages.put(message._messageId, message);
+				System.out.println("Message: " + message._messageId+" loaded.");
+			}
+				
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return allMessages;
+	}
 	public static void CloseConn() throws SQLException
 	{
 		if (objConn!=null)

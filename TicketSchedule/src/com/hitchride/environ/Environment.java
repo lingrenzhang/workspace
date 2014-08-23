@@ -21,12 +21,12 @@ public class Environment {
 			AllRides.getRides();
 			AllPartRides.getPartRides();
 			DummyData.getDummyEnv();
+			
 			AllTopicRides.getTopicRides();
 			AllTopics.getTopics();
 			maxTranRideId = TransientRideAccess.getMaxTransientRideId();
 			loadTransientTopic(); //Must execute after all user have been loaded.
-			
-			
+			RecentMessages.getRecMessage();
 	}
 	
 	public static Environment getEnv(){
@@ -38,6 +38,9 @@ public class Environment {
 		return env;
 	}
 	
+	//Transient Topic was not kept in memory. 
+	//Only load it's ID to user so user load from DB directly on purpose.
+	//Only keep user->topic mapping in transient topic.
 	public static void loadTransientTopic()
 	{
 		List<TransientTopic> ttopics = TransientTopicAccess.initPartis();

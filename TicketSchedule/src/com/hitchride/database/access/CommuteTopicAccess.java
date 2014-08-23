@@ -16,6 +16,7 @@ import com.hitchride.environ.AllPartRides;
 import com.hitchride.environ.AllTopicRides;
 import com.hitchride.environ.AllUsers;
 import com.hitchride.environ.DummyData;
+import com.hitchride.environ.RecentMessages;
 import com.hitchride.environ.SQLServerConf;
 
 public class CommuteTopicAccess {
@@ -262,6 +263,7 @@ public class CommuteTopicAccess {
 						for(int i=0; i<messages.length;i++)
 						{
 							Message message = DummyData.getDummyEnv()._dummyMessage.get(messages[i]);
+							//Message message = RecentMessages.getRecMessage()._recMessages.get(messages[i]);
 							topic.messages.add(message);
 						}
 					}
