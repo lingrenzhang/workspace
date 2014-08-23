@@ -50,4 +50,18 @@ public class RecentMessages {
 		_recMessages.put(this.messageCount,message);
 		messageCount++;
 	}
+	
+	//Load more message from DB, servers in the case when particular message is not 
+	//loaded initially, but then becomes active because corresponding transaction has been
+	//called.
+	public Message load_message_fromDB(int id)
+	{
+		Message newActmessage = MessageAccess.getMessagebyId(id);
+		RecentMessages.getRecMessage()._recMessages.put(id, newActmessage);
+		if (id>messageCount)
+		{
+			System.out.println("Invalid message ID. Check system logic.");
+		};
+		return newActmessage;
+	}
 }

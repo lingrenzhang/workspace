@@ -205,4 +205,43 @@ public class MessageAccess {
 		}
 	};
 	
+	
+	public static Message getMessagebyId(int id){
+		Message message = new Message();
+		try {
+			Statement sql;
+			getConnection();
+			
+			sql=objConn.createStatement();
+			ResultSet messagers = sql.executeQuery("select * from Message where messageid="+id);
+			if (messagers.next())
+			{
+				try {
+					message._messageId = messagers.getInt("MessageId");
+					message._from = (User) AllUsers.getUsers().getUser(messagers.getInt("fromUser"));
+					message._to = (User) AllUsers.getUsers().getUser(messagers.getInt("fromUser"));
+					message._topicID = messagers.getInt("topicID");
+					message._messageContent = messagers.getString("messageContent");
+					message._TimeStamp = messagers.getTimestamp("timestamp");
+					Date date = new Date();
+					date.setTime(message._TimeStamp.getTime());
+					message._generateDate = date;
+					message._isSystemMessage = messagers.getBoolean("isSystemMessage");
+				} catch (SQLException e) {
+					System.out.println("Not able to load Message: " + message._messageId);
+					e.printStackTrace();
+					message= null;
+				}
+			}
+				
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return message;
+	}
+	
 }

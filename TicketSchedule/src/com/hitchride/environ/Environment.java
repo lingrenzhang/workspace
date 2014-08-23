@@ -20,13 +20,13 @@ public class Environment {
             AllUsers.getUsers();
 			AllRides.getRides();
 			AllPartRides.getPartRides();
-			DummyData.getDummyEnv();
+			RecentMessages.getRecMessage();
 			
 			AllTopicRides.getTopicRides();
 			AllTopics.getTopics();
 			maxTranRideId = TransientRideAccess.getMaxTransientRideId();
 			loadTransientTopic(); //Must execute after all user have been loaded.
-			RecentMessages.getRecMessage();
+			
 	}
 	
 	public static Environment getEnv(){

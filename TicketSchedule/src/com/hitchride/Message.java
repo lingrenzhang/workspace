@@ -6,8 +6,6 @@ import java.util.Date;
 import com.hitchride.database.access.MessageAccess;
 import com.hitchride.environ.AllTopics;
 import com.hitchride.environ.AllUsers;
-import com.hitchride.environ.DummyData;
-import com.hitchride.environ.GlobalCount;
 import com.hitchride.environ.RecentMessages;
 
 public class Message implements IMessageInfo,IPersistentStorage{
@@ -31,10 +29,8 @@ public class Message implements IMessageInfo,IPersistentStorage{
 	}
 	public Message(String content, IUserInfo from, IUserInfo to,CommuteTopic topic)
 	{
-		//this._messageId = RecentMessages.getRecMessage().messageCount+1;
-		//RecentMessages.getRecMessage().messageCount = this._messageId;
-		this._messageId = GlobalCount.getGCount().messageCount+1;
-		GlobalCount.getGCount().messageCount = this._messageId;
+		this._messageId = RecentMessages.getRecMessage().messageCount+1;
+		RecentMessages.getRecMessage().messageCount = this._messageId;
 		
 		this._from = from;
 		this._to = to;
@@ -47,10 +43,8 @@ public class Message implements IMessageInfo,IPersistentStorage{
 	
 	public Message(String content, int fromID, int toID,int topicID)
 	{
-		//this._messageId = RecentMessages.getRecMessage().messageCount+1;
-		//RecentMessages.getRecMessage().messageCount = this._messageId;
-		this._messageId = GlobalCount.getGCount().messageCount+1;
-		GlobalCount.getGCount().messageCount = this._messageId;
+		this._messageId = RecentMessages.getRecMessage().messageCount+1;
+		RecentMessages.getRecMessage().messageCount = this._messageId;
 		
 		User from = (User) AllUsers.getUsers().getUser(fromID);
 		this._from = from;
@@ -68,10 +62,9 @@ public class Message implements IMessageInfo,IPersistentStorage{
 	public Message(int fstatus,int astatus, IUserInfo from, IUserInfo to,CommuteTopic topic)
 	{
 		this.topicType = 0;
-		//this._messageId = RecentMessages.getRecMessage().messageCount+1;
-		//RecentMessages.getRecMessage().messageCount = this._messageId;
-		this._messageId = GlobalCount.getGCount().messageCount+1;
-		GlobalCount.getGCount().messageCount = this._messageId;
+		this._messageId = RecentMessages.getRecMessage().messageCount+1;
+		RecentMessages.getRecMessage().messageCount = this._messageId;
+
 		this._from = from;
 		this._to = to;
 		this._topicID = topic.get_topicId();
@@ -131,10 +124,9 @@ public class Message implements IMessageInfo,IPersistentStorage{
 	public Message(IUserInfo from, IUserInfo to, int actiontype, TransientRide tride, String info)
 	{
 		this.topicType=1;
-		//this._messageId = RecentMessages.getRecMessage().messageCount+1;
-		//RecentMessages.getRecMessage().messageCount = this._messageId;
-		this._messageId = GlobalCount.getGCount().messageCount+1;
-		GlobalCount.getGCount().messageCount = this._messageId;
+		this._messageId = RecentMessages.getRecMessage().messageCount+1;
+		RecentMessages.getRecMessage().messageCount = this._messageId;
+
 		if (from==null) //Use system admin
 		{
 			this._from = AllUsers.getUsers().getUser(1);
@@ -279,8 +271,7 @@ public class Message implements IMessageInfo,IPersistentStorage{
     
     public void sendMessage()
     {
-		DummyData.getDummyEnv().insert_message(this); //Should be message unique ID.
-		//RecentMessages.getRecMessage().insert_message(this);
+		RecentMessages.getRecMessage().insert_message(this);//Should be message unique ID.
 		if (this.topicType==0)
 		{
 			CommuteTopic topic = AllTopics.getTopics().get_topic(this._topicID);

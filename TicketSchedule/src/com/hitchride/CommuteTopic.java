@@ -11,7 +11,6 @@ import com.hitchride.database.access.CommuteTopicAccess;
 import com.hitchride.environ.AllPartRides;
 import com.hitchride.environ.AllTopicRides;
 import com.hitchride.environ.AllUsers;
-import com.hitchride.environ.DummyData;
 import com.hitchride.environ.RecentMessages;
 import com.hitchride.util.JsonHelper;
 //This class is to represent the standard format of dataStructure for Message Box.
@@ -66,13 +65,11 @@ public class CommuteTopic implements IPersistentStorage,ISerializetoJson{
 					}
 				}
 				
-				e =DummyData.getDummyEnv()._dummyMessage.keys();
-				//e = RecentMessages.getRecMessage()._recMessages.keys();
+				e = RecentMessages.getRecMessage()._recMessages.keys();
 				while (e.hasMoreElements())
 				{
 					Integer key = e.nextElement();
-					Message message = DummyData.getDummyEnv()._dummyMessage.get(key);
-					//Message message = RecentMessages.getRecMessage()._recMessages.get(key);
+					Message message = RecentMessages.getRecMessage()._recMessages.get(key);
 					if (message.getOwnerRide()._rideInfo.recordId ==ownerRide._rideInfo.recordId)
 					{
 						messages.add(message);
