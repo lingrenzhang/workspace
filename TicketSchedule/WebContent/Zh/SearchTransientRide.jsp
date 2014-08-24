@@ -328,7 +328,7 @@ function search()
     	},
     	success: function(data){
     		this.data=data;
-	    	setTimeout(displayRides.bind(this),3000);
+	    	setTimeout(displayRides.bind(this),1000);
     	}
     });
     
@@ -553,9 +553,6 @@ function setDefaultTime()
 	{
 		document.getElementById("ride_time_hour").value=hour;
 	}
-	
-	
-	
 }
 
 
