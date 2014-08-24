@@ -707,7 +707,7 @@ $(document).ready(function(){
 			    <ul class="nav navbar-nav">
 			      <li><a href="/TicketSchedule/UserCenter.jsp">UserCenter</a></li>
 			      <li class="active"><a href="/TicketSchedule/ManageRide.jsp">ManageRide</a></li>
-			      <li><a href="/TicketSchedule/SearchRide.jsp">SearchRide</a></li>
+			      <li><a href="/TicketSchedule/SearchCommuteTopic.jsp">SearchRide</a></li>
 			    </ul>
 			  </div>
 			</div>

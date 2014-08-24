@@ -115,12 +115,12 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>UpdateParticipant</display-name>
-    <servlet-name>UpdateParticipant</servlet-name>
+    <display-name>UpdComParti</display-name>
+    <servlet-name>UpdComParti</servlet-name>
     <servlet-class>com.hitchride.servlet.commuteride.UpdateParticipant</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>UpdateParticipant</servlet-name>
+    <servlet-name>UpdComParti</servlet-name>
     <url-pattern>/servlet/UpdateParticipant</url-pattern>
   </servlet-mapping>
   <servlet>
@@ -131,7 +131,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>MessageService</servlet-name>
-    <url-pattern>/servlet/MessageService</url-pattern>
+    <url-pattern>/MessageService</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -151,7 +151,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>UserCenter</servlet-name>
-    <url-pattern>/servlet/UserCenter</url-pattern>
+    <url-pattern>/UserCenter</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -175,13 +175,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>SearchTopics</display-name>
-    <servlet-name>SearchTopics</servlet-name>
+    <display-name>SearchCommuteTopics</display-name>
+    <servlet-name>SearchCommuteTopics</servlet-name>
     <servlet-class>com.hitchride.servlet.commuteride.SearchCommuteTopics</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>SearchTopics</servlet-name>
-    <url-pattern>/servlet/SearchTopics</url-pattern>
+    <servlet-name>SearchCommuteTopics</servlet-name>
+    <url-pattern>/SearchCommuteTopics</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -285,13 +285,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>UpdateTParticipant</display-name>
-    <servlet-name>UpdateTParticipant</servlet-name>
+    <display-name>UpdTranParti</display-name>
+    <servlet-name>UpdTranParti</servlet-name>
     <servlet-class>com.hitchride.servlet.transientride.UpdateTParticipant</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>UpdateTParticipant</servlet-name>
-    <url-pattern>/servlet/UpdateTParticipant</url-pattern>
+    <servlet-name>UpdTranParti</servlet-name>
+    <url-pattern>/UpdTranParti</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -305,13 +305,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>UpdateTMiddlePoint</display-name>
-    <servlet-name>UpdateTMiddlePoint</servlet-name>
-    <servlet-class>com.hitchride.servlet.transient.UpdateTMiddlePoint</servlet-class>
+    <display-name>UpdTranMidPoi</display-name>
+    <servlet-name>UpdTranMidPoi</servlet-name>
+    <servlet-class>com.hitchride.servlet.transientride.UpdateTMiddlePoint</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>UpdateTMiddlePoint</servlet-name>
-    <url-pattern>/servlet/UpdateTMiddlePoint</url-pattern>
+    <servlet-name>UpdTranMidPoi</servlet-name>
+    <url-pattern>/UpdTranMidPoi</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -322,5 +322,15 @@
   <servlet-mapping>
     <servlet-name>DeleteTopic</servlet-name>
     <url-pattern>/servlet/DeleteTopic</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CommuteMessageService</display-name>
+    <servlet-name>CommuteMessageService</servlet-name>
+    <servlet-class>com.hitchride.servlet.commuteride.CommuteMessageService</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CommuteMessageService</servlet-name>
+    <url-pattern>/CommuteMessageService</url-pattern>
   </servlet-mapping>
 </web-app>

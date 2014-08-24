@@ -83,6 +83,6 @@ public class AuthorizationHelper {
 	{
 		AuthorizationHelper authhelper = new AuthorizationHelper();
 		System.out.println(authhelper.CheckAuthority("ab", 8));
-		System.out.println(authhelper.CheckAuthority("SearchRide", 8));
+		System.out.println(authhelper.CheckAuthority("SearchCommuteTopic", 8));
 	}
 }

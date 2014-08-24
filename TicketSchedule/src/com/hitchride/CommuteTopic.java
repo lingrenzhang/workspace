@@ -21,15 +21,15 @@ import com.hitchride.util.JsonHelper;
 //Has relation to both carpoolTb and messageTb in terms of persistent storage. Easier the table relation in mySQL.
 //Not sure the detailed mySQL multi-table relationship supporting level.
 //Think about more complicate use like trigger, cascade, etc later when necessary. 
-public class CommuteTopic implements IPersistentStorage,ISerializetoJson{
+public class CommuteTopic implements IPersistentStorage,ISerializetoJson,IMailList{
 	private int _topicId; 	//Same as owner ID
 	public User owner;
 	//public List<Participant> participants;
 	public CommuteOwnerRide ownerRide;
 	public List<CommutePartiRide> parRides;
 	public List<CommutePartiRide> _requestPride;
-	public List<Message> messages = new ArrayList<Message>();;      
-
+	public List<Message> messages = new ArrayList<Message>();
+	
     public CommuteTopic(){
     	//Used when load from DB.
     	parRides = new ArrayList<CommutePartiRide>();
@@ -156,6 +156,70 @@ public class CommuteTopic implements IPersistentStorage,ISerializetoJson{
 		result.append("To: " + this.ownerRide._rideInfo.destLoc.get_formatedAddr()+"</h4>");
         result.append("<h4>"+this.ownerRide._rideInfo.getBarMessage()+"</h4></div>");
         return result.toString();
+	}
+	
+	public User getOwner()
+	{
+		if (this.owner==null)
+		{
+			this.owner = (User) AllUsers.getUsers().getUser(this.ownerRide.get_ownerId());
+		}
+		return this.owner;
+	}
+	
+	//This list is mostly for message service to deriver proper user list.
+	@Override
+	public List<User> getAllRelevantUser()
+	{
+		List<User> users = new ArrayList<User>();
+		//Owner
+		users.add(this.getOwner());
+		for(Iterator<CommutePartiRide> iparti = this.parRides.iterator();iparti.hasNext();)
+		{
+			User user = (User) AllUsers.getUsers().getUser(iparti.next().get_userId());
+			users.add(user);
+		}
+		return users;
+	}
+	
+	@Override
+	public List<User> getUsersExcept(int uid)
+	{
+		List<User> users = new ArrayList<User>();
+		//Owner
+		if (this.getOwner().get_uid()!=uid)
+		{
+			users.add(this.getOwner());
+		}
+		for(Iterator<CommutePartiRide> iparti = this.parRides.iterator();iparti.hasNext();)
+		{
+			User user = (User) AllUsers.getUsers().getUser(iparti.next().get_userId());
+			if (user.get_uid()!=uid)
+			{
+				users.add(user);
+			}
+		}
+		return users;
+	}
+	
+	@Override
+	public List<User> getUsersExcept(User euser)
+	{
+		List<User> users = new ArrayList<User>();
+		//Owner
+		if (this.getOwner() != euser)
+		{
+			users.add(this.getOwner());
+		}
+		for(Iterator<CommutePartiRide> iparti = this.parRides.iterator();iparti.hasNext();)
+		{
+			User user = (User) AllUsers.getUsers().getUser(iparti.next().get_userId());
+			if (user!=euser)
+			{
+				users.add(user);
+			}
+		}
+		return users;
 	}
 	
 	//Persistent Storage Related

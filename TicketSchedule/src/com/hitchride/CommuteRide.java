@@ -39,7 +39,7 @@ public class CommuteRide implements IPersistentStorage{
 	// for commute only
 	//Normally used when initialize from client input.
 	public CommuteRide() {
-		
+		this.recordId = 0; //The ride is not register to system. Only exist in actRide of session.
 	}
 	
 	//Normally used when initialize from client input.

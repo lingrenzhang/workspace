@@ -7,7 +7,7 @@
 	<PageAuth>
  	</PageAuth>
 	<MethodAuth>
-	    <SearchRide>1</SearchRide>
+	    <SearchCommuteTopic>1</SearchCommuteTopic>
     	<UpdateFreeRide>2</UpdateFreeRide>
     	<CreateFreeRide>2</CreateFreeRide>
     	<InsertFreeRide>2</InsertFreeRide>

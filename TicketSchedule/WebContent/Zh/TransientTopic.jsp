@@ -366,7 +366,7 @@ function addMiddlePoint()
 	else
 	{	
 		var trid = getURLPara("trId");
-		var url = "/TicketSchedule/servlet/UpdateTMiddlePoint?trId="+trid;
+		var url = "/TicketSchedule/UpdTranMidPoi?trId="+trid;
 		url = url+"&mAddr="+mAddr;
 		url = url+"&mLat="+mLat;
 		url = url+"&mLng="+mLng;
@@ -394,7 +394,7 @@ function deleteMiddlePoint(id)
 	loadMiddle();
 
 	var trid = getURLPara("trId");
-	var url = "/TicketSchedule/servlet/UpdateTMiddlePoint?trId="+trid;
+	var url = "/TicketSchedule/UpdTranMidPoi?trId="+trid;
 	url = url+"&deleteId="+deleteId;
 	url = url+"&method=delete";
 	getJson(url);
@@ -411,7 +411,7 @@ function deleteUser(number)
 	loadParti();
 	
 	var trid = getURLPara("trId");
-	var url = "/TicketSchedule/servlet/UpdateTParticipant?trId="+trid;
+	var url = "/TicketSchedule/UpdTranParti?trId="+trid;
 	url = url+"&deleteId="+deleteId;
 	url = url+"&method=delete";
 	getJson(url);
@@ -422,7 +422,7 @@ function addUser(number)
 	var insertId=<%=user.get_uid()%>;
 
 	var trid = getURLPara("trId");
-	var url = "/TicketSchedule/servlet/UpdateTParticipant?trId="+trid;
+	var url = "/TicketSchedule/UpdTranParti?trId="+trid;
 	url = url+"&insertId="+insertId;
 	url = url+"&method=insert";
 	getJson(url);
@@ -478,7 +478,7 @@ function updateOk(result)
 				<ul class="nav navbar-nav">
 				  <li><a href="/TicketSchedule/Zh/UserCenter.jsp">用户中心</a></li>
 				  <li><a href="/TicketSchedule/Zh/ManageRide.jsp">管理行程</a></li> 
-			  	  <li><a href="/TicketSchedule/Zh/SearchRide.jsp">上下班拼车</a></li>
+			  	  <li><a href="/TicketSchedule/Zh/SearchCommuteTopic.jsp">上下班拼车</a></li>
 			  	  <!--<li><a href="javascript:inbuilding()">管理行程</a></li> 
 			      <li><a href="javascript:inbuilding()">上下班拼车</a></li>-->
 			      <li class="active"><a href="/TicketSchedule/Zh/SearchTransientRide.jsp">临时拼车</a></li>

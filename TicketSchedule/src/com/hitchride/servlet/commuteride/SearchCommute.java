@@ -179,7 +179,7 @@ public class SearchCommute extends HttpServlet {
 			request.setAttribute("orig", actRide.origLoc.get_formatedAddr());
 			request.setAttribute("dest", actRide.destLoc.get_formatedAddr());
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/Zh/SearchRide.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/Zh/SearchCommuteTopic.jsp");
 			rd.forward(request, response);
 		}	
 	}
@@ -200,7 +200,7 @@ public class SearchCommute extends HttpServlet {
 			request.setAttribute("orig", myRide.origLoc._addr);
 			request.setAttribute("dest", myRide.destLoc._addr);
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/TicketSchedule/Zh/SearchRide.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/TicketSchedule/Zh/SearchCommuteTopic.jsp");
 			rd.forward(request, response);
 	}
 	

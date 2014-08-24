@@ -142,7 +142,7 @@ public class UserCenter extends HttpServlet {
 						if (parRide.get_status()!=0)
 						{
 							
-							value.append("<a href=\"/TicketSchedule/CommuteTopicCenter?topicId="+parRide.get_assoOwnerRideId()+"\">");
+							value.append("<a href='/TicketSchedule/CommuteTopicCenter?topicId="+parRide.get_assoOwnerRideId()+"&partiId="+parRide._pid+"'>");
 							value.append("<div class=\"ride_wrapper\">");	
 							value.append(parRide._rideInfo.getGeoHTML());
 							value.append(parRide._rideInfo.getScheduleHTML());
@@ -182,8 +182,8 @@ public class UserCenter extends HttpServlet {
 						if (parRide.get_status()==0)
 						{
 							
-							value.append("<div class=\"ride_wrapper\">");	
-							value.append("<a href=\"/TicketSchedule/servlet/Search?rid="+parRide._pid+"\">");
+							value.append("<div class='ride_wrapper'>");	
+							value.append("<a href='/TicketSchedule/Zh/SearchCommuteTopic.jsp?rid="+parRide._pid+"'>");
 							value.append(parRide._rideInfo.getGeoHTML());
 							value.append(parRide._rideInfo.getScheduleHTML());
 							value.append("</a><a href='/TicketSchedule/Zh/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>Manage</button></div></a>");

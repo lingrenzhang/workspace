@@ -26,6 +26,7 @@ import com.hitchride.CommuteRide;
 import com.hitchride.Schedule;
 import com.hitchride.CommuteTopic;
 import com.hitchride.TransientRide;
+import com.hitchride.User;
 import com.hitchride.calc.NewScoreCalculator;
 import com.hitchride.environ.AllRides;
 import com.hitchride.environ.AllTopicRides;
@@ -152,6 +153,9 @@ public class SearchCommuteTopics extends HttpServlet {
 	private CommuteRide createNewTempActRide(HttpServletRequest request)
 	{
 		CommuteRide actRide = new CommuteRide();
+		User user = (User) request.getSession().getAttribute("user");
+		
+		actRide.set_user(user);
 		actRide.userType = true;
 		
 		GeoInfo orig=null;

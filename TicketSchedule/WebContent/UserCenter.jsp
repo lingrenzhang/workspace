@@ -69,7 +69,7 @@
 			+	 "<li><a href=\"javascript:getProfile()\">Profile</a></li>"
 			+"</ul>";
 			
-		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=topics");
+		var content = loadContent("/TicketSchedule/UserCenter?content=topics");
 		document.getElementById("innerContent").innerHTML = content;
  	}
  	
@@ -86,7 +86,7 @@
 	  		+	 "<li><a href=\"javascript:getHistory()\">History</a></li>"
 			+	 "<li><a href=\"javascript:getProfile()\">Profile</a></li>"
 			+"</ul>";
- 		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=messages");		
+ 		var content = loadContent("/TicketSchedule/UserCenter?content=messages");		
 	    
 		document.getElementById("innerContent").innerHTML = content;
 		newmessage = 0;
@@ -118,7 +118,7 @@
 	  		+	 "<li><a href=\"javascript:getHistory()\">History</a></li>"
 			+	 "<li class=\"active\"><a href=\"javascript:getProfile()\">Profile</a></li>"
 			+"</ul>";
- 		var content = loadContent("/TicketSchedule/servlet/UserCenter?content=profile");		
+ 		var content = loadContent("/TicketSchedule/UserCenter?content=profile");		
 		document.getElementById("innerContent").innerHTML = content;
  	}
  </script>   
@@ -139,7 +139,7 @@
 			    <ul class="nav navbar-nav">
 			      <li class="active"><a href="#">UserCenter</a></li>
 			      <li><a href="/TicketSchedule/ManageRide.jsp">ManageRide</a></li>
-			      <li><a href="/TicketSchedule/SearchRide.jsp">SearchRide</a></li>
+			      <li><a href="/TicketSchedule/SearchCommuteTopic.jsp">SearchRide</a></li>
 			    </ul>
 			  </div>
 			</div>

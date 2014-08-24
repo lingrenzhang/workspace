@@ -72,7 +72,7 @@
 			+	 "<li><a href='/TicketSchedule/servlet/Logout?uid='"+uid+"'>退出系统</a></li>"
 			+"</ul>";
 			
-		var content = getJson("/TicketSchedule/servlet/UserCenter?content=topics&language=Zh");
+		var content = getJson("/TicketSchedule/UserCenter?content=topics&language=Zh");
 		document.getElementById("innerContent").innerHTML = content;
  	}
  	
@@ -90,7 +90,7 @@
 			+	 "<li><a href='javascript:getProfile()'>个人信息</a></li>"
 			+	 "<li><a href='/TicketSchedule/servlet/Logout?uid='"+uid+"'>退出系统</a></li>"
 			+"</ul>";
- 		var content = getJson("/TicketSchedule/servlet/UserCenter?content=messages&language=Zh");		
+ 		var content = getJson("/TicketSchedule/UserCenter?content=messages&language=Zh");		
 	    
 		document.getElementById("innerContent").innerHTML = content;
 		newmessage = 0;
@@ -124,7 +124,7 @@
 			+	 "<li class='active'><a href='javascript:getProfile()'>个人信息</a></li>"
 			+	 "<li><a href='/TicketSchedule/servlet/Logout?uid='"+uid+"'>退出系统</a></li>"
 			+"</ul>";
- 		var content = getJson("/TicketSchedule/servlet/UserCenter?content=profile&language=Zh");		
+ 		var content = getJson("/TicketSchedule/UserCenter?content=profile&language=Zh");		
 		document.getElementById("innerContent").innerHTML = content;
  	}
  	
@@ -192,7 +192,7 @@ function validateNewpwd()
 			    <ul class="nav navbar-nav">
 			      <li class="active"><a href="#">用户中心</a></li>
 			      <li><a href="/TicketSchedule/Zh/ManageRide.jsp">管理行程</a></li> 
-			  	  <li><a href="/TicketSchedule/Zh/SearchRide.jsp">上下班拼车</a></li>
+			  	  <li><a href="/TicketSchedule/Zh/SearchCommuteTopic.jsp">上下班拼车</a></li>
 			      <!--<li><a href="javascript:inbuilding()">管理行程</a></li> 
 			      <li><a href="javascript:inbuilding()">上下班拼车</a></li>-->
 			      <li><a href="/TicketSchedule/Zh/SearchTransientRide.jsp">临时拼车</a></li>

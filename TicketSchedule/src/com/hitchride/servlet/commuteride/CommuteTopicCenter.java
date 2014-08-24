@@ -16,6 +16,7 @@ import com.hitchride.CommuteRide;
 import com.hitchride.CommuteTopic;
 import com.hitchride.User;
 import com.hitchride.environ.AllPartRides;
+import com.hitchride.environ.AllRides;
 import com.hitchride.environ.AllTopicRides;
 import com.hitchride.environ.AllTopics;
 import com.hitchride.environ.AllUsers;
@@ -57,10 +58,27 @@ public class CommuteTopicCenter extends HttpServlet {
 			    Boolean isOwnerMode = (user.get_uid() == topic.ownerRide._rideInfo.get_user().get_uid());
 			    request.setAttribute("isOwnerMode", isOwnerMode);
 				
-				CommuteRide ride = (CommuteRide) request.getSession().getAttribute("actRide");
+			    CommuteRide ride=null;
+			    try
+			    {
+			    	int partiId = qsPar.getInt("partiId");
+			    	ride = AllRides.getRides().getRide(partiId); 
+			    	request.getSession().setAttribute("actRide", ride);
+			    }
+			    catch(Exception e)
+			    {
+			    	//Owner mode or new ride.
+			    	System.out.println("No partiId invovled.");
+			    }
+			    
+			    if (ride== null) //Check if there is tempor active ride.
+			    {
+			    	ride = (CommuteRide) request.getSession().getAttribute("actRide");
+			    }
 				if (ride==null && !isOwnerMode )
 				{
-					response.sendRedirect("/TicketSchedule/Zh/ManageRide.jsp");
+					//Participant is not holding any ride. Force client to create ride.
+					response.sendRedirect("/TicketSchedule/Zh/ManageRide.jsp"); 
 				}
 				else
 				{
@@ -97,7 +115,7 @@ public class CommuteTopicCenter extends HttpServlet {
 				    	
 				    }
 				    
-					RequestDispatcher rd = request.getRequestDispatcher("/Zh/RideCenter.jsp");
+					RequestDispatcher rd = request.getRequestDispatcher("/Zh/CommuteTopicCenter.jsp");
 					rd.forward(request, response);
 				}
 			}
@@ -129,13 +147,20 @@ public class CommuteTopicCenter extends HttpServlet {
 		}
 		else
 		{
+			if(ride.recordId==0) //The actRide is temp and has not been registered.
+			{
+				AllRides.getRides().insert_availride(ride);
+				ride.insertToDB();
+			}
 			CommuteOwnerRide ownRide = new CommuteOwnerRide(ride);
 			ride.get_user().tRides.add(ownRide);
 			CommutePartiRide pRide = AllPartRides.getPartRides().get_participantRide(ride.recordId);
-			ride.get_user().pRides.remove(pRide);
-			pRide.delete();
-			
-			AllPartRides.getPartRides().remove(ride.recordId);
+			if (pRide!=null)
+			{
+				ride.get_user().pRides.remove(pRide);
+				pRide.delete();
+				AllPartRides.getPartRides().remove(ride.recordId);
+			}
 			
 			AllTopicRides.getTopicRides().insert_TopicRide(ownRide);
 			ownRide.insertToDB();

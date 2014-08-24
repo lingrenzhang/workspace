@@ -1,0 +1,142 @@
+form.search .text_input {
+position: relative;
+float: left;
+margin-right: 10px;
+}
+
+#search_index #content #head form.search .text_input .pin.start, #search_routes #content #head form.search .text_input .pin.start {
+background-image: url(/TicketSchedule/Picture/pin_start.png);
+}
+
+#search_index #content #head form.search .text_input .pin, #search_index #content #head form.search .text_input .datetime_icon, #search_routes #content #head form.search .text_input .pin, #search_routes #content #head form.search .text_input .datetime_icon {
+background-position: center 7px;
+background-repeat: no-repeat;
+display: block;
+height: 28px;
+left: 7px;
+position: absolute;
+top: 1px;
+width: 16px;
+}
+
+#search_index #content #head form.search .text_input input[type="text"], #search_routes #content #head form.search .text_input input[type="text"] {
+height: 21px;
+padding-left: 27px;
+width: 312px;
+}
+
+
+#action {
+	position: relative;
+	margin: 0;
+	color: #0d77b6;
+	border: none;
+	-webkit-border-radius: 0 0 5px 5px;
+	-moz-border-radius: 0 0 5px 5px;
+	-ms-border-radius: 0 0 5px 5px;
+	-o-border-radius: 0 0 5px 5px;
+	border-radius: 0 0  5px 5px;
+	background-color: #e0ecf3;
+	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ecf8ff), color-stop(100%, #e0ecf3));
+	background-image: -webkit-linear-gradient(#ecf8ff,#e0ecf3);
+	background-image: -moz-linear-gradient(#ecf8ff,#e0ecf3);
+	background-image: -o-linear-gradient(#ecf8ff,#e0ecf3);
+	background-image: -ms-linear-gradient(#ecf8ff,#e0ecf3);
+	background-image: linear-gradient(#ecf8ff,#e0ecf3);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ecf8ff, endColorstr=#e0ecf3);
+}
+
+
+#search_index #content #head form.search .text_input .pin.end, #search_routes #content #head form.search .text_input .pin.end {
+	background-image: url(/TicketSchedule/Picture/pin_end.png);
+}
+
+
+#search_index #content #head form.search .text_input.datetime .slim.datepicker, #search_routes #content #head form.search .text_input.datetime .slim.datepicker {
+font-size: 13px !important;
+}
+#search_index #content #head form.search .text_input.datetime input[type="text"], #search_routes #content #head form.search .text_input.datetime input[type="text"] {
+width: 69px;
+}
+
+#search_index #content #head form.search .text_input .datetime_icon, #search_routes #content #head form.search .text_input .datetime_icon {
+background-image: url("/TicketSchedule/Picture/calendar_input_icon.png");
+width: 15px;
+}
+
+
+
+#search_index #content #results, #search_routes #content #results {
+width: 640px;
+float: left;
+}
+
+
+#search_index #content #results .ride_list, #search_routes #content #results .ride_list {
+border: 1px solid #a7a7a7;
+-webkit-border-radius: 6px;
+-moz-border-radius: 6px;
+-ms-border-radius: 6px;
+-o-border-radius: 6px;
+border-radius: 6px;
+background-color: #fcfcfc;
+}
+
+
+#search_index #content #results h3.headline, #search_routes #content #results h3.headline {
+height: 30px;
+color: #777;
+text-shadow: 0 1px 0 #eee;
+line-height: 30px;
+padding: 0 14px;
+font-weight: 500;
+font-size: 1.17em;
+border-bottom: 1px solid #aab0b3;
+background-color: rgba(186, 227, 255, 0.4);
+}
+
+
+#map-canvas {
+position: relative; 
+float: right;
+width: 320px;
+height: 300px;
+margin-left: 30px;
+background-color: rgb(229, 227, 223); 
+overflow: hidden;
+ -webkit-transform: translateZ(0px);
+}
+
+
+#content #info {
+width: 320px;
+margin-left: 20px;
+float: right;
+}
+
+#info .floatable {
+width: 320px;
+position: absolute;
+}
+
+
+.floatwrap.fixed {
+width: 320px;
+position: fixed;
+top: 0;
+margin-top: 20px;
+}
+
+#createTopic
+{
+	position: absolute;
+	right: 20px;
+	top: 25px;
+}
+
+
+
+
+
+
+

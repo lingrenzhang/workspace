@@ -35,7 +35,7 @@
 
 <link rel="stylesheet" href="/TicketSchedule/bootstrap/css/bootstrap.css">
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
-<link href="/TicketSchedule/CSS/searchride.css" type="text/css" rel="stylesheet">
+<link href="/TicketSchedule/CSS/searchcommutetopic.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/custom_jqueryui.css" type="text/css" rel="stylesheet">
 
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
@@ -220,7 +220,7 @@ $(document).ready(function(){
 	}
   
 
-	var results = JSON.parse(getJson("/TicketSchedule/servlet/SearchTopics"));
+	var results = JSON.parse(getJson("/TicketSchedule/SearchCommuteTopics"));
 	listResults(results);
 	$(".entry").hover(function(){
 		torigLat = $(this)[0].getAttribute("origLat");
@@ -284,7 +284,7 @@ window.onscroll = function(){
 	function getTopic(topicInfo,rank)
 	{
 		var topicstring="";
-		topicstring = topicstring + "<a href='/TicketSchedule/CommuteRideCenter?topicId="+topicInfo._topicId +"&type=commute&language=En'>";
+		topicstring = topicstring + "<a href='/TicketSchedule/CommuteTopicCenter?topicId="+topicInfo._topicId +"&type=commute&language=En'>";
 		topicstring = topicstring + "<div class=\"entry\" origLat="+topicInfo.ownerRide._rideInfo.origLoc._lat+" ";
 		topicstring = topicstring + "origLng=" +  topicInfo.ownerRide._rideInfo.origLoc._lon+" ";
 		topicstring = topicstring + "destLat=" +  topicInfo.ownerRide._rideInfo.destLoc._lat+" ";
