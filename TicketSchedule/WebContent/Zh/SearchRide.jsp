@@ -50,27 +50,28 @@
  -->
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=Mto5Y3Pq2fgwkY2Kt9n60bWl"></script>
 <script type="text/javascript">
+//Display Related
+var torigLat, torigLng, tdestLat, tdestLng;
+var tomarker,tdmarker;
 
+var images = new BMap.Icon
+("/TicketSchedule/Picture/pin_start.png",
+new BMap.Size(71, 71),{
+anchor: new BMap.Size(8, 16),
+});
+var imagee = new BMap.Icon
+("/TicketSchedule/Picture/pin_end.png",
+new BMap.Size(71, 71),{
+anchor: new BMap.Size(8, 16),
+});
+
+var map;
+var basicbounds = new BMap.Bounds();
 
 $(document).ready(function(){
 	initCalandar("ui-datepicker-div","search_date","map-canvas");
 	document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
 	document.getElementById("headline").innerHTML="今日行程：<span> - "+ new Date().toDateString() +"</span>";
-
-	//Display Related
-	var torigLat, torigLng, tdestLat, tdestLng;
-	var tomarker,tdmarker;
-	
-	var images = new BMap.Icon
-	("/TicketSchedule/Picture/pin_start.png",
-	new BMap.Size(71, 71),{
-	anchor: new BMap.Size(8, 16),
-	});
-	var imagee = new BMap.Icon
-	("/TicketSchedule/Picture/pin_end.png",
-	new BMap.Size(71, 71),{
-	anchor: new BMap.Size(8, 16),
-	});
 	
 	//Search box realted
 	var searchBoxO;
@@ -115,7 +116,7 @@ $(document).ready(function(){
 	}
 
 
-	var map = new BMap.Map("map-canvas");
+	map = new BMap.Map("map-canvas");
 	var point = new BMap.Point(nowLng,nowLat);
 	map.addControl(new BMap.NavigationControl());    
 	map.addControl(new BMap.ScaleControl());
@@ -125,7 +126,7 @@ $(document).ready(function(){
 	var origLng="<%=actRide==null?"":actRide.origLoc.get_lon()%>";
 	var destLat="<%=actRide==null?"":actRide.destLoc.get_lat()%>";
 	var destLng="<%=actRide==null?"":actRide.destLoc.get_lon()%>";
-	var basicbounds = new BMap.Bounds();
+
 	
 	if (origLat!="" && origLng!="" && origLat!="" &&origLng!="")
 	{
@@ -218,97 +219,18 @@ $(document).ready(function(){
 		local.search(myValue);
 	});
 	
-	function refitb(bounds)
-	{
-		 var range = Math.max(bounds.toSpan().lat,bounds.toSpan().lng);
-		 var zoomNum = Math.floor(9-Math.log(range)/Math.log(2));
-		 map.setCenter(bounds.getCenter());
-		 map.setZoom(zoomNum);
-	}
-
-	function calculateDistances() {
-		var dx, dy, dew;
-
-		var DEF_PI = 3.14159265359; // PI
-		var DEF_2PI= 6.28318530712; // 2*PI
-		var DEF_PI180= 0.01745329252; // PI/180.0
-		var DEF_R =6370693.5; // radius of earth
-
-		ew1 = origLng* DEF_PI180;
-		ns1 = origLat * DEF_PI180;
-		ew2 = destLng * DEF_PI180;
-		ns2 = destLat * DEF_PI180;
-
-		dew = ew1 - ew2;
-
-		if (dew > DEF_PI)
-		{
-			dew = DEF_2PI - dew;
-		}
-		else
-		{
-			if (dew < -DEF_PI)
-			{
-				dew = DEF_2PI + dew;
-			}
-		}
-		dx = DEF_R * Math.cos(ns1) * dew; // 东西方向长度(在纬度圈上的投影长度)
-		dy = DEF_R * (ns1 - ns2); // 南北方向长度(在经度圈上的投影长度)
-			
-		distance = Math.sqrt(dx * dx + dy * dy)*1.1;
-		duration = distance/12;
-		
-		document.getElementById("distance").setAttribute("value",distance);
-		document.getElementById("duration").setAttribute("value",duration);
-		    
-		var price = Math.floor(distance/1200);
-		//document.getElementById("price").setAttribute("value",price);
-	}
-		
- 
-	//var results = JSON.parse(getJson("/TicketSchedule/servlet/SearchTopics"));
-	$.blockUI({ message: '<h1><img src="/TicketSchedule/Picture/busy1.gif" /></h1>' });
-	var queryURL = "/TicketSchedule/servlet/SearchTopics";
-	$.get(queryURL,function(data,status){
-		$.unblockUI();
-		document.getElementById("searchResultMessage").innerHTML="<h2>检索完成</h2>";
-		var results=JSON.parse(data);
-    	listResults(results);
-    	$(".entry").hover(function(){
-    		torigLat = $(this)[0].getAttribute("origLat");
-    		torigLng = $(this)[0].getAttribute("origLng");
-    		tdestLat = $(this)[0].getAttribute("destLat");
-    		tdestLng = $(this)[0].getAttribute("destLng");
-    		var rank = $(this)[0].getAttribute("rank");
-    		
-    		
-    		var toLatlng = new BMap.Point(torigLng,torigLat);
-    		var tdLatlng = new BMap.Point(tdestLng,tdestLat);
-
-    		if (tomarker!=null)
-    		{
-    			map.removeOverlay(tomarker);
-    		}
-    		if (tdmarker!=null)
-    		{
-    			map.removeOverlay(tdmarker);
-    		}
-    		
-    		tomarker = new BMap.Marker(toLatlng,{icon: images});
-    		tdmarker = new BMap.Marker(tdLatlng,{icon: imagee});
-    		
-    	 	var bounds = new BMap.Bounds(basicbounds.getSouthWest(),basicbounds.getNorthEast());
-    	    bounds.extend(toLatlng);
-    		bounds.extend(tdLatlng);
-    		refitb(bounds);
-    		map.addOverlay(tomarker);
-    		map.addOverlay(tdmarker);
-
-    		loadSchedule(results[rank]);
-    	});
-	});
-	document.getElementById("searchResultMessage").innerHTML="<h2>检索中</h2>";
 	
+
+	//Initial search
+	var rid = getURLPara("rid");
+	if (rid==null)
+	{
+		search(-2); //For default search
+	}
+	else
+	{
+		search(rid);
+	}
 });
 
 		
@@ -326,105 +248,220 @@ window.onscroll = function(){
 </script>
 
 <script>
-	function listResults(results){
-		var num = results.length;
-		if (num==0)
-		{
-			document.getElementById("searchResultMessage").innerHTML ="<h2><a href=''>本日尚无行程发布</a></h2>";
-		}
-		else
-		{
-			document.getElementById("searchResultMessage").innerHTML ="<h2><a href=''>没有找到你要的上下班拼车信息?	</a></h2>";
-		}
-		
-		var resultString="";
-		
-		for (var i=0;i<num;i++)
-		{
-			resultString =  resultString + getTopic(results[i],i);
-		}
-		document.getElementById("ride_content").innerHTML = resultString;
-	};
-	
-	function getTopic(topicInfo,rank)
+function search(rid)
+{
+	var queryURL;
+	if (rid==-2  ) //-2 for initial
 	{
-		var topicstring="";
-		topicstring = topicstring + "<a href='/TicketSchedule/CommuteTopicCenter?topicId="+topicInfo._topicId +"&type=commute&language=Zh'>";
-		topicstring = topicstring + "<div class='entry' origLat="+topicInfo.origLoc_lat+" ";
-		topicstring = topicstring + "origLng=" +  topicInfo.origLoc_lon+" ";
-		topicstring = topicstring + "destLat=" +  topicInfo.destLoc_lat+" ";
-		topicstring = topicstring + "destLng=" +  topicInfo.destLoc_lon+" ";
-		topicstring = topicstring + "rank=" +  rank +">";
-		
-		if (topicInfo.rideInfo_userType)
-		{
-			topicstring = topicstring + "<div class='passenger_box'><p>";
-			topicstring = topicstring +"<span><img src='/TicketSchedule/Picture/nocar.jpg'/><br><span>";
-			topicstring = topicstring + "<strong>不提供车<br>找"+topicInfo.rideInfo_totalSeats+"人同行</strong></p></div>";
-		}
-		else{
-			topicstring = topicstring + "<div class=\"price_box\"><div class=\"seats\">";
-			topicstring = topicstring +"<img src='/TicketSchedule/Picture/seats.jpg'/><span class='count'>"+topicInfo.rideInfo_totalSeats+"</span></div>";
-			topicstring = topicstring +"<p>每座<b>"+topicInfo.rideInfo_price + "</b>元</p></div>";
-		}
-		
-		topicstring = topicstring + "<div class='userpic'>";
-		topicstring = topicstring + "<div class='username'>"+topicInfo.owner_givenname+"</div>";
-		topicstring = topicstring + "<img src= '/TicketSchedule/pics/"+topicInfo.owner_avatarID+"' alt='Profile Picture'></img>";
-		topicstring = topicstring + "<span class='passenger'></span></div>";
-		topicstring = topicstring + "<div class='inner_content'><h5>";
-		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_start.png\"/>"+"  出发地："+topicInfo.origLoc_addr+"<br>";
-		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"  目的地："+topicInfo.destLoc_addr+"<br>";
-		topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/clock_small.jpg\"/>"+" 出发时间："+topicInfo.schedule.cftime[0];
-		if (topicInfo.schedule._isRoundTrip){
-			topicstring = topicstring + "&nbsp&nbsp&nbsp&nbsp返回时间："+topicInfo.schedule.cbtime[0];
-		}
-		
-		
-		topicstring = topicstring + "</h5></div></div></a>";
-		return topicstring;
-	};
-	
-	function loadSchedule(topicInfo)
+		queryURL = "/TicketSchedule/servlet/SearchTopics";
+	}
+	else if(rid == -1) // -1 for user specified
 	{
-		var schedule = "";
-		var ridesche = topicInfo.schedule;
-		if (ridesche._isCommute)
+		queryURL = "/TicketSchedule/servlet/SearchTopics"+"?"+$('#geoinfo').serialize();
+	}
+	else
+	{
+		queryURL = "/TicketSchedule/servlet/SearchTopics?rid="+rid;
+	}
+	$.blockUI({ message: '<h1><img src="/TicketSchedule/Picture/busy1.gif" /></h1>' });
+
+	$.ajax({
+        cache: false,
+        type: "Get",
+        url:queryURL,
+        //data: $('#geoinfo').serialize(),// 你的formid
+        async: true,
+        timeout:5000,
+        error: function() {
+        	alert('Server is busy');
+    		$.unblockUI();
+    		document.getElementById("searchResultMessage").innerHTML="<h2>服务器正忙，请重新检索</h2>";
+        },
+        success: function(data) {
+        	$.unblockUI();
+        	document.getElementById("searchResultMessage").innerHTML="<h2>检索结束</h2>";
+	    	results=JSON.parse(data);
+	    	listResults(results);
+	    	
+	    	$(".entry").hover(function(){
+	    		torigLat = $(this)[0].getAttribute("origLat");
+	    		torigLng = $(this)[0].getAttribute("origLng");
+	    		tdestLat = $(this)[0].getAttribute("destLat");
+	    		tdestLng = $(this)[0].getAttribute("destLng");
+	    		var rank = $(this)[0].getAttribute("rank");
+	    		var toLatlng = new BMap.Point(torigLng,torigLat);
+	    		var tdLatlng = new BMap.Point(tdestLng,tdestLat);
+	
+	    		if (tomarker!=null)
+	    		{
+	    			map.removeOverlay(tomarker);
+	    		}
+	    		if (tdmarker!=null)
+	    		{
+	    			map.removeOverlay(tdmarker);
+	    		}
+	    		
+	    		tomarker = new BMap.Marker(toLatlng,{icon: images});
+	    		tdmarker = new BMap.Marker(tdLatlng,{icon: imagee});
+	    		
+	    	 	var bounds = new BMap.Bounds(basicbounds.getSouthWest(),basicbounds.getNorthEast());
+	    	    bounds.extend(toLatlng);
+	    		bounds.extend(tdLatlng);
+	    		refitb(bounds);
+	    		map.addOverlay(tomarker);
+	    		map.addOverlay(tdmarker);
+	    		loadSchedule(results[rank]);
+	    	});
+        }
+    });
+	document.getElementById("searchResultMessage").innerHTML="<h2>检索中</h2>";
+}
+	
+function listResults(results){
+	var num = results.length;
+	if (num==0)
+	{
+		document.getElementById("searchResultMessage").innerHTML ="<h2><a href=''>本日尚无行程发布</a></h2>";
+	}
+	else
+	{
+		document.getElementById("searchResultMessage").innerHTML ="<h2><a href=''>没有找到你要的上下班拼车信息?	</a></h2>";
+	}
+		
+	var resultString="";
+		
+	for (var i=0;i<num;i++)
+	{
+		resultString =  resultString + getTopic(results[i],i);
+	}
+	document.getElementById("ride_content").innerHTML = resultString;
+};
+	
+function getTopic(topicInfo,rank)
+{
+	var topicstring="";
+	topicstring = topicstring + "<a href='/TicketSchedule/CommuteTopicCenter?topicId="+topicInfo._topicId +"&type=commute&language=Zh'>";
+	topicstring = topicstring + "<div class='entry' origLat="+topicInfo.origLoc_lat+" ";
+	topicstring = topicstring + "origLng=" +  topicInfo.origLoc_lon+" ";
+	topicstring = topicstring + "destLat=" +  topicInfo.destLoc_lat+" ";
+	topicstring = topicstring + "destLng=" +  topicInfo.destLoc_lon+" ";
+	topicstring = topicstring + "rank=" +  rank +">";
+	
+	if (topicInfo.rideInfo_userType)
+	{
+		topicstring = topicstring + "<div class='passenger_box'><p>";
+		topicstring = topicstring +"<span><img src='/TicketSchedule/Picture/nocar.jpg'/><br><span>";
+		topicstring = topicstring + "<strong>不提供车<br>找"+topicInfo.rideInfo_totalSeats+"人同行</strong></p></div>";
+	}
+	else{
+		topicstring = topicstring + "<div class=\"price_box\"><div class=\"seats\">";
+		topicstring = topicstring +"<img src='/TicketSchedule/Picture/seats.jpg'/><span class='count'>"+topicInfo.rideInfo_totalSeats+"</span></div>";
+		topicstring = topicstring +"<p>每座<b>"+topicInfo.rideInfo_price + "</b>元</p></div>";
+	}
+	
+	topicstring = topicstring + "<div class='userpic'>";
+	topicstring = topicstring + "<div class='username'>"+topicInfo.owner_givenname+"</div>";
+	topicstring = topicstring + "<img src= '/TicketSchedule/pics/"+topicInfo.owner_avatarID+"' alt='Profile Picture'></img>";
+	topicstring = topicstring + "<span class='passenger'></span></div>";
+	topicstring = topicstring + "<div class='inner_content'><h5>";
+	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_start.png\"/>"+"  出发地："+topicInfo.origLoc_addr+"<br>";
+	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/pin_end.png\"/>"+"  目的地："+topicInfo.destLoc_addr+"<br>";
+	topicstring = topicstring + "<span class=\"inner\"> <img src=\"/TicketSchedule/Picture/clock_small.jpg\"/>"+" 出发时间："+topicInfo.schedule.cftime[0];
+	if (topicInfo.schedule._isRoundTrip){
+		topicstring = topicstring + "&nbsp&nbsp&nbsp&nbsp返回时间："+topicInfo.schedule.cbtime[0];
+	}
+	
+	
+	topicstring = topicstring + "</h5></div></div></a>";
+	return topicstring;
+};
+
+function loadSchedule(topicInfo)
+{
+	var schedule = "";
+	var ridesche = topicInfo.schedule;
+	if (ridesche._isCommute)
+	{
+		for (var i=0;i<7;i++)
 		{
-			for (var i=0;i<7;i++)
-			{
-				 if (ridesche._dayOfWeek[i]){
-					 switch (i)
-					 {
-					 	case 1 : schedule = schedule + "Mon: ";
-					 		break;
-					 	case 2 : schedule = schedule + "Tue: ";
-					 		break;
-					 	case 3 : schedule = schedule + "Wed: ";
-					 		break;
-					 	case 4 : schedule = schedule + "Thu: ";
-					 		break;
-					 	case 5 : schedule = schedule + "Fri: ";
-				 			break;
-					 	case 6 : schedule = schedule + "Sat: ";
-				 			break;
-					 	case 0 : schedule = schedule + "Sun: ";
-				 			break;
-					 }
-					schedule = schedule + ridesche.cftime[i] + " " +  ridesche.cbtime[i] + "</br>";
+			 if (ridesche._dayOfWeek[i]){
+				 switch (i)
+				 {
+				 	case 1 : schedule = schedule + "Mon: ";
+				 		break;
+				 	case 2 : schedule = schedule + "Tue: ";
+				 		break;
+				 	case 3 : schedule = schedule + "Wed: ";
+				 		break;
+				 	case 4 : schedule = schedule + "Thu: ";
+				 		break;
+				 	case 5 : schedule = schedule + "Fri: ";
+			 			break;
+				 	case 6 : schedule = schedule + "Sat: ";
+			 			break;
+				 	case 0 : schedule = schedule + "Sun: ";
+			 			break;
 				 }
-				 
-			}
+				schedule = schedule + ridesche.cftime[i] + " " +  ridesche.cbtime[i] + "</br>";
+			 }
 		}
-		else
+	}
+	else
+	{
+		schedule = schedule + "Trip date: " + ridesche.tripDate + "</br>";
+		schedule = schedule + "Trip time: " + ridesche.tripTime;
+	}
+	
+	document.getElementById("schedule-info").innerHTML = schedule;
+	return schedule;
+};
+
+function refitb(bounds)
+{
+	 var range = Math.max(bounds.toSpan().lat,bounds.toSpan().lng);
+	 var zoomNum = Math.floor(9-Math.log(range)/Math.log(2));
+	 map.setCenter(bounds.getCenter());
+	 map.setZoom(zoomNum);
+}
+
+function calculateDistances() {
+	var dx, dy, dew;
+
+	var DEF_PI = 3.14159265359; // PI
+	var DEF_2PI= 6.28318530712; // 2*PI
+	var DEF_PI180= 0.01745329252; // PI/180.0
+	var DEF_R =6370693.5; // radius of earth
+
+	ew1 = origLng* DEF_PI180;
+	ns1 = origLat * DEF_PI180;
+	ew2 = destLng * DEF_PI180;
+	ns2 = destLat * DEF_PI180;
+
+	dew = ew1 - ew2;
+
+	if (dew > DEF_PI)
+	{
+		dew = DEF_2PI - dew;
+	}
+	else
+	{
+		if (dew < -DEF_PI)
 		{
-			schedule = schedule + "Trip date: " + ridesche.tripDate + "</br>";
-			schedule = schedule + "Trip time: " + ridesche.tripTime;
+			dew = DEF_2PI + dew;
 		}
+	}
+	dx = DEF_R * Math.cos(ns1) * dew; // 东西方向长度(在纬度圈上的投影长度)
+	dy = DEF_R * (ns1 - ns2); // 南北方向长度(在经度圈上的投影长度)
 		
-		document.getElementById("schedule-info").innerHTML = schedule;
-		return schedule;
-	};
+	distance = Math.sqrt(dx * dx + dy * dy)*1.1;
+	duration = distance/12;
+	
+	document.getElementById("distance").setAttribute("value",distance);
+	document.getElementById("duration").setAttribute("value",duration);
+	    
+	var price = Math.floor(distance/1200);
+	//document.getElementById("price").setAttribute("value",price);
+};
 </script>
 
 
@@ -456,7 +493,7 @@ window.onscroll = function(){
 	<div id="content_container">
 		<div id="content">
 			<div id="head">
-				<form class="search" action="/TicketSchedule/servlet/Search" method="get" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
+				<form class="search" id="geoinfo" action="/TicketSchedule/servlet/Search" method="get" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
 					<div class="text_input">
 						<label class="pin start" for="search_s"></label>
 						<input id="search_s" class="input_text" type="text" 
@@ -482,7 +519,7 @@ window.onscroll = function(){
 						<input id="search_date" class="slim datepicker hasDatepicker" type="text" value="exp" name="date" readonly="readonly" style="cursor:pointer">
 					</div>
 					
-					<button class="btn btn-primary" type="submit">查找</button>
+					<!--  <button class="btn btn-primary" type="submit">查找</button>-->
 				
 				<%if (user.get_authLevel()>=32) {%>
 				    <div class="sup_method">
@@ -517,6 +554,7 @@ window.onscroll = function(){
 				    </div>
 				<%} %>
 				</form>
+				<button class="btn btn-primary" type="submit" onclick="search(-1)">查找</button>
 			</div>
 			<div id="results">
 				<div class="ride_list">

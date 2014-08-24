@@ -66,7 +66,7 @@ public class SearchCommute extends HttpServlet {
 				actRide = (CommuteRide) request.getSession().getAttribute("actRide");
 			}
 			
-			if (actRide ==null)
+			if (actRide ==null) //Create new tempor ride
 			{ 
 				actRide = new CommuteRide();
 				actRide.userType = true;
