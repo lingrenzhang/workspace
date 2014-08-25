@@ -135,12 +135,6 @@ margin-top: 20px;
 	top: 25px;
 }
 
-select 
-{
-	width: 80px;
-	margin-top: 10px;
-}
-
 .slim select 
 {
 	width: 50px;
@@ -158,16 +152,6 @@ select
 	width: 50px;
 }
 
-
-#ride_time_hour
-{
-	width:60px;
-}
-
-#ride_time_minute
-{
-	width:60px;
-}
 
 .nav
 {

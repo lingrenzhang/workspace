@@ -805,46 +805,46 @@ function refitb(bounds)
                        <dd class="triptabs" style="display: block;">
                    		 <input id="onetime-only" type="hidden" name="type" value="one-time">
 		                   	<div id="multipostwrapper" style="">
-			                        <div id="singletripwrapper" class="singletripwrapper">
+			                    <!-- <div id="singletripwrapper" class="singletripwrapper">
 			                        	<span class="trip_num">Trip 1</span>
 			                        	<span class="float_right trip_close dot">X</span><br>
+			                        	  
 			                        	<div class="tripbox">
 			                               <div id="there_one_time">
 			                               		<input type="hidden" id="there_trip" name="there_trip" class="there" value="1">
 			                            	    <label for="depart-date" class="depart-date">Depart</label>
 				                                <input type="text" name="date" id="depart-date" class="slim datepicker depart-date hasDatepicker" maxlength="10" value="07/14/2013">
 				                                <img class="ui-datepicker-trigger" src="/TicketSchedule/Picture/icon_calendar.png" alt="..." title="...">
-				   								<select name="there_time" id="there_time" class="slim there_time">
-					                                <option value="anytime" selected="selected">anytime</option>
-					                                <option value="early">early (12a-8a)</option>
-					                                <option value="morning">morning (8a-12p)</option>
-					                                <option value="afternoon">afternoon (12p-5p)</option>
-					                                <option value="evening">evening (5p-9p)</option>
-					                                <option value="night">night (9p-12a)</option>
-					                                <option value="1:00 AM">1:00 AM</option>
-					                                <option value="2:00 AM">2:00 AM</option>
-					                                <option value="3:00 AM">3:00 AM</option>
-					                                <option value="4:00 AM">4:00 AM</option>
-					                                <option value="5:00 AM">5:00 AM</option>
-					                                <option value="6:00 AM">6:00 AM</option>
-					                                <option value="7:00 AM">7:00 AM</option>
-					                                <option value="8:00 AM">8:00 AM</option>
-					                                <option value="9:00 AM">9:00 AM</option>
-					                                <option value="10:00 AM">10:00 AM</option>
-					                                <option value="11:00 AM">11:00 AM</option>
-					                                <option value="12:00 PM">noon</option>
-					                                <option value="1:00 PM">1:00 PM</option>
-					                                <option value="2:00 PM">2:00 PM</option>
-					                                <option value="3:00 PM">3:00 PM</option>
-					                                <option value="4:00 PM">4:00 PM</option>
-					                                <option value="5:00 PM">5:00 PM</option>
-					                                <option value="6:00 PM">6:00 PM</option>
-					                                <option value="7:00 PM">7:00 PM</option>
-					                                <option value="8:00 PM">8:00 PM</option>
-					                                <option value="9:00 PM">9:00 PM</option>
-					                                <option value="10:00 PM">10:00 PM</option>
-					                                <option value="11:00 PM">11:00 PM</option>		                                
-				                                </select>
+				   								<div id="schedule-info">
+												<img src= "/TicketSchedule/Picture/clock.jpg"/>
+												<select name="ride_time_ap" id="ride_time_ap">
+													<option value="AM">上午</option>
+													<option value="PM">下午</option>
+												</select>
+												<select name="ride_time_hour" id="ride_time_hour" class="slim">
+									                  <option value="0">0</option>	
+									                  <option value="1">1</option>
+									                  <option value="2">2</option>
+									                  <option value="3">4</option>
+									                  <option value="4">4</option>
+									                  <option value="5">5</option>
+									                  <option value="6">6</option>
+									                  <option value="7">7</option>
+									                  <option value="8">8</option>
+									                  <option value="9">9</option>
+									                  <option value="10">10</option>
+									                  <option value="11">11</option>
+				    				            </select>点
+												<select name="ride_time_minute" id="ride_time_minute" class="slim">
+									                  <option value="00">00</option>	
+									                  <option value="10">10</option>
+									                  <option value="20">20</option>
+									                  <option value="30">30</option>
+									                  <option value="40">40</option>
+									                  <option value="50">50</option>
+									        	</select>分
+											</div>
+				   					<select name="there_time" id="there_time" class="slim there_time"> </select>
 				                            </div>
 				                            <p><input type="checkbox" name="back" id="back" value="1" class="checkbox back" checked="checked"></p>
 				                            <label for="return-date" class="return-date" style="opacity: 1;">Return</label>
@@ -889,7 +889,7 @@ function refitb(bounds)
 				                        <span class="max_trips hidden">你最多一次只能添加五个行程</span>
 			                        	<input type="hidden" name="multi_trips" id="multi_trips" value="0">
 			                        	<input type="hidden" name="num_trips" id="num_trips" value="1">
-		                     </div>
+		                     --></div>
 
 							<div id="there_repeating" style="display: none;">
 		                            <div id="commute-table">

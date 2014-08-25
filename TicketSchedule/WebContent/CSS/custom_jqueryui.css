@@ -142,3 +142,15 @@ background-position:0px 0px;
 background-image:url(/TicketSchedule/Picture/tiny-right-arrow.jpg);
 background-position:0px 0px;
 }
+
+/* UI Timer ---------------------- */
+.time_picker 
+{
+	width: 80px;
+	margin-top: 10px;
+}
+
+.hour_picker, .minute_picker
+{
+	width:60px;
+}

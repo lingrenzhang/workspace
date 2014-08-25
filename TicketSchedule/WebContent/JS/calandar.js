@@ -1,3 +1,4 @@
+//This part is for calandar picker
 var currentDate;
 var selectDate;
 var displayDate;
@@ -251,7 +252,104 @@ function initCalandar(url,countentId,replaceWidget)
 		$(this).className=$(this).className + " active";
 	});
 }	
+
+
+//Following part is for time picker
+//User different valueId so no 
+function TimePicker(widgetHolder,valueId,pictureName)
+{
+	if (valueId==null)
+	{
+		valueId = "ride_time";
+	}
+	if (pictureName == null)
+	{
+		pictureName = "/TicketSchedule/Picture/clock.jpg";
+	}
+	this.widgetHolder = widgetHolder;
+	this.valueId = valueId;
+	this.pictureName = pictureName;
+				var widgetScript = "<img src= '"+pictureName+"'/>"
+				+"<select class='time_picker ap_picker' name='"+valueId+"_ap' id='"+valueId+"_ap'>"
+				+"<option value='AM'>上午</option>"
+				+"<option value='PM'>下午</option>"
+				+"</select>"
+				+"<select class='time_picker hour_picker' name='"+valueId+"_hour' id='"+valueId+"_hour' class='slim'>"
+				+"<option value='0'>0</option>"
+				+"<option value='1'>1</option>"
+				+"<option value='2'>2</option>"
+				+"<option value='3'>4</option>"
+				+"<option value='4'>4</option>"
+				+"<option value='5'>5</option>"
+				+"<option value='6'>6</option>"
+				+"<option value='7'>7</option>"
+				+"<option value='8'>8</option>"
+				+"<option value='9'>9</option>"
+				+"<option value='10'>10</option>"
+				+"<option value='11'>11</option>"
+				+"</select>点"
+				+"<select class='time_picker minute_picker' name='"+valueId+"_minute' id='"+valueId+"_minute' class='slim'>"
+				+"<option value='00'>00</option>"
+				+"<option value='10'>10</option>"
+				+"<option value='20'>20</option>"
+				+"<option value='30'>30</option>"
+				+"<option value='40'>40</option>"
+				+"<option value='50'>50</option>"
+				+"</select>分";
+		widgetHolder.innerHTML = widgetScript;
 	
+	this.setDefaultTime = function(){
+		var ctime = new Date();
+		var hour = ctime.getHours();
+		var minutes = ctime.getMinutes();
+		var mu = Math.floor(minutes/10)+4;
+		if (mu>=6)
+		{ 
+		  mu = mu-6;
+		  hour = hour+1;
+		}
+		document.getElementById(valueId+"_minute").selectedIndex = mu;
+		if (hour>=12)
+		{
+			hour=hour - 12;
+			if (hour!=12)
+			{
+				document.getElementById(valueId+"_ap").value="PM";
+				document.getElementById(valueId+"_hour").value=hour;
+			}
+			else
+			{
+				//Next day
+				document.getElementById(valueId+"_ap").value="AM";
+				document.getElementById(valueId+"_hour").value= 0 ;
+			}
+		}
+		else
+		{
+			document.getElementById(valueId+"_hour").value=hour;
+		}
+	};
 	
-		
+	this.getHour = function(){
+		var time_hour;
+		if (document.getElementById(valueId+"_ap").value=="AM")
+		{
+			time_hour=  document.getElementById(valueId+"_hour").value;
+		}
+		else
+		{
+			time_hour=  Number(document.getElementById(valueId+"_hour").value)+Number(12);
+			if (time_hour>=24)
+				time_hour =time_hour-24;
+		}
+		return time_hour;
+	};
+	
+	this.getMinute = function(){
+		var time_minute = document.getElementById(valueId+"_minute").value;
+		return time_minute;
+	};
+};
+
+
 

@@ -76,8 +76,10 @@ anchor: new BMap.Size(8, 16),
 });
 
 $(document).ready(function(){
-
 	initCalandar("ui-datepicker-div","search_date","map-canvas");
+	var timer_holder = document.getElementById("schedule-info");
+	timePicker = new TimePicker(timer_holder,"ride_time","/TicketSchedule/Picture/clock.jpg");
+
 	document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
 	date=document.getElementById("search_date").value;
 	document.getElementById("headline").innerHTML="今日出发：<span>"+ new Date().toDateString() +"</span>";
@@ -475,21 +477,9 @@ function publishRide()
 		queryURL = queryURL+"&duration="+duration;
 		date = document.getElementById("search_date").value;
 		queryURL = queryURL+"&date="+date;
-		var time_hour;
-		if (document.getElementById("ride_time_ap").value=="AM")
-		{
-			time_hour=  document.getElementById("ride_time_hour").value;
-		}
-		else
-		{
-			time_hour=  Number(document.getElementById("ride_time_hour").value)+Number(12);
-			if (time_hour>=24)
-				time_hour =time_hour-24;
-		}
-		var time_minute = document.getElementById("ride_time_minute").value;
 		
-		queryURL = queryURL+"&time_hour="+time_hour;
-		queryURL = queryURL+"&time_minute="+time_minute;
+		queryURL = queryURL+"&time_hour="+timePicker.getHour();
+		queryURL = queryURL+"&time_minute="+timePicker.getMinute();
 		queryURL = queryURL+"&userType="+userType;
 		queryURL = queryURL+"&price="+document.getElementById("price").value;
 		queryURL = queryURL+"&seats="+document.getElementById("seats").value;
@@ -510,49 +500,17 @@ function onPublishValidate()
 		alert("先在搜索栏输入您的出发和目的地，并保证其位置显示在了地图上。然后在右下角输入具体信息。");
 		document.getElementById("topAnchor").click();
 		document.getElementById("additional-info").setAttribute("class", "panel");
+		timePicker.setDefaultTime();
 		return false;
 	}
 	if (document.getElementById("additional-info").getAttribute("class")=="panel hidden")
 	{
 		document.getElementById("additional-info").setAttribute("class","panel");
-		setDefaultTime();
+		timePicker.setDefaultTime();
 		return false;
 	}
 	//More input validation here
 	return true;
-}
-
-function setDefaultTime()
-{
-	var ctime = new Date();
-	var hour = ctime.getHours();
-	var minutes = ctime.getMinutes();
-	var mu = Math.floor(minutes/10)+4;
-	if (mu>=6)
-	{ 
-	  mu = mu-6;
-	  hour = hour+1;
-	}
-	document.getElementById("ride_time_minute").selectedIndex = mu;
-	if (hour>=12)
-	{
-		hour=hour - 12;
-		if (hour!=12)
-		{
-			document.getElementById("ride_time_ap").value="PM";
-			document.getElementById("ride_time_hour").value=hour;
-		}
-		else
-		{
-			//Next day
-			document.getElementById("ride_time_ap").value="AM";
-			document.getElementById("ride_time_hour").value= 0 ;
-		}
-	}
-	else
-	{
-		document.getElementById("ride_time_hour").value=hour;
-	}
 }
 
 
@@ -672,33 +630,6 @@ function asPassenger()
 										</div>
 									</div>
 									<div id="schedule-info">
-										<img src= "/TicketSchedule/Picture/clock.jpg"/>
-										<select name="ride_time_ap" id="ride_time_ap">
-											<option value="AM">上午</option>
-											<option value="PM">下午</option>
-										</select>
-										<select name="ride_time_hour" id="ride_time_hour" class="slim">
-							                  <option value="0">0</option>	
-							                  <option value="1">1</option>
-							                  <option value="2">2</option>
-							                  <option value="3">4</option>
-							                  <option value="4">4</option>
-							                  <option value="5">5</option>
-							                  <option value="6">6</option>
-							                  <option value="7">7</option>
-							                  <option value="8">8</option>
-							                  <option value="9">9</option>
-							                  <option value="10">10</option>
-							                  <option value="11">11</option>
-		    				            </select>点
-										<select name="ride_time_minute" id="ride_time_minute" class="slim">
-							                  <option value="00">00</option>	
-							                  <option value="10">10</option>
-							                  <option value="20">20</option>
-							                  <option value="30">30</option>
-							                  <option value="40">40</option>
-							                  <option value="50">50</option>
-							        	</select>分
 									</div>
 									<div>
 										<button id="publishTopic" type="submit" class="button post" onclick="publishRide()">发布</button>
