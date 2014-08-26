@@ -54,7 +54,7 @@ function select_Date(value,contentHolderId,replaceWidgetId)
 			mapcanvas.css({"display":""});
 		}
 	}
-	document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
+	document.getElementById(contentHolderId).value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
 };
 
 function displayCalender(year,month,contentHolderId,replaceWidgetId)
@@ -250,20 +250,34 @@ function Calandar(selectorHolder,pickerHolder,contentHolderId,replaceWidgetId)
 	    datepicker.css({"left" : search.left,"top" : search.top+35});
 	    datepicker.fadeToggle();
 	    var sdate=document.getElementById(contentHolderId).value;
-	    var dtArr=sdate.split("/");
-		var selectDate=new Date();
-	    selectDate.setDate(dtArr[1]);
-	    selectDate.setMonth(dtArr[0]-1);
-	    selectDate.setFullYear(dtArr[2]);
 	    
-	    displayDate.setDate(dtArr[1]);
-	    displayDate.setMonth(dtArr[0]-1);
-	    displayDate.setFullYear(dtArr[2]);
-	 	var mon = displayDate.toDateString().substring(4,7);
-		document.getElementById("picker-Month").innerHTML=mon;
-		document.getElementById("picker-Year").innerHTML=displayDate.getFullYear();
-		displayCalender(displayDate.getFullYear(),displayDate.getMonth(),contentHolderId,replaceWidgetId);
-	};
+	    try
+	    {
+		    var dtArr=sdate.split("/");
+			var selectDate=new Date();
+		    selectDate.setDate(dtArr[1]);
+		    selectDate.setMonth(dtArr[0]-1);
+		    selectDate.setFullYear(dtArr[2]);
+		    
+		    displayDate.setDate(dtArr[1]);
+		    displayDate.setMonth(dtArr[0]-1);
+		    displayDate.setFullYear(dtArr[2]);
+		 	var mon = displayDate.toDateString().substring(4,7);
+			document.getElementById("picker-Month").innerHTML=mon;
+			document.getElementById("picker-Year").innerHTML=displayDate.getFullYear();
+			displayCalender(displayDate.getFullYear(),displayDate.getMonth(),contentHolderId,replaceWidgetId);
+	    }
+	    catch(err)
+	    {
+	    	selectDate=new Date();
+		    displayDate=new Date();
+		    var mon = displayDate.toDateString().substring(4,7);
+			document.getElementById("picker-Month").innerHTML=mon;
+			document.getElementById("picker-Year").innerHTML=displayDate.getFullYear();
+			displayCalender(displayDate.getFullYear(),displayDate.getMonth(),contentHolderId,replaceWidgetId);
+	    }
+	    
+	 };
 
 	$(".ui-state-default").click(function(){
 		this.className="ui-state-default ui-state-active";

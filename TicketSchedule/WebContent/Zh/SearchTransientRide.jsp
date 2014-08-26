@@ -31,9 +31,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <link rel="stylesheet" href="/TicketSchedule/bootstrap/css/bootstrap.css">
+<link href="/TicketSchedule/CSS/custom_jqueryui.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/searchtransientride.css" type="text/css" rel="stylesheet">
-<link href="/TicketSchedule/CSS/custom_jqueryui.css" type="text/css" rel="stylesheet">
+
 
 <link rel="shortcut icon" href="/TicketSchedule/favicon.ico" type="image/x-icon" /> 
 

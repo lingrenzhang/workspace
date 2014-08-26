@@ -408,19 +408,6 @@ margin-left: 60px;
 	margin-left: 60px;
 }
 
-#cost, #seats {
-background: #FFFFFF url('/TicketSchedule/Picture/bg_input_text.gif') top repeat-x;
-border: 1px solid #C1D5E8;
-float: left;
-line-height: 14px;
-padding: 4px 3px 3px 3px;
-font-size: 26px;
-height: 38px;
-width: 60px !important;
-margin-bottom: 0px;
-}
-
-
 #dollarsign {
 float: left;
 font-size: 26px;

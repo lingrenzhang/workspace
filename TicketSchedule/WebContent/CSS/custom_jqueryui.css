@@ -35,6 +35,7 @@ display:block;
 text-indent:-99999px;
 overflow:hidden;
 background-repeat:no-repeat;
+width: 20px;
 }
 .ui-datepicker-header {
 position:relative;
@@ -99,6 +100,7 @@ width: 17em;
 padding:0.8em 0.8em;
 border:1px solid #bbb;
 border-bottom:2px solid #bbb;
+background-color: white;
 }
 .ui-datepicker-calendar a.ui-state-default {
 color:#666;

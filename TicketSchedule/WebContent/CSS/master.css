@@ -444,3 +444,23 @@ box-shadow: 0 1px 1px rgba(0,0,0,0.05);
 {
 	color: #666;
 }
+
+#bargin-content {
+padding-top: 10px;
+padding-bottom: 10px;
+padding-left: 13px;
+border: 1px solid #ddd;
+border-top: none;
+-webkit-border-radius: 0 0 4px 4px;
+-moz-border-radius: 0 0 4px 4px;
+border-radius: 0 0 4px 4px;
+}
+#seats-content,#price-content {
+display: inline;
+}
+
+#price, #distance,#seats {
+margin-top: 10px;
+width: 50px;
+}
+

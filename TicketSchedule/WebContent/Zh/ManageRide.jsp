@@ -30,11 +30,13 @@
 <link rel="stylesheet" href="/TicketSchedule/bootstrap/css/bootstrap.css">
 <link href="/TicketSchedule/CSS/master.css" type="text/css" rel="stylesheet">
 <link href="/TicketSchedule/CSS/manageride.css" type="text/css" rel="stylesheet">
+<link href="/TicketSchedule/CSS/custom_jqueryui.css" type="text/css" rel="stylesheet">
 
 <link rel="shortcut icon" href="/TicketSchedule/favicon.ico" type="image/x-icon" /> 
 
 <script src="/TicketSchedule/JS/jquery-1.10.1.js"></script>
 <script src="/TicketSchedule/JS/site.js"></script>
+<script src="/TicketSchedule/JS/calandar.js"></script>
 <script src="/TicketSchedule/bootstrap/js/bootstrap.js"></script>
 <!--
 <script type="text/javascript"
@@ -125,13 +127,26 @@ function asCommute()
 
 $(document).ready(function(){
 	//------------------------register listener-------------------------
-	$(".datetime_icon").click(function(){
-    var search= $("#search_date").offset();
-    var datepicker=$("#ui-datepicker-div");
-    datepicker.css({"left" : search.left,"top" : search.top+35});
-	datepicker.fadeToggle();
-	});
+	
+	
+	var selectorholder = document.getElementById("depart-date");
+	var pickerholder = document.getElementById("ui-datepicker-div");
 
+	var calandar = new Calandar(selectorholder,pickerholder,"depart-date","map-canvas");
+	date= calandar.getDate();
+	
+	var timer_holder = document.getElementById("time-info");
+	timePicker = new TimePicker(timer_holder,"ride_time","/TicketSchedule/Picture/clock.jpg");
+	timePicker.setDefaultTime();
+	
+	var selectorholder2 = document.getElementById("depart-date2");
+
+	var calandar2 = new Calandar(selectorholder2,pickerholder,"depart-date2","map-canvas");
+	date= calandar2.getDate();
+	
+	var timer_holder2 = document.getElementById("time-info2");
+	timePicker2 = new TimePicker(timer_holder2,"ride_time2","/TicketSchedule/Picture/clock.jpg");
+	timePicker2.setDefaultTime();
 	$("#commute_day").click(function(){
 		$(this).className=$(this).className + " active";
 	});
@@ -264,9 +279,9 @@ $(document).ready(function(){
 	});
 	
 	$("a.edit").click(function(){
-		if ($(this).text()=="edit")
+		if ($(this).text()=="编辑")
 		{
-			$(this).text("revert");
+			$(this).text("取消");
 			$(this).css("opacity", "0.6");
 			Id=$(this).attr("id");
 			num=Id.charAt(11);
@@ -318,7 +333,7 @@ $(document).ready(function(){
 		}
 		else
 		{
-			$(this).text("edit");
+			$(this).text("编辑");
 			$(this).css("opacity", "1");
 			Id=$(this).attr("id");
 			num=Id.charAt(11);
@@ -801,11 +816,29 @@ function refitb(bounds)
 					</div>
 					<input id="commuteType" class="commuteType hidden" type="text" value="Transient" name="commuteType"></input>
                     <div class="schedule-info">
-                    <dl>                
-                       <dd class="triptabs" style="display: block;">
-                   		 <input id="onetime-only" type="hidden" name="type" value="one-time">
+                    	<dl><dd>
 		                   	<div id="multipostwrapper" style="">
-			                    <!-- <div id="singletripwrapper" class="singletripwrapper">
+	                   	   		 <div class="date-info">
+		                               		<input type="hidden" id="there_trip" name="there_trip" class="there" value="1">
+		                            	    <label for="depart-date" class="depart-date">出发</label>
+			                                <input type="text" name="date" id="depart-date" class="slim datepicker depart-date hasDatepicker" maxlength="10" value="07/14/2013">
+			                                <img class="ui-datepicker-trigger" src="/TicketSchedule/Picture/icon_calendar.png" alt="..." title="...">
+	   								</div>
+	   								<div id="time-info">				
+									</div>
+									<div class="date-info2">
+		                               		<input type="hidden" id="there_trip" name="there_trip" class="there" value="1">
+		                            	    <label for="depart-date" class="depart-date">返回</label>
+			                                <input type="text" name="date" id="depart-date2" class="slim datepicker depart-date hasDatepicker" maxlength="10" value="07/14/2013">
+			                                <img class="ui-datepicker-trigger" src="/TicketSchedule/Picture/icon_calendar.png" alt="..." title="...">
+	   								</div>
+	   								<div id="time-info2">				
+									</div>
+									<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"
+ 										style="position: absolute; z-index:1;display:none;"></div>
+							</div>
+							<!--
+			                     <div id="singletripwrapper" class="singletripwrapper">
 			                        	<span class="trip_num">Trip 1</span>
 			                        	<span class="float_right trip_close dot">X</span><br>
 			                        	  
@@ -815,35 +848,7 @@ function refitb(bounds)
 			                            	    <label for="depart-date" class="depart-date">Depart</label>
 				                                <input type="text" name="date" id="depart-date" class="slim datepicker depart-date hasDatepicker" maxlength="10" value="07/14/2013">
 				                                <img class="ui-datepicker-trigger" src="/TicketSchedule/Picture/icon_calendar.png" alt="..." title="...">
-				   								<div id="schedule-info">
-												<img src= "/TicketSchedule/Picture/clock.jpg"/>
-												<select name="ride_time_ap" id="ride_time_ap">
-													<option value="AM">上午</option>
-													<option value="PM">下午</option>
-												</select>
-												<select name="ride_time_hour" id="ride_time_hour" class="slim">
-									                  <option value="0">0</option>	
-									                  <option value="1">1</option>
-									                  <option value="2">2</option>
-									                  <option value="3">4</option>
-									                  <option value="4">4</option>
-									                  <option value="5">5</option>
-									                  <option value="6">6</option>
-									                  <option value="7">7</option>
-									                  <option value="8">8</option>
-									                  <option value="9">9</option>
-									                  <option value="10">10</option>
-									                  <option value="11">11</option>
-				    				            </select>点
-												<select name="ride_time_minute" id="ride_time_minute" class="slim">
-									                  <option value="00">00</option>	
-									                  <option value="10">10</option>
-									                  <option value="20">20</option>
-									                  <option value="30">30</option>
-									                  <option value="40">40</option>
-									                  <option value="50">50</option>
-									        	</select>分
-											</div>
+
 				   					<select name="there_time" id="there_time" class="slim there_time"> </select>
 				                            </div>
 				                            <p><input type="checkbox" name="back" id="back" value="1" class="checkbox back" checked="checked"></p>
@@ -889,23 +894,22 @@ function refitb(bounds)
 				                        <span class="max_trips hidden">你最多一次只能添加五个行程</span>
 			                        	<input type="hidden" name="multi_trips" id="multi_trips" value="0">
 			                        	<input type="hidden" name="num_trips" id="num_trips" value="1">
-		                     --></div>
-
+		                     -->
 							<div id="there_repeating" style="display: none;">
 		                            <div id="commute-table">
 										<ul id="col1">
 		                                    <li class="first"><p>选择日期</p></li>
-		                                    <li><input type="checkbox" name="there_1" id="there_1" class="checkbox" checked alt="Enable trip for Monday"><label for="there_1">Monday</label></li>
-		                                    <li><input type="checkbox" name="there_2" id="there_2" class="checkbox" checked alt="Enable trip for Tuesday"><label for="there_2">Tuesday</label></li>                                                     
-		                          			<li><input type="checkbox" name="there_3" id="there_3" class="checkbox" checked alt="Enable trip for Wednesday"><label for="there_3">Wednesday</label></li>                                                 
-		  									<li><input type="checkbox" name="there_4" id="there_4" class="checkbox" checked alt="Enable trip for Thursday"><label for="there_4">Thursday</label></li>                                                   
-		 									<li><input type="checkbox" name="there_5" id="there_5" class="checkbox" checked alt="Enable trip for Friday"><label for="there_5">Friday</label></li>                                                       
-		                                    <li><input type="checkbox" name="there_6" id="there_6" class="checkbox" alt="Enable trip for Saturday"><label for="there_6">Saturday</label></li>                                                                     
-		                                    <li><input type="checkbox" name="there_7" id="there_7" class="checkbox" alt="Enable trip for Sunday"><label for="there_7">Sunday</label></li>                                                                         
+		                                    <li><input type="checkbox" name="there_1" id="there_1" class="checkbox" checked alt="Enable trip for Monday"><label for="there_1">周一</label></li>
+		                                    <li><input type="checkbox" name="there_2" id="there_2" class="checkbox" checked alt="Enable trip for Tuesday"><label for="there_2">周二</label></li>                                                     
+		                          			<li><input type="checkbox" name="there_3" id="there_3" class="checkbox" checked alt="Enable trip for Wednesday"><label for="there_3">周三</label></li>                                                 
+		  									<li><input type="checkbox" name="there_4" id="there_4" class="checkbox" checked alt="Enable trip for Thursday"><label for="there_4">周四</label></li>                                                   
+		 									<li><input type="checkbox" name="there_5" id="there_5" class="checkbox" checked alt="Enable trip for Friday"><label for="there_5">周五</label></li>                                                       
+		                                    <li><input type="checkbox" name="there_6" id="there_6" class="checkbox" alt="Enable trip for Saturday"><label for="there_6">周六</label></li>                                                                     
+		                                    <li><input type="checkbox" name="there_7" id="there_7" class="checkbox" alt="Enable trip for Sunday"><label for="there_7">周日</label></li>                                                                         
 		                                </ul>
 		                                <ul id="col2">
 		                                    <li class="first">
-		                                        <h3 class="th_time">Depart</h3>
+		                                        <h3 class="th_time">出发</h3>
 		                                        <select name="there_time_0" id="there_time_0" class="slim">
 		                                        <option value="No Trip">No Trip</option><option value="12:00 AM">12:00 AM</option><option value="12:15 AM">12:15 AM</option><option value="12:30 AM">12:30 AM</option><option value="12:45 AM">12:45 AM</option><option value="1:00 AM">1:00 AM</option><option value="1:15 AM">1:15 AM</option><option value="1:30 AM">1:30 AM</option><option value="1:45 AM">1:45 AM</option><option value="2:00 AM">2:00 AM</option><option value="2:15 AM">2:15 AM</option><option value="2:30 AM">2:30 AM</option><option value="2:45 AM">2:45 AM</option><option value="3:00 AM">3:00 AM</option><option value="3:15 AM">3:15 AM</option><option value="3:30 AM">3:30 AM</option><option value="3:45 AM">3:45 AM</option><option value="4:00 AM">4:00 AM</option><option value="4:15 AM">4:15 AM</option><option value="4:30 AM">4:30 AM</option><option value="4:45 AM">4:45 AM</option><option value="5:00 AM">5:00 AM</option><option value="5:15 AM">5:15 AM</option><option value="5:30 AM">5:30 AM</option><option value="5:45 AM">5:45 AM</option><option value="6:00 AM">6:00 AM</option><option value="6:15 AM">6:15 AM</option><option value="6:30 AM">6:30 AM</option><option value="6:45 AM">6:45 AM</option><option value="7:00 AM" selected="selected">7:00 AM</option><option value="7:15 AM">7:15 AM</option><option value="7:30 AM">7:30 AM</option><option value="7:45 AM">7:45 AM</option><option value="8:00 AM">8:00 AM</option><option value="8:15 AM">8:15 AM</option><option value="8:30 AM">8:30 AM</option><option value="8:45 AM">8:45 AM</option><option value="9:00 AM">9:00 AM</option><option value="9:15 AM">9:15 AM</option><option value="9:30 AM">9:30 AM</option><option value="9:45 AM">9:45 AM</option><option value="10:00 AM">10:00 AM</option><option value="10:15 AM">10:15 AM</option><option value="10:30 AM">10:30 AM</option><option value="10:45 AM">10:45 AM</option><option value="11:00 AM">11:00 AM</option><option value="11:15 AM">11:15 AM</option><option value="11:30 AM">11:30 AM</option><option value="11:45 AM">11:45 AM</option><option value="12:00 PM">12:00 PM</option><option value="12:15 PM">12:15 PM</option><option value="12:30 PM">12:30 PM</option><option value="12:45 PM">12:45 PM</option><option value="1:00 PM">1:00 PM</option><option value="1:15 PM">1:15 PM</option><option value="1:30 PM">1:30 PM</option><option value="1:45 PM">1:45 PM</option><option value="2:00 PM">2:00 PM</option><option value="2:15 PM">2:15 PM</option><option value="2:30 PM">2:30 PM</option><option value="2:45 PM">2:45 PM</option><option value="3:00 PM">3:00 PM</option><option value="3:15 PM">3:15 PM</option><option value="3:30 PM">3:30 PM</option><option value="3:45 PM">3:45 PM</option><option value="4:00 PM">4:00 PM</option><option value="4:15 PM">4:15 PM</option><option value="4:30 PM">4:30 PM</option><option value="4:45 PM">4:45 PM</option><option value="5:00 PM">5:00 PM</option><option value="5:15 PM">5:15 PM</option><option value="5:30 PM">5:30 PM</option><option value="5:45 PM">5:45 PM</option><option value="6:00 PM">6:00 PM</option><option value="6:15 PM">6:15 PM</option><option value="6:30 PM">6:30 PM</option><option value="6:45 PM">6:45 PM</option><option value="7:00 PM">7:00 PM</option><option value="7:15 PM">7:15 PM</option><option value="7:30 PM">7:30 PM</option><option value="7:45 PM">7:45 PM</option><option value="8:00 PM">8:00 PM</option><option value="8:15 PM">8:15 PM</option><option value="8:30 PM">8:30 PM</option><option value="8:45 PM">8:45 PM</option><option value="9:00 PM">9:00 PM</option><option value="9:15 PM">9:15 PM</option><option value="9:30 PM">9:30 PM</option><option value="9:45 PM">9:45 PM</option><option value="10:00 PM">10:00 PM</option><option value="10:15 PM">10:15 PM</option><option value="10:30 PM">10:30 PM</option><option value="10:45 PM">10:45 PM</option><option value="11:00 PM">11:00 PM</option><option value="11:15 PM">11:15 PM</option><option value="11:30 PM">11:30 PM</option><option value="11:45 PM">11:45 PM</option></select>
 		                                    </li> 
@@ -941,7 +945,7 @@ function refitb(bounds)
 		                                </ul>
 		                                <ul id="col3">
 		                                    <li class="first">
-		                                        <h3 class="th_time">Return</h3>
+		                                        <h3 class="th_time">返回</h3>
 		                                        <select name="back_time_0" id="back_time_0" class="slim">
 		                                        <option value="No Trip">No Trip</option><option value="12:00 AM">12:00 AM</option><option value="12:15 AM">12:15 AM</option><option value="12:30 AM">12:30 AM</option><option value="12:45 AM">12:45 AM</option><option value="1:00 AM">1:00 AM</option><option value="1:15 AM">1:15 AM</option><option value="1:30 AM">1:30 AM</option><option value="1:45 AM">1:45 AM</option><option value="2:00 AM">2:00 AM</option><option value="2:15 AM">2:15 AM</option><option value="2:30 AM">2:30 AM</option><option value="2:45 AM">2:45 AM</option><option value="3:00 AM">3:00 AM</option><option value="3:15 AM">3:15 AM</option><option value="3:30 AM">3:30 AM</option><option value="3:45 AM">3:45 AM</option><option value="4:00 AM">4:00 AM</option><option value="4:15 AM">4:15 AM</option><option value="4:30 AM">4:30 AM</option><option value="4:45 AM">4:45 AM</option><option value="5:00 AM">5:00 AM</option><option value="5:15 AM">5:15 AM</option><option value="5:30 AM">5:30 AM</option><option value="5:45 AM">5:45 AM</option><option value="6:00 AM">6:00 AM</option><option value="6:15 AM">6:15 AM</option><option value="6:30 AM">6:30 AM</option><option value="6:45 AM">6:45 AM</option><option value="7:00 AM">7:00 AM</option><option value="7:15 AM">7:15 AM</option><option value="7:30 AM">7:30 AM</option><option value="7:45 AM">7:45 AM</option><option value="8:00 AM">8:00 AM</option><option value="8:15 AM">8:15 AM</option><option value="8:30 AM">8:30 AM</option><option value="8:45 AM">8:45 AM</option><option value="9:00 AM">9:00 AM</option><option value="9:15 AM">9:15 AM</option><option value="9:30 AM">9:30 AM</option><option value="9:45 AM">9:45 AM</option><option value="10:00 AM">10:00 AM</option><option value="10:15 AM">10:15 AM</option><option value="10:30 AM">10:30 AM</option><option value="10:45 AM">10:45 AM</option><option value="11:00 AM">11:00 AM</option><option value="11:15 AM">11:15 AM</option><option value="11:30 AM">11:30 AM</option><option value="11:45 AM">11:45 AM</option><option value="12:00 PM">12:00 PM</option><option value="12:15 PM">12:15 PM</option><option value="12:30 PM">12:30 PM</option><option value="12:45 PM">12:45 PM</option><option value="1:00 PM">1:00 PM</option><option value="1:15 PM">1:15 PM</option><option value="1:30 PM">1:30 PM</option><option value="1:45 PM">1:45 PM</option><option value="2:00 PM">2:00 PM</option><option value="2:15 PM">2:15 PM</option><option value="2:30 PM">2:30 PM</option><option value="2:45 PM">2:45 PM</option><option value="3:00 PM">3:00 PM</option><option value="3:15 PM">3:15 PM</option><option value="3:30 PM">3:30 PM</option><option value="3:45 PM">3:45 PM</option><option value="4:00 PM">4:00 PM</option><option value="4:15 PM">4:15 PM</option><option value="4:30 PM">4:30 PM</option><option value="4:45 PM">4:45 PM</option><option value="5:00 PM" selected="selected">5:00 PM</option><option value="5:15 PM">5:15 PM</option><option value="5:30 PM">5:30 PM</option><option value="5:45 PM">5:45 PM</option><option value="6:00 PM">6:00 PM</option><option value="6:15 PM">6:15 PM</option><option value="6:30 PM">6:30 PM</option><option value="6:45 PM">6:45 PM</option><option value="7:00 PM">7:00 PM</option><option value="7:15 PM">7:15 PM</option><option value="7:30 PM">7:30 PM</option><option value="7:45 PM">7:45 PM</option><option value="8:00 PM">8:00 PM</option><option value="8:15 PM">8:15 PM</option><option value="8:30 PM">8:30 PM</option><option value="8:45 PM">8:45 PM</option><option value="9:00 PM">9:00 PM</option><option value="9:15 PM">9:15 PM</option><option value="9:30 PM">9:30 PM</option><option value="9:45 PM">9:45 PM</option><option value="10:00 PM">10:00 PM</option><option value="10:15 PM">10:15 PM</option><option value="10:30 PM">10:30 PM</option><option value="10:45 PM">10:45 PM</option><option value="11:00 PM">11:00 PM</option><option value="11:15 PM">11:15 PM</option><option value="11:30 PM">11:30 PM</option><option value="11:45 PM">11:45 PM</option></select>
 		                                    </li>
@@ -978,27 +982,27 @@ function refitb(bounds)
 		                                    <li class="first">
 		                                        <div id="flex">
 		                                            <div id="flexheader">
-		                                                <span>Firm</span> <span class="last">Flexible</span>
+		                                                <span>固定</span> <span class="last">自由</span>
 		                                            </div>
 		                                            <div class="pillbuttons">
-			                                            <div class="first">10min</div><div class="chosen">20min</div><div class="last">30min</div>
+			                                            <div class="first" style="cursor: pointer;">10min</div><div class="chosen" style="cursor: pointer;">20min</div><div class="last" style="cursor: pointer;">30min</div>
 			                                            <input type="hidden" id="flex_global" name="flex_global" value="20">
 			                                        </div>
 		                                        </div>
 		                                    </li>
-		                                    <li><a class="edit" href="javascript:void(0)" id="edit_times_1" style="visibility: visible;">edit</a></li>
-		                                 	<li><a class="edit" href="javascript:void(0)" id="edit_times_2" style="visibility: visible;">edit</a></li>
-		                                 	<li><a class="edit" href="javascript:void(0)" id="edit_times_3" style="visibility: visible;">edit</a></li>
-		                                 	<li><a class="edit" href="javascript:void(0)" id="edit_times_4" style="visibility: visible;">edit</a></li>
-		                                 	<li><a class="edit" href="javascript:void(0)" id="edit_times_5" style="visibility: visible;">edit</a></li>
-		                                 	<li><a class="edit" href="javascript:void(0)" id="edit_times_6" style="visibility: hidden;">edit</a></li>
-		                                 	<li><a class="edit" href="javascript:void(0)" id="edit_times_7" style="visibility: hidden;">edit</a></li>
+		                                    <li><a class="edit" href="javascript:void(0)" id="edit_times_1" style="visibility: visible;">编辑</a></li>
+		                                 	<li><a class="edit" href="javascript:void(0)" id="edit_times_2" style="visibility: visible;">编辑</a></li>
+		                                 	<li><a class="edit" href="javascript:void(0)" id="edit_times_3" style="visibility: visible;">编辑</a></li>
+		                                 	<li><a class="edit" href="javascript:void(0)" id="edit_times_4" style="visibility: visible;">编辑</a></li>
+		                                 	<li><a class="edit" href="javascript:void(0)" id="edit_times_5" style="visibility: visible;">编辑</a></li>
+		                                 	<li><a class="edit" href="javascript:void(0)" id="edit_times_6" style="visibility: hidden;">编辑</a></li>
+		                                 	<li><a class="edit" href="javascript:void(0)" id="edit_times_7" style="visibility: hidden;">编辑</a></li>
 		                                 </ul>
 		                            </div>
 		                   	</div>
-						</dd>
-					</dl>
+		                   </dd></dl>
 					</div>
+				
 				</div>
 			</div>
  	            <div class="panel" id="UserType">
@@ -1018,6 +1022,10 @@ function refitb(bounds)
 							<div id="price-content" >
 			 					<img src= "/TicketSchedule/Picture/yuansign.jpg"></img>
 								<input type="text" id="price" value="15"/>
+							</div>
+							<div id="distance-content" >
+			 					<img src= "/TicketSchedule/Picture/dissign.png" title="大约距离"></img>
+								<input type="text" id="distance" value="" readonly="readonly" />
 							</div>
 						</div>
 					</div>
@@ -1079,6 +1087,7 @@ function refitb(bounds)
 	</div>
 </div>
 
+ 
 <input type="text" class="hidden" id="IsLogin" value='<%=(IsLogin == null) ? "false" : IsLogin%>'></input>
 	<div id="baidu_tongji" style="display: none">
 		<script type="text/javascript">
