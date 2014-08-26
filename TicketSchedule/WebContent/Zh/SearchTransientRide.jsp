@@ -76,12 +76,15 @@ anchor: new BMap.Size(8, 16),
 });
 
 $(document).ready(function(){
-	initCalandar("ui-datepicker-div","search_date","map-canvas");
+	var selectorholder = document.getElementById("datetime");
+	var pickerholder = document.getElementById("ui-datepicker-div");
+
+	var calandar = new Calandar(selectorholder,pickerholder,"search_date","map-canvas");
+	date= calandar.getDate();
 	var timer_holder = document.getElementById("schedule-info");
 	timePicker = new TimePicker(timer_holder,"ride_time","/TicketSchedule/Picture/clock.jpg");
 
-	document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
-	date=document.getElementById("search_date").value;
+	
 	document.getElementById("headline").innerHTML="今日出发：<span>"+ new Date().toDateString() +"</span>";
 	
 	//Search box realted
@@ -578,7 +581,7 @@ function asPassenger()
 						<input id="destLng" name="destLng" value=""></input>
 						<input id="duration" name="duration" value="<%=tranRide==null?"":tranRide.dura%>"></input>
 					</div>
-					<div class="text_input datetime">
+					<div class="text_input datetime" id="datetime">
 						<label class="datetime_icon"></label>
 						<input id="search_date" class="slim datepicker hasDatepicker" type="text" value="exp" name="date" readonly="readonly" style="cursor:pointer">
 					</div>

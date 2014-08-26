@@ -1,59 +1,16 @@
 //This part is for calandar picker
-var currentDate;
-var selectDate;
+
 var displayDate;
-var replaceWidgetId; //map-canvas
 
-function getCalander(widgetId)
+function select_Date(value,contentHolderId,replaceWidgetId)
 {
-	document.getElementById(widgetId).innerHTML=
-	"<div class='ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all'>"+
-	"<a class='ui-datepicker-prev ui-corner-all' onclick='prevMonth()' title='Prev'>"+
-	"	<span class='ui-icon ui-icon-circle-triangle-e'>Prev</span>"+
-	"</a>"+
-	"	<a class='ui-datepicker-next ui-corner-all' onclick='nextMonth()' title='Next'>"+
-	"		<span class='ui-icon ui-icon-circle-triangle-w'>Next</span>"+
-	"	</a>"+
-	"	<div class='ui-datepicker-title'>"+
-	"		<span class='ui-datepicker-month' id='picker-Month'></span>"+
-	"		&nbsp;"+
-	"		<span class='ui-datepicker-year' id='picker-Year'></span>"+
-	"	</div>"+
-	"</div>"+
-	"<table class='ui-datepicker-calendar' id='ui-datepicker-calendar'>"+
-	"	<thead>"+
-	"		<tr>"+
-	"			<th class='ui-datepicker-week-end'>"+
-	"				<span title='Sunday'>Su</span>"+
-	"			</th>"+
-	"			<th>"+
-	"				<span title='Monday'>Mo</span>"+
-	"			</th>"+
-	"			<th>"+
-	"				<span title='Tuesday'>Tu</span>"+
-	"			</th>"+
-	"			<th>"+
-	"				<span title='Wednesday'>We</span>"+
-	"			</th>"+
-	"			<th>"+
-	"				<span title='Thursday'>Th</span>"+
-	"			</th>"+
-	"			<th>"+
-	"				<span title='Friday'>Fr</span>"+
-	"			</th>"+
-	"			<th class='ui-datepicker-week-end'>"+
-	"				<span title='Saturday'>Sa</span>"+
-	"			</th>"+
-	"		</tr>"+
-	"	</thead>"+
-	"	<tbody>"+
-	"	</tbody>"+
-	"</table>";
-}
-
-
-function select_Date(value)
-{
+	var sdate = document.getElementById(contentHolderId).value;
+	var dtArr=sdate.split("/");
+	var currentDate = new Date();
+	var selectDate=new Date();
+    selectDate.setDate(dtArr[1]);
+    selectDate.setMonth(dtArr[0]-1);
+    selectDate.setFullYear(dtArr[2]);
 	var list=$(".ui-state-default");
 	for (var i=0;i<list.length;i++)
 	{
@@ -73,6 +30,8 @@ function select_Date(value)
 	selectDate.setMonth(displayDate.getMonth());
 	selectDate.setFullYear(displayDate.getFullYear());
 	selectDate.setDate(value);
+	
+
 	if (selectDate<currentDate)
 	{
 		alert("该日已过期，请重新选择");
@@ -90,14 +49,24 @@ function select_Date(value)
 		var datepicker=$("#ui-datepicker-div");
 		var mapcanvas=$("#"+replaceWidgetId);
 		datepicker.css({"display":"none"});
-		mapcanvas.css({"display":""});
+		if (mapcanvas!=null)
+		{
+			mapcanvas.css({"display":""});
+		}
 	}
 	document.getElementById("search_date").value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
-	
 };
 
-function displayCalender(year,month)
+function displayCalender(year,month,contentHolderId,replaceWidgetId)
 {
+	
+	var sdatev = document.getElementById(contentHolderId).value;
+	var dtArr=sdatev.split("/");
+	var selectDate=new Date();
+    selectDate.setDate(dtArr[1]);
+    selectDate.setMonth(dtArr[0]-1);
+    selectDate.setFullYear(dtArr[2]);
+    
 	displayDate.setFullYear(year);
 	displayDate.setMonth(month);
 	var mon = displayDate.toDateString().substring(4,7);
@@ -136,7 +105,7 @@ function displayCalender(year,month)
 		{
 			link.className="ui-state-default ui-state-active";
 		}
-		link.href="javascript:select_Date("+countday+")";
+		link.href="javascript:select_Date("+countday+",'"+contentHolderId+"','"+replaceWidgetId+"')";
 		link.innerHTML=countday;
 		tbodynode.rows[0].cells[i].appendChild(link);
 	}
@@ -166,67 +135,123 @@ function displayCalender(year,month)
 				}
 			}
 			link.innerHTML=countday;
-			link.href="javascript:select_Date("+countday+")";
+			link.href="javascript:select_Date("+countday+",'"+contentHolderId+"','"+replaceWidgetId+"')";
 			
 			tbodynode.rows[week].cells[i].appendChild(link);
 		}
 		week++;
 	}
-}
+	/*
+	window.onresize = function(e){
+		var datepicker=$("#ui-datepicker-div");
+		datepicker.css({"display":"none"});
+		if (replaceWidget!=null)
+		{
+			replaceWidget.css({"display":""});
+		}
+	};
 
-window.onresize = function(e){
-	var datepicker=$("#ui-datepicker-div");
-	var mapcanvas=$("#"+replaceWidgetId);
-	datepicker.css({"display":"none"});
-	mapcanvas.css({"display":""});
-};
-
-window.onclick = function(e){
-	var datepicker=$("#ui-datepicker-div");
-	var mapcanvas=$("#"+replaceWidgetId);
-	var left = parseFloat(datepicker.css("left"));
-	var right = left + parseFloat(datepicker.css("width"))+25; 
-	var top = parseFloat(datepicker.css("top"))-30;
-	var down = top+parseFloat(datepicker.css("height"))+30;
-	
-	if ((e.pageX<left)||(e.pageX>right)
-		||(e.pageY<top)||(e.pageY>down))
-	{
-  	   datepicker.css({"display":"none"});
-  	   mapcanvas.css({"display":""});
-	}
-};
-
-function nextMonth()
-{
-	displayCalender(displayDate.getFullYear(),displayDate.getMonth()+1);
-
-}
-
-function prevMonth()
-{
-	displayCalender(displayDate.getFullYear(),displayDate.getMonth()-1);
-}
-
-function initCalandar(url,countentId,replaceWidget)
-{
-	replaceWidgetId=replaceWidget;
-	getCalander(url);
-	currentDate = new Date();
-	selectDate= new Date();
-	displayDate= new Date();
-	
-	$(".datetime").click(function(){
-	    //Data picker related
-		var mapcanvas=$("#"+replaceWidgetId);
-		mapcanvas.fadeToggle();
+	window.onclick = function(e){
+		var datepicker=$("#ui-datepicker-div");
+		var left = parseFloat(datepicker.css("left"));
+		var right = left + parseFloat(datepicker.css("width"))+25; 
+		var top = parseFloat(datepicker.css("top"))-30;
+		var down = top+parseFloat(datepicker.css("height"))+30;
 		
-	    var search= $("#"+countentId).offset();
+		if ((e.pageX<left)||(e.pageX>right)
+			||(e.pageY<top)||(e.pageY>down))
+		{
+	  	   datepicker.css({"display":"none"});
+	  	   if (replaceWidget!=null)
+			{
+				replaceWidget.css({"display":""});
+			}
+		}
+	};
+	*/
+}
+
+
+
+function nextMonth(contentHolderId,replaceWidgetId)
+{
+	displayCalender(displayDate.getFullYear(),displayDate.getMonth()+1,contentHolderId,replaceWidgetId);
+}
+
+function prevMonth(contentHolderId,replaceWidgetId)
+{
+	displayCalender(displayDate.getFullYear(),displayDate.getMonth()-1,contentHolderId,replaceWidgetId);
+}
+
+function Calandar(selectorHolder,pickerHolder,contentHolderId,replaceWidgetId)
+{
+	var replaceWidget=$("#"+replaceWidgetId);
+	pickerHolder.innerHTML = 
+	"<div class='ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all'>"+
+	"<a class='ui-datepicker-prev ui-corner-all' onclick='prevMonth(\""+contentHolderId+"\",\""+replaceWidgetId+"\")' title='Prev'>"+
+	"	<span class='ui-icon ui-icon-circle-triangle-e'>Prev</span>"+
+	"</a>"+
+	"	<a class='ui-datepicker-next ui-corner-all' onclick='nextMonth(\""+contentHolderId+"\",\""+replaceWidgetId+"\")' title='Next'>"+
+	"		<span class='ui-icon ui-icon-circle-triangle-w'>Next</span>"+
+	"	</a>"+
+	"	<div class='ui-datepicker-title'>"+
+	"		<span class='ui-datepicker-month' id='picker-Month'></span>"+
+	"		&nbsp;"+
+	"		<span class='ui-datepicker-year' id='picker-Year'></span>"+
+	"	</div>"+
+	"</div>"+
+	"<table class='ui-datepicker-calendar' id='ui-datepicker-calendar'>"+
+	"	<thead>"+
+	"		<tr>"+
+	"			<th class='ui-datepicker-week-end'>"+
+	"				<span title='Sunday'>Su</span>"+
+	"			</th>"+
+	"			<th>"+
+	"				<span title='Monday'>Mo</span>"+
+	"			</th>"+
+	"			<th>"+
+	"				<span title='Tuesday'>Tu</span>"+
+	"			</th>"+
+	"			<th>"+
+	"				<span title='Wednesday'>We</span>"+
+	"			</th>"+
+	"			<th>"+
+	"				<span title='Thursday'>Th</span>"+
+	"			</th>"+
+	"			<th>"+
+	"				<span title='Friday'>Fr</span>"+
+	"			</th>"+
+	"			<th class='ui-datepicker-week-end'>"+
+	"				<span title='Saturday'>Sa</span>"+
+	"			</th>"+
+	"		</tr>"+
+	"	</thead>"+
+	"	<tbody>"+
+	"	</tbody>"+
+	"</table>";
+	
+	var selectDate=new Date();
+	
+	this.getDate = function(){
+		document.getElementById(contentHolderId).value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
+		return (selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
+	};
+	
+	displayDate= new Date();
+	selectorHolder.onclick = function(){
+	    //Data picker related
+		if(replaceWidget!=null)
+		{
+			replaceWidget.fadeToggle();
+		}
+		
+	    var search= $("#"+contentHolderId).offset();
 	    var datepicker=$("#ui-datepicker-div");
 	    datepicker.css({"left" : search.left,"top" : search.top+35});
 	    datepicker.fadeToggle();
-	    var sdate=document.getElementById(countentId).value;
+	    var sdate=document.getElementById(contentHolderId).value;
 	    var dtArr=sdate.split("/");
+		var selectDate=new Date();
 	    selectDate.setDate(dtArr[1]);
 	    selectDate.setMonth(dtArr[0]-1);
 	    selectDate.setFullYear(dtArr[2]);
@@ -237,15 +262,15 @@ function initCalandar(url,countentId,replaceWidget)
 	 	var mon = displayDate.toDateString().substring(4,7);
 		document.getElementById("picker-Month").innerHTML=mon;
 		document.getElementById("picker-Year").innerHTML=displayDate.getFullYear();
-		displayCalender(displayDate.getFullYear(),displayDate.getMonth());
-	});
+		displayCalender(displayDate.getFullYear(),displayDate.getMonth(),contentHolderId,replaceWidgetId);
+	};
 
 	$(".ui-state-default").click(function(){
 		this.className="ui-state-default ui-state-active";
 		selectDate.setMonth(displayDate.getMonth());
 		selectDate.setYear(displayDate.getYear());
 		selectDate.setDate(this.innerHtml);
-		document.getElementById(countentId).value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
+		document.getElementById(contentHolderId).value=(selectDate.getMonth()+1)+"/"+selectDate.getDate()+"/"+selectDate.getFullYear();
 	});
 
 	$("#commute_day").click(function(){
