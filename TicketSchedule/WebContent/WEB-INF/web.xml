@@ -165,13 +165,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>ManageRide</display-name>
-    <servlet-name>ManageRide</servlet-name>
-    <servlet-class>com.hitchride.servlet.ManageRide</servlet-class>
+    <display-name>PublishRide</display-name>
+    <servlet-name>PublishRide</servlet-name>
+    <servlet-class>com.hitchride.servlet.PublishRide</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ManageRide</servlet-name>
-    <url-pattern>/servlet/ManageRide</url-pattern>
+    <servlet-name>PublishRide</servlet-name>
+    <url-pattern>/PublishRide</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>

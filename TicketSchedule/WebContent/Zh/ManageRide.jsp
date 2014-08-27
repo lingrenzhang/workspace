@@ -38,12 +38,6 @@
 <script src="/TicketSchedule/JS/site.js"></script>
 <script src="/TicketSchedule/JS/calandar.js"></script>
 <script src="/TicketSchedule/bootstrap/js/bootstrap.js"></script>
-<!--
-<script type="text/javascript"
-      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtajlUONtd9R9vdowDwwrc-ul6NarmtiE&sensor=false&libraries=places">
-</script>
--->
-
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=Mto5Y3Pq2fgwkY2Kt9n60bWl"></script>
 <script>
 var map;
@@ -54,7 +48,7 @@ function asDriver()
 {
 	document.getElementById("asDriver").setAttribute("class","active");
 	document.getElementById("asPassenger").setAttribute("class","");
-	document.getElementById("seats-content").style.display="inline";
+	document.getElementById("price-content").style.display="inline";
 	userType = false;
 }
 
@@ -62,30 +56,9 @@ function asPassenger()
 {
 	document.getElementById("asDriver").setAttribute("class","");
 	document.getElementById("asPassenger").setAttribute("class","active");
-	document.getElementById("seats-content").style.display="none";
+	document.getElementById("price-content").style.display="none";
 	userType = true;
 }
-/*
-function asPassenger()
-{
-	document.getElementById("asPassenger").setAttribute("class", "active");
-	document.getElementById("asDriver").setAttribute("class", "");
-	document.getElementById("userType").setAttribute("value", "passenger");
-	$(".cost-visibility").children("label").text("How much are you willing to contribute?");
-	$(".cost-visibility").fadeIn(1000);
-	$(".seats-visibility").fadeOut(1000);
-}
-
-function asDriver()
-{
-	document.getElementById("asPassenger").setAttribute("class", "");
-	document.getElementById("asDriver").setAttribute("class", "active");
-	document.getElementById("userType").setAttribute("value", "driver");
-	$(".cost-visibility").children("label").text("How much do you want each passenger to contribute?");
-	$(".cost-visibility").fadeIn(1000);
-	$(".seats-visibility").fadeIn(1000);
-}
-*/
 
 function asTransient()
 {
@@ -136,16 +109,16 @@ $(document).ready(function(){
 	date= calandar.getDate();
 	
 	var timer_holder = document.getElementById("time-info");
-	timePicker = new TimePicker(timer_holder,"ride_time","/TicketSchedule/Picture/clock.jpg");
+	timePicker = new TimePicker(timer_holder,"depart_time","/TicketSchedule/Picture/clock.jpg");
 	timePicker.setDefaultTime();
 	
-	var selectorholder2 = document.getElementById("depart-date2");
+	var selectorholder2 = document.getElementById("back-date");
 
-	var calandar2 = new Calandar(selectorholder2,pickerholder,"depart-date2","map-canvas");
+	var calandar2 = new Calandar(selectorholder2,pickerholder,"back-date","map-canvas");
 	date= calandar2.getDate();
 	
 	var timer_holder2 = document.getElementById("time-info2");
-	timePicker2 = new TimePicker(timer_holder2,"ride_time2","/TicketSchedule/Picture/clock.jpg");
+	timePicker2 = new TimePicker(timer_holder2,"back_time","/TicketSchedule/Picture/clock.jpg");
 	timePicker2.setDefaultTime();
 	$("#commute_day").click(function(){
 		$(this).className=$(this).className + " active";
@@ -191,8 +164,8 @@ $(document).ready(function(){
 			for (var i=1;i<=numtrip;i++)
 			{
 				$(a[i-1]).children(".trip_num").text("Trip "+i);
-				$(a[i-1]).find(".there").attr("id","there_trip"+i);
-				$(a[i-1]).find(".there").attr("name","there_trip"+i);
+				$(a[i-1]).find(".there").attr("id","depart_time"+i);
+				$(a[i-1]).find(".there").attr("name","depart_time"+i);
 				$(a[i-1]).find(".depart-date").attr("for","depart-date-trip"+i);
 				//To add
 			}
@@ -221,8 +194,8 @@ $(document).ready(function(){
 			for (var i=1;i<=numtrip;i++)
 			{
 				$(a[i-1]).children(".trip_num").text("Trip "+i);
-				$(a[i-1]).find(".there").attr("id","there_trip"+i);
-				$(a[i-1]).find(".there").attr("name","there_trip"+i);
+				$(a[i-1]).find(".there").attr("id","depart_time"+i);
+				$(a[i-1]).find(".there").attr("name","depart_time"+i);
 				$(a[i-1]).find(".depart-date").attr("for","depart-date-trip"+i);
 			}
 			
@@ -710,15 +683,19 @@ function refitb(bounds)
 <script>
 	function loadValue(rid)
 	{
-		var rideinfo = JSON.parse(getJson("/TicketSchedule/servlet/ManageRide?rid="+rid));
+		var rideinfo = JSON.parse(getJson("/TicketSchedule/PublishRide?rid="+rid));
 		document.getElementById("rid").value=rid;
-		document.getElementById("s").setAttribute("value", rideinfo.origLoc._formatedAddr);
-		document.getElementById("e").setAttribute("value", rideinfo.destLoc._formatedAddr);
-		document.getElementById("origLat").value=rideinfo.origLoc._lat;
-		document.getElementById("origLng").value=rideinfo.origLoc._lon;
-		document.getElementById("destLat").value=rideinfo.destLoc._lat;
-		document.getElementById("destLng").value=rideinfo.destLoc._lon;
-		document.getElementById("distance").value=rideinfo.dist;
+		document.getElementById("s").setAttribute("value", rideinfo.origLoc_addr);
+		document.getElementById("s").setAttribute("placeholder", rideinfo.origLoc_addr);
+		document.getElementById("e").setAttribute("value", rideinfo.destLoc_addr);
+		document.getElementById("e").setAttribute("placeholder", rideinfo.destLoc_addr);
+		document.getElementById("origLat").value=rideinfo.origLoc_lat;
+		document.getElementById("origLng").value=rideinfo.origLoc_lon;
+		document.getElementById("destLat").value=rideinfo.destLoc_lat;
+		document.getElementById("destLng").value=rideinfo.destLoc_lon;
+		document.getElementById("price").value =rideinfo.price;
+		document.getElementById("seats").value = rideinfo.totalSeats;
+		document.getElementById("distance").value=Math.floor(rideinfo.dist/1000);
 		document.getElementById("dtime").value=rideinfo.dura;
 		if (rideinfo.schedule._isCommute==true)
 		{
@@ -788,7 +765,7 @@ function refitb(bounds)
 <div id="content_wrapper">
 	<div id="content_container" class="clearfix">
 		<div id="wide_column_left" class="newAddRideStyle">
-			<form action="/TicketSchedule/servlet/ManageRide" method="Post" id="add_ride" class="standard requires_login_results" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
+			<form action="/TicketSchedule/PublishRide" method="Post" id="add_ride" class="standard requires_login_results" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
 				<div class="panel" id="GeoInfo">
 					<div class="panel-heading">地址信息</div>
 					<div class="panel-body">
@@ -819,23 +796,22 @@ function refitb(bounds)
                     	<dl><dd>
 		                   	<div id="multipostwrapper" style="">
 	                   	   		 <div class="date-info">
-		                               		<input type="hidden" id="there_trip" name="there_trip" class="there" value="1">
-		                            	    <label for="depart-date" class="depart-date">出发</label>
-			                                <input type="text" name="date" id="depart-date" class="slim datepicker depart-date hasDatepicker" maxlength="10" value="07/14/2013">
-			                                <img class="ui-datepicker-trigger" src="/TicketSchedule/Picture/icon_calendar.png" alt="..." title="...">
-	   								</div>
-	   								<div id="time-info">				
-									</div>
-									<div class="date-info2">
-		                               		<input type="hidden" id="there_trip" name="there_trip" class="there" value="1">
-		                            	    <label for="depart-date" class="depart-date">返回</label>
-			                                <input type="text" name="date" id="depart-date2" class="slim datepicker depart-date hasDatepicker" maxlength="10" value="07/14/2013">
-			                                <img class="ui-datepicker-trigger" src="/TicketSchedule/Picture/icon_calendar.png" alt="..." title="...">
-	   								</div>
-	   								<div id="time-info2">				
-									</div>
-									<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"
- 										style="position: absolute; z-index:1;display:none;"></div>
+		                           		<label for="depart-date" class="depart-date">出发</label>
+			                            <input type="text" name="depart-date" id="depart-date" class="slim datepicker depart-date hasDatepicker" maxlength="10" value="07/14/2013">
+			                            <img class="ui-datepicker-trigger" src="/TicketSchedule/Picture/icon_calendar.png" alt="..." title="...">
+	   							 </div>
+	   							 <div id="time-info">				
+								 </div>
+								 <div class="date-info2">
+		                           		<label for="back-date" class="back-date">返回</label>
+			                            <input type="text" name="back-date" id="back-date" class="slim datepicker depart-date hasDatepicker" maxlength="10" value="07/14/2013">
+			                            <img class="ui-datepicker-trigger" src="/TicketSchedule/Picture/icon_calendar.png" alt="..." title="...">
+	   							 </div>
+	   							 <div id="time-info2">				
+								 </div>
+								 <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"
+ 										style="position: absolute; z-index:1;display:none;">
+ 								 </div>
 							</div>
 							<!--
 			                     <div id="singletripwrapper" class="singletripwrapper">
@@ -844,12 +820,12 @@ function refitb(bounds)
 			                        	  
 			                        	<div class="tripbox">
 			                               <div id="there_one_time">
-			                               		<input type="hidden" id="there_trip" name="there_trip" class="there" value="1">
+			                               		<input type="hidden" id="depart_time" name="depart_time" class="there" value="1">
 			                            	    <label for="depart-date" class="depart-date">Depart</label>
 				                                <input type="text" name="date" id="depart-date" class="slim datepicker depart-date hasDatepicker" maxlength="10" value="07/14/2013">
 				                                <img class="ui-datepicker-trigger" src="/TicketSchedule/Picture/icon_calendar.png" alt="..." title="...">
 
-				   					<select name="there_time" id="there_time" class="slim there_time"> </select>
+				   					<select name="depart_time" id="depart_time" class="slim depart_time"> </select>
 				                            </div>
 				                            <p><input type="checkbox" name="back" id="back" value="1" class="checkbox back" checked="checked"></p>
 				                            <label for="return-date" class="return-date" style="opacity: 1;">Return</label>
@@ -1009,23 +985,23 @@ function refitb(bounds)
  	            <div class="panel-heading">交易信息</div>
 					<div class="panel-body">
 						<div class="tabbable tabs-top">
-							<ul class="nav nav-tabs">
+							<ul class="nav nav-tabs" id="userNav">
 									<li class="" id="asDriver"><a href="javascript: asDriver()"><img src= "/TicketSchedule/Picture/car.jpg"></img>有车</a></li>
 									<li class="active" id="asPassenger"><a href="javascript: asPassenger()"><img src= "/TicketSchedule/Picture/nocar.jpg"></img>无车</a></li>
 							</ul>
 						</div>
 						<div id="bargin-content">
-							<div id="seats-content" style="display:none">
+							<div id="seats-content" >
 								<img src= "/TicketSchedule/Picture/seats.jpg"></img>
-								<input type="text" id="seats" value="3"/>
+								<input type="text" id="seats" name="seats" value="3"/>
 							</div>
-							<div id="price-content" >
+							<div id="price-content" style="display:none">
 			 					<img src= "/TicketSchedule/Picture/yuansign.jpg"></img>
-								<input type="text" id="price" value="15"/>
+								<input type="text" id="price" name="price" value="15"/>
 							</div>
 							<div id="distance-content" >
 			 					<img src= "/TicketSchedule/Picture/dissign.png" title="大约距离"></img>
-								<input type="text" id="distance" value="" readonly="readonly" />
+								<input type="text" id="distance" name="distance" value="" readonly="readonly" />
 							</div>
 						</div>
 					</div>

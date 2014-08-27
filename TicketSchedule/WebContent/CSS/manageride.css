@@ -52,7 +52,9 @@ form.standard dl {
 display: block;
 margin-bottom: 0px;
 }
-
+form{
+	width: 605px;
+}
 form.standard dt {
 display: inline-block;
 clear: both;
@@ -62,7 +64,7 @@ line-height: 20px;
 margin-right: 16px;
 padding: 8px 0 2px 0;
 text-align: right;
-width: 140px;
+width: 100px;
 }
 
 form.standard dd {
@@ -291,9 +293,9 @@ background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0, 0, 0, 0.1)), t
 
 #post-map-canvas {
 float: right;
-width: 320px;
-height: 300px;
-margin-left: 30px;
+width: 350px;
+height: 330px;
+margin-left: 0px;
 }
 
 #multipostwrapper {
@@ -451,3 +453,6 @@ height: 100px;
 	float: right;
 }
 
+#userNav{
+	margin-bottom: 0px;
+}
