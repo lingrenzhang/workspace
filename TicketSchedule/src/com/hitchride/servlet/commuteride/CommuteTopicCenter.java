@@ -1,5 +1,5 @@
 package com.hitchride.servlet.commuteride;
-
+//Pre-process of different cases of how the CommuteTopicCenter is loaded.
 import java.io.IOException;
 import java.util.Iterator;
 
@@ -82,6 +82,22 @@ public class CommuteTopicCenter extends HttpServlet {
 				}
 				else
 				{
+					if(ride.recordId==0) //This is a new ride 
+					{
+						AllRides.getRides().insert_availride(ride);
+						ride.insertToDB();
+
+						if (AllPartRides.getPartRides().get_participantRide(ride.recordId)==null)
+						{
+							CommutePartiRide pride = new CommutePartiRide(ride);
+							pride.set_status(0);
+							pride.set_assoOwnerRideId(-1);
+							user.pRides.add(pride);
+							AllPartRides.getPartRides().insert_pride(pride);
+							pride.insertToDB();
+						}
+					}
+					
 				    if (!isOwnerMode)
 				    {
 					    Boolean alreadyPart = false;
@@ -92,7 +108,6 @@ public class CommuteTopicCenter extends HttpServlet {
 					    		{
 					    			alreadyPart = true;
 					    		}
-		
 					    }
 					    for(Iterator<CommutePartiRide> prI = topic._requestPride.iterator(); prI.hasNext();)
 					    {

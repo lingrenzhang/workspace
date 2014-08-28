@@ -50,17 +50,7 @@ public class SearchCommute extends HttpServlet {
 		Environment.getEnv();
 		{
 			CommuteRide actRide = null;
-			if (request.getQueryString()!=null)
-			{
-				QueryStringParser qsp = new QueryStringParser(request.getQueryString());
-				if (qsp.getString("rid")!=null)
-				{
-					int rid = qsp.getInt("rid");
-					actRide = AllRides.getRides().getRide(rid);
-					request.getSession().setAttribute("actRide", actRide);
-				}
-			}
-			
+						
 			if (request.getParameter("s") == null || request.getParameter("e") == null)
 			{
 				actRide = (CommuteRide) request.getSession().getAttribute("actRide");
@@ -85,28 +75,6 @@ public class SearchCommute extends HttpServlet {
 				{
 					System.out.println("Orig coordinate not initilized on client site.");
 					System.out.println("Caculating from server");
-					//origLat,OrigLng for some reason not caculated. Compute it from the original space
-					String jsonoutput;
-					JSONObject json;
-					String start = request.getParameter("s");
-					start = start.replaceAll(" ","" );
-					//String getURL = "https://maps.googleapis.com/maps/api/place/autocomplete/xml?input=" + start +"&types=geocode&sensor=true&key=";
-					String getURL = "http://maps.googleapis.com/maps/api/geocode/json?address="+start+"&sensor=false";
-					jsonoutput=jsonquery(getURL);
-					
-					try {
-						json = new JSONObject(jsonoutput);
-					    String origAddr = json.getJSONArray("results").getJSONObject(0).getString("formatted_address");
-					    origAddr = origAddr.replaceAll(" ","" );
-					    request.setAttribute("orig", origAddr);
-					    JSONObject geometry = json.getJSONArray("results").getJSONObject(0).getJSONObject("geometry");
-					    Double origLat =geometry.getJSONObject("location").getDouble("lat");
-					    Double origLon =geometry.getJSONObject("location").getDouble("lng");
-					    orig = new GeoInfo(origAddr,origLat,origLon);
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
 				}
 			    actRide.origLoc = orig;
 				
@@ -124,24 +92,6 @@ public class SearchCommute extends HttpServlet {
 				{
 					System.out.println("Target coordinate not initilized on client site.");
 					System.out.println("Caculating from server");
-					String end = request.getParameter("e");
-					end = end.replace(" ", "");
-					//getURL = "https://maps.googleapis.com/maps/api/place/autocomplete/xml?input=" + end +"&types=geocode&sensor=true&key=";
-					String getURL = "http://maps.googleapis.com/maps/api/geocode/json?address="+end+"&sensor=false";
-					String jsonoutput=jsonquery(getURL);
-					try {
-						JSONObject json = new JSONObject(jsonoutput);
-					    String destAddr = json.getJSONArray("results").getJSONObject(0).getString("formatted_address");
-					    destAddr = destAddr.replaceAll(" ","" );
-					    request.setAttribute("dest", destAddr);
-					    JSONObject geometry = json.getJSONArray("results").getJSONObject(0).getJSONObject("geometry");
-					    Double destLat =geometry.getJSONObject("location").getDouble("lat");
-					    Double destLon =geometry.getJSONObject("location").getDouble("lng");
-					    dest = new GeoInfo(destAddr,destLat,destLon);
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
 				}
 				actRide.destLoc = dest;
 				
@@ -171,7 +121,7 @@ public class SearchCommute extends HttpServlet {
 				String date = request.getParameter("date");
 				Date d = TimeFormatHelper.setDate(date);
 				schedule.tripDate = d;
-				schedule.forwardTime =  java.sql.Time.valueOf("12:00:00"); 
+				schedule.tripTime =  java.sql.Time.valueOf("12:00:00"); 
 				schedule.forwardFlexibility =  java.sql.Time.valueOf("12:00:00");
 				request.getSession().setAttribute("actRide", actRide);
 			}

@@ -175,17 +175,11 @@ public class PublishRide extends HttpServlet {
 			bt = request.getParameter("back_time_7");
 			schedule.cbtime[0] = TimeFormatHelper.getTime(bt);
 			
-			String date =request.getParameter("date");
-			schedule.tripDate = TimeFormatHelper.setDate(date);
-			if (schedule.isCommute())
-			{
-				schedule.tripTime = TimeFormatHelper.getTime("12:00pm");
-			}
-			else
-			{
-				String triptime= request.getParameter("there_time");
-				schedule.tripTime = TimeFormatHelper.getTripTime(triptime,schedule.forwardFlexibility);
-			}
+			String departdate = request.getParameter("depart-date");
+			schedule.tripDate = TimeFormatHelper.setDate(departdate);
+			String backdate = request.getParameter("return-date");
+			
+			
 			//Distance duration
 			int dist=0;
 			int dura=0;
@@ -206,29 +200,39 @@ public class PublishRide extends HttpServlet {
 			myRide.dist=dist;
 			myRide.recordId = Integer.parseInt(request.getParameter("rid"));
 			
-			if (myRide.recordId==0)
+			if (schedule.isCommute())
 			{
-				AllRides.getRides().insert_availride(myRide);
-				myRide.insertToDB();
+				schedule.tripTime = TimeFormatHelper.getTime("12:00pm");
+				if (myRide.recordId==0)
+				{
+					AllRides.getRides().insert_availride(myRide);
+					myRide.insertToDB();
+				}
+				else
+				{
+					AllRides.getRides().udpate_availride(myRide);
+					myRide.updateDB();
+				}
+				
+				
+				if (AllPartRides.getPartRides().get_participantRide(myRide.recordId)==null)
+				{
+					CommutePartiRide pride = new CommutePartiRide(myRide);
+					pride.set_status(0);
+					pride.set_assoOwnerRideId(-1);
+					user.pRides.add(pride);
+					AllPartRides.getPartRides().insert_pride(pride);
+					pride.insertToDB();
+				}
+				request.getSession().setAttribute("actRide", myRide);
+				response.sendRedirect("/TicketSchedule/Zh/SearchCommuteTopic.jsp?rid="+myRide.recordId);
 			}
 			else
 			{
-				AllRides.getRides().udpate_availride(myRide);
-				myRide.updateDB();
+				String triptime= request.getParameter("there_time");
+				schedule.tripTime = TimeFormatHelper.getTripTime(triptime,schedule.forwardFlexibility);
 			}
-			
-			if (AllPartRides.getPartRides().get_participantRide(myRide.recordId)==null)
-			{
-				CommutePartiRide pride = new CommutePartiRide(myRide);
-				pride.set_status(0);
-				pride.set_assoOwnerRideId(-1);
-				user.pRides.add(pride);
-				AllPartRides.getPartRides().insert_pride(pride);
-				pride.insertToDB();
-			}
-			request.getSession().setAttribute("actRide", myRide);
 		}
-		response.sendRedirect("/TicketSchedule/servlet/Search");
 	}
 	
 

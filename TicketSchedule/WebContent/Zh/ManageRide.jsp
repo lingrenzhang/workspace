@@ -646,29 +646,43 @@ $(document).ready(function(){
 		  
 		
 		function calculateDistances() {
-		   var service = new google.maps.DistanceMatrixService();
-		   var orig = new google.maps.LatLng(origLat,origLng);
-		   var dest = new google.maps.LatLng(destLat,destLng);
-		   service.getDistanceMatrix(
-			    {
-			      origins: [orig],
-			      destinations: [dest],
-			      travelMode: google.maps.TravelMode.DRIVING,
-			      unitSystem: google.maps.UnitSystem.METRIC,
-			      avoidHighways: false,
-			      avoidTolls: false
-			    }, callback);
+			var dx, dy, dew;
+
+			var DEF_PI = 3.14159265359; // PI
+			var DEF_2PI= 6.28318530712; // 2*PI
+			var DEF_PI180= 0.01745329252; // PI/180.0
+			var DEF_R =6370693.5; // radius of earth
+
+			ew1 = origLng* DEF_PI180;
+			ns1 = origLat * DEF_PI180;
+			ew2 = destLng * DEF_PI180;
+			ns2 = destLat * DEF_PI180;
+
+			dew = ew1 - ew2;
+
+			if (dew > DEF_PI)
+			{
+				dew = DEF_2PI - dew;
 			}
-		
-		function callback(response, status) {
-			  if (status != google.maps.DistanceMatrixStatus.OK) {
-			    alert('Error was: ' + status);
-			  } else {
+			else
+			{
+				if (dew < -DEF_PI)
+				{
+					dew = DEF_2PI + dew;
+				}
+			}
+			dx = DEF_R * Math.cos(ns1) * dew; // 东西方向长度(在纬度圈上的投影长度)
+			dy = DEF_R * (ns1 - ns2); // 南北方向长度(在经度圈上的投影长度)
+				
+			distance = Math.floor(Math.sqrt(dx * dx + dy * dy)*1.1/1000);
+			duration = distance/30; //Will use better algorithm if necessary
+			
+			document.getElementById("distance").setAttribute("value",distance);
+			document.getElementById("duration").setAttribute("value",duration);
 			   
-			    document.getElementById("distance").value =response.rows[0].elements[0].distance.value;
-			    document.getElementById("dtime").value =response.rows[0].elements[0].duration.value;
-			   }
-			}
+			var price = distance;
+			document.getElementById("price").setAttribute("value",price);
+		}
 	};
 </script>
 <script>
@@ -696,7 +710,7 @@ function refitb(bounds)
 		document.getElementById("price").value =rideinfo.price;
 		document.getElementById("seats").value = rideinfo.totalSeats;
 		document.getElementById("distance").value=Math.floor(rideinfo.dist/1000);
-		document.getElementById("dtime").value=rideinfo.dura;
+		document.getElementById("duration").value=rideinfo.dura;
 		if (rideinfo.schedule._isCommute==true)
 		{
 			asCommute();
@@ -1002,6 +1016,7 @@ function refitb(bounds)
 							<div id="distance-content" >
 			 					<img src= "/TicketSchedule/Picture/dissign.png" title="大约距离"></img>
 								<input type="text" id="distance" name="distance" value="" readonly="readonly" />
+							    <input type="text" class="hidden" id="duration" name="duration" />
 							</div>
 						</div>
 					</div>
@@ -1051,8 +1066,6 @@ function refitb(bounds)
             <input type="text" class="hidden" id="origLng" name="origLng" value=""></input>
             <input type="text" class="hidden" id="destLat" name="destLat" value=""></input>
             <input type="text" class="hidden" id="destLng" name="destLng" value=""></input>
-            <input type="text" class="hidden" id="distance" name="distance" value=""></input>
-            <input type="text" class="hidden" id="dtime" name="dtime" value=""></input>
             <input type="text" class="hidden" id="isPost" name="isPost" value="true"></input>
             <input type="text" class="hidden" id="dayofweek" name="dayofweek" value="0"></input>
             <input type="text" class="hidden" id="rid" name="rid" value="0"></input>

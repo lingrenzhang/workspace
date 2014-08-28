@@ -10,12 +10,14 @@ public class Schedule implements Cloneable{
 	private boolean _isRoundTrip; 
 	private boolean _isCommute;
 	
-	public Time forwardTime,forwardFlexibility;
-	public Time backTime, backFlexibility;	// for round trip only
+	public Time forwardFlexibility;
+	public Time backFlexibility;	// for round trip only
 	
-	// for travel only
+	// for transient
 	public Date tripDate;
 	public Time tripTime;
+	public Date returnDate;
+	public Time returnTime;
 	
 	// for commute
 	private boolean[] _dayOfWeek = new boolean[]{false,false,false,false,false,false,false};

@@ -146,7 +146,7 @@ public class UserCenter extends HttpServlet {
 							value.append("<div class=\"ride_wrapper\">");	
 							value.append(parRide._rideInfo.getGeoHTML());
 							value.append(parRide._rideInfo.getScheduleHTML());
-							value.append("</a><a href='/TicketSchedule/Zh/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>Manage</button></div></a>");
+							value.append("</a><a href='/TicketSchedule/Zh/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>±à¼­</button></div></a>");
 							value.append("</div></a>");
 							CommuteTopic topic= AllTopics.getTopics().get_topic(parRide.get_assoOwnerRideId());
 						}
@@ -186,8 +186,8 @@ public class UserCenter extends HttpServlet {
 							value.append("<a href='/TicketSchedule/Zh/SearchCommuteTopic.jsp?rid="+parRide._pid+"'>");
 							value.append(parRide._rideInfo.getGeoHTML());
 							value.append(parRide._rideInfo.getScheduleHTML());
-							value.append("</a><a href='/TicketSchedule/Zh/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>Manage</button></div></a>");
-							value.append("<a href='/TicketSchedule/Zh/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>Delete</button></div></a>");
+							value.append("</a><a href='/TicketSchedule/Zh/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>±à¼­</button></div></a>");
+							value.append("<a href='/TicketSchedule/DeleteRide?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>È¡Ïû</button></div></a>");
 							value.append("</div>");
 						}
 					}

@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Hashtable;
 
+import com.hitchride.CommutePartiRide;
 import com.hitchride.CommuteRide;
 import com.hitchride.database.access.CarpoolTbAccess;
 import com.hitchride.database.access.CommuteRideAccess;
@@ -89,4 +90,14 @@ public class AllRides {
 		}
 		this._availRides.put(ride.recordId, ride);
 	}
+	
+	public void remove(CommuteRide ride)
+	{
+		this._availRides.remove(ride.recordId);
+	}
+	public void remove(int pid)
+	{
+		this._availRides.remove(pid);
+	}
+
 }

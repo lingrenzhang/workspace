@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
 
+import com.hitchride.CommutePartiRide;
 import com.hitchride.GeoInfo;
 import com.hitchride.CommuteRide;
 import com.hitchride.Schedule;
@@ -397,6 +398,32 @@ public class CommuteRideAccess {
 			objConn=null;
 		}
 	};
+	
+	
+	public static void deleteRide(CommuteRide ride)
+	{
+		deleteRide(ride.recordId);
+	}
+	
+	
+	public static void deleteRide(int rideid)
+	{
+		try {
+			Statement sql;
+		    getConnection();
+
+			sql=objConn.createStatement();
+			sql.execute("delete from commuteride where recordId="+rideid);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 	
 	public static int[] parseIds(String input)
 	{

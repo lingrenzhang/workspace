@@ -81,9 +81,9 @@ public class NewScoreCalculator {
 		// TODO: think of a non-boolean function
 		// TODO: take into account time spent driving to pick-up location
 		boolean retval = false;
-		Time time1 = myRide.schedule.forwardTime;
+		Time time1 = myRide.schedule.tripTime;
 		Time flex1 = myRide.schedule.forwardFlexibility;
-		Time time2 = ownerRide._rideInfo.schedule.forwardTime;
+		Time time2 = ownerRide._rideInfo.schedule.returnTime;
 		Time flex2 = ownerRide._rideInfo.schedule.forwardFlexibility;
 		if(time2 == null || flex2 == null) return 0; // TODO: why should these guys be null in the first place? 
 		retval = (timeToInt(flex1) + timeToInt(flex2)) > Math.abs(timeToInt(time1)-timeToInt(time2));

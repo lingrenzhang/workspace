@@ -1,5 +1,6 @@
 package com.hitchride.servlet.commuteride;
 //Async search result topics based on initialized Ride. Must have active Ride initialized.
+//Used to initialize the Search Commute Topic page. Manual Search is in SearchCommute.
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -225,7 +226,7 @@ public class SearchCommuteTopics extends HttpServlet {
 			String date = request.getParameter("date");
 			Date d = TimeFormatHelper.setDate(date);
 			schedule.tripDate = d;
-			schedule.forwardTime =  java.sql.Time.valueOf("12:00:00"); 
+			schedule.tripTime =  java.sql.Time.valueOf("12:00:00"); 
 			schedule.forwardFlexibility =  java.sql.Time.valueOf("12:00:00");
 			return actRide;
 		}

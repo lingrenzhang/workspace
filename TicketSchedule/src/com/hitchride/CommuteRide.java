@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 
+import com.hitchride.database.access.CommutePartiRideAccess;
 import com.hitchride.database.access.CommuteRideAccess;
 import com.hitchride.database.access.CommuteTopicAccess;
 import com.hitchride.environ.AllUsers;
@@ -237,6 +238,10 @@ public class CommuteRide implements IPersistentStorage{
   		}
   	}
 
+  	public void delete(){
+  		CommuteRideAccess.deleteRide(this);
+  	}
+  	
   	@Override
   	public boolean isChanged() {
   		// TODO Auto-generated method stub
