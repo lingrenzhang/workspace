@@ -81,6 +81,8 @@
 	<div id="content_wrapper">
 		<div id="content_container" class="clearfix">
 			<div id="login_panel">
+				<% String err = request.getParameter("err")==null?"": request.getParameter("err"); %>
+				<ul><li style='text-align:center; font-size:15px !important; color:red; padding:5px'><% if(err.equals("1")){ %>用户名密码不正确<% } %></li></ul>
 				<form method="post" id="login-Form" class="login-form"
 					action="/TicketSchedule/servlet/Login">
 					<dl class="top clearfix">

@@ -100,11 +100,11 @@ public class Login extends HttpServlet {
 					request.setAttribute("isFailed", "true");
 					if("Zh".equalsIgnoreCase(request.getParameter("language")))
 					{
-						response.sendRedirect("/TicketSchedule/Zh/Login.jsp");
+						response.sendRedirect("/TicketSchedule/Zh/Login.jsp?err=1");
 					}
 					else
 					{
-						response.sendRedirect("/TicketSchedule/Login.jsp");
+						response.sendRedirect("/TicketSchedule/Login.jsp?err=1");
 					}
 				}
 			}
@@ -113,11 +113,11 @@ public class Login extends HttpServlet {
 				request.setAttribute("isFailed", "true");
 				if("Zh".equalsIgnoreCase(request.getParameter("language")))
 				{
-					response.sendRedirect("/TicketSchedule/Zh/Login.jsp");
+					response.sendRedirect("/TicketSchedule/Zh/Login.jsp?err=1");
 				}
 				else
 				{
-					response.sendRedirect("/TicketSchedule/Login.jsp");
+					response.sendRedirect("/TicketSchedule/Login.jsp?err=1");
 				}
 			}
 		} catch (SQLException e) {

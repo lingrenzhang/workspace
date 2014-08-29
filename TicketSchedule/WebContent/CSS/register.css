@@ -90,3 +90,36 @@
 	padding-bottom:10px;
 }
 
+.required:focus
+{
+	border-color: #229BF9;
+}
+
+.optional:focus{
+	border-color: #229BF9;
+}
+
+.requiredErr
+{
+	border-color: #FF0000 !important;
+}
+
+.error
+{
+	 background: none repeat scroll 0 0 #FFEBEB;
+	 border: 1px solid #FFBDBE;
+	 color: #FF0000;
+	 float: left;
+	 padding: 5px;
+	 margin: 0 4px;
+	 display: none;
+}
+
+dd input{
+	width: 238px !important;
+}
+
+.imgPos{
+	padding: 8px 4px;
+	display: none;
+}

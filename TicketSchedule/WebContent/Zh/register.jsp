@@ -21,73 +21,9 @@ String err = request.getParameter("err")==null?"": request.getParameter("err");
 <script src="/TicketSchedule/JS/ajaxFileUpload.js"></script>
 
 <script>
-(function ($){
-	$.formField = function (ele_id, err_msg) {
-		this.err_msg = err_msg;
-		this.validate = function (){
-			var ele = $('#' + ele_id);
-			if(ele.val() == ""){
-				return false;
-			}
-			return true;
-		};
-	};
-})(jQuery);
-
-var requiredFields = [new $.formField('emailAddress', 'email address can not be blank'),
-                      new $.formField('password', 'password can not be blank'),
-                      new $.formField('repassword', 'password confirmation can not be blank'),
-                      new $.formField('givenname', 'givenname can not be blank'),
-                      new $.formField('surname', 'surname can not be blank'),
-                      new $.formField('cellphone', 'cellphone can not be blank')];
-
 function showpic(value){
 	document.getElementById("pic").innerHTML="<img src="+value+ "alt='Image Hosting' border='0'>";
 }
-
-function validForm(){
-//	for(var i = 0; i < requiredFields.length; i++){
-//		if(!requiredFields[i].validate()){
-//			alert(requiredFields[i].err_msg);
-//			return false
-//		}
-//	}
-	if ((document.getElementById("password").value != document.getElementById("repassword").value)
-		|| (document.getElementById("password").value =="")
-		|| (document.getElementById("emailAddress").value == "")
-		|| (document.getElementById("givenname").value == "")
-		|| (document.getElementById("surname").value == "")
-		|| (document.getElementById("cellphone").value == ""))
-	return false;
-	if ((document.getElementById("authcode").value == ""))
-	{
-		return true;
-	}
-	else
-	{
-		var checkUrl = "/TicketSchedule/servlet/AuthCheck";
-		$.ajaxSetup({
-			async : false
-		});
-		$.get(checkUrl,    
-			{authCode : document.getElementById("authcode").value},     
-			 function(responseText){document.getElementById("groupID").value=responseText;},    
-				"html"   );
-
-		var resultvali= /^[1-9]/i;
-		
-		var result = document.getElementById("groupID").value;
-		if (resultvali.test(result))
-		{
-			return true;
-		}
-		else{
-			alert(result);
-		}
-		return false;
-    }
-}
-
 
 var __avatar_handlerUrl ="/TicketSchedule/servlet/AvaterService";
 var avatarFileName = "sample";
@@ -113,7 +49,117 @@ $(document).ready(function(){
 	    }
 	}).offset({ 
 		top: gbOS.top + 63, 
-		left: gbOS.left + 63 });   
+		left: gbOS.left + 63 });
+	
+	function emailAddressValidator(){
+		// TODO: email format check
+		return true;
+	}
+	
+	function repasswordValidator(){
+		var _pwd = $('#password').val();
+		var _repwd = $('#repassword').val();
+		if(_pwd != _repwd){
+			return "两次输入密码不一致";
+		}else{
+			return true;
+		}
+	}
+	
+	function cellphoneValidator(){
+		// TODO: cellphone number format check
+		return true;
+	}
+	
+	function authcodeValidator(){
+		var checkUrl = "/TicketSchedule/servlet/AuthCheck";
+		$.ajaxSetup({
+			async : false
+		});
+		$.get(checkUrl,    
+			{authCode : document.getElementById("authcode").value},     
+			 function(responseText){document.getElementById("groupID").value=responseText;},    
+				"html"   );
+
+		var resultvali= /^[1-9]/i;
+		
+		var result = document.getElementById("groupID").value;
+		if (resultvali.test(result))
+		{
+			return true;
+		}
+		else{
+			return result;
+		}
+	}
+	
+	(function ($){
+		$.formField = function (ele_id, is_required, err_msg, sp_validator) {
+			this.eid = ele_id;
+			this.err_msg = err_msg;
+			this.generalValidator = function (){
+				if(!is_required){
+					return true;
+				}
+				var ele = $('#' + ele_id);
+				if(ele.val() == ""){
+					return false;
+				}
+				return true;
+			};
+			if(sp_validator){
+				this.specialValidator = sp_validator;
+			}else{
+				this.specialValidator = function(){return true;};
+			}
+			
+		};
+	})(jQuery);
+	
+	var requiredFields = [new $.formField('emailAddress', true, '请输入用户名', emailAddressValidator),
+	                      new $.formField('password', true, '请输入密码'),
+	                      new $.formField('repassword', true, '请确认密码', repasswordValidator),
+	                      new $.formField('givenname', true, '请输入您的姓'),
+	                      new $.formField('surname', true, '请输入您的名'),
+	                      new $.formField('cellphone', true, '请输入手机号码', cellphoneValidator),
+						  new $.formField('authcode', false, '', authcodeValidator)];
+	
+	for(var i=0; i<requiredFields.length; i++){
+		(function(){
+			var j = i;
+			var ele = requiredFields[j];
+			$('#' + ele.eid).focus(function(){
+				$('#' + ele.eid).removeClass('requiredErr');
+				$('#' + ele.eid + 'Msg').hide();	
+			});
+			$('#' + ele.eid).blur(function(){
+				$('#' + ele.eid + 'Msg').show();
+				$('#' + ele.eid).addClass('requiredErr');
+				$('#' + ele.eid + 'Succ').hide();
+				if(!ele.generalValidator()){
+					$('#' + ele.eid + 'Msg').html("<span>" + ele.err_msg + "</span>");
+				}else if((err_msg = ele.specialValidator()) != true){
+					$('#' + ele.eid + 'Msg').html("<span>" + err_msg + "</span>");
+				}else{
+					$('#' + ele.eid + 'Msg').hide();
+					$('#' + ele.eid).removeClass('requiredErr');
+					$('#' + ele.eid + 'Succ').show();
+				}
+			});
+		})();
+	}
+
+	$('#add_ride').submit(function(event){
+		var is_valid = true;
+		for(var i=0; i<requiredFields.length; i++){
+			var ele = $('#' + requiredFields[i].eid);
+			ele.blur();
+			if(ele.hasClass('requiredErr')){
+				is_valid = false;
+			}
+		}
+		return is_valid;
+	});
 });
 
 function _prepare_for_upload() {
@@ -124,7 +170,7 @@ function _uploadImg() {
     if(!ready_for_upload){
         return;
     }
-    ready_for_upload = false // workround for the Chrome v36 upload file issue, see www.redmine.org/issues/17151
+    ready_for_upload = false; // workround for the Chrome v36 upload file issue, see www.redmine.org/issues/17151
     $.ajaxFileUpload({
         url: __avatar_handlerUrl,
         secureuri: false,
@@ -249,7 +295,7 @@ function _uploadAvatarCancel() {
 				<form action="/TicketSchedule/servlet/Register" method="Post"
 					id="add_ride" class="standard requires_login_results"
 					onkeypress="if(event.keyCode==13||event.which==13){return false;}"
-					onsubmit="return validForm()" accept-charset="UTF-8">
+					onsubmit="return false;" accept-charset="UTF-8">
 					<fieldset id="reg_fld">
 						<dl id="reg_dl">
 							<dt>
@@ -257,10 +303,12 @@ function _uploadAvatarCancel() {
 									用户名
 								</label>
 							</dt>
-							<dd class="emailAddress" id="emailAddress">
+							<dd class="emailAddress" >
 								<input type="text" class="required" placeholder="邮箱"
 									name="emailAddress" id="emailAddress" maxlength="50"
 									autocomplete="off"> <%= err.equals("existed_user")?"<p style=\"color:#FF0000;\">用户名已存在</p>":""%>
+									<img id="emailAddressSucc" src="/TicketSchedule/Picture/success.png" class="imgPos"/>
+									<div id="emailAddressMsg" class="error"></div>
 							</dd>
 
 							<dt>
@@ -271,6 +319,8 @@ function _uploadAvatarCancel() {
 							<dd>
 								<input type="password" class="required" placeholder="密码"
 									name="password" id="password" maxlength="50" autocomplete="off">
+								<img id="passwordSucc" src="/TicketSchedule/Picture/success.png" class="imgPos"/>
+								<div id="passwordMsg" class="error"></div>
 							</dd>
 
 							<dt>
@@ -282,6 +332,8 @@ function _uploadAvatarCancel() {
 								<input type="password" class="required" placeholder="再次输入密码"
 									name="repassword" id="repassword" maxlength="50"
 									autocomplete="off">
+								<img id="repasswordSucc" src="/TicketSchedule/Picture/success.png" class="imgPos"/>
+								<div id="repasswordMsg" class="error"></div>
 							</dd>
 							<dt>
 								<label class="register-label"> <span class="req">*</span>
@@ -291,6 +343,8 @@ function _uploadAvatarCancel() {
 							<dd>
 								<input type="text" class="required" placeholder="你的姓"
 									name="surname" id="surname" maxlength="100" autocomplete="off">
+								<img id="surnameSucc" src="/TicketSchedule/Picture/success.png" class="imgPos"/>
+								<div id="surnameMsg" class="error"></div>
 							</dd>
 							<dt>
 								<label class="register-label"> <span class="req">*</span>
@@ -301,6 +355,8 @@ function _uploadAvatarCancel() {
 								<input type="text" class="required" placeholder="你的名字"
 									name="givenname" id="givenname" maxlength="100"
 									autocomplete="off">
+								<img id="givennameSucc" src="/TicketSchedule/Picture/success.png" class="imgPos"/>
+									<div id="givennameMsg" class="error"></div>
 							</dd>
 							<dt>
 								<label class="register-label"> 电话 </label>
@@ -309,6 +365,8 @@ function _uploadAvatarCancel() {
 								<input type="text" class="required" placeholder="手机号码"
 									name="cellphone" id="cellphone" maxlength="15"
 									autocomplete="off">
+								<img id="cellphoneSucc" src="/TicketSchedule/Picture/success.png" class="imgPos"/>
+								<div id="cellphoneMsg" class="error"></div>
 								<p>11位手机号码</p>
 							</dd>
 							<dt>
@@ -317,6 +375,8 @@ function _uploadAvatarCancel() {
 							<dd>
 								<input type="text" class="optional" placeholder="abcdefghi"
 									name="authcode" id="authcode" maxlength="10" autocomplete="off">
+								<img id="authcodeSucc" src="/TicketSchedule/Picture/success.png" class="imgPos"/>
+								<div id="authcodeMsg" class="error"></div>
 								<p>9位授权码</p>
 							</dd>
 
