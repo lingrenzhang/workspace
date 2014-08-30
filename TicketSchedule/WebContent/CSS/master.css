@@ -464,3 +464,9 @@ margin-top: 10px;
 width: 50px;
 }
 
+.datepicker[readonly]
+{
+	background-color: white;
+	cursor: pointer;
+}
+

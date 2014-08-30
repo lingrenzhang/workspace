@@ -102,10 +102,10 @@ $(document).ready(function(){
 	//------------------------register listener-------------------------
 	
 	
-	var selectorholder = document.getElementById("depart-date");
-	var pickerholder = document.getElementById("ui-datepicker-div");
+	var selectorholder1 = document.getElementById("depart-date");
+	var pickerholder1 = document.getElementById("ui-datepicker-div");
 
-	var calandar = new Calandar(selectorholder,pickerholder,"depart-date","map-canvas");
+	var calandar = new Calandar(selectorholder1,pickerholder1,"depart-date","map-canvas");
 	date= calandar.getDate();
 	
 	var timer_holder = document.getElementById("time-info");
@@ -113,8 +113,9 @@ $(document).ready(function(){
 	timePicker.setDefaultTime();
 	
 	var selectorholder2 = document.getElementById("back-date");
-
-	var calandar2 = new Calandar(selectorholder2,pickerholder,"back-date","map-canvas");
+	var pickerholder2 = document.getElementById("ui-datepicker-div");
+	
+	var calandar2 = new Calandar(selectorholder2,pickerholder2,"back-date","map-canvas");
 	date= calandar2.getDate();
 	
 	var timer_holder2 = document.getElementById("time-info2");
@@ -811,14 +812,14 @@ function refitb(bounds)
 		                   	<div id="multipostwrapper" style="">
 	                   	   		 <div class="date-info">
 		                           		<label for="depart-date" class="depart-date">出发</label>
-			                            <input type="text" name="depart-date" id="depart-date" class="slim datepicker depart-date hasDatepicker" maxlength="10" value="07/14/2013">
+			                            <input type="text" name="depart-date" id="depart-date" readonly="readonly" class="slim datepicker depart-date hasDatepicker" maxlength="10" value="07/14/2013">
 			                            <img class="ui-datepicker-trigger" src="/TicketSchedule/Picture/icon_calendar.png" alt="..." title="...">
 	   							 </div>
 	   							 <div id="time-info">				
 								 </div>
 								 <div class="date-info2">
 		                           		<label for="back-date" class="back-date">返回</label>
-			                            <input type="text" name="back-date" id="back-date" class="slim datepicker depart-date hasDatepicker" maxlength="10" value="07/14/2013">
+			                            <input type="text" name="back-date" id="back-date" readonly="readonly" class="slim datepicker depart-date hasDatepicker" maxlength="10" value="07/14/2013">
 			                            <img class="ui-datepicker-trigger" src="/TicketSchedule/Picture/icon_calendar.png" alt="..." title="...">
 	   							 </div>
 	   							 <div id="time-info2">				
@@ -826,7 +827,7 @@ function refitb(bounds)
 								 <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"
  										style="position: absolute; z-index:1;display:none;">
  								 </div>
-							</div>
+ 							</div>
 							<!--
 			                     <div id="singletripwrapper" class="singletripwrapper">
 			                        	<span class="trip_num">Trip 1</span>
