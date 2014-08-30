@@ -172,7 +172,6 @@ function displayCalender(year,month,contentHolderId,replaceWidgetId)
 }
 
 
-
 function nextMonth(contentHolderId,replaceWidgetId)
 {
 	displayCalender(displayDate.getFullYear(),displayDate.getMonth()+1,contentHolderId,replaceWidgetId);
@@ -188,10 +187,10 @@ function Calandar(selectorHolder,pickerHolder,contentHolderId,replaceWidgetId)
 	var replaceWidget=$("#"+replaceWidgetId);
 	pickerHolder.innerHTML = 
 	"<div class='ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all'>"+
-	"<a class='ui-datepicker-prev ui-corner-all' onclick='prevMonth(\""+contentHolderId+"\",\""+replaceWidgetId+"\")' title='Prev'>"+
+	"<a id='datepicker-prev' class='ui-datepicker-prev ui-corner-all' title='Prev'>"+
 	"	<span class='ui-icon ui-icon-circle-triangle-e'>Prev</span>"+
 	"</a>"+
-	"	<a class='ui-datepicker-next ui-corner-all' onclick='nextMonth(\""+contentHolderId+"\",\""+replaceWidgetId+"\")' title='Next'>"+
+	"	<a id='datepicker-next' class='ui-datepicker-next ui-corner-all' title='Next'>"+
 	"		<span class='ui-icon ui-icon-circle-triangle-w'>Next</span>"+
 	"	</a>"+
 	"	<div class='ui-datepicker-title'>"+
@@ -276,6 +275,13 @@ function Calandar(selectorHolder,pickerHolder,contentHolderId,replaceWidgetId)
 			document.getElementById("picker-Year").innerHTML=displayDate.getFullYear();
 			displayCalender(displayDate.getFullYear(),displayDate.getMonth(),contentHolderId,replaceWidgetId);
 	    }
+	    
+	    document.getElementById("datepicker-prev").onclick = function(){
+	    	prevMonth(contentHolderId,replaceWidgetId);
+	    };
+	    document.getElementById("datepicker-next").onclick = function(){
+	    	nextMonth(contentHolderId,replaceWidgetId);
+	    };
 	    
 	 };
 
