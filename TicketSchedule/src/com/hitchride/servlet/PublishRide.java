@@ -177,7 +177,6 @@ public class PublishRide extends HttpServlet {
 			
 			String departdate = request.getParameter("depart-date");
 			schedule.tripDate = TimeFormatHelper.setDate(departdate);
-			String backdate = request.getParameter("return-date");
 			
 			
 			//Distance duration
@@ -229,8 +228,12 @@ public class PublishRide extends HttpServlet {
 			}
 			else
 			{
-				String triptime= request.getParameter("there_time");
-				schedule.tripTime = TimeFormatHelper.getTripTime(triptime,schedule.forwardFlexibility);
+				String tripdate= request.getParameter("depart-date");
+				String forwardtime= request.getParameter("depart_time_hour");
+				String backdate= request.getParameter("back-date");
+				String backtime= request.getParameter("back_time_hour");
+				//schedule.tripTime = TimeFormatHelper.getTripTime(triptime,schedule.forwardFlexibility);
+				System.out.println(tripdate+" "+forwardtime+" "+backdate+" "+backtime);
 			}
 		}
 	}
