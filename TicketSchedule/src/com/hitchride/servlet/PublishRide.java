@@ -83,7 +83,16 @@ public class PublishRide extends HttpServlet {
 		{
 			Double origLat = Double.parseDouble(request.getParameter("origLat"));
 			Double origLon = Double.parseDouble(request.getParameter("origLng"));
-			String origAddr = new String(request.getParameter("s").getBytes("iso-8859-1"), "UTF-8");
+			String origAddr=null;
+			if (null != request.getParameter("s") && !"".equals(request.getParameter("s")))
+			{
+				origAddr = new String(request.getParameter("s").getBytes("iso-8859-1"), "UTF-8");
+			}
+			else
+			{
+				origAddr = new String(request.getParameter("defaultS").getBytes("iso-8859-1"), "UTF-8");
+			}
+			
 			orig = new GeoInfo(origAddr,origLat,origLon);
 			request.setAttribute("orig", origAddr);
 		}
@@ -98,7 +107,15 @@ public class PublishRide extends HttpServlet {
 		{
 			Double destLat = Double.parseDouble(request.getParameter("destLat"));
 			Double destLon = Double.parseDouble(request.getParameter("destLng"));
-			String destAddr = new String(request.getParameter("e").getBytes("iso-8859-1"), "UTF-8");
+			String destAddr=null;
+			if (null != request.getParameter("e") && !"".equals(request.getParameter("e")))
+			{
+				destAddr = new String(request.getParameter("e").getBytes("iso-8859-1"), "UTF-8");
+			}
+			else
+			{
+				destAddr = new String(request.getParameter("defaultE").getBytes("iso-8859-1"), "UTF-8");
+			}
 			request.setAttribute("dest", destAddr);
 			dest = new GeoInfo(destAddr,destLat,destLon);
 		}

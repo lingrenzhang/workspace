@@ -700,9 +700,11 @@ function refitb(bounds)
 	{
 		var rideinfo = JSON.parse(getJson("/TicketSchedule/PublishRide?rid="+rid));
 		document.getElementById("rid").value=rid;
-		document.getElementById("s").setAttribute("value", rideinfo.origLoc_addr);
+		document.getElementById("s").value= rideinfo.origLoc_addr;//Seems have compatible issue with baidu api.
+		document.getElementById("defaultS").value= rideinfo.origLoc_addr;
 		document.getElementById("s").setAttribute("placeholder", rideinfo.origLoc_addr);
-		document.getElementById("e").setAttribute("value", rideinfo.destLoc_addr);
+		document.getElementById("e").value= rideinfo.destLoc_addr; //Seems have compatible issue with baidu api.
+		document.getElementById("defaultE").value= rideinfo.destLoc_addr;
 		document.getElementById("e").setAttribute("placeholder", rideinfo.destLoc_addr);
 		document.getElementById("origLat").value=rideinfo.origLoc_lat;
 		document.getElementById("origLng").value=rideinfo.origLoc_lon;
@@ -753,6 +755,16 @@ function refitb(bounds)
 		}
 	}
 </script>
+
+<script>
+function subform()
+{
+    //Input check
+	return true;
+}
+
+</script>
+
 <title>管理行程</title>
 </head>
 <body>
@@ -780,7 +792,7 @@ function refitb(bounds)
 <div id="content_wrapper">
 	<div id="content_container" class="clearfix">
 		<div id="wide_column_left" class="newAddRideStyle">
-			<form action="/TicketSchedule/PublishRide" method="Post" id="add_ride" class="standard requires_login_results" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
+			<form action="/TicketSchedule/PublishRide" method="Post" id="add_ride" class="standard requires_login_results" onsubmit="return subform()" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
 				<div class="panel" id="GeoInfo">
 					<div class="panel-heading">地址信息</div>
 					<div class="panel-body">
@@ -1063,6 +1075,8 @@ function refitb(bounds)
 					</div>	
 				</div> -->
 			<span id="form_submit"><button type="submit" class="btn btn-primary">创建或更新行程</button></span>          
+            <input type="text" class="hidden" id="defaultS" name="defaultS" value=""></input>
+            <input type="text" class="hidden" id="defaultE" name="defaultE" value=""></input>
             <input type="text" class="hidden" id="origLat" name="origLat" value=""></input>
             <input type="text" class="hidden" id="origLng" name="origLng" value=""></input>
             <input type="text" class="hidden" id="destLat" name="destLat" value=""></input>
