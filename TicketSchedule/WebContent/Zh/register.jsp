@@ -158,7 +158,9 @@ $(document).ready(function(){
 				is_valid = false;
 			}
 		}
-		return is_valid;
+		if(is_valid){
+			this.submit();
+		}
 	});
 });
 
