@@ -43,10 +43,10 @@ public class DeleteCommuteTopic extends HttpServlet {
 				TransientTopic tr = TransientTopicAccess.getTransientTopicById(trid);
 				for (int i=0;i<tr.nParticipant;i++)
 				{
-					tr.parti[i].deletepTrideById(trid);
+					tr.parti[i].deletePartiCommuteRide(trid);
 				}
 				User holder = (User) AllUsers.getUsers().getUser(deleteId);
-				holder.deletetTrideById(trid);
+				holder.deletetTopicCommuteRide(trid);
 				
 				
 				TransientTopicAccess.deleteTransientTopic(trid);

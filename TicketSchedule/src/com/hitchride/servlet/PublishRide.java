@@ -14,8 +14,10 @@ import com.hitchride.Schedule;
 import com.hitchride.TransientRide;
 import com.hitchride.TransientTopic;
 import com.hitchride.User;
+import com.hitchride.database.access.CommuteRideAccess;
 import com.hitchride.environ.AllPartRides;
 import com.hitchride.environ.AllRides;
+import com.hitchride.environ.AllUsers;
 import com.hitchride.environ.Environment;
 import com.hitchride.util.DistanceHelper;
 import com.hitchride.util.GsonWrapperForCommuteRide;
@@ -250,60 +252,94 @@ public class PublishRide extends HttpServlet {
 		}
 		else //For transientRide
 		{
-			TransientRide tr = new TransientRide();
-			tr.transientRideId = Environment.getEnv().maxTranRideId+1;
+			//Depart-----------------------------
+			TransientRide trdepart = new TransientRide();
+			trdepart.transientRideId = Environment.getEnv().maxTranRideId+1;
 			Environment.getEnv().maxTranRideId++;
-			tr.owner =user;
-			tr.userId = user.get_uid();
-			tr.origLoc= orig;
-			tr.destLoc= dest;
-			tr.dist = dist;
-			tr.dura = dura;
-			
-			if (request.getParameter("userType")!=null)
-			{
-				tr.userType = request.getParameter("userType").equals("driver");
-			}
-			else
-			{
-				tr.userType=false;
-			}
-			tr.price = Double.parseDouble(request.getParameter("price"));
-			tr.totalSeats =Integer.parseInt(request.getParameter("seats"));
-			
+			trdepart.owner =user;
+			trdepart.userId = user.get_uid();
+			trdepart.origLoc= orig;
+			trdepart.destLoc= dest;
+			trdepart.dist = dist;
+			trdepart.dura = dura;
 			
 			String departdate = request.getParameter("depart-date");
-			tr.rideDate = TimeFormatHelper.setDate(departdate);
+			trdepart.rideDate = TimeFormatHelper.setDate(departdate);
 			
 			String forwardhour= request.getParameter("depart_time_hour");
 			String forwardap= request.getParameter("depart_time_ap");
 			String forwardmin= request.getParameter("depart_time_minute");
 			String forwards= forwardhour+":"+forwardmin+forwardap;
-			tr.rideTime=TimeFormatHelper.getTime(forwards);
+			trdepart.rideTime=TimeFormatHelper.getTime(forwards);
 			
 			int fflx = 30;
-			tr.rideFlex = new Time(fflx*60000-TimeFormatHelper.systemOffset);
+			trdepart.rideFlex = new Time(fflx*60000-TimeFormatHelper.systemOffset);
 			
-			tr.insertToDB();
-			user.tTride.add(tr.transientRideId);
+			if (request.getParameter("userType")!=null)
+			{
+				trdepart.userType = request.getParameter("userType").equals("driver");
+				trdepart.price = Double.parseDouble(request.getParameter("price"));
+			}
+			else
+			{
+				trdepart.userType=false;
+			}
+			trdepart.totalSeats =Integer.parseInt(request.getParameter("seats"));
 			
-			TransientTopic ttopic = new TransientTopic(tr.transientRideId);
+			
+			trdepart.insertToDB();
+			user.topicCommuteRide.add(trdepart.transientRideId);
+			
+			TransientTopic ttopic = new TransientTopic(trdepart.transientRideId);
 			ttopic.insertToDB();
 			
+			//Back-----------------------
+			TransientRide trback = new TransientRide();
+			trback.transientRideId = Environment.getEnv().maxTranRideId+1;
+			Environment.getEnv().maxTranRideId++;
+			trback.owner =user;
+			trback.userId = user.get_uid();
+			trback.origLoc= dest;
+			trback.destLoc= orig;
+			trback.dist = dist;
+			trback.dura = dura;
+			
+			String backdate = request.getParameter("back-date");
+			trback.rideDate = TimeFormatHelper.setDate(backdate);
+			
+			String backhour= request.getParameter("back_time_hour");
+			String backap= request.getParameter("back_time_ap");
+			String backmin= request.getParameter("back_time_minute");
+			String back= backhour+":"+backmin+backap;
+			trback.rideTime=TimeFormatHelper.getTime(back);
+			
+			trback.rideFlex = new Time(fflx*60000-TimeFormatHelper.systemOffset);
+			
+			if (request.getParameter("userType")!=null)
+			{
+				trback.userType = request.getParameter("userType").equals("driver");
+				trback.price = Double.parseDouble(request.getParameter("price"));
+			}
+			else
+			{
+				trback.userType=false;
+			}
+			trback.totalSeats =Integer.parseInt(request.getParameter("seats"));
+			
+			
+			trback.insertToDB();
+			user.topicCommuteRide.add(trback.transientRideId);
+			
+			TransientTopic ttopicb = new TransientTopic(trback.transientRideId);
+			ttopicb.insertToDB();
+
 			if (recordId!=0)//Switch from commute to transient.
 			{
 				//Delete old commute ride here. 
+				AllRides.getRides().remove(recordId);
+				user.deletePartiCommuteRide(recordId);
+				CommuteRideAccess.deleteRide(recordId);
 			}
-			
-			
-			/*
-			 * String backdate= request.getParameter("back-date");
-			   String backhour= request.getParameter("back_time_hour");
-			   String backap= request.getParameter("back_time_ap");
-			   String backmin= request.getParameter("back_time_minute");
-			   String backs= backhour+":"+backmin+backap;
-			   myRide.schedule.returnTime=TimeFormatHelper.getTime(backs);
-			*/
 			response.sendRedirect("/TicketSchedule/Zh/SearchTransientRide.jsp");
 		}
 	}

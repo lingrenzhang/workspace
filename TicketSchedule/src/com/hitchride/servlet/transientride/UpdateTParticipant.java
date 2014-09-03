@@ -42,7 +42,7 @@ public class UpdateTParticipant extends HttpServlet {
 				int deleteId = Integer.parseInt(request.getParameter("deleteId"));
 				TransientTopicAccess.removeParti(trid, deleteId);
 				User user = (User) AllUsers.getUsers().getUser(deleteId);
-				user.deletepTrideById(trid);
+				user.deletePartiCommuteRide(trid);
 				
 				TransientRide tride = TransientRideAccess.getTransisentRideById(trid);
 				User touser = (User) AllUsers.getUsers().getUser(tride.userId);
@@ -58,7 +58,7 @@ public class UpdateTParticipant extends HttpServlet {
 				int insertId = Integer.parseInt(request.getParameter("insertId"));
 				TransientTopicAccess.addParti(trid, insertId);
 				User user = (User) AllUsers.getUsers().getUser(insertId);
-				user.insertpTrideById(trid);
+				user.insertPartiCommuteRide(trid);
 				
 				TransientRide tride = TransientRideAccess.getTransisentRideById(trid);
 				User touser = (User) AllUsers.getUsers().getUser(tride.userId);

@@ -23,8 +23,8 @@ public class User implements IRideListener,IUserInfo{
 	public String _cellphone;
 	
 	//Use self defined data structure later.
-	public List<Integer> pTride = new ArrayList<Integer>();
-	public List<Integer> tTride = new ArrayList<Integer>();
+	public List<Integer> partiCommuteRide = new ArrayList<Integer>();
+	public List<Integer> topicCommuteRide = new ArrayList<Integer>();
 	
 	//Transient Ride is traced by ID and accessed from DB directly.
 	public Vector<CommutePartiRide> pRides= new Vector<CommutePartiRide>();
@@ -200,7 +200,7 @@ public class User implements IRideListener,IUserInfo{
 	//ID operation
 	public void refreshpTride()
 	{
-		for (Iterator<Integer> iTransient = this.pTride.iterator();iTransient.hasNext();)
+		for (Iterator<Integer> iTransient = this.partiCommuteRide.iterator();iTransient.hasNext();)
 		{
 			Integer tid = iTransient.next();
 			TransientRide tr = TransientRideAccess.getTransisentRideById(tid);
@@ -214,9 +214,9 @@ public class User implements IRideListener,IUserInfo{
 		}
 	}
 	
-	public void deletepTrideById(int id)
+	public void deletePartiCommuteRide(int id)
 	{
-		for (Iterator<Integer> iTransient = this.pTride.iterator();iTransient.hasNext();)
+		for (Iterator<Integer> iTransient = this.partiCommuteRide.iterator();iTransient.hasNext();)
 		{
 			if (iTransient.next() == id)
 			{
@@ -225,15 +225,15 @@ public class User implements IRideListener,IUserInfo{
 		}
 	}
 	
-	public void insertpTrideById(int id)
+	public void insertPartiCommuteRide(int id)
 	{
-	    deletepTrideById(id); //Remove duplicate id
-		this.pTride.add(id);
+	    deletePartiCommuteRide(id); //Remove duplicate id
+		this.partiCommuteRide.add(id);
 	}
 	
-	public void refreshtTride()
+	public void refreshTopicCommuteRide()
 	{
-		for (Iterator<Integer> iTransient = this.tTride.iterator();iTransient.hasNext();)
+		for (Iterator<Integer> iTransient = this.topicCommuteRide.iterator();iTransient.hasNext();)
 		{
 			Integer tid = iTransient.next();
 			TransientRide tr = TransientRideAccess.getTransisentRideById(tid);
@@ -247,9 +247,9 @@ public class User implements IRideListener,IUserInfo{
 		}
 	}
 	
-	public void deletetTrideById(int id)
+	public void deletetTopicCommuteRide(int id)
 	{
-		for (Iterator<Integer> iTransient = this.tTride.iterator();iTransient.hasNext();)
+		for (Iterator<Integer> iTransient = this.topicCommuteRide.iterator();iTransient.hasNext();)
 		{
 			if (iTransient.next() == id)
 			{
@@ -258,9 +258,9 @@ public class User implements IRideListener,IUserInfo{
 		}
 	}
 	
-	public void inserttTrideById(int id)
+	public void insertTopicCommuteRide(int id)
 	{
-	    deletetTrideById(id); //Remove duplicate id
-		this.tTride.add(id);
+	    deletetTopicCommuteRide(id); //Remove duplicate id
+		this.topicCommuteRide.add(id);
 	}
 }

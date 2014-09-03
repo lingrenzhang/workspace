@@ -112,8 +112,8 @@ public class UserCenter extends HttpServlet {
 						}
 					}
 					
-					user.refreshtTride();
-					for(Iterator<Integer> rideI = user.tTride.iterator();rideI.hasNext(); )
+					user.refreshTopicCommuteRide();
+					for(Iterator<Integer> rideI = user.topicCommuteRide.iterator();rideI.hasNext(); )
 					{
 						int rideId = rideI.next();
 						TransientRide ownerTRide = TransientRideAccess.getTransisentRideById(rideId);
@@ -153,7 +153,7 @@ public class UserCenter extends HttpServlet {
 					}
 					
 					user.refreshpTride();
-					for(Iterator<Integer> rideI = user.pTride.iterator();rideI.hasNext(); )
+					for(Iterator<Integer> rideI = user.partiCommuteRide.iterator();rideI.hasNext(); )
 					{
 						int rideId = rideI.next();
 						TransientRide ownerTRide = TransientRideAccess.getTransisentRideById(rideId);

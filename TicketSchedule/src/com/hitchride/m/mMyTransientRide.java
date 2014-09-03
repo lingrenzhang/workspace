@@ -99,11 +99,11 @@ public class mMyTransientRide extends HttpServlet {
 			json.reason = "not login";
 			json.redirect = "login.html";
 		} else {
-			user.refreshtTride();
-			json.tRides = new mRide[user.tTride.size()];
-			System.out.println(user.tTride.size());
+			user.refreshTopicCommuteRide();
+			json.tRides = new mRide[user.topicCommuteRide.size()];
+			System.out.println(user.topicCommuteRide.size());
 			int i=0;
-			for (Iterator<Integer> rideI = user.tTride.iterator(); rideI
+			for (Iterator<Integer> rideI = user.topicCommuteRide.iterator(); rideI
 					.hasNext();) {
 				int trId = rideI.next();
 				TransientRide tride = TransientRideAccess

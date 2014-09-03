@@ -118,7 +118,7 @@ public class PublishTransientTopic extends HttpServlet {
 			tranRide.insertToDB();
 			TransientTopic trantopic = new TransientTopic(tranRide.transientRideId);
 			trantopic.insertToDB();
-			tranRide.owner.inserttTrideById(tranRide.transientRideId);
+			tranRide.owner.insertTopicCommuteRide(tranRide.transientRideId);
 		
 			request.getSession().setAttribute("tranRide", tranRide);
 			response.setContentType("text/html; charset=UTF-8");

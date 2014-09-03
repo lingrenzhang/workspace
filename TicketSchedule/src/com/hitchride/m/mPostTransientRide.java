@@ -174,7 +174,7 @@ public class mPostTransientRide extends HttpServlet {
 			TransientTopic trantopic = new TransientTopic(
 					tranRide.transientRideId);
 			trantopic.insertToDB();
-			tranRide.owner.inserttTrideById(tranRide.transientRideId);
+			tranRide.owner.insertTopicCommuteRide(tranRide.transientRideId);
 
 			json.status = "successful";
 			json.reason = "";

@@ -51,10 +51,10 @@ public class Environment {
 			if (ownerId!=0)
 			{	
 				User user = (User) AllUsers.getUsers().getUser(ownerId);
-				user.tTride.add(ttopic.transientRideId);
+				user.topicCommuteRide.add(ttopic.transientRideId);
 				for (int i = 0;i<ttopic.nParticipant;i++)
 				{
-					ttopic.parti[i].pTride.add(ttopic.transientRideId);
+					ttopic.parti[i].partiCommuteRide.add(ttopic.transientRideId);
 				}
 			}
 		}

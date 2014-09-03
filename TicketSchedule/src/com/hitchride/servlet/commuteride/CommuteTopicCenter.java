@@ -59,6 +59,7 @@ public class CommuteTopicCenter extends HttpServlet {
 			    request.setAttribute("isOwnerMode", isOwnerMode);
 				
 			    CommuteRide ride=null;
+			    ride = AllRides.getRides().getRide(topicId);
 			    try
 			    {
 			    	int partiId = qsPar.getInt("partiId");

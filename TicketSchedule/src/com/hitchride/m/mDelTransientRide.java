@@ -95,10 +95,10 @@ public class mDelTransientRide extends HttpServlet {
 				int ownerUid = tride.owner.get_uid();
 				if (ownerUid == user.get_uid()) {
 					for (int i = 0; i < ttopic.nParticipant; i++) {
-						ttopic.parti[i].deletepTrideById(trId);
+						ttopic.parti[i].deletePartiCommuteRide(trId);
 					}
 					User holder = (User) AllUsers.getUsers().getUser(ownerUid);
-					holder.deletetTrideById(trId);
+					holder.deletetTopicCommuteRide(trId);
 
 					TransientTopicAccess.deleteTransientTopic(trId);
 					TransientRideAccess.deleteTransientRide(trId);
