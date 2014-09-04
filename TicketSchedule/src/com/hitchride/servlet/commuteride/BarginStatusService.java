@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.hitchride.CommuteOwnerRide;
 import com.hitchride.Message;
 import com.hitchride.CommutePartiRide;
 import com.hitchride.CommuteRide;
@@ -15,6 +16,7 @@ import com.hitchride.CommuteTopic;
 import com.hitchride.User;
 import com.hitchride.environ.AllPartRides;
 import com.hitchride.environ.AllRides;
+import com.hitchride.environ.AllTopicRides;
 import com.hitchride.environ.AllUsers;
 import com.hitchride.util.QueryStringParser;
 
@@ -56,6 +58,17 @@ public class BarginStatusService extends HttpServlet {
 			switch (status)
 			{
 				case 1:
+					if (ride==null) //When ride coming directly from search
+					{
+						CommuteOwnerRide tr = AllTopicRides.getTopicRides().getRide(topic.get_topicId());
+						ride = new CommuteRide();
+						ride.origLoc=tr._rideInfo.origLoc.clone();
+						ride.destLoc=tr._rideInfo.destLoc.clone();
+						ride.dist=tr._rideInfo.dist;
+						ride.dura=tr._rideInfo.dura;
+						ride.schedule = tr._rideInfo.schedule.clone();
+					}
+					
 					if (ride.get_user()==null)  //When ride coming from search
 					{
 						AllRides.getRides().insert_availride(ride);
