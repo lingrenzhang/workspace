@@ -143,7 +143,7 @@ public class NewScoreCalculator {
 		while(topicE.hasMoreElements()){
 			CommuteOwnerRide topicRide = AllTopicRides.getTopicRides().getRide(topicE.nextElement());
 			double score = destScoreByCoordinates(myRide, topicRide, false);
-			insertResult(score,topicRide._recordId);
+			insertResult(score,topicRide.id);
 		}
 		
 		//return results.subList(0, numRecords-1);

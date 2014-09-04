@@ -100,15 +100,15 @@ public class UserCenter extends HttpServlet {
 					value.append("<div class=\"panel-body\">");
 					for(Iterator<CommuteOwnerRide> rideI = user.tRides.iterator();rideI.hasNext(); )
 					{
-						CommuteOwnerRide ownerRide = AllTopicRides.getTopicRides().getRide(rideI.next()._recordId);
+						CommuteOwnerRide ownerRide = AllTopicRides.getTopicRides().getRide(rideI.next().id);
 						if (ownerRide!=null)
 						{
-							value.append("<a href=\"/TicketSchedule/CommuteTopicCenter?topicId="+ownerRide._recordId+"\">");
+							value.append("<a href=\"/TicketSchedule/CommuteTopicCenter?topicId="+ownerRide.id+"\">");
 							value.append("<div class=\"ride_wrapper\">");	
 							value.append(ownerRide.getGeoHTML());
 							value.append(ownerRide.getScheduleHTML());
 							value.append("</div></a>");
-							CommuteTopic topic= AllTopics.getTopics().get_topic(ownerRide._recordId);
+							CommuteTopic topic= AllTopics.getTopics().get_topic(ownerRide.id);
 						}
 					}
 					
@@ -119,7 +119,7 @@ public class UserCenter extends HttpServlet {
 						TransientRide ownerTRide = TransientRideAccess.getTransisentRideById(rideId);
 						if (ownerTRide!=null)
 						{
-							value.append("<a href=\"/TicketSchedule/Zh/TransientTopic.jsp?trId="+ownerTRide.transientRideId+"\">");
+							value.append("<a href=\"/TicketSchedule/Zh/TransientTopic.jsp?trId="+ownerTRide.id+"\">");
 							value.append("<div class=\"ride_wrapper\">");	
 							value.append(ownerTRide.getGeoHTML());
 							value.append(ownerTRide.getScheduleHTML());
@@ -138,15 +138,15 @@ public class UserCenter extends HttpServlet {
 					value.append("<div class=\"panel-body\">");
 					for(Iterator<CommutePartiRide> prideI = user.pRides.iterator();prideI.hasNext(); )
 					{
-						CommutePartiRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next()._pid);
+						CommutePartiRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next().id);
 						if (parRide.get_status()!=0)
 						{
 							
-							value.append("<a href='/TicketSchedule/CommuteTopicCenter?topicId="+parRide.get_assoOwnerRideId()+"&partiId="+parRide._pid+"'>");
+							value.append("<a href='/TicketSchedule/CommuteTopicCenter?topicId="+parRide.get_assoOwnerRideId()+"&partiId="+parRide.id+"'>");
 							value.append("<div class=\"ride_wrapper\">");	
 							value.append(parRide._rideInfo.getGeoHTML());
 							value.append(parRide._rideInfo.getScheduleHTML());
-							value.append("</a><a href='/TicketSchedule/Zh/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>±à¼­</button></div></a>");
+							value.append("</a><a href='/TicketSchedule/Zh/ManageRide.jsp?rid="+parRide.id+"'><div><button class='btn-primary' type='submit'>±à¼­</button></div></a>");
 							value.append("</div></a>");
 							CommuteTopic topic= AllTopics.getTopics().get_topic(parRide.get_assoOwnerRideId());
 						}
@@ -159,7 +159,7 @@ public class UserCenter extends HttpServlet {
 						TransientRide ownerTRide = TransientRideAccess.getTransisentRideById(rideId);
 						if (ownerTRide!=null)
 						{
-							value.append("<a href=\"/TicketSchedule/Zh/TransientTopic.jsp?trId="+ownerTRide.transientRideId+"\">");
+							value.append("<a href=\"/TicketSchedule/Zh/TransientTopic.jsp?trId="+ownerTRide.id+"\">");
 							value.append("<div class=\"ride_wrapper\">");	
 							value.append(ownerTRide.getGeoHTML());
 							value.append(ownerTRide.getScheduleHTML());
@@ -178,16 +178,16 @@ public class UserCenter extends HttpServlet {
 					value.append("<div class=\"panel-body\">");
 					for(Iterator<CommutePartiRide> prideI = user.pRides.iterator();prideI.hasNext(); )
 					{
-						CommutePartiRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next()._pid);
+						CommutePartiRide parRide = AllPartRides.getPartRides().get_participantRide(prideI.next().id);
 						if (parRide.get_status()==0)
 						{
 							
 							value.append("<div class='ride_wrapper'>");	
-							value.append("<a href='/TicketSchedule/Zh/SearchCommuteTopic.jsp?rid="+parRide._pid+"'>");
+							value.append("<a href='/TicketSchedule/Zh/SearchCommuteTopic.jsp?rid="+parRide.id+"'>");
 							value.append(parRide._rideInfo.getGeoHTML());
 							value.append(parRide._rideInfo.getScheduleHTML());
-							value.append("</a><a href='/TicketSchedule/Zh/ManageRide.jsp?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>±à¼­</button></div></a>");
-							value.append("<a href='/TicketSchedule/DeleteRide?rid="+parRide._pid+"'><div><button class='btn-primary' type='submit'>È¡Ïû</button></div></a>");
+							value.append("</a><a href='/TicketSchedule/Zh/ManageRide.jsp?rid="+parRide.id+"'><div><button class='btn-primary' type='submit'>±à¼­</button></div></a>");
+							value.append("<a href='/TicketSchedule/DeleteRide?rid="+parRide.id+"'><div><button class='btn-primary' type='submit'>È¡Ïû</button></div></a>");
 							value.append("</div>");
 						}
 					}

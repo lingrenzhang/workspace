@@ -51,7 +51,7 @@ public static Connection objConn; //This reference is used for batch job.
 			*/
 			rows = sql.executeUpdate("insert into commuteownerride (userId,RideInfoId) values(\"" 
 					+ commuteownerride._rideInfo.get_user().get_uid() + "\",\""
-					+ commuteownerride._recordId + "\")");
+					+ commuteownerride.id + "\")");
 		}
 		catch (java.lang.ClassNotFoundException e){
 			System.err.println("ClassNotFoundException:"+e.getMessage());
@@ -109,7 +109,7 @@ public static Connection objConn; //This reference is used for batch job.
 			{
 				System.out.println("Incorrect number of middle point");
 			}
-			updatequery.append(" where RideInfoId=\""+ commuteownerride._rideInfo.recordId+"\"" );
+			updatequery.append(" where RideInfoId=\""+ commuteownerride._rideInfo.id+"\"" );
 			rows = sql.executeUpdate(updatequery.toString());
 		}
 		catch (java.lang.ClassNotFoundException e){
@@ -136,7 +136,7 @@ public static Connection objConn; //This reference is used for batch job.
 				//TODO: Rethink about it
 				CommuteOwnerRide tride = new CommuteOwnerRide();
 				try {
-					tride._recordId = rid;
+					tride.id = rid;
 					tride.set_ownerId(triders.getInt("userId"));
 					tride.middlePointCount=(triders.getInt("MiddlePointCount"));
 					for (int i=1;i<tride.middlePointCount+1;i++)
@@ -149,11 +149,11 @@ public static Connection objConn; //This reference is used for batch job.
 					}
 					
 				} catch (SQLException e) {
-					System.out.println("Not able to load topic ride: " + tride._recordId);
+					System.out.println("Not able to load topic ride: " + tride.id);
 					e.printStackTrace();
 				}
-				allTRides.put(tride._recordId, tride);
-				System.out.println("Topic Ride: " + tride._recordId+" loaded.");
+				allTRides.put(tride.id, tride);
+				System.out.println("Topic Ride: " + tride.id+" loaded.");
 			}
 				
 		} catch (ClassNotFoundException e) {

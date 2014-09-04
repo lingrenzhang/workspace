@@ -206,7 +206,7 @@ function validateNewpwd()
 	</div>
 	<div id="content_wrapper">
 		<div class="user_wrapper">
-		   <div class="user_info" id="from">
+		   <div class="user_info" id="">
 			<div class="userpic">
 				<div class="username"><%=(user.get_name()==null)?"guest":user.get_name() %></div>
 				<img src=<%= user.get_head_portrait_path() %> alt="Profile Picture"></img>

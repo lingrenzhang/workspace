@@ -1,6 +1,5 @@
 package com.hitchride;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Vector;
@@ -14,7 +13,7 @@ import com.hitchride.environ.AllUsers;
 public class CommuteOwnerRide implements IPersistentStorage,IRideStatusChange{
 	private Vector<IRideListener> _rideListeners = new Vector<IRideListener>();
 	private int _ownerId;
-	public int _recordId;
+	public int id;
 	public CommuteRide _rideInfo;
 	public int middlePointCount = 0;
 	public Vector<GeoInfo> middlepoint = new Vector<GeoInfo>(); //Persistent storage in ownerRide table
@@ -55,7 +54,7 @@ public class CommuteOwnerRide implements IPersistentStorage,IRideStatusChange{
     public CommuteOwnerRide(CommuteRide rideInfo)
     {
     	this._rideInfo = rideInfo;
-    	this._recordId = rideInfo.recordId;
+    	this.id = rideInfo.id;
     	this._ownerId = rideInfo.get_user().get_uid();
     }
     
@@ -94,11 +93,11 @@ public class CommuteOwnerRide implements IPersistentStorage,IRideStatusChange{
 		int rows = CommuteOwnerRideAccess.updateTopicRide(this);
 		if (rows == 0)
 		{
-			System.out.println("Update failed for topicride: "+this._recordId + " attempting insert.");
+			System.out.println("Update failed for topicride: "+this.id + " attempting insert.");
 			rows = CommuteOwnerRideAccess.insertTopicRide(this);
 			if (rows== 0)
 			{
-				System.out.println("Insert also failed for topicride: "+this._recordId + " Please check DB integrity.");
+				System.out.println("Insert also failed for topicride: "+this.id + " Please check DB integrity.");
 			}
 		}
 	}
@@ -108,11 +107,11 @@ public class CommuteOwnerRide implements IPersistentStorage,IRideStatusChange{
 		int rows = CommuteOwnerRideAccess.insertTopicRide(this);
 		if (rows == 0)
 		{
-			System.out.println("Insert failed for topicride: "+ this._recordId + " attempting update.");
+			System.out.println("Insert failed for topicride: "+ this.id + " attempting update.");
 			rows = CommuteOwnerRideAccess.updateTopicRide(this);
 			if (rows== 0)
 			{
-				System.out.println("Update also failed for topicride: "+this._recordId + " Please check DB integrity.");
+				System.out.println("Update also failed for topicride: "+this.id + " Please check DB integrity.");
 			}
 		}
 	}

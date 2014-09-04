@@ -65,7 +65,7 @@ public class CommuteTopicAccess {
 					System.out.println("Warning: too much participant ride");
 					break;
 				}
-				parRideIds.append(pari.next()._pid);
+				parRideIds.append(pari.next().id);
 			}
 			
 			StringBuilder reqparRideIds = new StringBuilder();
@@ -84,7 +84,7 @@ public class CommuteTopicAccess {
 					System.out.println("Warning: too much requst ride");
 					break;
 				}
-				reqparRideIds.append(reqpari.next()._pid);
+				reqparRideIds.append(reqpari.next().id);
 			}
 			
 			StringBuilder messages = new StringBuilder();
@@ -149,7 +149,7 @@ public class CommuteTopicAccess {
 					System.out.println("Warning: too much participant ride");
 					break;
 				}
-				parRideIds.append(pari.next()._pid);
+				parRideIds.append(pari.next().id);
 			}
 			
 			StringBuilder reqparRideIds = new StringBuilder();
@@ -168,7 +168,7 @@ public class CommuteTopicAccess {
 					System.out.println("Warning: too much requst ride");
 					break;
 				}
-				reqparRideIds.append(reqpari.next()._pid);
+				reqparRideIds.append(reqpari.next().id);
 			}
 			
 			StringBuilder messages = new StringBuilder();
@@ -241,7 +241,7 @@ public class CommuteTopicAccess {
 									topic.parRides.add(pRide);
 									break;
 								default:
-									System.out.println("Invalid status code for pride: "+ pRide._pid);
+									System.out.println("Invalid status code for pride: "+ pRide.id);
 							}
 						}
 					}

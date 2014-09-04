@@ -43,8 +43,8 @@ public class TransientRideAccess {
 			sql=objConn.createStatement();
 
 		 rows = sql.executeUpdate("insert into TransientRide values(\"" + 
-		    		+ ride.userId + "\",\""
-					+ ride.transientRideId +"\",\""
+		    		+ ride.ownerId + "\",\""
+					+ ride.id +"\",\""
 			//Geo Info
 					+ ride.origLoc.get_formatedAddr()+"\",\""
 					+ ride.origLoc._addr+"\",\""
@@ -101,7 +101,7 @@ public class TransientRideAccess {
 				     //Key Info
 				 	//	new DataColumnSchema("userId","INT(10)"),
 					//  new DataColumnSchema("recordId","INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE"),
-					+ "userId=\"" + ride.userId + "\","
+					+ "userId=\"" + ride.ownerId + "\","
 					
 					//Geo Info
 					+ "origFAddr=\"" + ride.origLoc.get_formatedAddr()+"\","
@@ -133,7 +133,7 @@ public class TransientRideAccess {
 					+ "TotalSeats=\""+ ride.totalSeats+"\","
 					+ "AvailSeats=\""+ ride.availSeats+"\","
 					+ "PayperSeat=\""+ ride.price+ "\" "
-					+ "where transientRideId=\""+ride.transientRideId+"\"");
+					+ "where transientRideId=\""+ride.id+"\"");
 		}
 		catch (java.lang.ClassNotFoundException e){
 			System.err.println("ClassNotFoundException:"+e.getMessage());

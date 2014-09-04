@@ -1,16 +1,13 @@
 package com.hitchride.calc;
 import com.hitchride.GeoInfo;
 import com.hitchride.util.DistanceHelper;
-import com.hitchride.util.GeoUtil;
 import com.hitchride.calc.rideInfoParameters;
 import com.hitchride.database.access.CarpoolTbAccess;
 import com.hitchride.environ.SystemConfig;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
-import org.json.*;
 
 @Deprecated
 public class ScoreCalculator {

@@ -56,8 +56,8 @@ public class PublishTransientTopic extends HttpServlet {
 			//Also not search geoinfo at this layer.  Client layer is responsible for guarantee the issue 
 			TransientRide tranRide = new TransientRide();
 			tranRide.owner = (User) request.getSession().getAttribute("user");
-			tranRide.userId = tranRide.owner.get_uid();
-			tranRide.transientRideId = Environment.getEnv().maxTranRideId+1;
+			tranRide.ownerId = tranRide.owner.get_uid();
+			tranRide.id = Environment.getEnv().maxTranRideId+1;
 			Environment.getEnv().maxTranRideId++;
 			tranRide.userType = Boolean.parseBoolean(request.getParameter("userType"));
 			GeoInfo orig=null;
@@ -116,13 +116,13 @@ public class PublishTransientTopic extends HttpServlet {
 			tranRide.price = Double.parseDouble(request.getParameter("price"));
 					
 			tranRide.insertToDB();
-			TransientTopic trantopic = new TransientTopic(tranRide.transientRideId);
+			TransientTopic trantopic = new TransientTopic(tranRide.id);
 			trantopic.insertToDB();
-			tranRide.owner.insertTopicCommuteRide(tranRide.transientRideId);
+			tranRide.owner.insertTopicCommuteRide(tranRide.id);
 		
 			request.getSession().setAttribute("tranRide", tranRide);
 			response.setContentType("text/html; charset=UTF-8");
-			response.getWriter().write(""+tranRide.transientRideId);
+			response.getWriter().write(""+tranRide.id);
 			
 			Message message = new Message(null,tranRide.owner,-1,tranRide,"");
 			message.sendMessage();

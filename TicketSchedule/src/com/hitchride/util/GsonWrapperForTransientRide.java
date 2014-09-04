@@ -23,8 +23,8 @@ public class GsonWrapperForTransientRide {
     
     public GsonWrapperForTransientRide(TransientRide tr)
     {
-    	this.userId = tr.userId;
-    	this.transientRideId =tr.transientRideId;
+    	this.userId = tr.ownerId;
+    	this.transientRideId =tr.id;
     	this.origLoc_lat = tr.origLoc.get_lat();
     	this.origLoc_lon = tr.origLoc.get_lon();
     	this.origLoc_addr = tr.origLoc.get_formatedAddr();

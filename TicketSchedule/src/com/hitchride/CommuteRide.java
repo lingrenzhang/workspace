@@ -5,9 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 
-import com.hitchride.database.access.CommutePartiRideAccess;
 import com.hitchride.database.access.CommuteRideAccess;
-import com.hitchride.database.access.CommuteTopicAccess;
 import com.hitchride.environ.AllUsers;
 import com.hitchride.util.TimeFormatHelper;
 
@@ -17,7 +15,7 @@ import com.hitchride.util.TimeFormatHelper;
 public class CommuteRide implements IPersistentStorage{
 	// assign all not-applicable fields to null
 	
-	public int recordId;
+	public int id;
 	
 	public boolean userType;
 	public GeoInfo origLoc,destLoc;
@@ -40,7 +38,7 @@ public class CommuteRide implements IPersistentStorage{
 	// for commute only
 	//Normally used when initialize from client input.
 	public CommuteRide() {
-		this.recordId = 0; //The ride is not register to system. Only exist in actRide of session.
+		this.id = 0; //The ride is not register to system. Only exist in actRide of session.
 	}
 	
 	//Normally used when initialize from client input.
@@ -70,7 +68,7 @@ public class CommuteRide implements IPersistentStorage{
         	this.participant.add(parI.next());
         }
 		*/
-        this.recordId = r.recordId;
+        this.id = r.id;
 	}
 
 	//Initialize from DB. Used to generate our dummy data pool from carpoolTb
@@ -87,7 +85,7 @@ public class CommuteRide implements IPersistentStorage{
 		// for output only
 		username = rs.getString("username");
 		//user = (User) Environment.getEnv().getUser(username); For this routine, fully initialized after username table ready.
-		recordId	= rs.getInt("recordId");
+		id	= rs.getInt("recordId");
 		String origState = rs.getString("origState");
 		String origCity	 = rs.getString("origCity");
 		String origNbhd	 = rs.getString("origNbhd");
@@ -189,9 +187,9 @@ public class CommuteRide implements IPersistentStorage{
     public String getGeoHTML()
     {
     	StringBuilder result = new StringBuilder();
-    	result.append("<div class=\"geo\"> From: ");
+    	result.append("<div class=\"geo\"> 出发地： ");
     	result.append(origLoc.get_formatedAddr()+"<br>");
-    	result.append("To: "+destLoc.get_formatedAddr()+"</div>");
+    	result.append("目的地： "+destLoc.get_formatedAddr()+"</div>");
     	return result.toString();
     }
     public String getScheduleHTML()
@@ -215,11 +213,11 @@ public class CommuteRide implements IPersistentStorage{
   		int rows = CommuteRideAccess.updateRideInfo(this);
   		if (rows==0)
   		{
- 			System.out.println("Update failed for rideinfo: "+ this.recordId + " attempting insert.");
+ 			System.out.println("Update failed for rideinfo: "+ this.id + " attempting insert.");
   			rows = CommuteRideAccess.insertRideInfo(this);
   			if (rows==0)
   			{
-  	  			System.out.println("Insert also failed for rideinfo: "+ this.recordId + " Check DB integrity.");
+  	  			System.out.println("Insert also failed for rideinfo: "+ this.id + " Check DB integrity.");
   			}
   		}
   	}
@@ -229,11 +227,11 @@ public class CommuteRide implements IPersistentStorage{
   		int rows  = CommuteRideAccess.insertRideInfo(this);
   		if (rows==0)
   		{
-  			System.out.println("Insert failed for rideinfo: "+ this.recordId + " attempting update.");
+  			System.out.println("Insert failed for rideinfo: "+ this.id + " attempting update.");
   			rows = CommuteRideAccess.updateRideInfo(this);
   			if (rows==0)
   			{
-  				System.out.println("Update also failed for rideinfo: "+ this.recordId + " Check DB integrity.");
+  				System.out.println("Update also failed for rideinfo: "+ this.id + " Check DB integrity.");
   			}
   		}
   	}

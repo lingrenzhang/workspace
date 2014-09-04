@@ -28,7 +28,7 @@ public class GsonWrapperForCommuteRide {
 	 public GsonWrapperForCommuteRide(CommuteRide cr)
 	 {
 		this.userId = cr.userId;
-	    this.id =cr.recordId;
+	    this.id =cr.id;
 	    this.origLoc_lat = cr.origLoc.get_lat();
 	    this.origLoc_lon = cr.origLoc.get_lon();
 	    this.origLoc_addr = cr.origLoc.get_formatedAddr();

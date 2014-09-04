@@ -99,8 +99,8 @@ public class mPostTransientRide extends HttpServlet {
 			TransientRide tranRide = new TransientRide();
 
 			tranRide.owner = (User) request.getSession().getAttribute("user");
-			tranRide.userId = tranRide.owner.get_uid();
-			tranRide.transientRideId = Environment.getEnv().maxTranRideId + 1;
+			tranRide.ownerId = tranRide.owner.get_uid();
+			tranRide.id = Environment.getEnv().maxTranRideId + 1;
 			Environment.getEnv().maxTranRideId++;
 			tranRide.userType = Boolean.parseBoolean(request
 					.getParameter("userType"));
@@ -172,13 +172,13 @@ public class mPostTransientRide extends HttpServlet {
 
 			tranRide.insertToDB();
 			TransientTopic trantopic = new TransientTopic(
-					tranRide.transientRideId);
+					tranRide.id);
 			trantopic.insertToDB();
-			tranRide.owner.insertTopicCommuteRide(tranRide.transientRideId);
+			tranRide.owner.insertTopicCommuteRide(tranRide.id);
 
 			json.status = "successful";
 			json.reason = "";
-			json.trId = tranRide.transientRideId;
+			json.trId = tranRide.id;
 			json.redirect = "transientride.html#" + json.trId;
 
 		}

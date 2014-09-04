@@ -2,7 +2,6 @@ package com.hitchride;
 
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.List;
 
 import com.hitchride.database.access.MessageAccess;
 import com.hitchride.environ.AllTopics;

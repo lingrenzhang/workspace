@@ -47,7 +47,7 @@ public class AllRides {
 			while(rides.next())
 			{
 				CommuteRide ride = new CommuteRide(rides,true);
-				_availRides.put(ride.recordId,ride);
+				_availRides.put(ride.id,ride);
 				//RideInfoAccess.insertRideInfo(ride);
 
 			}
@@ -68,32 +68,32 @@ public class AllRides {
 	
 	public void insert_availride(CommuteRide ride)
 	{
-		if (ride.recordId==0 || ride.recordId<= this._maxRidesKey )
+		if (ride.id==0 || ride.id<= this._maxRidesKey )
 		{
 			this._maxRidesKey++;
-			ride.recordId = _maxRidesKey;
+			ride.id = _maxRidesKey;
 			this._availRides.put(this._maxRidesKey, ride);
 			System.out.println("Ride ID not initialized before inserting to hash table.");
 		}
 		else
 		{
 			this._availRides.put(this._maxRidesKey, ride);
-			this._maxRidesKey = ride.recordId;
+			this._maxRidesKey = ride.id;
 		}
 	}
 	
 	public void udpate_availride(CommuteRide ride)
 	{
-		if (this._availRides.get(ride.recordId)==null)
+		if (this._availRides.get(ride.id)==null)
 		{
 			System.out.println("Warning: This is a new ride. Insert now and please check DB integrity.");
 		}
-		this._availRides.put(ride.recordId, ride);
+		this._availRides.put(ride.id, ride);
 	}
 	
 	public void remove(CommuteRide ride)
 	{
-		this._availRides.remove(ride.recordId);
+		this._availRides.remove(ride.id);
 	}
 	public void remove(int pid)
 	{

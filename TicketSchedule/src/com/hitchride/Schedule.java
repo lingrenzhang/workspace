@@ -127,43 +127,44 @@ public class Schedule implements Cloneable{
 					switch (i)
 					{
 						case 0:
-							result.append(" Sun");
+							//result.append(" Sun");
+							result.append("周日：");
 							result.append(" "+TimeFormatHelper.getFormatedTime(cftime[0]));
 							result.append(" "+TimeFormatHelper.getFormatedTime(cbtime[0]));
 							result.append(br);
 						break;
 						case 1:
-							result.append(" Mon");
+							result.append("周一：");
 							result.append(" "+TimeFormatHelper.getFormatedTime(cftime[1]));
 							result.append(" "+TimeFormatHelper.getFormatedTime(cbtime[1]));
 							result.append(br);
 							break;
 						case 2:
-							result.append(" Thu");
+							result.append("周二：");
 							result.append(" "+TimeFormatHelper.getFormatedTime(cftime[2]));
 							result.append(" "+TimeFormatHelper.getFormatedTime(cbtime[2]));
 							result.append(br);
 							break;
 						case 3:
-							result.append(" Wed");
+							result.append("周三：");
 							result.append(" "+TimeFormatHelper.getFormatedTime(cftime[3]));
 							result.append(" "+TimeFormatHelper.getFormatedTime(cbtime[3]));
 							result.append(br);
 							break;
 						case 4:
-							result.append(" Tue");
+							result.append("周四： ");
 							result.append(" "+TimeFormatHelper.getFormatedTime(cftime[4]));
 							result.append(" "+TimeFormatHelper.getFormatedTime(cbtime[4]));
 							result.append(br);
 							break;
 						case 5:
-							result.append(" Fri");
+							result.append("周五：");
 							result.append(" "+TimeFormatHelper.getFormatedTime(cftime[5]));
 							result.append(" "+TimeFormatHelper.getFormatedTime(cbtime[5]));
 							result.append(br);
 							break;
 						case 6:
-							result.append(" Sat");
+							result.append("周六：");
 							result.append(" "+TimeFormatHelper.getFormatedTime(cftime[6]));
 							result.append(" "+TimeFormatHelper.getFormatedTime(cbtime[6]));
 							result.append(br);
@@ -173,39 +174,20 @@ public class Schedule implements Cloneable{
 			}
 		}
 		else{
-			result.append("Trip Date: ");
+			result.append("出发日期： ");
 			result.append(this.tripDate);
 			result.append(br);
 			
-			result.append("Trip Time: ");
+			result.append("出发时间：");
 			result.append(TimeFormatHelper.getQuarterTime(this.tripTime));
 			result.append(br);
 			
+			/*
 			result.append("Flex: ");
 			result.append(this.forwardFlexibility);
 			result.append(br);
+			*/
 		}
-
-		/*
-		if (isRoundTrip())
-		{
-			if (isHtml){
-				result.append("<br>");
-				}
-				else{
-					result.append("\r\n");
-				}
-			result.append("Return Time: ");
-			if (backTime!=null)
-			{
-				result.append(backTime.toString());
-			}
-			else
-			{
-				result.append("Round Trip not supported for travel now. Arrange another ride for your return please.");
-			}
-		}
-		*/
 		return result.toString();
 	}
 	

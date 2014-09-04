@@ -151,7 +151,7 @@ public class PublishRide extends HttpServlet {
 			{
 				myRide = new CommuteRide();
 			}
-			myRide.recordId = Integer.parseInt(request.getParameter("rid"));//Some issue here.
+			myRide.id = Integer.parseInt(request.getParameter("rid"));//Some issue here.
 			
 			myRide.origLoc = orig;
 			myRide.destLoc = dest;
@@ -225,7 +225,7 @@ public class PublishRide extends HttpServlet {
 			String departdate = request.getParameter("depart-date");
 			schedule.tripDate = TimeFormatHelper.setDate(departdate);
 			schedule.tripTime = TimeFormatHelper.getTime("12:00pm");
-			if (myRide.recordId==0)
+			if (myRide.id==0)
 			{
 				AllRides.getRides().insert_availride(myRide);
 				myRide.insertToDB();
@@ -237,7 +237,7 @@ public class PublishRide extends HttpServlet {
 			}
 				
 				
-			if (AllPartRides.getPartRides().get_participantRide(myRide.recordId)==null)
+			if (AllPartRides.getPartRides().get_participantRide(myRide.id)==null)
 			{
 				CommutePartiRide pride = new CommutePartiRide(myRide);
 				pride.set_status(0);
@@ -248,16 +248,16 @@ public class PublishRide extends HttpServlet {
 			}
 		
 			request.getSession().setAttribute("actRide", myRide);
-			response.sendRedirect("/TicketSchedule/Zh/SearchCommuteTopic.jsp?rid="+myRide.recordId);
+			response.sendRedirect("/TicketSchedule/Zh/SearchCommuteTopic.jsp?rid="+myRide.id);
 		}
 		else //For transientRide
 		{
 			//Depart-----------------------------
 			TransientRide trdepart = new TransientRide();
-			trdepart.transientRideId = Environment.getEnv().maxTranRideId+1;
+			trdepart.id = Environment.getEnv().maxTranRideId+1;
 			Environment.getEnv().maxTranRideId++;
 			trdepart.owner =user;
-			trdepart.userId = user.get_uid();
+			trdepart.ownerId = user.get_uid();
 			trdepart.origLoc= orig;
 			trdepart.destLoc= dest;
 			trdepart.dist = dist;
@@ -288,17 +288,17 @@ public class PublishRide extends HttpServlet {
 			
 			
 			trdepart.insertToDB();
-			user.topicCommuteRide.add(trdepart.transientRideId);
+			user.topicCommuteRide.add(trdepart.id);
 			
-			TransientTopic ttopic = new TransientTopic(trdepart.transientRideId);
+			TransientTopic ttopic = new TransientTopic(trdepart.id);
 			ttopic.insertToDB();
 			
 			//Back-----------------------
 			TransientRide trback = new TransientRide();
-			trback.transientRideId = Environment.getEnv().maxTranRideId+1;
+			trback.id = Environment.getEnv().maxTranRideId+1;
 			Environment.getEnv().maxTranRideId++;
 			trback.owner =user;
-			trback.userId = user.get_uid();
+			trback.ownerId = user.get_uid();
 			trback.origLoc= dest;
 			trback.destLoc= orig;
 			trback.dist = dist;
@@ -328,9 +328,9 @@ public class PublishRide extends HttpServlet {
 			
 			
 			trback.insertToDB();
-			user.topicCommuteRide.add(trback.transientRideId);
+			user.topicCommuteRide.add(trback.id);
 			
-			TransientTopic ttopicb = new TransientTopic(trback.transientRideId);
+			TransientTopic ttopicb = new TransientTopic(trback.id);
 			ttopicb.insertToDB();
 
 			if (recordId!=0)//Switch from commute to transient.

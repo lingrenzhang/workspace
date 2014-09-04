@@ -9,7 +9,7 @@ import com.hitchride.database.access.CommutePartiRideAccess;
 public class CommutePartiRide implements IPersistentStorage{   
 	//Extends RideInfo appears not proper setting and creates mess. Will change finally.
     public CommuteRide _rideInfo;
-    public int _pid;
+    public int id;
 	private int _assoOwnerRideId; //Topic the ParticipantRide associating with.
     public MatchScore _Match;
     private int _status; //0 for not associating with OwnerRide -> 1 (drive by participant)
@@ -19,7 +19,7 @@ public class CommutePartiRide implements IPersistentStorage{
                          //4 for participant Confirm -> (Deal done.)
 	public CommutePartiRide(CommuteRide rideinfo) {
 		this._rideInfo = rideinfo; //Double copy, finally more one.
-		this._pid = rideinfo.recordId;
+		this.id = rideinfo.id;
 		this.set_Match(new MatchScore());
 		set_status(0);
 	}
@@ -123,11 +123,11 @@ public class CommutePartiRide implements IPersistentStorage{
 		int rows = CommutePartiRideAccess.updatePride(this);
 		if (rows==0)
 		{
-			System.out.println("Update failed for partiride: "+ this._pid + " attempting insert.");
+			System.out.println("Update failed for partiride: "+ this.id + " attempting insert.");
 			rows = CommutePartiRideAccess.insertPRide(this);
 			if (rows==0)
 			{
-				System.out.println("Insert also failed for partiride: "+ this._pid + " Please check DB integrity.");
+				System.out.println("Insert also failed for partiride: "+ this.id + " Please check DB integrity.");
 			}
 		}
 	}
@@ -137,11 +137,11 @@ public class CommutePartiRide implements IPersistentStorage{
 		int rows = CommutePartiRideAccess.insertPRide(this);
 		if (rows==0)
 		{
-			System.out.println("Insert failed for partiride: "+ this._pid + " attempting update.");
+			System.out.println("Insert failed for partiride: "+ this.id + " attempting update.");
 			rows = CommutePartiRideAccess.updatePride(this);
 			if (rows==0)
 			{
-				System.out.println("Update also failed for partiride: "+ this._pid + " Please check DB integrity.");
+				System.out.println("Update also failed for partiride: "+ this.id + " Please check DB integrity.");
 			}
 		}
 	}

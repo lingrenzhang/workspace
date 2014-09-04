@@ -83,12 +83,12 @@ public class CommuteTopicCenter extends HttpServlet {
 				}
 				else
 				{
-					if(ride.recordId==0) //This is a new ride 
+					if(ride.id==0) //This is a new ride 
 					{
 						AllRides.getRides().insert_availride(ride);
 						ride.insertToDB();
 
-						if (AllPartRides.getPartRides().get_participantRide(ride.recordId)==null)
+						if (AllPartRides.getPartRides().get_participantRide(ride.id)==null)
 						{
 							CommutePartiRide pride = new CommutePartiRide(ride);
 							pride.set_status(0);
@@ -163,30 +163,30 @@ public class CommuteTopicCenter extends HttpServlet {
 		}
 		else
 		{
-			if(ride.recordId==0) //The actRide is temp and has not been registered.
+			if(ride.id==0) //The actRide is temp and has not been registered.
 			{
 				AllRides.getRides().insert_availride(ride);
 				ride.insertToDB();
 			}
 			CommuteOwnerRide ownRide = new CommuteOwnerRide(ride);
 			ride.get_user().tRides.add(ownRide);
-			CommutePartiRide pRide = AllPartRides.getPartRides().get_participantRide(ride.recordId);
+			CommutePartiRide pRide = AllPartRides.getPartRides().get_participantRide(ride.id);
 			if (pRide!=null)
 			{
 				ride.get_user().pRides.remove(pRide);
 				pRide.delete();
-				AllPartRides.getPartRides().remove(ride.recordId);
+				AllPartRides.getPartRides().remove(ride.id);
 			}
 			
 			AllTopicRides.getTopicRides().insert_TopicRide(ownRide);
 			ownRide.insertToDB();
 			CommuteTopic topic= new CommuteTopic();
 			topic.ownerRide=ownRide;
-			topic.set_topicId(ride.recordId);
+			topic.set_topicId(ride.id);
 			topic.owner=ride.get_user();
 			AllTopics.getTopics().insert_topic(topic);
 			topic.insertToDB();
-			response.sendRedirect("/TicketSchedule/CommuteTopicCenter?topicId="+ride.recordId);
+			response.sendRedirect("/TicketSchedule/CommuteTopicCenter?topicId="+ride.id);
 		}
 	}
 

@@ -55,7 +55,7 @@ public class CommutePartiRideAccess {
 			new DataColumnSchema("BarginMatch","INT(3) DEFAULT 0"),
 			*/
 			rows = sql.executeUpdate("insert into commutepartiride (RideInfoID,TopicId,Status,GeoMatch,ScheduleMatch,BarginMatch) values(\"" 
-					+ pride._pid + "\",\""
+					+ pride.id + "\",\""
 					+ pride.get_assoOwnerRideId() +"\",\""
 					+ pride.get_status() +"\",\""
 					+ pride._Match.getLocationMatching() +"\",\""
@@ -89,7 +89,7 @@ public class CommutePartiRideAccess {
 					+ "GeoMatch=\""+pride._Match.getLocationMatching() +"\","
 					+ "ScheduleMatch=\""+pride._Match.getSchedulingMatching() +"\","
 					+ "BarginMatch=\""+pride._Match.getBarginMatching() +"\" "
-					+ "where RideInfoID=\""+pride._pid+"\"");
+					+ "where RideInfoID=\""+pride.id+"\"");
 		}
 		catch (java.lang.ClassNotFoundException e){
 			System.err.println("ClassNotFoundException:"+e.getMessage());
@@ -115,17 +115,17 @@ public class CommutePartiRideAccess {
 				CommuteRide ride = AllRides.getRides()._availRides.get(_pid);
 				CommutePartiRide pride = new CommutePartiRide(ride);
 				try {
-					pride._pid = _pid;
+					pride.id = _pid;
 					pride.set_assoOwnerRideId(priders.getInt("TopicId"));
 					pride.set_status(priders.getInt("Status"));
 					MatchScore match = new MatchScore(priders.getInt("GeoMatch"),priders.getInt("ScheduleMatch"),priders.getInt("BarginMatch"));
 			        pride._Match=match;
 				} catch (SQLException e) {
-					System.out.println("Not able to load participant ride: " + pride._pid);
+					System.out.println("Not able to load participant ride: " + pride.id);
 					e.printStackTrace();
 				}
-				allPRides.put(pride._pid, pride);
-				System.out.println("Participant Ride: " + pride._pid+" loaded.");
+				allPRides.put(pride.id, pride);
+				System.out.println("Participant Ride: " + pride.id+" loaded.");
 			}
 				
 		} catch (ClassNotFoundException e) {
@@ -140,7 +140,7 @@ public class CommutePartiRideAccess {
 	
 	public static void deletePride(CommutePartiRide pride)
 	{
-		deletePride(pride._pid);
+		deletePride(pride.id);
 	}
 	
 	

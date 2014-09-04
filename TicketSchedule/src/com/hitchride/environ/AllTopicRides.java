@@ -43,7 +43,7 @@ public class AllTopicRides {
     }
     
 	public void insert_TopicRide(CommuteOwnerRide tRide) {
-		this._topicRides.put(tRide._recordId,tRide);
+		this._topicRides.put(tRide.id,tRide);
 	}
 	
 	public CommuteOwnerRide getRide(int key)

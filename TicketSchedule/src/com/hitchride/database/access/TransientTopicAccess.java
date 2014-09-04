@@ -45,7 +45,7 @@ public class TransientTopicAccess {
 			sql=objConn.createStatement();
 
 		 rows = sql.executeUpdate("insert into TransientTopic values(\"" + 
-		    		+ topic.transientRideId + "\",\""
+		    		+ topic.id + "\",\""
 					+ topic.nmiddlePoints +"\",\""
 					+ topic.middle[0].get_formatedAddr()+"\",\""
 					+ topic.middle[0].get_lat()+"\",\""
@@ -111,7 +111,7 @@ public class TransientTopicAccess {
 					+ "partiuid3=\"" + topic.partiuid[2]+"\","
 					+ "partiuid4="+ topic.partiuid[3]+","
 					+ "partiuid5=\""+ topic.partiuid[4]+"\" "
-					+ "where transientRideId=\""+topic.transientRideId+"\"");
+					+ "where transientRideId=\""+topic.id+"\"");
 		}
 		catch (java.lang.ClassNotFoundException e){
 			System.err.println("ClassNotFoundException:"+e.getMessage());

@@ -58,8 +58,8 @@ public class GenerateDummyTransientTopic {
 					//GeoInfo destLoc = geoUtil.reverseGeoCoding(destlat, destlng);
 					GeoInfo destLoc = geoUtil.baiduGeoCoding(destlat, destlng);
 				    TransientRide ride = new TransientRide();
-				    ride.userId=userId;
-				    ride.transientRideId = maxTranid;
+				    ride.ownerId=userId;
+				    ride.id = maxTranid;
 				    ride.origLoc = origLoc;
 				    ride.destLoc = destLoc;
 
@@ -75,10 +75,9 @@ public class GenerateDummyTransientTopic {
 				    ride.totalSeats = 4;
 				    ride.price = r/1000;
 				    
-				    
 				    TransientRideAccess.insertTransientRideInfo(ride);
 				    
-				    TransientTopic ttopic= new TransientTopic(ride.transientRideId);
+				    TransientTopic ttopic= new TransientTopic(ride.id);
 				    ttopic.insertToDB();
 				    /*
 				    OwnerRideInfo topicRide= new OwnerRideInfo(ride);

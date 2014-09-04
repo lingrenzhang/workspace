@@ -7,7 +7,7 @@ import com.hitchride.environ.AllUsers;
 
 public class TransientTopic implements IPersistentStorage{
 
-	public int transientRideId;
+	public int id;
 	private int ownerId = 0; //This one is not saved in db schema and can not be changed by client. 
 	public int nmiddlePoints=0;
 	public GeoInfo[] middle;
@@ -27,7 +27,7 @@ public class TransientTopic implements IPersistentStorage{
 	
 	public TransientTopic(int transientRideId)
 	{
-		this.transientRideId = transientRideId;
+		this.id = transientRideId;
 		GeoInfo middle0 = new GeoInfo(0,0);
 		GeoInfo middle1 = new GeoInfo(0,0);
 		GeoInfo middle2 = new GeoInfo(0,0);
@@ -41,7 +41,7 @@ public class TransientTopic implements IPersistentStorage{
 	
 	public TransientTopic(int transientRideId, int ownerId)
 	{
-		this.transientRideId = transientRideId;
+		this.id = transientRideId;
 		this.ownerId = ownerId;
 		GeoInfo middle0 = new GeoInfo(0,0);
 		GeoInfo middle1 = new GeoInfo(0,0);
@@ -58,7 +58,7 @@ public class TransientTopic implements IPersistentStorage{
 	{
 		if (nmiddlePoints>=5)
 		{
-			System.out.print("Middle Point full for transientRideId: "+transientRideId);
+			System.out.print("Middle Point full for transientRideId: "+id);
 			return false;
 		}
 		else
@@ -100,7 +100,7 @@ public class TransientTopic implements IPersistentStorage{
 	{
 		if (nParticipant>=5)
 		{
-			System.out.print("Participants full for this ride: "+transientRideId);
+			System.out.print("Participants full for this ride: "+id);
 			return false;
 		}
 		else
@@ -144,11 +144,11 @@ public class TransientTopic implements IPersistentStorage{
 		int rows = TransientTopicAccess.insertTransientTopic(this);
 		if (rows==0)
 		{
-			System.out.println("Insert failed for transientTopic: "+ this.transientRideId + " attempting update.");
+			System.out.println("Insert failed for transientTopic: "+ this.id + " attempting update.");
 			rows = TransientTopicAccess.updateTransientTopic(this);
 			if (rows==0)
 			{
-				System.out.println("Update also failed for transientTopic: "+ this.transientRideId + " Please check DB integrity.");
+				System.out.println("Update also failed for transientTopic: "+ this.id + " Please check DB integrity.");
 			}
 		}
 		
@@ -158,11 +158,11 @@ public class TransientTopic implements IPersistentStorage{
 		int rows = TransientTopicAccess.updateTransientTopic(this);
   		if (rows==0)
   		{
- 			System.out.println("Update failed for transientTopic: "+ this.transientRideId + " attempting insert.");
+ 			System.out.println("Update failed for transientTopic: "+ this.id + " attempting insert.");
   			rows = TransientTopicAccess.insertTransientTopic(this);
   			if (rows==0)
   			{
-  	  			System.out.println("Insert also failed for rideinfo: "+ this.transientRideId + " Check DB integrity.");
+  	  			System.out.println("Insert also failed for rideinfo: "+ this.id + " Check DB integrity.");
   			}
   		}
 	}

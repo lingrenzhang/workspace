@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
 
-import com.hitchride.CommutePartiRide;
 import com.hitchride.GeoInfo;
 import com.hitchride.CommuteRide;
 import com.hitchride.Schedule;
@@ -52,7 +51,7 @@ public class CommuteRideAccess {
 		 	//	new DataColumnSchema("userId","INT(10)"),
 			//  new DataColumnSchema("recordId","INT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE"),
 					+ ride.get_user().get_uid() + "\",\""
-					+ ride.recordId +"\",\""
+					+ ride.id +"\",\""
 			//Geo Info
 			/*new DataColumnSchema("origFAddr","VARCHAR(100)"),
 			new DataColumnSchema("origAddr","VARCHAR(50)"),
@@ -257,7 +256,7 @@ public class CommuteRideAccess {
 					+ "TotalSeats=\""+ ride.totalSeats+"\","
 					+ "AvailSeats=\""+ ride.availSeats+"\","
 					+ "PayperSeat=\""+ ride.price+ "\" "
-					+ "where recordId=\""+ride.recordId+"\"");
+					+ "where recordId=\""+ride.id+"\"");
 		}
 		catch (java.lang.ClassNotFoundException e){
 			System.err.println("ClassNotFoundException:"+e.getMessage());
@@ -282,7 +281,7 @@ public class CommuteRideAccess {
 				CommuteRide ride = new CommuteRide();
 				try {
 					ride.userId = riders.getInt("userId");
-					ride.recordId =riders.getInt("recordId");
+					ride.id =riders.getInt("recordId");
 					// assign every field
 
 					String origState = riders.getString("origState");
@@ -345,11 +344,11 @@ public class CommuteRideAccess {
 					}
 					ride.schedule = schedule;
 				} catch (SQLException e) {
-					System.out.println("Not able to load Ride: " + ride.recordId);
+					System.out.println("Not able to load Ride: " + ride.id);
 					e.printStackTrace();
 				}
-				allRides.put(ride.recordId, ride);
-				System.out.println("Ride: " + ride.recordId +" loaded.");
+				allRides.put(ride.id, ride);
+				System.out.println("Ride: " + ride.id +" loaded.");
 			}
 				
 		} catch (ClassNotFoundException e) {
@@ -402,7 +401,7 @@ public class CommuteRideAccess {
 	
 	public static void deleteRide(CommuteRide ride)
 	{
-		deleteRide(ride.recordId);
+		deleteRide(ride.id);
 	}
 	
 	

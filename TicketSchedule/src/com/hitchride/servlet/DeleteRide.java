@@ -55,7 +55,7 @@ public class DeleteRide extends HttpServlet {
 				ride.delete();
 				AllRides.getRides().remove(ride);
 				response.sendRedirect("/TicketSchedule/Zh/UserCenter.jsp");
-				System.out.println("Ride "+ride.recordId + " has been deleted.");
+				System.out.println("Ride "+ride.id + " has been deleted.");
 			}
 		}
 		

@@ -45,7 +45,7 @@ public class UpdateTParticipant extends HttpServlet {
 				user.deletePartiCommuteRide(trid);
 				
 				TransientRide tride = TransientRideAccess.getTransisentRideById(trid);
-				User touser = (User) AllUsers.getUsers().getUser(tride.userId);
+				User touser = (User) AllUsers.getUsers().getUser(tride.ownerId);
 				Message message = new Message(user,touser,1,tride,"");
 				message.sendMessage();
 				
@@ -61,7 +61,7 @@ public class UpdateTParticipant extends HttpServlet {
 				user.insertPartiCommuteRide(trid);
 				
 				TransientRide tride = TransientRideAccess.getTransisentRideById(trid);
-				User touser = (User) AllUsers.getUsers().getUser(tride.userId);
+				User touser = (User) AllUsers.getUsers().getUser(tride.ownerId);
 				Message message = new Message(user,touser,0,tride,"");
 				message.sendMessage();
 				

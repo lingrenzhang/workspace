@@ -73,14 +73,14 @@ public class GenerateDummyCommuteTopic {
 			    
 			    CommuteRideAccess.insertRideInfo(ride);
 			    int rid = CommuteRideAccess.getMaxRideId();
-			    ride.recordId = rid;
+			    ride.id = rid;
 			    AllRides.getRides().insert_availride(ride); //This will initialize data just inserted.
 			    
 			    CommuteOwnerRide topicRide= new CommuteOwnerRide(ride);
 			    CommuteOwnerRideAccess.insertTopicRide(topicRide);
 			    AllTopicRides.getTopicRides().insert_TopicRide(topicRide);
 			    
-			    CommuteTopic topic = new CommuteTopic(topicRide._recordId);
+			    CommuteTopic topic = new CommuteTopic(topicRide.id);
 			    CommuteTopicAccess.insertTopic(topic);
 			    AllTopics.getTopics().insert_topic(topic);
 			}

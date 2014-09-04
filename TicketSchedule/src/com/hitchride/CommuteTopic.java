@@ -12,7 +12,6 @@ import com.hitchride.environ.AllPartRides;
 import com.hitchride.environ.AllTopicRides;
 import com.hitchride.environ.AllUsers;
 import com.hitchride.environ.RecentMessages;
-import com.hitchride.util.JsonHelper;
 //This class is to represent the standard format of dataStructure for Message Box.
 //Shield the front end from direct access to DB. Using runtime object for performance increase
 //and de-couple physical persistent record with runtime server.  
@@ -22,7 +21,7 @@ import com.hitchride.util.JsonHelper;
 //Not sure the detailed mySQL multi-table relationship supporting level.
 //Think about more complicate use like trigger, cascade, etc later when necessary. 
 public class CommuteTopic implements IPersistentStorage,ISerializetoJson,IMailList{
-	private int _topicId; 	//Same as owner ID
+	private int id; 	//Same as owner ID
 	public User owner;
 	//public List<Participant> participants;
 	public CommuteOwnerRide ownerRide;
@@ -41,7 +40,7 @@ public class CommuteTopic implements IPersistentStorage,ISerializetoJson,IMailLi
 				parRides = new ArrayList<CommutePartiRide>();
 		    	_requestPride = new ArrayList<CommutePartiRide>();
 				ownerRide = AllTopicRides.getTopicRides()._topicRides.get(rid);
-				this._topicId=rid;
+				this.id=rid;
 				IUserInfo ownerInfo = AllUsers.getUsers().getUser(ownerRide._rideInfo.get_username());
 				owner =(User) ownerInfo;
 						
@@ -52,7 +51,7 @@ public class CommuteTopic implements IPersistentStorage,ISerializetoJson,IMailLi
 				{
 					Integer key = e.nextElement();
 					CommutePartiRide pRide = AllPartRides.getPartRides().get_participantRide(key);
-					if (pRide.get_assoOwnerRideId()==ownerRide._rideInfo.recordId)
+					if (pRide.get_assoOwnerRideId()==ownerRide._rideInfo.id)
 					{
 						if (pRide.get_status()==1)
 						{
@@ -70,7 +69,7 @@ public class CommuteTopic implements IPersistentStorage,ISerializetoJson,IMailLi
 				{
 					Integer key = e.nextElement();
 					Message message = RecentMessages.getRecMessage()._recMessages.get(key);
-					if (message.getOwnerRide()._rideInfo.recordId ==ownerRide._rideInfo.recordId)
+					if (message.getOwnerRide()._rideInfo.id ==ownerRide._rideInfo.id)
 					{
 						messages.add(message);
 					}
@@ -83,12 +82,12 @@ public class CommuteTopic implements IPersistentStorage,ISerializetoJson,IMailLi
 	}
 
 	public int get_topicId() {
-		return _topicId;
+		return id;
 	}
 
 
 	public void set_topicId(int _topicId) {
-		this._topicId = _topicId;
+		this.id = _topicId;
 	}
 	
 	public CommutePartiRide getpRideByuserId(int userId)
@@ -117,7 +116,7 @@ public class CommuteTopic implements IPersistentStorage,ISerializetoJson,IMailLi
 	public String getHTML()
 	{
 		StringBuilder result = new StringBuilder(2000);
-		result.append("<a href=\"/TicketSchedule/CommuteTopicCenter?topicId="+this._topicId +"&type=commute\">");
+		result.append("<a href=\"/TicketSchedule/CommuteTopicCenter?topicId="+this.id +"&type=commute\">");
 		result.append("<div class=\"entry\" origLat="+this.ownerRide._rideInfo.origLoc.get_lat()+" ");
 		result.append("origLng=" +  this.ownerRide._rideInfo.origLoc.get_lon()+" ");
 		result.append("destLat=" +  this.ownerRide._rideInfo.destLoc.get_lat()+" ");
@@ -231,11 +230,11 @@ public class CommuteTopic implements IPersistentStorage,ISerializetoJson,IMailLi
 		int rows = CommuteTopicAccess.updateTopic(this);
 		if (rows == 0)
 		{
-			System.out.println("Update failed for topic: "+ this._topicId + " attempting insert.");
+			System.out.println("Update failed for topic: "+ this.id + " attempting insert.");
 			rows = CommuteTopicAccess.insertTopic(this);
 			if (rows== 0)
 			{
-				System.out.println("Insert also failed for topic: "+this._topicId + " Please check DB integrity.");
+				System.out.println("Insert also failed for topic: "+this.id + " Please check DB integrity.");
 			}
 		}
 	}
@@ -245,11 +244,11 @@ public class CommuteTopic implements IPersistentStorage,ISerializetoJson,IMailLi
 		int rows = CommuteTopicAccess.insertTopic(this);
 		if (rows == 0)
 		{
-			System.out.println("Insert failed for topic: "+ this._topicId + " attempting update.");
+			System.out.println("Insert failed for topic: "+ this.id + " attempting update.");
 			rows = CommuteTopicAccess.updateTopic(this);
 			if (rows== 0)
 			{
-				System.out.println("Update also failed for topic: "+this._topicId + " Please check DB integrity.");
+				System.out.println("Update also failed for topic: "+this.id + " Please check DB integrity.");
 			}
 		}
 	}

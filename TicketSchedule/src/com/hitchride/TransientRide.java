@@ -13,8 +13,8 @@ import com.mysql.jdbc.ResultSetImpl;
 //Typically load temporide directly. Not keeping persistent at memory.
 public class TransientRide implements IPersistentStorage{
 	public User owner;
-	public int userId;
-	public int transientRideId;
+	public int ownerId;
+	public int id;
 	
 	public GeoInfo origLoc,destLoc;
 	public int dist,dura;
@@ -51,9 +51,9 @@ public class TransientRide implements IPersistentStorage{
   	public TransientRide(ResultSetImpl rs)
   	{
   		try {
-  			this.userId = rs.getInt("userId");
-  			owner = (User) AllUsers.getUsers().getUser(userId);
-  			this.transientRideId = rs.getInt("transientRideId");
+  			this.ownerId = rs.getInt("userId");
+  			owner = (User) AllUsers.getUsers().getUser(ownerId);
+  			this.id = rs.getInt("transientRideId");
   			
 			String origFAddr=rs.getString("origFAddr");
 			String origAddr=rs.getString("origAddr");
@@ -95,7 +95,7 @@ public class TransientRide implements IPersistentStorage{
   	{
   		if (owner==null)
   		{
-  			this.owner = (User) AllUsers.getUsers().getUser(this.userId);
+  			this.owner = (User) AllUsers.getUsers().getUser(this.ownerId);
   		}
   		return owner;
   	}
@@ -105,11 +105,11 @@ public class TransientRide implements IPersistentStorage{
 		int rows = TransientRideAccess.insertTransientRideInfo(this);
 		if (rows == 0)
 		{
-			System.out.println("Insert failed for topicride: "+ this.transientRideId + " attempting update.");
+			System.out.println("Insert failed for topicride: "+ this.id + " attempting update.");
 			rows = TransientRideAccess.updateTransientRide(this);
 			if (rows== 0)
 			{
-				System.out.println("Update also failed for topicride: "+this.transientRideId + " Please check DB integrity.");
+				System.out.println("Update also failed for topicride: "+this.id + " Please check DB integrity.");
 			}
 		}
 	}
@@ -140,9 +140,9 @@ public class TransientRide implements IPersistentStorage{
     public String getGeoHTML()
     {
     	StringBuilder result = new StringBuilder();
-    	result.append("<div class=\"geo\"> From: ");
+    	result.append("<div class=\"geo\"> 出发地: ");
     	result.append(origLoc.get_formatedAddr()+"<br>");
-    	result.append("To: "+destLoc.get_formatedAddr()+"</div>");
+    	result.append("目的地: "+destLoc.get_formatedAddr()+"</div>");
     	return result.toString();
     }
     
@@ -151,17 +151,18 @@ public class TransientRide implements IPersistentStorage{
     	StringBuilder result = new StringBuilder();
     	result.append("<div class=\"schedule\"> ");
     	
-    	result.append("Trip Date: ");
+    	result.append("出发日期： ");
 		result.append(this.rideDate);
 		result.append("<br>");
 		
-		result.append("Trip Time: ");
+		result.append("出发时间： ");
 		result.append(this.rideTime);
 		result.append("<br>");
-		
+		/*
 		result.append("Flex: ");
 		result.append(this.rideFlex);
 		result.append("<br>");
+		*/
 
     	result.append("</div>");
     	return result.toString();

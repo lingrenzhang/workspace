@@ -96,21 +96,21 @@ public class TransientRideCenter extends HttpServlet {
 		{
 			CommuteOwnerRide ownRide = new CommuteOwnerRide(ride);
 			ride.get_user().tRides.add(ownRide);
-			CommutePartiRide pRide = AllPartRides.getPartRides().get_participantRide(ride.recordId);
+			CommutePartiRide pRide = AllPartRides.getPartRides().get_participantRide(ride.id);
 			ride.get_user().pRides.remove(pRide);
 			pRide.delete();
 			
-			AllPartRides.getPartRides().remove(ride.recordId);
+			AllPartRides.getPartRides().remove(ride.id);
 			
 			AllTopicRides.getTopicRides().insert_TopicRide(ownRide);
 			ownRide.insertToDB();
 			CommuteTopic topic= new CommuteTopic();
 			topic.ownerRide=ownRide;
-			topic.set_topicId(ride.recordId);
+			topic.set_topicId(ride.id);
 			topic.owner=ride.get_user();
 			AllTopics.getTopics().insert_topic(topic);
 			topic.insertToDB();
-			response.sendRedirect("/TicketSchedule/servlet/TransientRideCenter?transientRideId="+ride.recordId);
+			response.sendRedirect("/TicketSchedule/servlet/TransientRideCenter?transientRideId="+ride.id);
 		}
 	}
 }

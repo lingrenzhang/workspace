@@ -68,7 +68,6 @@ public class BarginStatusService extends HttpServlet {
 						ride.dura=tr._rideInfo.dura;
 						ride.schedule = tr._rideInfo.schedule.clone();
 					}
-					
 					if (ride.get_user()==null)  //When ride coming from search
 					{
 						AllRides.getRides().insert_availride(ride);
@@ -83,7 +82,7 @@ public class BarginStatusService extends HttpServlet {
 					}
 					else
 					{
-						pride = AllPartRides.getPartRides().get_participantRide(ride.recordId);
+						pride = AllPartRides.getPartRides().get_participantRide(ride.id);
 					}
 					
 					pride.set_assoOwnerRideId(topic.get_topicId());

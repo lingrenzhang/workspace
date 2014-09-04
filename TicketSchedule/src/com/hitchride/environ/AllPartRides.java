@@ -57,12 +57,12 @@ public class AllPartRides {
 	
 	public void insert_pride(CommutePartiRide pride)
 	{
-		this._partRides.put(pride._pid, pride);
+		this._partRides.put(pride.id, pride);
 	}
 	
 	public void remove(CommutePartiRide pride)
 	{
-		this._partRides.remove(pride._pid);
+		this._partRides.remove(pride.id);
 	}
 	public void remove(int pid)
 	{

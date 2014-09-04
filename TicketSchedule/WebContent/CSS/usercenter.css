@@ -35,7 +35,7 @@
 	padding: 15px 10px 4px 10px;
 	line-height: 14px;
 	margin: 0 auto;
-	width: 590px;
+	width: 610px;
 }
 
 .panel-default
@@ -80,12 +80,14 @@
 .geo
 {
 	float: left;
-	width: 280px;
+	width: 320px;
+	line-height : 22px;
 }
 .schedule
 {
 	float: left;
 	width: 180px; 
+	line-height : 20px;
 }
 .people
 {
