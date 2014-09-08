@@ -34,19 +34,19 @@ input[type="text"].hidden
 {
 	display: block;
 	position: absolute;
-	padding: 15px 60px 4px;
+	padding: 0px 60px 4px;
 	line-height: 14px;
 	margin: 0 auto;
-	width: 350px;
-	height:125px;
+	width: 340px;
+	height:90px;
 }
 
 #logo
 {
-	padding-top:2px;
-	width: 319px;
-	height:123px;
-	background: url('/TicketSchedule/Picture/hitridelogo.jpg');
+	padding-top:0px;
+	width: 340px;
+	height: 90px;
+	background: url('/TicketSchedule/Picture/sitelogo.png');
 }
 
 #header_wrap #user_info_wrap
@@ -55,7 +55,7 @@ input[type="text"].hidden
     position: absolute;
     left: 780px;
  	line-height: 14px;
-	margin: 60px 100px 0px;
+	margin: 10px 100px 0px;
 	width: 300px;
 	height:75px;
 }
@@ -343,7 +343,7 @@ opacity: 0.7;
 
 /*------------------------------------ Header --------------------------------*/
 #header_wrap {
-    padding-bottom: 7px;
+    padding-bottom: 1px;
     position: relative;
     width: 100%;
     z-index: 101;
@@ -352,7 +352,7 @@ opacity: 0.7;
 
 /*------------------------------------ Content --------------------------------*/
 #content_wrapper {
-    margin: 123px auto;
+    margin: 78px auto;
     width: 990px;
 }
 
@@ -393,7 +393,7 @@ opacity: 0.7;
 .header_nav_wrapper
 {
 	position: relative;
-	top: 95px;
+	top: 45px;
 	left: 475px;
 	width: 500px;
 }
