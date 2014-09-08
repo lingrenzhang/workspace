@@ -37,14 +37,14 @@ input[type="text"].hidden
 	padding: 0px 60px 4px;
 	line-height: 14px;
 	margin: 0 auto;
-	width: 340px;
+	width: 350px;
 	height:90px;
 }
 
 #logo
 {
 	padding-top:0px;
-	width: 340px;
+	width: 350px;
 	height: 90px;
 	background: url('/TicketSchedule/Picture/sitelogo.png');
 }
