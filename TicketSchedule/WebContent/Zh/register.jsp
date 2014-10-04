@@ -53,7 +53,20 @@ $(document).ready(function(){
 	
 	function emailAddressValidator(){
 		// TODO: email format check
-		return true;
+		var uniqueCheckUrl = "/TicketSchedule/servlet/UniqueUsernameCheck";
+		var flag = true;
+	    $.ajaxSetup({
+			async: false
+		});
+		$.get(uniqueCheckUrl, {username : $('#emailAddress').val()},
+			  function(responseText, status){
+			  	  flag = responseText;
+		      }, "html");
+		if(flag == "0"){
+			return true;
+		}else{
+			return "用户名已存在";
+		}
 	}
 	
 	function repasswordValidator(){

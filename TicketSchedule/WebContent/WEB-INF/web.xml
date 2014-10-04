@@ -343,4 +343,14 @@
     <servlet-name>DeleteRide</servlet-name>
     <url-pattern>/DeleteRide</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UniqueUsernameCheck</display-name>
+    <servlet-name>UniqueUsernameCheck</servlet-name>
+    <servlet-class>com.hitchride.servlet.user.UniqueUsernameCheck</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UniqueUsernameCheck</servlet-name>
+    <url-pattern>/servlet/UniqueUsernameCheck</url-pattern>
+  </servlet-mapping>
 </web-app>

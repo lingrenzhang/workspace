@@ -385,6 +385,30 @@ public class UserAccess {
         	return result;
         }
         
+        public static boolean checkUsernameUnique(String username) {
+			// TODO Auto-generated method stub
+			boolean result = true;
+			try
+			{
+				Statement sql;
+				getConnection();
+				sql = objConn.createStatement();
+				ResultSet rs = sql.executeQuery("select 1 from user where emailAddress = '" + username + "'");
+				if(rs.next()){
+					result = false;
+				}
+			}
+			catch (java.lang.ClassNotFoundException e){
+				System.err.println("ClassNotFoundException:"+e.getMessage());
+			}
+			catch (SQLException e)
+			{
+                Error err=new Error("SQLException:"+e.getMessage());
+                throw err;
+			}
+        	return result;
+		}
+        
         protected void finalize(){
         	if (objConn!=null){
     			try {
@@ -396,5 +420,9 @@ public class UserAccess {
     			}
     		}
         }
+
+
+
+		
 
 }
