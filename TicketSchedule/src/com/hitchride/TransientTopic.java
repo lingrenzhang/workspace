@@ -8,7 +8,7 @@ import com.hitchride.environ.AllUsers;
 public class TransientTopic implements IPersistentStorage{
 
 	public int id;
-	private int ownerId = 0; //This one is not saved in db schema and can not be changed by client. 
+	public int ownerId = 0; //This one is not saved in db schema and can not be changed by client. 
 	public int nmiddlePoints=0;
 	public GeoInfo[] middle;
 	public int nParticipant=0;

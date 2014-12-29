@@ -22,20 +22,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.hitchride.GeoInfo;
-import com.hitchride.CommuteOwnerRide;
 import com.hitchride.CommuteRide;
 import com.hitchride.Schedule;
 import com.hitchride.CommuteTopic;
-import com.hitchride.TransientRide;
 import com.hitchride.User;
 import com.hitchride.calc.NewScoreCalculator;
 import com.hitchride.environ.AllRides;
-import com.hitchride.environ.AllTopicRides;
 import com.hitchride.environ.AllTopics;
 import com.hitchride.environ.Environment;
 import com.hitchride.util.DistanceHelper;
-import com.hitchride.util.GsonWrapperForTransientTopic;
-import com.hitchride.util.GsonWrapperForTransientRide;
+import com.hitchride.util.GsonWrapperForCommuteTopic;
 import com.hitchride.util.JsonHelper;
 import com.hitchride.util.QueryStringParser;
 import com.hitchride.util.TimeFormatHelper;
@@ -93,10 +89,10 @@ public class SearchCommuteTopics extends HttpServlet {
 				System.out.println("ActRide to search not initialized, showing all ride in DB.");
 				List<CommuteTopic> resultList = AllTopics.getTopics().getTopicRideAsList();
 				
-				List<GsonWrapperForTransientTopic> rlist = new ArrayList<GsonWrapperForTransientTopic>();
+				List<GsonWrapperForCommuteTopic> rlist = new ArrayList<GsonWrapperForCommuteTopic>();
 				for(Iterator<CommuteTopic> itr = resultList.iterator();itr.hasNext();)
 				{
-					GsonWrapperForTransientTopic gtr = new GsonWrapperForTransientTopic(itr.next());
+					GsonWrapperForCommuteTopic gtr = new GsonWrapperForCommuteTopic(itr.next());
 					rlist.add(gtr);
 				}
 				JsonHelper jsonhelp = new JsonHelper();
@@ -111,10 +107,10 @@ public class SearchCommuteTopics extends HttpServlet {
 				NewScoreCalculator sc = new NewScoreCalculator();
 				resultList=sc.filterByCoordinates(actRide, 20);
 				
-				List<GsonWrapperForTransientTopic> rlist = new ArrayList<GsonWrapperForTransientTopic>();
+				List<GsonWrapperForCommuteTopic> rlist = new ArrayList<GsonWrapperForCommuteTopic>();
 				for(Iterator<CommuteTopic> itr = resultList.iterator();itr.hasNext();)
 				{
-					GsonWrapperForTransientTopic gtr = new GsonWrapperForTransientTopic(itr.next());
+					GsonWrapperForCommuteTopic gtr = new GsonWrapperForCommuteTopic(itr.next());
 					rlist.add(gtr);
 				}
 				JsonHelper jsonhelp = new JsonHelper();

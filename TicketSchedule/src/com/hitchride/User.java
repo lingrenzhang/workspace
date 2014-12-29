@@ -12,14 +12,14 @@ import com.hitchride.database.access.TransientRideAccess;
 //User passively updates i
 public class User implements IRideListener,IUserInfo{
 	//UserInfo
-	private int _uid=0;
-	private int _authLevel=-1;
-	private int _groupId=-1;
+	public int _uid=0;
+	public int _authLevel=-1;
+	public int _groupId=-1;
 	public String _surename;
-	private String _givenname;
-	private String _avatarID;
-	private int _userLevel;
-	private String _emailAddress;
+	public String _givenname;
+	public String _avatarID;
+	public int _userLevel;
+	public String _emailAddress;
 	public String _cellphone;
 	
 	//Use self defined data structure later.
